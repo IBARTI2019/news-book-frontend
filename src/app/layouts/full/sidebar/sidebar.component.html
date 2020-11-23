@@ -1,0 +1,75 @@
+<!-- ============================================================== -->
+<!-- sidebar -->
+<!-- ============================================================== -->
+<div class="user-profile" style="background: url(assets/images/IbartiSoftware-logo.png) no-repeat;">
+    <!-- User profile image -->
+    <div class="profile-img"> <img src="assets/images/IbartiSoftware-logo.png" alt="ibarti"> </div>
+    <!-- User profile text-->
+    <!-- ============================================================== -->
+    <!-- Profile - style you can find in header.scss -->
+    <!-- ============================================================== -->
+    <div class="profile-text"><a [matMenuTriggerFor]="sdprofile" class="">
+            {{ usuario?.nombre }} {{ usuario?.apellido }} <br>
+            {{ usuario?.roll?.descripcion}}
+            <i class="ti-angle-down font-12 m-l-5"></i></a></div>
+    <mat-menu #sdprofile="matMenu" class="mymegamenu">
+        <!--         <button mat-menu-item>
+            <mat-icon>settings</mat-icon> Settings
+        </button>
+        <button mat-menu-item>
+            <mat-icon>account_box</mat-icon> Profile
+        </button>
+        <button mat-menu-item>
+            <mat-icon>notifications_off</mat-icon> Disable notifications
+        </button> -->
+        <button mat-menu-item (click)="logout()">
+            <mat-icon>exit_to_app</mat-icon> Sign Out
+        </button>
+    </mat-menu>
+
+</div>
+<mat-nav-list dense>
+    <mat-expansion-panel [class.mat-elevation-z0]="true" dense>
+        <mat-expansion-panel-header>
+            Ejemplos
+        </mat-expansion-panel-header>
+        <mat-nav-list dense *ngFor="let menuitem of menuItems.getMenuitem()">
+            <a mat-list-item [routerLink]="['/', menuitem.state]" *ngIf="menuitem.type === 'inicio'">
+                <span fxFlex></span>
+                <mat-icon>{{ menuitem.icon }}</mat-icon>
+                <span>{{ menuitem.name }}</span>
+                <span fxFlex></span>
+                <span class="label label-{{ badge.type }}" *ngFor="let badge of menuitem.badge">{{ badge.value }}</span>
+            </a>
+            <a mat-list-item [routerLink]="['/material/', menuitem.state]" *ngIf="menuitem.type === 'link'">
+                <span fxFlex></span>
+                <mat-icon>{{ menuitem.icon }}</mat-icon>
+                <span>{{ menuitem.name }}</span>
+                <span fxFlex></span>
+                <span class="label label-{{ badge.type }}" *ngFor="let badge of menuitem.badge">{{ badge.value }}</span>
+            </a>
+        </mat-nav-list>
+    </mat-expansion-panel>
+    <mat-expansion-panel [class.mat-elevation-z0]="true" dense *ngFor="let modulo of menuitems">
+        <mat-expansion-panel-header>
+            {{modulo.values[0].modulo.modulo}}
+        </mat-expansion-panel-header>
+        <mat-nav-list dense *ngFor="let menuitem of modulo.values">
+            <a mat-list-item [routerLink]="['/', menuitem.permiso]">
+                <span>{{ menuitem.permiso }}</span>
+                <span fxFlex></span>
+            </a>
+        </mat-nav-list>
+    </mat-expansion-panel>
+    <mat-expansion-panel [class.mat-elevation-z0]="true" *ngIf="existModule('standby')" dense>
+        <mat-expansion-panel-header>
+            Test
+        </mat-expansion-panel-header>
+        <mat-nav-list dense metodo="GET" ruta="login" ocultar="true">
+            <a mat-list-item [routerLink]="['/', 'login']">
+                <span>Login</span>
+                <span fxFlex></span>
+            </a>
+        </mat-nav-list>
+    </mat-expansion-panel>
+</mat-nav-list>

@@ -1,0 +1,15 @@
+<div class="bg-info position-relative p-10" style="top: 0px; position: sticky; z-index: 100;">
+  <div class="ml-auto m-0">
+    <span class="text-white m-0 ml-5">{{modulo}} <span class="font-10">{{menu}}</span></span>
+    <ul class="list-inline m-0 ml-5">
+      <li style="cursor: pointer" (click)="navigate([breadcrumb.url].concat(breadcrumb.params))"
+        *ngFor='let breadcrumb of breadcrumbs;index as i;' class="p-0 m-0">
+        <!-- <h6 class="text-white ml-5 p-0 m-0" *ngIf="i>0">{{ breadcrumb.label }}</h6>*ngIf="i===0" -->
+        <h6 class="text-white ml-5 p-0 m-0"><i class="mdi mdi-checkbox-blank-circle m-r-10 ">
+            {{ breadcrumb.label }}</i></h6>
+      </li>
+    </ul>
+  </div>
+  <button mat-mini-fab color="accent" appPermiso metodo="POST" ocultar="false" class="add-contact p-0 m-0" *ngIf="link"
+    (click)="add()" title="{{linkMenu}}">+</button>
+</div>
