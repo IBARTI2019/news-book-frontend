@@ -29,6 +29,11 @@ export const AppRoutes: Routes = [
             path: 'material',
             loadChildren:
               () => import('app/material-component/material.module').then(m => m.MaterialComponentsModule)
+          },
+          {
+            path: 'gestion',
+            loadChildren:
+              () => import('app/gestion/gestion.module').then(m => m.GestionModule)
           }
         ]
       }
