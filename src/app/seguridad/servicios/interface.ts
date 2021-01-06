@@ -42,7 +42,5 @@ export interface Usuario {
   apellido?: string;
   usuario?: string;
   clave?: string;
-  permisos?: Permiso[];
-  roll?: Roll;
   status?: boolean;
 }

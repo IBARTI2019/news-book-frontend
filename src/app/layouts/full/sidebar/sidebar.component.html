@@ -63,11 +63,77 @@
     </mat-expansion-panel>
     <mat-expansion-panel [class.mat-elevation-z0]="true" *ngIf="existModule('standby')" dense>
         <mat-expansion-panel-header>
-            Test
+            Wharehouses
         </mat-expansion-panel-header>
-        <mat-nav-list dense metodo="GET" ruta="login" ocultar="true">
-            <a mat-list-item [routerLink]="['/', 'login']">
-                <span>Login</span>
+        <mat-nav-list dense>
+            <a mat-list-item [routerLink]="['Wharehouses/', 'Wharehouses']">
+                <span>Wharehouses</span>
+                <span fxFlex></span>
+            </a>
+        </mat-nav-list>
+    </mat-expansion-panel>
+    <mat-expansion-panel [class.mat-elevation-z0]="true" *ngIf="existModule('standby')" dense>
+        <mat-expansion-panel-header>
+            Classify News
+        </mat-expansion-panel-header>
+        <mat-nav-list dense>
+            <a mat-list-item [routerLink]="['classify-news/', 'classifynew']">
+                <span>Calssify News</span>
+                <span fxFlex></span>
+            </a>
+        </mat-nav-list>
+    </mat-expansion-panel>
+    <mat-expansion-panel [class.mat-elevation-z0]="true" *ngIf="existModule('standby')" dense>
+        <mat-expansion-panel-header>
+            Vehiculos
+        </mat-expansion-panel-header>
+        <mat-nav-list dense>
+            <a mat-list-item [routerLink]="['vehiculos/', 'vehiculo']">
+                <span>Vehiculos</span>
+                <span fxFlex></span>
+            </a>
+        </mat-nav-list>
+    </mat-expansion-panel>
+    <mat-expansion-panel [class.mat-elevation-z0]="true" *ngIf="existModule('standby')" dense>
+        <mat-expansion-panel-header>
+            Type News
+        </mat-expansion-panel-header>
+        <mat-nav-list dense>
+            <a mat-list-item [routerLink]="['type-news/', 'typenew']">
+                <span>Type news</span>
+                <span fxFlex></span>
+            </a>
+        </mat-nav-list>
+    </mat-expansion-panel>
+    <mat-expansion-panel [class.mat-elevation-z0]="true" *ngIf="existModule('standby')" dense>
+        <mat-expansion-panel-header>
+            Type Personas
+        </mat-expansion-panel-header>
+        <mat-nav-list dense>
+            <a mat-list-item [routerLink]="['type-persons/', 'maestro']">
+                <span>Type personas</span>
+                <span fxFlex></span>
+            </a>
+        </mat-nav-list>
+    </mat-expansion-panel>
+    <mat-expansion-panel [class.mat-elevation-z0]="true" *ngIf="existModule('standby')" dense>
+        <mat-expansion-panel-header>
+            Personas
+        </mat-expansion-panel-header>
+        <mat-nav-list dense>
+            <a mat-list-item [routerLink]="['personas/', 'maestro']">
+                <span>Personas</span>
+                <span fxFlex></span>
+            </a>
+        </mat-nav-list>
+    </mat-expansion-panel>
+    <mat-expansion-panel [class.mat-elevation-z0]="true" *ngIf="existModule('standby')" dense>
+        <mat-expansion-panel-header>
+            Gestion
+        </mat-expansion-panel-header>
+        <mat-nav-list dense>
+            <a mat-list-item [routerLink]="['seguridad/', 'usuario']">
+                <span>Usuario</span>
                 <span fxFlex></span>
             </a>
         </mat-nav-list>

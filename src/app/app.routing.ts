@@ -9,7 +9,7 @@ import { PermisoGuard } from "./utils/permiso.guard";
 export const AppRoutes: Routes = [
   {
     path: '',
-    canActivateChild: [PermisoGuard],
+    //canActivateChild: [PermisoGuard],
     runGuardsAndResolvers: 'always',
     children: [
       {
@@ -28,12 +28,23 @@ export const AppRoutes: Routes = [
           {
             path: 'material',
             loadChildren:
-              () => import('app/material-component/material.module').then(m => m.MaterialComponentsModule)
+              () => import('app/materiales/materiales.module').then(m => m.MaterialesModule)
           },
           {
-            path: 'gestion',
+            path: 'type-persons',
             loadChildren:
-              () => import('app/gestion/gestion.module').then(m => m.GestionModule)
+              () => import('app/type-persons/gestion.module').then(m => m.GestionModule)
+          },
+          
+          {
+            path: 'personas',
+            loadChildren:
+              () => import('app/personas/gestion.module').then(m => m.GestionModule)
+          },
+          {
+            path: 'seguridad',
+            loadChildren:
+              () => import('app/seguridad/seguridad.module').then(m => m.SeguridadModule)
           }
         ]
       }

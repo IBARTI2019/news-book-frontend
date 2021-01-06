@@ -3,10 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { UsuarioService } from 'app/seguridad/servicios/usuario.service';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
-import { RolService } from 'app/seguridad/servicios/rol.service';
-import { SucursalService } from 'app/maestro/servicios/sucursal.service';
-import { Roll } from 'app/seguridad/servicios/interface';
-import { Sucursal } from 'app/maestro/servicios/interface';
+
 
 @Component({
   selector: 'app-usuario-crear',
@@ -20,12 +17,8 @@ export class UsuarioCrearComponent implements OnInit {
   errors: any;
   hide = true;
   hide2 = true;
-  roles: Roll[] = [];
-  sucursales: Sucursal[] = [];
   constructor(
     private usuarioService: UsuarioService,
-    private sucursalService: SucursalService,
-    private rolService: RolService,
     private fb: FormBuilder,
     private toastr: ToastrService,
     private router: Router
@@ -38,19 +31,12 @@ export class UsuarioCrearComponent implements OnInit {
     this.fg = this.fb.group({
       nombre: ['', Validators.required],
       apellido: ['', Validators.required],
-      roll: ['', Validators.required],
-      sucursales: [[], null],
       usuario: ['', Validators.required],
       status: [true, Validators.required],
       clave: ['', null],
       clave2: ['', null]
     }, {});
-    this.rolService.list().subscribe(roles => {
-      this.roles = roles;
-    });
-    this.sucursalService.list().subscribe((sucursales: Sucursal[]) => {
-      this.sucursales = sucursales;
-    });
+   
   }
 
   onSubmit() {

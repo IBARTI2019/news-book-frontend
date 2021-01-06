@@ -22,21 +22,18 @@ export class UsuarioComponent implements OnInit {
   ngOnInit(): void {
     this.columns = [
       {
-        dataAttribute: 'nombre',
+        dataAttribute: 'firstName',
         attribute: "Nombre",
       },
       {
-        dataAttribute: 'apellido',
+        dataAttribute: 'lastName',
         attribute: 'Apellido'
       },
       {
-        dataAttribute: 'usuario',
+        dataAttribute: 'user',
         attribute: 'Usuario'
       },
-      {
-        header: "Rol",
-        attribute: 'roll.descripcion',
-      },
+      
       {
         attribute: "id",
         header: "Opciones",
@@ -46,11 +43,11 @@ export class UsuarioComponent implements OnInit {
   }
 
   editar(id: string) {
-    this.router.navigate(['/seguridad/usuario/', id]);
+    this.router.navigate(['seguridad/usuario/', id]);
   }
 
   eliminar(usuario: Usuario) {
-    this.dialogService.open({ message: `Esta seguro de que desea eliminar el usuario ${usuario.usuario}?`, });
+    this.dialogService.open({ message: `Esta seguro de que desea eliminar el usuario ${usuario._id}?`, });
     this.dialogService.confirmed().subscribe(confirmed => {
       if (confirmed) {
         this.usuarioService.remove(usuario._id).subscribe(data => {

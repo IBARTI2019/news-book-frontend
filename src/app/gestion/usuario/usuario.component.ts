@@ -16,7 +16,7 @@ export class UsuarioComponent implements OnInit {
   ngOnInit(): void {
     this.columns = [
       {
-        attribute: 'nombre',
+        attribute: 'firstName',
         header: "Nombre"
       },
       {
@@ -33,6 +33,7 @@ export class UsuarioComponent implements OnInit {
 
   editar(id: string) {
     console.log(id);
+    this.router.navigate(['/gestion/usuario/', id]);
 
   }
 
