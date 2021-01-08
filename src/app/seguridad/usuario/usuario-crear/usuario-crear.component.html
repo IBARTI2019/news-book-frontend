@@ -6,18 +6,18 @@
             <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="5px">
                 <mat-form-field>
                     <mat-label>Nombre</mat-label>
-                    <input matInput placeholder="Nombre" formControlName="nombre">
+                    <input matInput placeholder="Nombre" formControlName="firstName">
                 </mat-form-field>
                 <mat-form-field>
                     <mat-label>Apellido</mat-label>
-                    <input matInput placeholder="Apellido" formControlName="apellido">
+                    <input matInput placeholder="Apellido" formControlName="lastName">
                 </mat-form-field>
             </div>
            
             <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="5px">
                 <mat-form-field>
                     <mat-label>Usuario</mat-label>
-                    <input matInput placeholder="Usuario" formControlName="usuario">
+                    <input matInput placeholder="Usuario" formControlName="user">
                 </mat-form-field>
                 <div fxFlex="50">
                     <mat-slide-toggle formControlName="status">Activo</mat-slide-toggle>
@@ -26,7 +26,7 @@
             <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="5px">
                 <mat-form-field>
                     <mat-label>Clave</mat-label>
-                    <input matInput placeholder="Clave" [type]="hide ? 'password' : 'text'" formControlName="clave">
+                    <input matInput placeholder="Clave" [type]="hide ? 'password' : 'text'" formControlName="password">
                     <span mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
                         [attr.aria-pressed]="hide">
                         <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
@@ -35,7 +35,7 @@
                 <mat-form-field>
                     <mat-label>Confirma la clave</mat-label>
                     <input matInput placeholder="Corfirmación de clave" [type]="hide2 ? 'password' : 'text'"
-                        formControlName="clave2">
+                        formControlName="password2">
                     <span mat-icon-button matSuffix (click)="hide2 = !hide2" [attr.aria-label]="'Hide password'"
                         [attr.aria-pressed]="hide2">
                         <mat-icon>{{hide2 ? 'visibility_off' : 'visibility'}}</mat-icon>

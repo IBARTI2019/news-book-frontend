@@ -43,11 +43,11 @@ export class UsuarioComponent implements OnInit {
   }
 
   editar(id: string) {
-    this.router.navigate(['seguridad/usuario/', id]);
+    this.router.navigate(['seguridad/usuario/editar', id]);
   }
 
   eliminar(usuario: Usuario) {
-    this.dialogService.open({ message: `Esta seguro de que desea eliminar el usuario ${usuario._id}?`, });
+    this.dialogService.open({ message: `Esta seguro de que desea eliminar el usuario ${usuario.user}?`, });
     this.dialogService.confirmed().subscribe(confirmed => {
       if (confirmed) {
         this.usuarioService.remove(usuario._id).subscribe(data => {

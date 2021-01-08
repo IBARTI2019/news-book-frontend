@@ -9,8 +9,8 @@
     <!-- Profile - style you can find in header.scss -->
     <!-- ============================================================== -->
     <div class="profile-text"><a [matMenuTriggerFor]="sdprofile" class="">
-            {{ usuario?.nombre }} {{ usuario?.apellido }} <br>
-            {{ usuario?.roll?.descripcion}}
+            {{ usuario?.firsName }} {{ usuario?.lastName }} <br>
+            {{ usuario?.user}}
             <i class="ti-angle-down font-12 m-l-5"></i></a></div>
     <mat-menu #sdprofile="matMenu" class="mymegamenu">
         <!--         <button mat-menu-item>
@@ -66,7 +66,7 @@
             Wharehouses
         </mat-expansion-panel-header>
         <mat-nav-list dense>
-            <a mat-list-item [routerLink]="['Wharehouses/', 'Wharehouses']">
+            <a mat-list-item [routerLink]="['wharehouses/', 'maestro']">
                 <span>Wharehouses</span>
                 <span fxFlex></span>
             </a>
@@ -77,8 +77,8 @@
             Classify News
         </mat-expansion-panel-header>
         <mat-nav-list dense>
-            <a mat-list-item [routerLink]="['classify-news/', 'classifynew']">
-                <span>Calssify News</span>
+            <a mat-list-item [routerLink]="['classify-news/', 'maestro']">
+                <span>Classify News</span>
                 <span fxFlex></span>
             </a>
         </mat-nav-list>
@@ -88,7 +88,7 @@
             Vehiculos
         </mat-expansion-panel-header>
         <mat-nav-list dense>
-            <a mat-list-item [routerLink]="['vehiculos/', 'vehiculo']">
+            <a mat-list-item [routerLink]="['vehiculos/', 'maestro']">
                 <span>Vehiculos</span>
                 <span fxFlex></span>
             </a>
@@ -99,7 +99,7 @@
             Type News
         </mat-expansion-panel-header>
         <mat-nav-list dense>
-            <a mat-list-item [routerLink]="['type-news/', 'typenew']">
+            <a mat-list-item [routerLink]="['type-news/', 'maestro']">
                 <span>Type news</span>
                 <span fxFlex></span>
             </a>

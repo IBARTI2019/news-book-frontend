@@ -17,11 +17,11 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { ComponentesModule } from 'app/componentes/componentes.module';
 import { UsuarioCrearComponent } from './usuario/usuario-crear/usuario-crear.component';
-
+import { UsuarioEditarComponent } from './usuario/usuario-editar/usuario-editar.component';
 
 
 @NgModule({
-  declarations: [UsuarioComponent, UsuarioCrearComponent],
+  declarations: [UsuarioComponent, UsuarioCrearComponent,UsuarioEditarComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(GestionRoutes),

@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { UsuarioServiceG } from 'app/gestion/servicios/usuariog.service';
+import { UsuarioService } from 'app/personas/servicios/usuario.service';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-usuario-crear',
@@ -17,7 +18,7 @@ export class UsuarioCrearComponent implements OnInit {
   hide = true;
   hide2 = true;
   constructor(
-    private usuarioService: UsuarioServiceG,
+    private usuarioService: UsuarioService,
     private fb: FormBuilder,
     private toastr: ToastrService,
     private router: Router
@@ -28,24 +29,22 @@ export class UsuarioCrearComponent implements OnInit {
 
   ngOnInit() {
     this.fg = this.fb.group({
-      nombre: ['', Validators.required],
-      apellido: ['', Validators.required],
-      roll: ['', Validators.required],
-      sucursales: [[], null],
-      usuario: ['', Validators.required],
+      cod_person: ['', Validators.required],
+      name: ['', Validators.required],
+      lastname: ['', Validators.required],
+      doc_ident: ['', Validators.required],
+      addres: ['', Validators.required],
+      phono: ['', Validators.required],
+      movil: ['', Validators.required],
+      id_type_person:['', Validators.required],
       status: [true, Validators.required],
-      clave: ['', null],
-      clave2: ['', null]
+      
     }, {});
+   
   }
 
   onSubmit() {
     this.submitted = true;
-    if (this.fg.get('clave').value !== this.fg.get('clave2').value) {
-      this.toastr.error("Las claves son diferentes");
-      this.submitted = false;
-      return;
-    }
     if (this.fg.invalid) {
       this.submitted = false;
       return;
@@ -56,20 +55,20 @@ export class UsuarioCrearComponent implements OnInit {
   onReset() {
     this.submitted = false;
     this.fg.reset();
-    this.router.navigate(['gestion/usuario']);
+    this.router.navigate(['personas/maestro']);
   }
 
   guardar() {
     this.usuarioService.add(this.fg.value).subscribe(
       data => {
-        this.toastr.success('Usuario creado con éxito');
+        this.toastr.success('Datos de la Persona creado con éxito');
         this.submitted = false;
         this.fg.reset();
-        this.router.navigate(['gestion/usuario']);
+        this.router.navigate(['personas/maestro']);
       },
       (result: any) => {
         this.errors = result.errors;
-        this.toastr.error('No se pudo crear el usuario');
+        this.toastr.error('No se pudo crear los datos de la persona');
       }
     );
   }

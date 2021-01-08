@@ -8,14 +8,14 @@
 
                 <mat-form-field>
                     <mat-label>Ingresa tu usuario</mat-label>
-                    <input matInput required placeholder="Usuario" [(ngModel)]="usuario.usuario"
+                    <input matInput required placeholder="Usuario" [(ngModel)]="usuario.user"
                         [ngModelOptions]="{standalone: true}">
                     <mat-icon matSuffix>account_circle</mat-icon>
                 </mat-form-field>
 
                 <mat-form-field>
                     <mat-label>Ingresa tu clave</mat-label>
-                    <input matInput required [type]="hide ? 'password' : 'text'" [(ngModel)]="usuario.clave"
+                    <input matInput required [type]="hide ? 'password' : 'text'" [(ngModel)]="usuario.password"
                         [ngModelOptions]="{standalone: true}">
                     <span mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
                         [attr.aria-pressed]="hide">
@@ -24,7 +24,7 @@
                 </mat-form-field>
 
                 <button mat-raised-button color="primary" class="btn-block" type="submit"
-                    [disabled]="cargando || !usuario.usuario || !usuario.clave">Entrar</button>
+                    [disabled]="cargando || !usuario.user || !usuario.password">Entrar</button>
             </form>
         </mat-card-content>
     </mat-card>

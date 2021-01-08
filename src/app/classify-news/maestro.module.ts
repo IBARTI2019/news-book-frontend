@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UsuarioComponent } from './maestro/usuario.component';
 import { RouterModule } from '@angular/router';
-import { GestionRoutes } from './gestion.routing';
+import { GestionRoutes } from './maestro.routing';
 import { CdkTableModule } from '@angular/cdk/table';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -17,11 +17,11 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { ComponentesModule } from 'app/componentes/componentes.module';
 import { UsuarioCrearComponent } from './maestro/usuario-crear/usuario-crear.component';
-
+import { UsuarioEditarComponent } from './maestro/usuario-editar/usuario-editar.component';
 
 
 @NgModule({
-  declarations: [UsuarioComponent, UsuarioCrearComponent],
+  declarations: [UsuarioComponent, UsuarioCrearComponent,UsuarioEditarComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(GestionRoutes),
@@ -41,4 +41,4 @@ import { UsuarioCrearComponent } from './maestro/usuario-crear/usuario-crear.com
     MatIconModule
   ]
 })
-export class GestionModule { }
+export class MaestroModule { }

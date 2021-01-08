@@ -1,0 +1,25 @@
+<div fxLayout="row wrap">
+    <div fxFlex.gt-xs="100" fxFlex="100">
+        <mat-card>
+            <app-card-header link="crear" link-menu="Crear Wherehouses" modulo="Wherehouses" menu="Gestion de Wherehouses">
+            </app-card-header>
+            <mat-card-content>
+                <div class="d-flex flex-wrap">
+                    <ng-template #templateOpciones let-column="column" let-item="item" let-i="i">
+                        <div class="button-row">
+                            <button mat-icon-button appPermiso metodo="PUT" (click)="editar(item.id)">
+                                <mat-icon>edit</mat-icon>
+                            </button>
+                            <button mat-icon-button appPermiso metodo="DELETE" (click)="eliminar(item)">
+                                <mat-icon>delete</mat-icon>
+                            </button>
+                        </div>
+                    </ng-template>
+                    <app-generic-table fxFlex="100" [columns]="columns" [showFilter]="true" [service]="usuarioService"
+                        [btnRefresh]="true" [templates]="{opciones: templateOpciones}">
+                    </app-generic-table>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>

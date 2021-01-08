@@ -38,9 +38,10 @@ export interface Permiso {
 
 export interface Usuario {
   _id?: string | any;
-  nombre?: string;
-  apellido?: string;
-  usuario?: string;
-  clave?: string;
+  firstName?: string;
+  lastName?: string;
+  email?: string;
+  user?: string;
+  password?:string;
   status?: boolean;
 }

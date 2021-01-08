@@ -32,7 +32,7 @@ export class UsuarioService extends API<Usuario> {
   public login(usuario?: string, clave?: string) {
     // En el login se quitan los ceros a la izquierda para números de personal
     return this.http
-      .post(`${this.URL_API}/usuario/login/`, { usuario, clave })
+      .post(`${this.URL_API}/users/login/`, { usuario, clave })
       .pipe(
         map((response: any) => {
           localStorage.setItem(API.ISLOGGEDIN, response.logIn);

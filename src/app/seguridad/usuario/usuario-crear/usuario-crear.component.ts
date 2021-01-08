@@ -29,19 +29,19 @@ export class UsuarioCrearComponent implements OnInit {
 
   ngOnInit() {
     this.fg = this.fb.group({
-      nombre: ['', Validators.required],
-      apellido: ['', Validators.required],
-      usuario: ['', Validators.required],
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
+      user: ['', Validators.required],
       status: [true, Validators.required],
-      clave: ['', null],
-      clave2: ['', null]
+      password: ['', null],
+      password2: ['', null]
     }, {});
    
   }
 
   onSubmit() {
     this.submitted = true;
-    if (this.fg.get('clave').value !== this.fg.get('clave2').value) {
+    if (this.fg.get('password').value !== this.fg.get('password2').value) {
       this.toastr.error("Las claves son diferentes");
       this.submitted = false;
       return;

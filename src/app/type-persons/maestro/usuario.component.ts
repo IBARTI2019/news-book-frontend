@@ -1,7 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { UsuarioService } from '../servicios/usuario.service';
 import { DTColumn } from 'app/componentes/generic-table/interface';
-import { UsuarioG } from '../servicios/interface';
-import { UsuarioServiceG } from '../servicios/usuariog.service';
+import { Usuario } from '../servicios/interface';
+import { Router } from '@angular/router';
+import { ConfirmDialogService } from 'app/componentes/confirm-dialog/confirm-dialog.service';
+import { ToastrService } from 'ngx-toastr';
+import { GenericTableComponent } from 'app/componentes/generic-table/generic-table.component';
 
 @Component({
   selector: 'app-usuario',
@@ -9,39 +13,52 @@ import { UsuarioServiceG } from '../servicios/usuariog.service';
   styleUrls: ['./usuario.component.css']
 })
 export class UsuarioComponent implements OnInit {
+  @ViewChild('tabla') tabla!: GenericTableComponent;
   columns: DTColumn[] = [];
-  params: any = { params: 'Ejemplo' };
-  constructor(public usuarioService: UsuarioServiceG) { }
+  constructor(public usuarioService: UsuarioService, private router: Router,
+    private dialogService: ConfirmDialogService, private toastr: ToastrService) { }
 
+  showCheck = () => { return true; }
   ngOnInit(): void {
     this.columns = [
       {
-        attribute: 'description',
-        header: "Descripcion"
+        dataAttribute: 'description',
+        attribute: "Descripcion",
       },
       {
-        attribute: 'priority',
-        header: "Prioridad"
+        dataAttribute: 'priority',
+        attribute: 'Prioridad'
       },
       {
-        attribute: 'status',
-        header: "Estatu"
+        dataAttribute: 'status',
+        attribute: 'Status'
       },
+      
       {
-        attribute: 'id_type_person',
-        header: 'Opciones',
-        template: 'opc'
-      }
-    ];
+        attribute: "id_type_person",
+        header: "Opciones",
+        template: "opciones"
+      },
+    ]
   }
 
   editar(id: string) {
-    console.log(id);
-
+    this.router.navigate(['type-persons/maestr/editar', id]);
   }
 
-  eliminar(usuario: UsuarioG) {
-    console.log('Eliminar', usuario);
-
+  eliminar(usuario: Usuario) {
+    this.dialogService.open({ message: `Esta seguro de que desea eliminar el Type Persons ${usuario.description}?`, });
+    this.dialogService.confirmed().subscribe(confirmed => {
+      if (confirmed) {
+        this.usuarioService.remove(usuario.id_type_person).subscribe(data => {
+          this.toastr.success("Type Persons eliminado con exito!.");
+          this.tabla.refresh();
+        }, error => {
+          this.toastr.success("Ocurrio un error al intentar eliminar el Type Persons");
+          this.tabla.refresh();
+        });
+      }
+    });
   }
+
 }

@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { UsuarioServiceG } from 'app/gestion/servicios/usuariog.service';
+import { UsuarioService } from 'app/type-persons/servicios/usuario.service';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-usuario-crear',
@@ -17,7 +18,7 @@ export class UsuarioCrearComponent implements OnInit {
   hide = true;
   hide2 = true;
   constructor(
-    private usuarioService: UsuarioServiceG,
+    private usuarioService: UsuarioService,
     private fb: FormBuilder,
     private toastr: ToastrService,
     private router: Router
@@ -28,25 +29,17 @@ export class UsuarioCrearComponent implements OnInit {
 
   ngOnInit() {
     this.fg = this.fb.group({
-      nombre: ['', Validators.required],
-      apellido: ['', Validators.required],
-      roll: ['', Validators.required],
-      sucursales: [[], null],
-      usuario: ['', Validators.required],
+      description: ['', Validators.required],
+      priority: ['', Validators.required],
       status: [true, Validators.required],
-      clave: ['', null],
-      clave2: ['', null]
+      
     }, {});
+   
   }
 
   onSubmit() {
     this.submitted = true;
-    if (this.fg.get('clave').value !== this.fg.get('clave2').value) {
-      this.toastr.error("Las claves son diferentes");
-      this.submitted = false;
-      return;
-    }
-    if (this.fg.invalid) {
+   if (this.fg.invalid) {
       this.submitted = false;
       return;
     }
@@ -56,20 +49,20 @@ export class UsuarioCrearComponent implements OnInit {
   onReset() {
     this.submitted = false;
     this.fg.reset();
-    this.router.navigate(['gestion/usuario']);
+    this.router.navigate(['type-persons/maestro']);
   }
 
   guardar() {
     this.usuarioService.add(this.fg.value).subscribe(
       data => {
-        this.toastr.success('Usuario creado con éxito');
+        this.toastr.success('Type persons creado con éxito');
         this.submitted = false;
         this.fg.reset();
-        this.router.navigate(['gestion/usuario']);
+        this.router.navigate(['type-persons/maestro']);
       },
       (result: any) => {
         this.errors = result.errors;
-        this.toastr.error('No se pudo crear el usuario');
+        this.toastr.error('No se pudo crear el type persons');
       }
     );
   }

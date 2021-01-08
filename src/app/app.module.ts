@@ -65,8 +65,8 @@ import { LayoutModule } from '@angular/cdk/layout';
     }),
   ],
   providers: [
-    //{ provide: LocationStrategy,  useClass: PathLocationStrategy},
-    // { provide: APP_BASE_HREF, useValue: '/facial' },
+   // { provide: LocationStrategy,  useClass: PathLocationStrategy},
+   // { provide: APP_BASE_HREF, useValue: '/news-book-frontend/app' },
     { provide: LocationStrategy, useClass: HashLocationStrategy },
     { provide: HTTP_INTERCEPTORS, useClass: Error401Interceptor, multi: true, },
     { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { floatLabel: 'always' } },
