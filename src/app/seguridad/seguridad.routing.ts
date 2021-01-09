@@ -7,48 +7,48 @@ import { UsuarioEditarComponent } from './usuario/usuario-editar/usuario-editar.
 export const GestionRoutes: Routes = [
     {
         path: 'usuario',
-        children:[
+        children: [
             {
                 path: "",
                 data: {
                     breadcrumb: {
                         label: 'Usuario'
                     },
-                    omitirPermiso:true
+                    omitirPermiso: true
                 },
                 component: UsuarioComponent,
             },
             {
                 path: "crear",
-                data:{
-                   breadcrumbAnt:{
-                     label :"Usuario",
-                     url:"seguridad/usuario" ,  
-                     params:[]
+                data: {
+                    breadcrumbAnt: {
+                        label: "Usuario",
+                        url: "seguridad/usuario",
+                        params: []
                     },
                     breadcrumb: {
                         label: "Crear Usuario"
-                    }, 
-                    omitirPermiso:true
+                    },
+                    omitirPermiso: true
                 },
                 component: UsuarioCrearComponent
             },
             {
-                path: "editar",
-                data:{
-                   breadcrumbAnt:{
-                     label :"Usuario",
-                     url:"seguridad/usuario" ,  
-                     params:[]
+                path: ":id",
+                data: {
+                    breadcrumbAnt: {
+                        label: "Usuario",
+                        url: "seguridad/usuario",
+                        params: []
                     },
                     breadcrumb: {
                         label: "Editar Usuario"
-                    }, 
-                    omitirPermiso:true
+                    },
+                    omitirPermiso: true
                 },
                 component: UsuarioEditarComponent
             }
-            
+
         ]
     }
 ];

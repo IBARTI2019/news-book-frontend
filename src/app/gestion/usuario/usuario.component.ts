@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { DTColumn } from 'app/componentes/generic-table/interface';
+import { DTColumn } from '../../componentes/generic-table/interface';
 import { UsuarioG } from '../servicios/interface';
 import { UsuarioServiceG } from '../servicios/usuariog.service';
 
@@ -33,7 +33,7 @@ export class UsuarioComponent implements OnInit {
 
   editar(id: string) {
     console.log(id);
-    this.router.navigate(['/gestion/usuario/', id]);
+    //this.router.navigate(['/gestion/usuario/', id]);
 
   }
 

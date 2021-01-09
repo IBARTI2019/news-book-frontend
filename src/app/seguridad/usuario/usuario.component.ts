@@ -33,7 +33,7 @@ export class UsuarioComponent implements OnInit {
         dataAttribute: 'user',
         attribute: 'Usuario'
       },
-      
+
       {
         attribute: "id",
         header: "Opciones",
@@ -43,7 +43,7 @@ export class UsuarioComponent implements OnInit {
   }
 
   editar(id: string) {
-    this.router.navigate(['seguridad/usuario/editar', id]);
+    this.router.navigate(['seguridad/usuario/', id]);
   }
 
   eliminar(usuario: Usuario) {
