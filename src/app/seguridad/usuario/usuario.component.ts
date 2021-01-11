@@ -35,14 +35,14 @@ export class UsuarioComponent implements OnInit {
       },
 
       {
-        attribute: "id",
+        attribute: "_id",
         header: "Opciones",
         template: "opciones"
       },
     ]
   }
 
-  editar(id: string) {
+  editar(id:string) {
     this.router.navigate(['seguridad/usuario/', id]);
   }
 

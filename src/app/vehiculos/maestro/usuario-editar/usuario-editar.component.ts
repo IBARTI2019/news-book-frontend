@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { UsuarioService } from 'app/personas/servicios/usuario.service';
+import { UsuarioService } from 'app/vehiculos/servicios/usuario.service';
 import { ToastrService } from 'ngx-toastr';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Usuario } from 'app/personas/servicios/interface';
+import { Usuario } from 'app/vehiculos/servicios/interface';
 //import { RolService } from "app/seguridad/servicios/rol.service";
 //import { SucursalService } from 'app/maestro/servicios/sucursal.service';
 //import { Sucursal } from 'app/maestro/servicios/interface';
@@ -38,14 +38,10 @@ export class UsuarioEditarComponent implements OnInit {
   ngOnInit() {
     this.id = this.route.snapshot.params.id;
     this.fg = this.fb.group({
-      cod_person: ['', Validators.required],
       name: ['', Validators.required],
       lastname: ['', Validators.required],
       doc_ident: ['', Validators.required],
-      addres: ['', Validators.required],
-      phono: ['', Validators.required],
-      movil: ['', Validators.required],
-      id_type_person:['', Validators.required],
+      placa_vehiculo:['', Validators.required],
       status: [true, Validators.required],
       
       }, {});
@@ -73,21 +69,17 @@ export class UsuarioEditarComponent implements OnInit {
         this.fg.get('lastname').setValue(data.lastname);
         this.fg.get('status').setValue(data.status);
         this.fg.get('doc_ident').setValue(data.doc_ident);
-        this.fg.get('addres').setValue(data.addres);
-        this.fg.get('phono').setValue(data.phono);
-        this.fg.get('movil').setValue(data.movil);
-        this.fg.get('id_type_person').setValue(data.id_type_person);
-        
+        this.fg.get('placa_vehiculo').setValue(data.placa_vehiculo); 
       });
   }
 
   actualizar() {
     this.usuarioService.update(this.id, this.fg.value).subscribe(
       data => {
-        this.toastr.success('Datos Personas actualizado');
+        this.toastr.success('Datos Vehiculos actualizado');
         this.submitted = false;
         this.fg.reset();
-        this.router.navigate(['personas/maestro']);
+        this.router.navigate(['vehiculos/maestro']);
       },
       (result: any) => {
         this.errors = result.errors;

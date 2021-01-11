@@ -26,9 +26,14 @@ export const AppRoutes: Routes = [
             loadChildren: () => import('app/dashboard/dashboard.module').then(m => m.DashboardModule)
           },
           {
-            path: 'material',
+            path: 'materiales',
             loadChildren:
-              () => import('app/materiales/materiales.module').then(m => m.MaterialesModule)
+              () => import('app/materiales/maestro.module').then(m => m.MaestroModule)
+          },
+          {
+            path: 'vehiculos',
+            loadChildren:
+              () => import('app/vehiculos/maestro.module').then(m => m.MaestroModule)
           },
           {
             path: 'wharehouses',

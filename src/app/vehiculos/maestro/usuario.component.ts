@@ -21,21 +21,29 @@ export class UsuarioComponent implements OnInit {
   showCheck = () => { return true; }
   ngOnInit(): void {
     this.columns = [
+     
       {
-        dataAttribute: 'description',
-        attribute: "Descripcion",
+        dataAttribute: 'name',
+        attribute: 'Nombres'
       },
       {
-        dataAttribute: 'level_urgency',
-        attribute: 'Nivel Urgencia'
+        dataAttribute: 'lastname',
+        attribute: 'Apellidos'
       },
-      {
+       {
+        dataAttribute: 'doc_ident',
+        attribute: 'Cedula'
+      },
+       {
+        dataAttribute: 'placa_vehiculo',
+        attribute: 'Placa Vehiculo'
+      },
+     {
         dataAttribute: 'status',
-        attribute: 'Status'
+        attribute: 'Statu'
       },
-      
       {
-        attribute: "id_classify",
+        attribute: "id_vehiculo",
         header: "Opciones",
         template: "opciones"
       },
@@ -43,18 +51,18 @@ export class UsuarioComponent implements OnInit {
   }
 
   editar(id: string) {
-    this.router.navigate(['classify-news/maestro/', id]);
+    this.router.navigate(['vehiculos/maestro/', id]);
   }
 
   eliminar(usuario: Usuario) {
-    this.dialogService.open({ message: `Esta seguro de que desea eliminar el Classify News ${usuario.description}?`, });
+    this.dialogService.open({ message: `Esta seguro de que desea eliminar La Informacion de ${usuario.placa_vehiculo}?`, });
     this.dialogService.confirmed().subscribe(confirmed => {
       if (confirmed) {
-        this.usuarioService.remove(usuario.id_classify).subscribe(data => {
-          this.toastr.success("Classify News eliminado con exito!.");
+        this.usuarioService.remove(usuario.id_vehiculo).subscribe(data => {
+          this.toastr.success("Datos eliminado con exito!.");
           this.tabla.refresh();
         }, error => {
-          this.toastr.success("Ocurrio un error al intentar eliminar la Classify News");
+          this.toastr.success("Ocurrio un error al intentar eliminar los datos del Vehiculo");
           this.tabla.refresh();
         });
       }

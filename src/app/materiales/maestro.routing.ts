@@ -12,7 +12,7 @@ export const GestionRoutes: Routes = [
                 path: "",
                 data: {
                     breadcrumb: {
-                        label: 'Type Persons'
+                        label: 'Materiales y Suministros'
                     },
                     omitirPermiso:true
                 },
@@ -22,12 +22,12 @@ export const GestionRoutes: Routes = [
                 path: "crear",
                 data:{
                    breadcrumbAnt:{
-                     label :"Type Persons",
-                     url:"type-persons/maestro" ,  
+                     label :"Materiales y Suministros",
+                     url:"materiales/maestro" ,  
                      params:[]
                     },
                     breadcrumb: {
-                        label: "Crear Type Persons"
+                        label: "Crear Materiales"
                     }, 
                     omitirPermiso:true
                 },
@@ -37,12 +37,12 @@ export const GestionRoutes: Routes = [
                 path: ":id",
                 data:{
                    breadcrumbAnt:{
-                     label :"Tipo Personas",
-                     url:"type-persons/maestro" ,  
+                     label :"Materiales y Suministros",
+                     url:"materiales/maestro" ,  
                      params:[]
                     },
                     breadcrumb: {
-                        label: "Editar Tipo Personas"
+                        label: "Editar Materiales"
                     }, 
                     omitirPermiso:true
                 },

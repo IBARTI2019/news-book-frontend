@@ -22,20 +22,28 @@ export class UsuarioComponent implements OnInit {
   ngOnInit(): void {
     this.columns = [
       {
+        dataAttribute: 'cod_material',
+        attribute: "Cod Material",
+      },
+      {
+        dataAttribute: 'serial_material',
+        attribute: 'Serial Material'
+      },
+      {
         dataAttribute: 'description',
-        attribute: "Descripcion",
+        attribute: 'Descripcion'
       },
-      {
-        dataAttribute: 'level_urgency',
-        attribute: 'Nivel Urgencia'
+       {
+        dataAttribute: 'id_warehouse',
+        attribute: 'Almacen'
       },
-      {
+     
+     {
         dataAttribute: 'status',
-        attribute: 'Status'
+        attribute: 'Statu'
       },
-      
       {
-        attribute: "id_classify",
+        attribute: "id_material",
         header: "Opciones",
         template: "opciones"
       },
@@ -43,18 +51,18 @@ export class UsuarioComponent implements OnInit {
   }
 
   editar(id: string) {
-    this.router.navigate(['classify-news/maestro/', id]);
+    this.router.navigate(['materiales/maestro/', id]);
   }
 
   eliminar(usuario: Usuario) {
-    this.dialogService.open({ message: `Esta seguro de que desea eliminar el Classify News ${usuario.description}?`, });
+    this.dialogService.open({ message: `Esta seguro de que desea eliminar La Informacion de ${usuario.description}?`, });
     this.dialogService.confirmed().subscribe(confirmed => {
       if (confirmed) {
-        this.usuarioService.remove(usuario.id_classify).subscribe(data => {
-          this.toastr.success("Classify News eliminado con exito!.");
+        this.usuarioService.remove(usuario.id_material).subscribe(data => {
+          this.toastr.success("Datos eliminado con exito!.");
           this.tabla.refresh();
         }, error => {
-          this.toastr.success("Ocurrio un error al intentar eliminar la Classify News");
+          this.toastr.success("Ocurrio un error al intentar eliminar los datos del Material");
           this.tabla.refresh();
         });
       }

@@ -34,7 +34,7 @@ export const GestionRoutes: Routes = [
                 component: UsuarioCrearComponent
             },
             {
-                path: "editar",
+                path: ":id",
                 data:{
                    breadcrumbAnt:{
                      label :"Type News",
