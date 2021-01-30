@@ -17,7 +17,7 @@ import { DemoMaterialModule } from './demo-material-module';
 import { ComponentesModule } from "app/componentes/componentes.module";
 import { SeguridadModule } from "app/seguridad/seguridad.module";
 import { SharedModule } from './shared/shared.module';
-
+import {MatTabsModule} from '@angular/material/tabs'; 
 import { SpinnerComponent } from './shared/spinner.component';
 import { LoginComponent } from 'app/seguridad/login/login.component';
 import { ToastrModule } from 'ngx-toastr';
@@ -39,6 +39,7 @@ import { LayoutModule } from '@angular/cdk/layout';
   ],
   imports: [
     BrowserModule,
+    MatTabsModule,
     BrowserAnimationsModule,
     DemoMaterialModule,
     SeguridadModule,
@@ -65,8 +66,8 @@ import { LayoutModule } from '@angular/cdk/layout';
     }),
   ],
   providers: [
-    //{ provide: LocationStrategy,  useClass: PathLocationStrategy},
-    // { provide: APP_BASE_HREF, useValue: '/facial' },
+   // { provide: LocationStrategy,  useClass: PathLocationStrategy},
+   // { provide: APP_BASE_HREF, useValue: '/news-book-frontend/app' },
     { provide: LocationStrategy, useClass: HashLocationStrategy },
     { provide: HTTP_INTERCEPTORS, useClass: Error401Interceptor, multi: true, },
     { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { floatLabel: 'always' } },

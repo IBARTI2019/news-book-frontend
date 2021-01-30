@@ -9,8 +9,8 @@
     <!-- Profile - style you can find in header.scss -->
     <!-- ============================================================== -->
     <div class="profile-text"><a [matMenuTriggerFor]="sdprofile" class="">
-            {{ usuario?.nombre }} {{ usuario?.apellido }} <br>
-            {{ usuario?.roll?.descripcion}}
+            {{ usuario?.firsName }} {{ usuario?.lastName }} <br>
+            {{ usuario?.user}}
             <i class="ti-angle-down font-12 m-l-5"></i></a></div>
     <mat-menu #sdprofile="matMenu" class="mymegamenu">
         <!--         <button mat-menu-item>
@@ -29,45 +29,101 @@
 
 </div>
 <mat-nav-list dense>
+     <mat-expansion-panel [class.mat-elevation-z0]="true" dense>
+        <mat-expansion-panel-header>
+            Archivos
+        </mat-expansion-panel-header>
+        <mat-nav-list dense>
+            <a mat-list-item [routerLink]="['wharehouses/', 'maestro']">
+                <span>Almacenes</span>
+                <span fxFlex></span>
+            </a>
+        </mat-nav-list>
+        <mat-nav-list dense>
+            <a mat-list-item [routerLink]="['materiales/', 'maestro']">
+                <span>Materiales</span>
+                <span fxFlex></span>
+            </a>
+        </mat-nav-list>
+        <mat-nav-list dense>
+            <a mat-list-item [routerLink]="['classify-news/', 'maestro']">
+                <span>Class. Novedades</span>
+                <span fxFlex></span>
+            </a>
+        </mat-nav-list>
+        <mat-nav-list dense>
+            <a mat-list-item [routerLink]="['vehiculos/', 'maestro']">
+                <span>Vehiculos</span>
+                <span fxFlex></span>
+            </a>
+        </mat-nav-list>
+        <mat-nav-list dense>
+            <a mat-list-item [routerLink]="['type-news/', 'maestro']">
+                <span>Tipos Novedades</span>
+                <span fxFlex></span>
+            </a>
+        </mat-nav-list>
+        <mat-nav-list dense>
+            <a mat-list-item [routerLink]="['type-persons/', 'maestro']">
+                <span>Tipos Personas</span>
+                <span fxFlex></span>
+            </a>
+        </mat-nav-list>
+        <mat-nav-list dense>
+            <a mat-list-item [routerLink]="['personas/', 'maestro']">
+                <span>Personas</span>
+                <span fxFlex></span>
+            </a>
+        </mat-nav-list>
+    </mat-expansion-panel>
     <mat-expansion-panel [class.mat-elevation-z0]="true" dense>
         <mat-expansion-panel-header>
-            Ejemplos
+            Operaciones Book
         </mat-expansion-panel-header>
-        <mat-nav-list dense *ngFor="let menuitem of menuItems.getMenuitem()">
-            <a mat-list-item [routerLink]="['/', menuitem.state]" *ngIf="menuitem.type === 'inicio'">
-                <span fxFlex></span>
-                <mat-icon>{{ menuitem.icon }}</mat-icon>
-                <span>{{ menuitem.name }}</span>
-                <span fxFlex></span>
-                <span class="label label-{{ badge.type }}" *ngFor="let badge of menuitem.badge">{{ badge.value }}</span>
-            </a>
-            <a mat-list-item [routerLink]="['/material/', menuitem.state]" *ngIf="menuitem.type === 'link'">
-                <span fxFlex></span>
-                <mat-icon>{{ menuitem.icon }}</mat-icon>
-                <span>{{ menuitem.name }}</span>
-                <span fxFlex></span>
-                <span class="label label-{{ badge.type }}" *ngFor="let badge of menuitem.badge">{{ badge.value }}</span>
-            </a>
-        </mat-nav-list>
-    </mat-expansion-panel>
-    <mat-expansion-panel [class.mat-elevation-z0]="true" dense *ngFor="let modulo of menuitems">
-        <mat-expansion-panel-header>
-            {{modulo.values[0].modulo.modulo}}
-        </mat-expansion-panel-header>
-        <mat-nav-list dense *ngFor="let menuitem of modulo.values">
-            <a mat-list-item [routerLink]="['/', menuitem.permiso]">
-                <span>{{ menuitem.permiso }}</span>
+        <mat-nav-list dense>
+            <a mat-list-item [routerLink]="['news/', 'maestro']">
+                <span>Novedades</span>
                 <span fxFlex></span>
             </a>
         </mat-nav-list>
+        
     </mat-expansion-panel>
-    <mat-expansion-panel [class.mat-elevation-z0]="true" *ngIf="existModule('standby')" dense>
+     <mat-expansion-panel [class.mat-elevation-z0]="true" dense>
         <mat-expansion-panel-header>
-            Test
+            Seguridad
         </mat-expansion-panel-header>
-        <mat-nav-list dense metodo="GET" ruta="login" ocultar="true">
-            <a mat-list-item [routerLink]="['/', 'login']">
-                <span>Login</span>
+        <mat-nav-list dense>
+            <a mat-list-item [routerLink]="['roles/', 'maestro']">
+                <span>Roles</span>
+                <span fxFlex></span>
+            </a>
+        </mat-nav-list>
+        <mat-nav-list dense>
+            <a mat-list-item [routerLink]="['perfiles/', 'maestro']">
+                <span>Perfiles</span>
+                <span fxFlex></span>
+            </a>
+        </mat-nav-list>
+        <mat-nav-list dense>
+            <a mat-list-item [routerLink]="['seguridad/', 'usuario']">
+                <span>Usuarios</span>
+                <span fxFlex></span>
+            </a>
+        </mat-nav-list>
+    </mat-expansion-panel>
+    <mat-expansion-panel [class.mat-elevation-z0]="true" dense>
+        <mat-expansion-panel-header>
+            Configuracion
+        </mat-expansion-panel-header>
+        <mat-nav-list dense>
+            <a mat-list-item [routerLink]="['ubicaciones/', 'maestro']">
+                <span>Ubicaciones</span>
+                <span fxFlex></span>
+            </a>
+        </mat-nav-list>
+        <mat-nav-list dense>
+            <a mat-list-item [routerLink]="['notificaciones/', 'maestro']">
+                <span>Notificaciones</span>
                 <span fxFlex></span>
             </a>
         </mat-nav-list>

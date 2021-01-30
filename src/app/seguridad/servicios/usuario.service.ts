@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
   providedIn: 'root'
 })
 export class UsuarioService extends API<Usuario> {
-  protected URL = `${this.URL_API}/usuario/`;
+  protected URL = `${this.URL_API}/users/crud/`;
   private $actual!: Observable<Usuario> | any;
   constructor(
     protected http: HttpClient,
@@ -32,7 +32,7 @@ export class UsuarioService extends API<Usuario> {
   public login(usuario?: string, clave?: string) {
     // En el login se quitan los ceros a la izquierda para números de personal
     return this.http
-      .post(`${this.URL_API}/usuario/login/`, { usuario, clave })
+      .post(`${this.URL_API}/users/login/`, { usuario, clave })
       .pipe(
         map((response: any) => {
           localStorage.setItem(API.ISLOGGEDIN, response.logIn);

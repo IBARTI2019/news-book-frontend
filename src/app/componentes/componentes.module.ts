@@ -8,6 +8,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { CdkTableModule } from '@angular/cdk/table';
 import { GenericTableComponent } from 'app/componentes/generic-table/generic-table.component';
+import { GenericTableComponentf } from 'app/componentes/tablefree/generic-table.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatGridListModule } from '@angular/material/grid-list';
@@ -27,6 +28,7 @@ export const entryComponentes = [
   declarations: [
     CardHeaderComponent,
     GenericTableComponent,
+    GenericTableComponentf,
     MatTableResponsiveDirective,
     ConfirmDialogComponent,
     PermisoDirective,

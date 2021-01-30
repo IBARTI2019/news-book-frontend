@@ -15,12 +15,13 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { ComponentesModule } from 'app/componentes/componentes.module';
+import { ComponentesModule } from '../componentes/componentes.module';
+import { UsuarioCrearComponent } from './usuario/usuario-crear/usuario-crear.component';
 
 
 
 @NgModule({
-  declarations: [UsuarioComponent],
+  declarations: [UsuarioComponent, UsuarioCrearComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(GestionRoutes),

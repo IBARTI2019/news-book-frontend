@@ -26,14 +26,49 @@ export const AppRoutes: Routes = [
             loadChildren: () => import('app/dashboard/dashboard.module').then(m => m.DashboardModule)
           },
           {
-            path: 'material',
+            path: 'materiales',
             loadChildren:
-              () => import('app/material-component/material.module').then(m => m.MaterialComponentsModule)
+              () => import('app/materiales/maestro.module').then(m => m.MaestroModule)
           },
           {
-            path: 'gestion',
+            path: 'vehiculos',
             loadChildren:
-              () => import('app/gestion/gestion.module').then(m => m.GestionModule)
+              () => import('app/vehiculos/maestro.module').then(m => m.MaestroModule)
+          },
+           {
+            path: 'news',
+            loadChildren:
+              () => import('app/news/maestro.module').then(m => m.MaestroModule)
+          },
+          {
+            path: 'wharehouses',
+            loadChildren:
+              () => import('app/wharehouses/maestro.module').then(m => m.MaestroModule)
+          },
+          {
+            path: 'classify-news',
+            loadChildren:
+              () => import('app/classify-news/maestro.module').then(m => m.MaestroModule)
+          },
+          {
+            path: 'type-persons',
+            loadChildren:
+              () => import('app/type-persons/maestro.module').then(m => m.MaestroModule)
+          },
+          {
+            path: 'type-news',
+            loadChildren:
+              () => import('app/type-news/maestro.module').then(m => m.MaestroModule)
+          },
+          {
+            path: 'personas',
+            loadChildren:
+              () => import('app/personas/maestro.module').then(m => m.MaestroModule)
+          },
+          {
+            path: 'seguridad',
+            loadChildren:
+              () => import('app/seguridad/seguridad.module').then(m => m.SeguridadModule)
           }
         ]
       }

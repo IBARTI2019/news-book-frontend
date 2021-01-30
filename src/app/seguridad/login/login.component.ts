@@ -25,15 +25,15 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
-    /*     if (this.usuarioService.isLoggedIn) {
-          this.router.navigateByUrl('/facial');
-        } */
+        if (this.usuarioService.isLoggedIn) {
+          this.router.navigateByUrl('seguridad/login');
+        } 
     this.errors = {};
   }
 
   doLogin(usuario: Usuario) {
     this.cargando = true;
-    this.usuarioService.login(usuario.usuario, usuario.clave).subscribe(
+    this.usuarioService.login(usuario.user, usuario.password).subscribe(
       (response: any) => {
         this.errors = {};
         this.router.navigateByUrl('/');

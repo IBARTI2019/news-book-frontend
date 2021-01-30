@@ -27,6 +27,7 @@
             </mat-checkbox>
         </span>
         <!-- fxFlex.gt-sm="80"  -->
+        
         <mat-form-field fxFlex.gt-xs="80" fxFlex="80" *ngIf="showFilter === true">
             <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filtrar">
         </mat-form-field>
