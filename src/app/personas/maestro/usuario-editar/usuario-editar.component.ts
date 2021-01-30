@@ -27,7 +27,7 @@ export class UsuarioEditarComponent implements OnInit {
 
   constructor(
     private usuarioService: UsuarioService,
-    private servicepersonat: TipopersonaService,
+    private servicepersonat:TipopersonaService,
     //private sucursalService: SucursalService,
     //private rolService: RolService,
     private fb: FormBuilder,
@@ -42,7 +42,7 @@ export class UsuarioEditarComponent implements OnInit {
   ngOnInit() {
     this.id = this.route.snapshot.params.id;
     this.servicepersonat.list().subscribe((data: Tipopersona[]) => {
-      this.listap = data;
+      this.listap= data;
     });
     this.fg = this.fb.group({
       cod_person: ['', Validators.required],
@@ -52,10 +52,10 @@ export class UsuarioEditarComponent implements OnInit {
       addres: ['', Validators.required],
       phono: ['', Validators.required],
       movil: ['', Validators.required],
-      id_type_person: ['', Validators.required],
+      id_type_person:['', Validators.required],
       status: [true, Validators.required],
-
-    }, {});
+      
+      }, {});
     this.getUsuario();
   }
 
@@ -85,7 +85,7 @@ export class UsuarioEditarComponent implements OnInit {
         this.fg.get('phono').setValue(data.phono);
         this.fg.get('movil').setValue(data.movil);
         this.fg.get('id_type_person').setValue(data.id_type_person);
-
+        
       });
   }
 

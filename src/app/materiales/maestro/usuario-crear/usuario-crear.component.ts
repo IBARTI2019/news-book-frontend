@@ -21,7 +21,7 @@ export class UsuarioCrearComponent implements OnInit {
   almacennews: Almacen[] = [];
   constructor(
     private usuarioService: UsuarioService,
-    private almacennewservice: almacennService,
+    private almacennewservice:almacennService,
     private fb: FormBuilder,
     private toastr: ToastrService,
     private router: Router
@@ -31,19 +31,19 @@ export class UsuarioCrearComponent implements OnInit {
 
 
   ngOnInit() {
-    this.almacennewservice.list().subscribe((data: Almacen[]) => {
-      this.almacennews = data;
+   this.almacennewservice.list().subscribe((data: Almacen[]) => {
+      this.almacennews= data;
     });
     this.fg = this.fb.group({
       cod_material: ['', Validators.required],
       serial_material: ['', Validators.required],
       id_warehouse: ['', Validators.required],
-      description: ['', Validators.required],
-      stock: ['', Validators.required],
+      description:['', Validators.required],
+      stock:['', Validators.required],
       status: [true, Validators.required],
-
+      
     }, {});
-
+   
   }
 
   onSubmit() {

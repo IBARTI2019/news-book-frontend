@@ -20,10 +20,10 @@ export class UsuarioEditarComponent implements OnInit {
   errors: any;
   id: string = '';
   clasifnews: Clasifinews[] = [];
-
+  
   constructor(
     private usuarioService: UsuarioService,
-    private serviceclasificacion: clasifinewsService,
+    private serviceclasificacion:clasifinewsService,
     private fb: FormBuilder,
     private toastr: ToastrService,
     private router: Router,
@@ -36,13 +36,13 @@ export class UsuarioEditarComponent implements OnInit {
   ngOnInit() {
     this.id = this.route.snapshot.params.id;
     this.serviceclasificacion.list().subscribe((data: Clasifinews[]) => {
-      this.clasifnews = data;
+      this.clasifnews= data;
     });
     this.fg = this.fb.group({
       descripton: ['', Validators.required],
       id_classify: ['', Validators.required],
       status: [true, Validators.required],
-
+      
     }, {});
     this.getUsuario();
   }
@@ -66,7 +66,7 @@ export class UsuarioEditarComponent implements OnInit {
       (data: Usuario) => {
         this.fg.get('descripton').setValue(data.descripton);
         this.fg.get('id_classify').setValue(data.id_classify);
-        this.fg.get('status').setValue(data.status);
+        this.fg.get('status').setValue(data.status);     
       });
   }
 

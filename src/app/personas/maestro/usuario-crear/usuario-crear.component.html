@@ -8,7 +8,7 @@
                     <mat-label>Codigo</mat-label>
                     <input matInput placeholder="Codigo" formControlName="cod_person">
                 </mat-form-field>
-                <mat-form-field>
+                 <mat-form-field>
                     <mat-label>Cedula</mat-label>
                     <input matInput placeholder="Cedula" formControlName="doc_ident">
                 </mat-form-field>
@@ -21,13 +21,13 @@
                     <input matInput placeholder="Apellidos" formControlName="lastname">
                 </mat-form-field>
             </div>
-
+           
             <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="5px">
                 <mat-form-field>
                     <mat-label>Telefono Habitacion</mat-label>
                     <input matInput placeholder="Telefonohab" formControlName="phono">
                 </mat-form-field>
-                <mat-form-field>
+                 <mat-form-field>
                     <mat-label>Movil</mat-label>
                     <input matInput placeholder="Celular" formControlName="movil">
                 </mat-form-field>
@@ -38,8 +38,7 @@
                 <mat-form-field>
                     <mat-label>Tipo Persona</mat-label>
                     <mat-select formControlName="id_type_person" placeholder="TipoPersona">
-                        <mat-option *ngFor="let personan of listap" [value]="personan.id_type_person">
-                            {{personan.description}}
+                        <mat-option *ngFor="let personan of listap" [value]="personan.id_type_person">{{personan.description}}
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
@@ -47,7 +46,7 @@
                     <mat-slide-toggle formControlName="status">Activo</mat-slide-toggle>
                 </div>
             </div>
-
+            
             <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="end">
                 <button mat-raised-button color="primary" type="submit">Crear</button>
             </div>

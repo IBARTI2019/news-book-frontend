@@ -29,7 +29,7 @@ export class UsuarioComponent implements OnInit {
         dataAttribute: 'status',
         attribute: 'Status'
       },
-
+      
       {
         attribute: "id_warehouse",
         header: "Opciones",
@@ -49,7 +49,7 @@ export class UsuarioComponent implements OnInit {
         this.usuarioService.remove(usuario.id_warehouse).subscribe(data => {
           this.toastr.success("Wherehouses eliminado con exito!.");
           this.tabla.refresh();
-
+          
         }, error => {
           this.toastr.success("Ocurrio un error al intentar eliminar el Wherehouses");
           this.tabla.refresh();

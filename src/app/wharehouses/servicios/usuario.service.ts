@@ -67,7 +67,7 @@ export class UsuarioService extends API<Usuario> {
     if (this.$actual) {
       return this.$actual;
     }
-
+    
   }
 
   public valNroPersonal(nro_personal: any) {

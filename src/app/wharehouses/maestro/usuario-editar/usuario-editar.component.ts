@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, SimpleChanges } from '@angular/core';
+import { Component, OnInit, Input, SimpleChanges} from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { UsuarioService } from 'app/wharehouses/servicios/usuario.service';
 import { ToastrService } from 'ngx-toastr';
@@ -19,7 +19,7 @@ export class UsuarioEditarComponent implements OnInit {
   submitted = false;
   errors: any;
   id: string = '';
-
+      
   constructor(
     private usuarioService: UsuarioService,
     //private sucursalService: SucursalService,
@@ -28,19 +28,19 @@ export class UsuarioEditarComponent implements OnInit {
     private toastr: ToastrService,
     private router: Router,
     private route: ActivatedRoute,
-
+    
   ) {
     this.fg = this.fb.group({});
-
+    
   }
 
 
   ngOnInit() {
     this.id = this.route.snapshot.params.id;
     this.fg = this.fb.group({
-      descripcion: ['', Validators.required],
-      status: [true, Validators.required],
-
+        descripcion: ['',Validators.required],
+        status: [true, Validators.required],
+      
     }, {});
     this.getUsuario();
   }
@@ -64,7 +64,7 @@ export class UsuarioEditarComponent implements OnInit {
       (data: Usuario) => {
         this.fg.get('descripcion').setValue(data.descripcion);
         this.fg.get('status').setValue(data.status);
-
+               
       });
   }
 

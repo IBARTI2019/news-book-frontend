@@ -22,7 +22,7 @@ export class UsuarioCrearComponent implements OnInit {
   clasifnews: Clasifinews[] = [];
   constructor(
     private usuarioService: UsuarioService,
-    private serviceclasificacion: clasifinewsService,
+    private serviceclasificacion:clasifinewsService,
     private fb: FormBuilder,
     private toastr: ToastrService,
     private router: Router
@@ -33,20 +33,20 @@ export class UsuarioCrearComponent implements OnInit {
 
   ngOnInit() {
     this.serviceclasificacion.list().subscribe((data: Clasifinews[]) => {
-      this.clasifnews = data;
+      this.clasifnews= data;
     });
     this.fg = this.fb.group({
       descripton: ['', Validators.required],
       id_classify: ['', Validators.required],
       status: [true, Validators.required],
-
+      
     }, {});
-
+   
   }
 
   onSubmit() {
     this.submitted = true;
-    if (this.fg.invalid) {
+   if (this.fg.invalid) {
       this.submitted = false;
       return;
     }

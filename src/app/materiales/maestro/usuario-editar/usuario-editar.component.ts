@@ -27,7 +27,7 @@ export class UsuarioEditarComponent implements OnInit {
 
   constructor(
     private usuarioService: UsuarioService,
-    private almacennewservice: almacennService,
+    private almacennewservice:almacennService,
     //private sucursalService: SucursalService,
     //private rolService: RolService,
     private fb: FormBuilder,
@@ -42,17 +42,17 @@ export class UsuarioEditarComponent implements OnInit {
   ngOnInit() {
     this.id = this.route.snapshot.params.id;
     this.almacennewservice.list().subscribe((data: Almacen[]) => {
-      this.almacennews = data;
+      this.almacennews= data;
     });
     this.fg = this.fb.group({
       cod_material: ['', Validators.required],
       serial_material: ['', Validators.required],
       id_warehouse: ['', Validators.required],
-      description: ['', Validators.required],
-      stock: ['', Validators.required],
+      description:['', Validators.required],
+      stock:['', Validators.required],
       status: [true, Validators.required],
-
-    }, {});
+      
+      }, {});
     this.getUsuario();
   }
 
@@ -78,7 +78,7 @@ export class UsuarioEditarComponent implements OnInit {
         this.fg.get('description').setValue(data.description);
         this.fg.get('status').setValue(data.status);
         this.fg.get('id_warehouse').setValue(data.id_warehouse);
-        this.fg.get('stock').setValue(data.stock);
+        this.fg.get('stock').setValue(data.stock);    
       });
   }
 

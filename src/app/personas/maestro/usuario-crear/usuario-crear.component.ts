@@ -22,7 +22,7 @@ export class UsuarioCrearComponent implements OnInit {
   listap: Tipopersona[] = [];
   constructor(
     private usuarioService: UsuarioService,
-    private servicepersonat: TipopersonaService,
+    private servicepersonat:TipopersonaService,
     private fb: FormBuilder,
     private toastr: ToastrService,
     private router: Router
@@ -32,8 +32,8 @@ export class UsuarioCrearComponent implements OnInit {
 
 
   ngOnInit() {
-    this.servicepersonat.list().subscribe((data: Tipopersona[]) => {
-      this.listap = data;
+   this.servicepersonat.list().subscribe((data: Tipopersona[]) => {
+      this.listap= data;
     });
     this.fg = this.fb.group({
       cod_person: ['', Validators.required],
@@ -43,11 +43,11 @@ export class UsuarioCrearComponent implements OnInit {
       addres: ['', Validators.required],
       phono: ['', Validators.required],
       movil: ['', Validators.required],
-      id_type_person: ['', Validators.required],
+      id_type_person:['', Validators.required],
       status: [true, Validators.required],
-
+      
     }, {});
-
+   
   }
 
   onSubmit() {

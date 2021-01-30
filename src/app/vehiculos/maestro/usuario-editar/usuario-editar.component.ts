@@ -41,10 +41,10 @@ export class UsuarioEditarComponent implements OnInit {
       name: ['', Validators.required],
       lastname: ['', Validators.required],
       doc_ident: ['', Validators.required],
-      placa_vehiculo: ['', Validators.required],
+      placa_vehiculo:['', Validators.required],
       status: [true, Validators.required],
-
-    }, {});
+      
+      }, {});
     this.getUsuario();
   }
 
@@ -69,7 +69,7 @@ export class UsuarioEditarComponent implements OnInit {
         this.fg.get('lastname').setValue(data.lastname);
         this.fg.get('status').setValue(data.status);
         this.fg.get('doc_ident').setValue(data.doc_ident);
-        this.fg.get('placa_vehiculo').setValue(data.placa_vehiculo);
+        this.fg.get('placa_vehiculo').setValue(data.placa_vehiculo); 
       });
   }
 

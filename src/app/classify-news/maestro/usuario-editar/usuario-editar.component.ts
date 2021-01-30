@@ -37,11 +37,11 @@ export class UsuarioEditarComponent implements OnInit {
 
   ngOnInit() {
     this.id = this.route.snapshot.params.id;
-    this.fg = this.fb.group({
+   this.fg = this.fb.group({
       description: ['', Validators.required],
       level_urgency: ['', Validators.required],
       status: [true, Validators.required],
-
+      
     }, {});
     this.getUsuario();
   }
@@ -66,7 +66,7 @@ export class UsuarioEditarComponent implements OnInit {
         this.fg.get('description').setValue(data.description);
         this.fg.get('level_urgency').setValue(data.level_urgency);
         this.fg.get('status').setValue(data.status);
-
+        
       });
   }
 

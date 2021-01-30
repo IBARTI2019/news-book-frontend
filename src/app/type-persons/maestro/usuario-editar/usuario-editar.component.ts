@@ -41,8 +41,8 @@ export class UsuarioEditarComponent implements OnInit {
       description: ['', Validators.required],
       priority: ['', Validators.required],
       status: [true, Validators.required],
-
-    }, {});
+      
+      }, {});
     this.getUsuario();
   }
 
@@ -66,7 +66,7 @@ export class UsuarioEditarComponent implements OnInit {
         this.fg.get('description').setValue(data.description);
         this.fg.get('priority').setValue(data.priority);
         this.fg.get('status').setValue(data.status);
-
+                
       });
   }
 
