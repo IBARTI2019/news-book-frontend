@@ -36,6 +36,11 @@ export const AppRoutes: Routes = [
               () => import('app/vehiculos/maestro.module').then(m => m.MaestroModule)
           },
           {
+            path: 'news',
+            loadChildren:
+              () => import('app/news/maestro.module').then(m => m.MaestroModule)
+          },
+          {
             path: 'wharehouses',
             loadChildren:
               () => import('app/wharehouses/maestro.module').then(m => m.MaestroModule)

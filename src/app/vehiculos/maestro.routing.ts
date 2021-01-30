@@ -7,48 +7,48 @@ import { UsuarioEditarComponent } from './maestro/usuario-editar/usuario-editar.
 export const GestionRoutes: Routes = [
     {
         path: 'maestro',
-        children:[
+        children: [
             {
                 path: "",
                 data: {
                     breadcrumb: {
                         label: 'Personas'
                     },
-                    omitirPermiso:true
+                    omitirPermiso: true
                 },
                 component: UsuarioComponent,
             },
             {
                 path: "crear",
-                data:{
-                   breadcrumbAnt:{
-                     label :"Usuario",
-                     url:"personas/maestro" ,  
-                     params:[]
+                data: {
+                    breadcrumbAnt: {
+                        label: "Vehiculos",
+                        url: "vehiculos/maestro",
+                        params: []
                     },
                     breadcrumb: {
-                        label: "Crear Personas"
-                    }, 
-                    omitirPermiso:true
+                        label: "Crear Vehiculos"
+                    },
+                    omitirPermiso: true
                 },
                 component: UsuarioCrearComponent
             },
             {
                 path: ":id",
-                data:{
-                   breadcrumbAnt:{
-                     label :"Personas",
-                     url:"personas/maestro" ,  
-                     params:[]
+                data: {
+                    breadcrumbAnt: {
+                        label: "Vehiculos",
+                        url: "vehiculos/maestro",
+                        params: []
                     },
                     breadcrumb: {
-                        label: "Editar Personas"
-                    }, 
-                    omitirPermiso:true
+                        label: "Editar Vehiculos"
+                    },
+                    omitirPermiso: true
                 },
                 component: UsuarioEditarComponent
             }
-            
+
         ]
     }
 ];

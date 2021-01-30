@@ -1,27 +1,26 @@
 <mat-card>
-    <app-card-header modulo="Seguridad" menu="Editar Usuario">
+    <app-card-header modulo="TypeNews" menu="Crear Type News">
     </app-card-header>
     <mat-card-content>
-        <form [formGroup]="fg" fxLayout="column" fxLayoutGap="5px" (ngSubmit)="onSubmit()" #formRol
-            (ngSubmit)="onSubmit()" #formRol>
+        <form [formGroup]="fg" fxLayout="column" fxLayoutGap="5px" (ngSubmit)="onSubmit()" #formRol>
             <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="5px">
                 <mat-form-field>
-                    <mat-label>Nombre</mat-label>
-                    <input matInput placeholder="Nombre" formControlName="firstName">
+                    <mat-label>Descripcion</mat-label>
+                    <input matInput placeholder="Descripcion" formControlName="descripton">
                 </mat-form-field>
                 <mat-form-field>
-                    <mat-label>Apellido</mat-label>
-                    <input matInput placeholder="Apellido" formControlName="lastName">
+                    <mat-label>Clasificacion</mat-label>
+                    <mat-select formControlName="id_classify" placeholder="Clasificacion">
+                        <mat-option *ngFor="let clasican of clasifnews" [value]="clasican.id_classify">
+                            {{clasican.description}}
+                        </mat-option>
+                    </mat-select>
                 </mat-form-field>
             </div>
-            
+
             <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="5px">
-                <mat-form-field>
-                    <mat-label>Usuario</mat-label>
-                    <input matInput placeholder="Usuario" formControlName="user">
-                </mat-form-field>
                 <div fxFlex="50">
-                    <mat-slide-toggle formControlName="status">Activo</mat-slide-toggle>
+                    <mat-slide-toggle formControlName="status">Status</mat-slide-toggle>
                 </div>
             </div>
             <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="end">

@@ -3,6 +3,8 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { UsuarioService } from 'app/type-news/servicios/usuario.service';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
+import { Clasifinews, Usuario } from 'app/type-news/servicios/interface';
+import { clasifinewsService } from "app/type-news/servicios/clasifinews.service";
 
 
 @Component({
@@ -17,8 +19,10 @@ export class UsuarioCrearComponent implements OnInit {
   errors: any;
   hide = true;
   hide2 = true;
+  clasifnews: Clasifinews[] = [];
   constructor(
     private usuarioService: UsuarioService,
+    private serviceclasificacion: clasifinewsService,
     private fb: FormBuilder,
     private toastr: ToastrService,
     private router: Router
@@ -28,18 +32,21 @@ export class UsuarioCrearComponent implements OnInit {
 
 
   ngOnInit() {
+    this.serviceclasificacion.list().subscribe((data: Clasifinews[]) => {
+      this.clasifnews = data;
+    });
     this.fg = this.fb.group({
       descripton: ['', Validators.required],
       id_classify: ['', Validators.required],
       status: [true, Validators.required],
-      
+
     }, {});
-   
+
   }
 
   onSubmit() {
     this.submitted = true;
-   if (this.fg.invalid) {
+    if (this.fg.invalid) {
       this.submitted = false;
       return;
     }

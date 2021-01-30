@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { API } from 'app/utils/api';
-import { Usuario } from 'app/type-persons/servicios/interface';
+import { Usuario } from 'app/type-news/servicios/interface';
 import { map, publishReplay, refCount } from 'rxjs/operators';
 import { BehaviorSubject, Observable, Observer } from 'rxjs';
 import { JwtHelperService } from '@auth0/angular-jwt';

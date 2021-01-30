@@ -7,48 +7,48 @@ import { UsuarioEditarComponent } from './maestro/usuario-editar/usuario-editar.
 export const GestionRoutes: Routes = [
     {
         path: 'maestro',
-        children:[
+        children: [
             {
                 path: "",
                 data: {
                     breadcrumb: {
                         label: 'Wherehouses'
                     },
-                    omitirPermiso:true
+                    omitirPermiso: true
                 },
                 component: UsuarioComponent,
             },
             {
                 path: "crear",
-                data:{
-                   breadcrumbAnt:{
-                     label :"Wherehouses",
-                     url:"wherehouses/maestro" ,  
-                     params:[]
+                data: {
+                    breadcrumbAnt: {
+                        label: "Wherehouses",
+                        url: "wharehouses/maestro/",
+                        params: []
                     },
                     breadcrumb: {
                         label: "Crear Wherehouses"
-                    }, 
-                    omitirPermiso:true
+                    },
+                    omitirPermiso: true
                 },
                 component: UsuarioCrearComponent
             },
             {
                 path: ":id",
-                data:{
-                   breadcrumbAnt:{
-                     label :"Wherehouses",
-                     url:"wherehouses/maestro" ,  
-                     params:[]
+                data: {
+                    breadcrumbAnt: {
+                        label: "Wherehouses",
+                        url: "wharehouses/maestro/",
+                        params: []
                     },
                     breadcrumb: {
                         label: "Editar Wherehouses"
-                    }, 
-                    omitirPermiso:true
+                    },
+                    omitirPermiso: true
                 },
                 component: UsuarioEditarComponent
             }
-            
+
         ]
     }
 ];

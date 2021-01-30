@@ -1,13 +1,14 @@
 <div fxLayout="row wrap">
     <div fxFlex.gt-xs="100" fxFlex="100">
         <mat-card>
-            <app-card-header link="crear" link-menu="Crear Wherehouses" modulo="Wherehouses" menu="Gestion de Wherehouses">
+            <app-card-header link="crear" link-menu="Crear Wherehouses" modulo="Wherehouses"
+                menu="Gestion de Wherehouses">
             </app-card-header>
             <mat-card-content>
                 <div class="d-flex flex-wrap">
                     <ng-template #templateOpciones let-column="column" let-item="item" let-i="i">
                         <div class="button-row">
-                            <button mat-icon-button appPermiso metodo="PUT" (click)="editar(item.id)">
+                            <button mat-icon-button appPermiso metodo="PUT" (click)="editar(item.id_warehouse)">
                                 <mat-icon>edit</mat-icon>
                             </button>
                             <button mat-icon-button appPermiso metodo="DELETE" (click)="eliminar(item)">

@@ -3,7 +3,8 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { UsuarioService } from 'app/materiales/servicios/usuario.service';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
-
+import { Almacen, Usuario } from 'app/materiales/servicios/interface';
+import { almacennService } from "app/materiales/servicios/almacenn.service";
 
 @Component({
   selector: 'app-usuario-crear',
@@ -17,8 +18,10 @@ export class UsuarioCrearComponent implements OnInit {
   errors: any;
   hide = true;
   hide2 = true;
+  almacennews: Almacen[] = [];
   constructor(
     private usuarioService: UsuarioService,
+    private almacennewservice: almacennService,
     private fb: FormBuilder,
     private toastr: ToastrService,
     private router: Router
@@ -28,16 +31,19 @@ export class UsuarioCrearComponent implements OnInit {
 
 
   ngOnInit() {
+    this.almacennewservice.list().subscribe((data: Almacen[]) => {
+      this.almacennews = data;
+    });
     this.fg = this.fb.group({
       cod_material: ['', Validators.required],
       serial_material: ['', Validators.required],
       id_warehouse: ['', Validators.required],
-      description:['', Validators.required],
-      stock:['', Validators.required],
+      description: ['', Validators.required],
+      stock: ['', Validators.required],
       status: [true, Validators.required],
-      
+
     }, {});
-   
+
   }
 
   onSubmit() {

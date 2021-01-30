@@ -10,10 +10,14 @@
                 </mat-form-field>
                 <mat-form-field>
                     <mat-label>Clasificacion</mat-label>
-                    <input matInput placeholder="Clasificacion" formControlName="id_classify">
+                    <mat-select formControlName="id_classify" placeholder="Clasificacion">
+                        <mat-option *ngFor="let clasican of clasifnews" [value]="clasican.id_classify">
+                            {{clasican.description}}
+                        </mat-option>
+                    </mat-select>
                 </mat-form-field>
             </div>
-           
+
             <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="5px">
                 <div fxFlex="50">
                     <mat-slide-toggle formControlName="status">Status</mat-slide-toggle>

@@ -67,21 +67,7 @@ export class UsuarioService extends API<Usuario> {
     if (this.$actual) {
       return this.$actual;
     }
-    let token = localStorage.getItem(API.TOKEN);
-    if (token) {
-      let decode: any = jwt_decode(String(token));
-      this.$actual = decode;
-    }
-    /* this.http.get(`${this.URL}actual/`).pipe(
-      publishReplay(),
-      refCount(),
-      map((response: any) => {
-        localStorage.setItem(API.JWT, response.jwt_id);
-        this.usuario_actual.next(response);
-        return response;
-      })
-    ); */
-    return this.$actual;
+
   }
 
   public valNroPersonal(nro_personal: any) {

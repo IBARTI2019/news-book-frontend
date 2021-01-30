@@ -46,6 +46,7 @@
     "node-sass": "^4.13.1",
     "rxjs": "^6.6.2",
     "rxjs-compat": "^6.6.0",
+    "sequelize": "^6.5.0",
     "tslib": "^2.0.0",
     "xlsx": "^0.16.7",
     "zone.js": "~0.10.3"

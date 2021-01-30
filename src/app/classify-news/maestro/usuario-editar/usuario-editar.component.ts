@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { UsuarioService } from 'app/seguridad/servicios/usuario.service';
+import { UsuarioService } from 'app/classify-news/servicios/usuario.service';
 import { ToastrService } from 'ngx-toastr';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Usuario } from 'app/seguridad/servicios/interface';
+import { Usuario } from 'app/classify-news/servicios/interface';
 //import { RolService } from "app/seguridad/servicios/rol.service";
 //import { SucursalService } from 'app/maestro/servicios/sucursal.service';
 //import { Sucursal } from 'app/maestro/servicios/interface';
@@ -38,11 +38,11 @@ export class UsuarioEditarComponent implements OnInit {
   ngOnInit() {
     this.id = this.route.snapshot.params.id;
     this.fg = this.fb.group({
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
-      user: [{ value: '', disabled: true }, Validators.required],
-      status: [false, Validators.required],
-      }, {});
+      description: ['', Validators.required],
+      level_urgency: ['', Validators.required],
+      status: [true, Validators.required],
+
+    }, {});
     this.getUsuario();
   }
 
@@ -57,31 +57,30 @@ export class UsuarioEditarComponent implements OnInit {
   onReset() {
     this.submitted = false;
     this.fg.reset();
-    this.router.navigate(['seguridad/usuario']);
+    this.router.navigate(['classify-news/maestro']);
   }
 
   getUsuario() {
     this.usuarioService.get(this.id).subscribe(
       (data: Usuario) => {
-        this.fg.get('firstName').setValue(data.firstName);
-        this.fg.get('lastName').setValue(data.lastName);
+        this.fg.get('description').setValue(data.description);
+        this.fg.get('level_urgency').setValue(data.level_urgency);
         this.fg.get('status').setValue(data.status);
-        this.fg.get('user').setValue(data.user);
-        
+
       });
   }
 
   actualizar() {
     this.usuarioService.update(this.id, this.fg.value).subscribe(
       data => {
-        this.toastr.success('Usuario actualizado');
+        this.toastr.success('Datos  actualizado');
         this.submitted = false;
         this.fg.reset();
-        this.router.navigate(['seguridad/usuario']);
+        this.router.navigate(['classify-news/maestro']);
       },
       (result: any) => {
         this.errors = result.errors;
-        this.toastr.error('No se pudo actualizar el usuario');
+        this.toastr.error('No se pudo actualizar los Datos');
       }
     );
   }

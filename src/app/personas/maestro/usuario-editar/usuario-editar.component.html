@@ -5,11 +5,11 @@
         <form [formGroup]="fg" fxLayout="column" fxLayoutGap="5px" (ngSubmit)="onSubmit()" #formRol
             (ngSubmit)="onSubmit()" #formRol>
             <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="5px">
-                  <mat-form-field>
+                <mat-form-field>
                     <mat-label>Codigo</mat-label>
                     <input matInput placeholder="Codigo" formControlName="cod_person">
                 </mat-form-field>
-                 <mat-form-field>
+                <mat-form-field>
                     <mat-label>Cedula</mat-label>
                     <input matInput placeholder="Cedula" formControlName="doc_ident">
                 </mat-form-field>
@@ -22,13 +22,13 @@
                     <input matInput placeholder="Apellido" formControlName="lastname">
                 </mat-form-field>
             </div>
-            
+
             <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="5px">
                 <mat-form-field>
                     <mat-label>Telefono Habitacion</mat-label>
                     <input matInput placeholder="Telefonohab" formControlName="phono">
                 </mat-form-field>
-                 <mat-form-field>
+                <mat-form-field>
                     <mat-label>Movil</mat-label>
                     <input matInput placeholder="Celular" formControlName="movil">
                 </mat-form-field>
@@ -36,9 +36,13 @@
                     <mat-label>Direccion</mat-label>
                     <input matInput placeholder="Direccion" formControlName="addres">
                 </mat-form-field>
-                 <mat-form-field>
+                <mat-form-field>
                     <mat-label>Tipo Persona</mat-label>
-                    <input matInput placeholder="Tipopersona" formControlName="id_type_person">
+                    <mat-select formControlName="id_type_person" placeholder="TipoPersona">
+                        <mat-option *ngFor="let personan of listap" [value]="personan.id_type_person">
+                            {{personan.description}}
+                        </mat-option>
+                    </mat-select>
                 </mat-form-field>
                 <div fxFlex="50">
                     <mat-slide-toggle formControlName="status">Activo</mat-slide-toggle>

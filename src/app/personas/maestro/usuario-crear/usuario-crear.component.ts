@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { UsuarioService } from 'app/personas/servicios/usuario.service';
+import { TipopersonaService } from 'app/personas/servicios/tipopersonas.service';
+import { Tipopersona } from 'app/personas/servicios/interface';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 
@@ -17,8 +19,10 @@ export class UsuarioCrearComponent implements OnInit {
   errors: any;
   hide = true;
   hide2 = true;
+  listap: Tipopersona[] = [];
   constructor(
     private usuarioService: UsuarioService,
+    private servicepersonat: TipopersonaService,
     private fb: FormBuilder,
     private toastr: ToastrService,
     private router: Router
@@ -28,6 +32,9 @@ export class UsuarioCrearComponent implements OnInit {
 
 
   ngOnInit() {
+    this.servicepersonat.list().subscribe((data: Tipopersona[]) => {
+      this.listap = data;
+    });
     this.fg = this.fb.group({
       cod_person: ['', Validators.required],
       name: ['', Validators.required],
@@ -36,11 +43,11 @@ export class UsuarioCrearComponent implements OnInit {
       addres: ['', Validators.required],
       phono: ['', Validators.required],
       movil: ['', Validators.required],
-      id_type_person:['', Validators.required],
+      id_type_person: ['', Validators.required],
       status: [true, Validators.required],
-      
+
     }, {});
-   
+
   }
 
   onSubmit() {
