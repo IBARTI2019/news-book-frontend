@@ -35,16 +35,26 @@
   <mat-step [stepControl]="secondFormGroup" [editable]="isEditable">
     <form [formGroup]="secondFormGroup">
       <ng-template matStepLabel>Tipo Noticia</ng-template>
+          
           <mat-form-field>
                  <mat-label>Selected tab index</mat-label>
                  <input matInput type="number" [formControl]="selected">
          </mat-form-field>
         <mat-tab-group [selectedIndex]="selected.value"
                (selectedIndexChange)="selected.setValue($event)">
-        <mat-tab *ngFor="let tab of tabs; let index = index" [label]="tab">
-                   Contents for {{tab}} tab
+          <mat-tab *ngFor="let almacenn of almacennews; let index = index"   [label]="almacenn.descripton">
+               <mat-selection-list #shoes [multiple]="false">
+ 		 <mat-list-option *ngFor="let shoe of links" [value]="shoe">
+    			{{shoe}}
+  		</mat-list-option>
+		</mat-selection-list>
 
-         </mat-tab>
+		<p>
+  			Option selected: {{shoes.selectedOptions.selected[0]?.value}}
+		</p>
+
+
+          </mat-tab>
            </mat-tab-group>
 
       <div>
@@ -58,8 +68,8 @@
     <form [formGroup]="TercerFormGroup">
       <ng-template matStepLabel>Personas Involucradas</ng-template>
       <mat-form-field>
-        <mat-label>Address</mat-label>
-        <input matInput formControlName="TercerCtrl" placeholder="Ex. 1 Main St, New York, NY"
+        <mat-label>Cedula</mat-label>
+        <input matInput formControlName="TercerCtrl" placeholder="Cedula"
                required>
       </mat-form-field>
       <div>

@@ -7,6 +7,8 @@ import { Almacen, Usuario } from 'app/news/servicios/interface';
 import { almacennService } from "app/news/servicios/almacenn.service";
 import {ThemePalette} from '@angular/material/core';
 import {FormControl} from '@angular/forms';
+import { values } from 'lodash';
+import { Table2SheetOpts } from 'xlsx/types';
 
 
 @Component({
@@ -23,14 +25,14 @@ export class UsuarioCrearComponent implements OnInit {
   hide2 = true;
   isLinear = false;
   almacennews: Almacen[] = [];
+  tabs: Almacen[] = [];
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
   TercerFormGroup:FormGroup;
   isEditable = false;
   typesOfShoes: string[] = [];
-  tabs = [] ;
   selected = new FormControl(0);
-
+  links: string[] = ['Boots', 'Clogs', 'Loafers', 'Moccasins', 'Sneakers'];
   constructor(
     private usuarioService: UsuarioService,
     private almacennewservice:almacennService,
@@ -38,7 +40,7 @@ export class UsuarioCrearComponent implements OnInit {
     private toastr: ToastrService,
     private router: Router,
     
-  ) {
+    ) {
     this.fg = this.fb.group({});
     this.firstFormGroup = this.fb.group({});
     this.secondFormGroup = this.fb.group({});
@@ -51,7 +53,7 @@ export class UsuarioCrearComponent implements OnInit {
   
    this.almacennewservice.list().subscribe((data: Almacen[]) => {
       this.almacennews= data;
-      
+     
     });
     
     this.firstFormGroup = this.fb.group({
@@ -61,10 +63,7 @@ export class UsuarioCrearComponent implements OnInit {
       id_type_news:['', Validators.required],
        
     }, {});
-   this.secondFormGroup = this.fb.group({
-     secondCtrl: ['', Validators.required],
-       
-    }, {});
+  
     this.TercerFormGroup = this.fb.group({
      TercerCtrl: ['', Validators.required],
     }, {});
