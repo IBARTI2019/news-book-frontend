@@ -21,6 +21,7 @@ import { UsuarioEditarComponent } from './maestro/usuario-editar/usuario-editar.
 import {MatStepperModule} from '@angular/material/stepper'; 
 import {MatTabsModule} from '@angular/material/tabs'; 
 import {MatListModule} from '@angular/material/list'; 
+import {MatAutocompleteModule} from '@angular/material/autocomplete'; 
 @NgModule({
   declarations: [UsuarioComponent, UsuarioCrearComponent,UsuarioEditarComponent],
   imports: [
@@ -34,6 +35,7 @@ import {MatListModule} from '@angular/material/list';
     MatStepperModule,
     MatTabsModule,
     MatListModule,
+    MatAutocompleteModule,
     ComponentesModule,
     MatFormFieldModule,
     MatInputModule,
