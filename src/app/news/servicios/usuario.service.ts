@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { API } from 'app/utils/api';
-import { Usuario } from 'app/news/servicios/interface';
+import { Usuario,materialesentrance } from 'app/news/servicios/interface';
 import { map, publishReplay, refCount } from 'rxjs/operators';
 import { BehaviorSubject, Observable, Observer } from 'rxjs';
 import { JwtHelperService } from '@auth0/angular-jwt';
@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
   providedIn: 'root'
 })
 export class UsuarioService extends API<Usuario> {
-  protected URL = `${this.URL_API}/news/crudnews/`;
+  protected URL = `${this.URL_API}/news/crudnews`;
   private $actual!: Observable<Usuario> | any;
   constructor(
     protected http: HttpClient,
@@ -114,3 +114,4 @@ export class UsuarioService extends API<Usuario> {
   }
 
 }
+

@@ -17,3 +17,14 @@ export interface Almacen{
      
     
 }
+
+export interface materialesentrance{
+  id_uuid?:string | any;
+  serial?: string;
+  description?:string;
+  condiction?: string;
+  id_news?: string;
+  quantity?: number;
+  type?: string;  
+    
+}

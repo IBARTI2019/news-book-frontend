@@ -53,6 +53,20 @@
                  <mat-label>Descripcion del Identicador</mat-label>
                  <input matInput formControlName="descripcion" placeholder="Descripcion">
                </mat-form-field>
+               <mat-form-field>
+                 <mat-label>Cantidad</mat-label>
+                 <input matInput formControlName="quantity" placeholder="Cantidad">
+               </mat-form-field>
+               <mat-form-field appearance="fill">
+                   <mat-label>Condicion</mat-label>
+                     <mat-select [(ngModel)]="selectedValue" formControlName="foods">
+                       <mat-option *ngFor="let food of condicion" [value]="food.value">
+                             {{food.viewValue}}
+                        </mat-option>
+                      </mat-select>
+              
+               </mat-form-field>
+              
                </div> 
                <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="end">
                  <button mat-button (click)="agregarlist()">Agregar</button>
@@ -141,7 +155,7 @@
 
           
       <div>
-        <button mat-button matStepperPrevious>Atraz</button>
+        <button mat-button matStepperPrevious>Atras</button>
         <button mat-button matStepperNext>Siguiente</button>
       </div>
     </form>
@@ -165,7 +179,7 @@
         <mat-option *ngFor="let state of filteredStates | async" [value]="state.name">
              <img class="example-option-img" aria-hidden [src]="state.flag" height="25">
              <span>{{state.name}}</span> |
-             <small>Population: {{state.population}}</small>
+             <small>Email: {{state.population}}</small>
         </mat-option>
        </mat-autocomplete>
        </mat-form-field>

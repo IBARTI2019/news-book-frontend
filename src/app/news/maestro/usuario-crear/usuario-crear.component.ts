@@ -4,6 +4,8 @@ import { UsuarioService } from 'app/news/servicios/usuario.service';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import { Almacen, Usuario } from 'app/news/servicios/interface';
+import { materialesentrance } from 'app/news/servicios/interface';
+import { MatService} from 'app/news/servicios/materiales.service';
 import { almacennService } from "app/news/servicios/almacenn.service";
 import {ThemePalette} from '@angular/material/core';
 import {FormControl} from '@angular/forms';
@@ -18,6 +20,11 @@ export interface State {
   name: string;
   population: string;
 }
+
+interface listacondicion {
+  value: string;
+  viewValue: string;
+}
 @Component({
   selector: 'app-usuario-crear',
   templateUrl: './usuario-crear.component.html',
@@ -25,6 +32,7 @@ export interface State {
 })
 
 export class UsuarioCrearComponent implements OnInit {
+  
   fg: any | FormGroup;
   // modal variables
   submitted = false;
@@ -33,6 +41,7 @@ export class UsuarioCrearComponent implements OnInit {
   hide2 = true;
   isLinear = false;
   almacennews: Almacen[] = [];
+  listamateriales:materialesentrance[] = [];
   tabs = ['First', 'Second', 'Third'];
   firstFormGroup: FormGroup;
   SecondFormGroup: FormGroup;
@@ -47,6 +56,15 @@ export class UsuarioCrearComponent implements OnInit {
   listavehiculos: string[] = [];
   lista4=[];
   lista3=[];
+  selectedValue:string="Bueno";
+  tipocondicion:any;
+  default: string = 'Bueno';
+  condicion: listacondicion[] = [
+    {value: 'Bueno', viewValue: 'Bueno'},
+    {value: 'Dañado', viewValue: 'Dañado'},
+    {value: 'Extraviado', viewValue: 'Extraviado'},
+    {value: 'Excelente', viewValue: 'Excelente'}
+  ];
   emailFormControl = new FormControl('', [
     Validators.required,
     Validators.email,
@@ -64,10 +82,10 @@ export class UsuarioCrearComponent implements OnInit {
         {id: 10, name: "Obj 10"},
 
       ]
-      
+  
   stateCtrl = new FormControl();
   filteredStates: Observable<State[]>;
-
+  
   states: State[] = [
     {
       name: 'Carlos Blanco',
@@ -88,14 +106,18 @@ export class UsuarioCrearComponent implements OnInit {
       flag: 'https://upload.wikimedia.org/wikipedia/commons/f/f7/Flag_of_Florida.svg'
     }
   ];    
+  matentrance: any;
+  opcionSeleccionado: string  = '0';
+  verSeleccion: string        = '';
+  
   constructor(
     private usuarioService: UsuarioService,
+    private matservicio:MatService,
     private almacennewservice:almacennService,
     private fb: FormBuilder,
     private toastr: ToastrService,
     private router: Router,
-    
-    ) {
+     ) {
     this.fg = this.fb.group({});
     this.firstFormGroup = this.fb.group({});
     this.SecondFormGroup = this.fb.group({});
@@ -107,9 +129,10 @@ export class UsuarioCrearComponent implements OnInit {
         startWith(''),
         map(state => state ? this._filterStates(state) : this.states.slice())
       );
+    
   }
 
-
+  
   ngOnInit() {
   
    this.almacennewservice.list().subscribe((data: Almacen[]) => {
@@ -127,8 +150,10 @@ export class UsuarioCrearComponent implements OnInit {
    this.SecondFormGroup = this.fb.group({
      identificador: [''],
      descripcion: ['', ],
-          
+     quantity: ['', ],
+     foods:['', ],
     }, {});
+    this.SecondFormGroup.get('foods')?.value;
     this.TercerFormGroup = this.fb.group({
      doc_ident: ['', ],
      nombres_apellidos: ['', ],
@@ -153,19 +178,25 @@ export class UsuarioCrearComponent implements OnInit {
     }
     this.guardar();
   }
-  private _filterStates(value: string): State[] {
+private _filterStates(value: string): State[] {
     const filterValue = value.toLowerCase();
 
     return this.states.filter(state => state.name.toLowerCase().indexOf(filterValue) === 0);
   }
+capturar() {
+    // Pasamos el valor seleccionado a la variable verSeleccion
+    this.verSeleccion =this.selectedValue;
+    
+}
  agregarlist() {
     var valor:string;
-    valor =this.SecondFormGroup.get('identificador')?.value + "       " + this.SecondFormGroup.get('descripcion')?.value;
+    valor =this.SecondFormGroup.get('identificador')?.value + " " + this.SecondFormGroup.get('descripcion')?.value +" " + this.SecondFormGroup.get('quantity')?.value + " "+ this.SecondFormGroup.get('foods')?.value
     this.links.push(valor);
-    this.toastr.success( 'Agregado a la lista:' + this.SecondFormGroup.get('identificador')?.value); 
+    this.toastr.success( 'Agregado a la lista:' + this.SecondFormGroup.get('identificador')?.value) ; 
     valor= "";
     this.SecondFormGroup.get('identificador')?.setValue(valor);
     this.SecondFormGroup.get('descripcion')?.setValue(valor);
+    this.SecondFormGroup.get('quantity')?.setValue(valor);
   }
  agregarpersonas() {
     var valor:string;
@@ -239,6 +270,62 @@ BorrarLista(leftList:any){
     this.router.navigate(['news/maestro']);
   }
   
+getNumbersInString(string:string) {
+  var tmp = string.split("");
+  var map = tmp.map(function(current) {
+    if (!isNaN(parseInt(current))) {
+      return current;
+    }
+  });
+
+  var numbers = map.filter(function(value) {
+    return value != undefined;
+  });
+
+  return numbers.join("");
+}
+  guardarmateriales() {
+    for(var i=0; i< this.links.length; i++){
+      let aux= this.links[i].split(' ',4);
+      let serial =aux[0];
+      var longitud=0;
+      var l2=0;
+      longitud = serial.length;
+      l2= this.links[i].length;
+      let descripcionaux= this.links[i].substr(longitud,l2)
+      var cantidad:number;
+      let auxdescripcion=descripcionaux.trim();
+      let descripcionfinal= auxdescripcion.split(' ',5);
+      var l3=0;  
+         
+      let descripcion=descripcionfinal[0] + " " + descripcionfinal[1] + " " + descripcionfinal[2] + " " + descripcionfinal[3] + " " + descripcionfinal[4];
+      cantidad= Number(this.getNumbersInString(descripcionaux));
+      let tira= descripcion;
+      var l7=0;
+      l7=tira.length;
+      let condicion = descripcionaux.substr(l7,l2)
+      
+      this.listamateriales.push({
+        serial:serial, description:descripcion,quantity:cantidad,condiction:condicion
+          });
+    
+   }
+    for (let suc of this.listamateriales) {
+        
+      this.matservicio.add(suc).subscribe(
+         data => {
+           this.toastr.success('Datos Registrados');
+           this.submitted = false;
+           this.TercerFormGroup.reset();
+           this.router.navigate(['news/maestro']);
+         },
+         (result: any) => {
+            this.errors = result.errors;
+            this.toastr.error('No se pudo crear los datos');
+          }
+         );
+     }    
+  }
   guardarpersonas() {
     for (let suc of this.listapersonas) {
         
@@ -287,6 +374,11 @@ BorrarLista(leftList:any){
         this.toastr.error('No se pudo crear los datos');
       }
     );
+    if (this.submitted==false) {
+      this.guardarmateriales();
+    }
+
   }
+ 
     
 }
