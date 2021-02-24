@@ -5,8 +5,8 @@ import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import { Clasifinews, Usuario } from 'app/type-news/servicios/interface';
 import { clasifinewsService } from "app/type-news/servicios/clasifinews.service";
-
-
+import { PlantillaService } from "app/type-news/servicios/plantillas.service";
+import { Plantilla } from 'app/plantillas/servicios/interface';
 @Component({
   selector: 'app-usuario-crear',
   templateUrl: './usuario-crear.component.html',
@@ -20,9 +20,11 @@ export class UsuarioCrearComponent implements OnInit {
   hide = true;
   hide2 = true;
   clasifnews: Clasifinews[] = [];
+  plantillas:Plantilla[] = [];
   constructor(
     private usuarioService: UsuarioService,
     private serviceclasificacion:clasifinewsService,
+    private serviceplantilla:PlantillaService,
     private fb: FormBuilder,
     private toastr: ToastrService,
     private router: Router
@@ -35,9 +37,13 @@ export class UsuarioCrearComponent implements OnInit {
     this.serviceclasificacion.list().subscribe((data: Clasifinews[]) => {
       this.clasifnews= data;
     });
+     this.serviceplantilla.list().subscribe((data:Plantilla[]) => {
+      this.plantillas= data;
+    });
     this.fg = this.fb.group({
       descripton: ['', Validators.required],
       id_classify: ['', Validators.required],
+      plantilla: ['', Validators.required],
       status: [true, Validators.required],
       
     }, {});
@@ -56,7 +62,7 @@ export class UsuarioCrearComponent implements OnInit {
   onReset() {
     this.submitted = false;
     this.fg.reset();
-    this.router.navigate(['type-persons/maestro']);
+    this.router.navigate(['inicio/type-persons/maestro']);
   }
 
   guardar() {
@@ -65,7 +71,7 @@ export class UsuarioCrearComponent implements OnInit {
         this.toastr.success('Type News creado con éxito');
         this.submitted = false;
         this.fg.reset();
-        this.router.navigate(['type-news/maestro']);
+        this.router.navigate(['inicio/type-news/maestro']);
       },
       (result: any) => {
         this.errors = result.errors;

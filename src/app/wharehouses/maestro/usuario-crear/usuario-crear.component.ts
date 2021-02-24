@@ -48,7 +48,7 @@ export class UsuarioCrearComponent implements OnInit {
   onReset() {
     this.submitted = false;
     this.fg.reset();
-    this.router.navigate(['wharehouses/maestro']);
+    this.router.navigate(['inicio/wharehouses/maestro']);
   }
 
   guardar() {
@@ -57,7 +57,7 @@ export class UsuarioCrearComponent implements OnInit {
         this.toastr.success('Wharehouses creado con éxito');
         this.submitted = false;
         this.fg.reset();
-        this.router.navigate(['wharehouses/maestro']);
+        this.router.navigate(['inicio/wharehouses/maestro']);
       },
       (result: any) => {
         this.errors = result.errors;

@@ -49,7 +49,7 @@ export class UsuarioCrearComponent implements OnInit {
   onReset() {
     this.submitted = false;
     this.fg.reset();
-    this.router.navigate(['type-persons/maestro']);
+    this.router.navigate(['inicio/type-persons/maestro']);
   }
 
   guardar() {
@@ -58,7 +58,7 @@ export class UsuarioCrearComponent implements OnInit {
         this.toastr.success('Type persons creado con éxito');
         this.submitted = false;
         this.fg.reset();
-        this.router.navigate(['type-persons/maestro']);
+        this.router.navigate(['inicio/type-persons/maestro']);
       },
       (result: any) => {
         this.errors = result.errors;

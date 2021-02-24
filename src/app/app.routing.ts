@@ -13,12 +13,12 @@ export const AppRoutes: Routes = [
     runGuardsAndResolvers: 'always',
     children: [
       {
-        path: 'login',
+        path: '',
         component: LoginComponent,
         data: { omitirPermiso: true },
       },
       {
-        path: '',
+        path: 'inicio',
         component: FullComponent,
         children: [
           {
@@ -64,6 +64,11 @@ export const AppRoutes: Routes = [
             path: 'personas',
             loadChildren:
               () => import('app/personas/maestro.module').then(m => m.MaestroModule)
+          },
+          {
+            path: 'plantillas',
+            loadChildren:
+              () => import('app/plantillas/maestro.module').then(m => m.MaestroModule)
           },
           {
             path: 'seguridad',

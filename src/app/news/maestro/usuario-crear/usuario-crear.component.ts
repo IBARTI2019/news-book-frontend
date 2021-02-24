@@ -5,7 +5,12 @@ import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import { Almacen, Usuario } from 'app/news/servicios/interface';
 import { materialesentrance } from 'app/news/servicios/interface';
+import { personasentrance } from 'app/news/servicios/interface';
+import { vehiculosentrance } from 'app/news/servicios/interface';
+
 import { MatService} from 'app/news/servicios/materiales.service';
+import { PerService} from 'app/news/servicios/personas.service';
+import { VehService} from 'app/news/servicios/vehiculosnews.service';
 import { almacennService } from "app/news/servicios/almacenn.service";
 import {ThemePalette} from '@angular/material/core';
 import {FormControl} from '@angular/forms';
@@ -14,6 +19,8 @@ import { Table2SheetOpts } from 'xlsx/types';
 import { MatListModule} from '@angular/material/list';
 import {map, startWith} from 'rxjs/operators';
 import {Observable} from 'rxjs';
+import { data } from 'jquery';
+
 
 export interface State {
   flag: string;
@@ -39,9 +46,13 @@ export class UsuarioCrearComponent implements OnInit {
   errors: any;
   hide = true;
   hide2 = true;
+  public idcodigo:string="";
   isLinear = false;
   almacennews: Almacen[] = [];
+  listanews:Usuario[] = [];
   listamateriales:materialesentrance[] = [];
+  listaper:personasentrance[] = [];
+  listaveh:vehiculosentrance[] = [];
   tabs = ['First', 'Second', 'Third'];
   firstFormGroup: FormGroup;
   SecondFormGroup: FormGroup;
@@ -113,6 +124,8 @@ export class UsuarioCrearComponent implements OnInit {
   constructor(
     private usuarioService: UsuarioService,
     private matservicio:MatService,
+    private perservicio:PerService,
+    private vehservicio:VehService,
     private almacennewservice:almacennService,
     private fb: FormBuilder,
     private toastr: ToastrService,
@@ -165,7 +178,7 @@ export class UsuarioCrearComponent implements OnInit {
      
     }, {});
    this.QuintoFormGroup = this.fb.group({
-     placa_vehiculo: ['', Validators.required],
+    stateCtrl: ['', Validators.required],
      
     }, {});
   }
@@ -267,7 +280,7 @@ BorrarLista(leftList:any){
   onReset() {
     this.submitted = false;
     this.fg.reset();
-    this.router.navigate(['news/maestro']);
+    this.router.navigate(['inicio/news/maestro']);
   }
   
 getNumbersInString(string:string) {
@@ -284,7 +297,7 @@ getNumbersInString(string:string) {
 
   return numbers.join("");
 }
-  guardarmateriales() {
+  guardarmateriales(tiranews:any) {
     for(var i=0; i< this.links.length; i++){
       let aux= this.links[i].split(' ',4);
       let serial =aux[0];
@@ -297,7 +310,7 @@ getNumbersInString(string:string) {
       let auxdescripcion=descripcionaux.trim();
       let descripcionfinal= auxdescripcion.split(' ',5);
       var l3=0;  
-         
+      let idnews = tiranews;  
       let descripcion=descripcionfinal[0] + " " + descripcionfinal[1] + " " + descripcionfinal[2] + " " + descripcionfinal[3] + " " + descripcionfinal[4];
       cantidad= Number(this.getNumbersInString(descripcionaux));
       let tira= descripcion;
@@ -306,7 +319,7 @@ getNumbersInString(string:string) {
       let condicion = descripcionaux.substr(l7,l2)
       
       this.listamateriales.push({
-        serial:serial, description:descripcion,quantity:cantidad,condiction:condicion
+        id_news:idnews,serial:serial, description:descripcion,quantity:cantidad,condiction:condicion
           });
     
    }
@@ -317,7 +330,7 @@ getNumbersInString(string:string) {
            this.toastr.success('Datos Registrados');
            this.submitted = false;
            this.TercerFormGroup.reset();
-           this.router.navigate(['news/maestro']);
+           this.router.navigate(['inicio/news/maestro']);
          },
          (result: any) => {
             this.errors = result.errors;
@@ -326,15 +339,41 @@ getNumbersInString(string:string) {
          );
      }    
   }
-  guardarpersonas() {
-    for (let suc of this.listapersonas) {
+
+  guardarpersonas(tiranews:any) {
+    for(var i=0; i< this.listapersonas.length; i++){
+      let aux= this.listapersonas[i].split(' ',4);
+      let serial =aux[0];
+      var longitud=0;
+      var l2=0;
+      longitud = serial.length;
+      l2= this.listapersonas[i].length;
+      let descripcionaux= this.listapersonas[i].substr(longitud,l2)
+      var cantidad:number;
+      let auxdescripcion=descripcionaux.trim();
+      let descripcionfinal= auxdescripcion.split(' ',5);
+      var l3=0;  
+      let idnews = tiranews;    
+      let descripcion=descripcionfinal[0] + " " + descripcionfinal[1] + " " + descripcionfinal[2] + " " + descripcionfinal[3] + " " + descripcionfinal[4];
+      cantidad= Number(this.getNumbersInString(descripcionaux));
+      let tira= descripcion;
+      var l7=0;
+      l7=tira.length;
+      let condicion = descripcionaux.substr(l7,l2)
+      
+      this.listaper.push({
+        id_news:this.idcodigo, id_person:serial,nombres_apellidos:descripcion
+          });
+    
+   }
+    for (let suc of this.listaper) {
         
-      this.usuarioService.add(this.TercerFormGroup.value).subscribe(
+      this.perservicio.add(suc).subscribe(
          data => {
            this.toastr.success('Datos Registrados');
            this.submitted = false;
            this.TercerFormGroup.reset();
-           this.router.navigate(['news/maestro']);
+           this.router.navigate(['inicio/news/maestro']);
          },
          (result: any) => {
             this.errors = result.errors;
@@ -343,15 +382,40 @@ getNumbersInString(string:string) {
          );
      }    
   }
-  guardarvehiculos() {
-    for (let suc of this.listavehiculos) {
+
+   guardarvehiculos(tiranews:any) {
+    for(var i=0; i< this.listavehiculos.length; i++){
+      let aux= this.listavehiculos[i].split(' ',4);
+      let serial =aux[0];
+      var longitud=0;
+      var l2=0;
+      longitud = serial.length;
+      l2= this.listavehiculos[i].length;
+      let descripcionaux= this.listavehiculos[i].substr(longitud,l2)
+      var cantidad:number;
+      let auxdescripcion=descripcionaux.trim();
+      let descripcionfinal= auxdescripcion.split(' ',5);
+      var l3=0;  
+      let idnews = tiranews;  
+      let descripcion=descripcionfinal[0] + " " + descripcionfinal[1] + " " + descripcionfinal[2] + " " + descripcionfinal[3] + " " + descripcionfinal[4];
+      cantidad= Number(this.getNumbersInString(descripcionaux));
+      let tira= descripcion;
+      var l7=0;
+      l7=tira.length;
+      let condicion = descripcionaux.substr(l7,l2)
+      this.listaveh.push({
+        id_news:this.idcodigo, placa_vehiculo:serial,ced_chof:tira,nombresapellidos:descripcion
+          });
+    
+   }
+    for (let suc of this.listaveh) {
         
-      this.usuarioService.add(this.TercerFormGroup.value).subscribe(
+      this.vehservicio.add(suc).subscribe(
          data => {
            this.toastr.success('Datos Registrados');
            this.submitted = false;
            this.TercerFormGroup.reset();
-           this.router.navigate(['news/maestro']);
+           this.router.navigate(['inicio/news/maestro']);
          },
          (result: any) => {
             this.errors = result.errors;
@@ -360,24 +424,35 @@ getNumbersInString(string:string) {
          );
      }    
   }
-  
+
   guardar() {
     this.usuarioService.add(this.firstFormGroup.value).subscribe(
       data => {
-        this.toastr.success('Datos de la Novedad creada con éxito');
+        this.idcodigo = data.id_news;
+        this.toastr.success('Datos de la Novedad creada con éxito' + this.idcodigo);
         this.submitted = false;
+        if (this.submitted==false) {
+          this.guardarmateriales(this.idcodigo);
+        }
+        if (this.submitted==false) {
+            this.guardarpersonas(this.idcodigo);
+        }
+        if (this.submitted==false) {
+          this.guardarvehiculos(this.idcodigo);
+      }
         this.firstFormGroup.reset();
-        this.router.navigate(['news/maestro']);
+        
+        this.router.navigate(['inicio/news/maestro']);
       },
       (result: any) => {
         this.errors = result.errors;
         this.toastr.error('No se pudo crear los datos');
       }
+      
     );
-    if (this.submitted==false) {
-      this.guardarmateriales();
-    }
-
+    
+    
+   
   }
  
     

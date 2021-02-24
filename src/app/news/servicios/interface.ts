@@ -28,3 +28,17 @@ export interface materialesentrance{
   type?: string;  
     
 }
+export interface personasentrance{
+  UUID?:string | any;
+  id_news?: string;
+  id_person?: string;
+  nombres_apellidos?: string;
+    
+}
+export interface vehiculosentrance{
+  id_uuid?:string | any;
+  id_news?: string;
+  placa_vehiculo?: string;
+  ced_chof?: string;
+  nombresapellidos?: string;
+}

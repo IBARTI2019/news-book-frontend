@@ -36,8 +36,8 @@
     <div fxFlex.gt-lg="100" fxFlex.gt-md="100" fxFlex.gt-xs="100" fxFlex="100">
         <mat-card>
             <mat-card-content>
-                <mat-card-title>Visitas</mat-card-title>
-                <mat-card-subtitle>Diferencia entre visitas aptas y no aptas</mat-card-subtitle>
+                <mat-card-title>Novedades</mat-card-title>
+                <mat-card-subtitle>Tipos de Novedades</mat-card-subtitle>
                 <div class="piechart">
                     <x-chartist *ngIf="donuteChart1" class="" [data]="donuteChart1.data" [type]="donuteChart1.type"
                         [options]="donuteChart1.options" [responsiveOptions]="donuteChart1.responsiveOptions"
@@ -50,11 +50,11 @@
                 <ul class="list-inline text-center">
                     <li>
                         <h6 class=" text-info  m-0">
-                            <i class="mdi mdi-checkbox-blank-circle font-10 m-r-10"></i>Aptos</h6>
+                            <i class="mdi mdi-checkbox-blank-circle font-10 m-r-10"></i>Obligatorias</h6>
                     </li>
                     <li>
                         <h6 class="text-success m-0">
-                            <i class="mdi mdi-checkbox-blank-circle font-10 m-r-10 "></i>No aptos</h6>
+                            <i class="mdi mdi-checkbox-blank-circle font-10 m-r-10 "></i>Eventuales</h6>
                     </li>
                 </ul>
             </mat-card-content>

@@ -51,7 +51,7 @@ export class UsuarioCrearComponent implements OnInit {
   onReset() {
     this.submitted = false;
     this.fg.reset();
-    this.router.navigate(['vehiculos/maestro']);
+    this.router.navigate(['inicio/vehiculos/maestro']);
   }
 
   guardar() {
@@ -60,7 +60,7 @@ export class UsuarioCrearComponent implements OnInit {
         this.toastr.success('Datos del Vehiculo creado con éxito');
         this.submitted = false;
         this.fg.reset();
-        this.router.navigate(['vehiculos/maestro']);
+        this.router.navigate(['inicio/vehiculos/maestro']);
       },
       (result: any) => {
         this.errors = result.errors;

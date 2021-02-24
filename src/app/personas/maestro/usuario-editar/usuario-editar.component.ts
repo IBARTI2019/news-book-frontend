@@ -70,7 +70,7 @@ export class UsuarioEditarComponent implements OnInit {
   onReset() {
     this.submitted = false;
     this.fg.reset();
-    this.router.navigate(['personas/maestro']);
+    this.router.navigate(['inicio/personas/maestro']);
   }
 
   getUsuario() {
@@ -96,7 +96,7 @@ export class UsuarioEditarComponent implements OnInit {
         this.toastr.success('Datos Personas actualizado');
         this.submitted = false;
         this.fg.reset();
-        this.router.navigate(['personas/maestro']);
+        this.router.navigate(['inicio/personas/maestro']);
       },
       (result: any) => {
         this.errors = result.errors;

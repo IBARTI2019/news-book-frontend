@@ -56,7 +56,7 @@ export class UsuarioEditarComponent implements OnInit {
   onReset() {
     this.submitted = false;
     this.fg.reset();
-    this.router.navigate(['wharehouses/maestro']);
+    this.router.navigate(['inicio/wharehouses/maestro']);
   }
 
   getUsuario() {
@@ -74,7 +74,7 @@ export class UsuarioEditarComponent implements OnInit {
         this.toastr.success('Datos del Almacen  actualizado');
         this.submitted = false;
         this.fg.reset();
-        this.router.navigate(['wharehouses/maestro']);
+        this.router.navigate(['inicio/wharehouses/maestro']);
       },
       (result: any) => {
         this.errors = result.errors;

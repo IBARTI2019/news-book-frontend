@@ -29,16 +29,16 @@ export class UsuarioService extends API<Usuario> {
     return localStorage.getItem(API.ISLOGGEDIN);
   }
 
-  public login(usuario?: string, clave?: string) {
+  public login(usuario:Usuario) {
     // En el login se quitan los ceros a la izquierda para números de personal
     return this.http
-      .post(`${this.URL_API}/users/login/`, { usuario, clave })
+      .post(`${this.URL_API}/users/validate/login/`, usuario)
       .pipe(
         map((response: any) => {
           localStorage.setItem(API.ISLOGGEDIN, response.logIn);
           localStorage.setItem(API.TOKEN, response.token);
           let usuario: any = this.actual();
-          localStorage.setItem(API.USUARIO, usuario.usuario);
+          localStorage.setItem(API.USUARIO, usuario._id);
           //localStorage.setItem(API.TOKEN, response.access);
           //localStorage.setItem(API.REFRESH_TOKEN, response.refresh);
           return response;
@@ -51,7 +51,8 @@ export class UsuarioService extends API<Usuario> {
   }
 
   public logout() {
-    this.http.post(`${this.URL_API}/usuario/logout/`, { usuario: localStorage.getItem(API.USUARIO) }).subscribe(data => {
+    
+    this.http.post(`${this.URL_API}/users/validate/logout/`, { usuario: localStorage.getItem(API.USUARIO) }).subscribe(data => {
       localStorage.removeItem(API.TOKEN);
       localStorage.removeItem(API.USUARIO);
       localStorage.removeItem(API.MENU_ACTUAL);
@@ -59,7 +60,7 @@ export class UsuarioService extends API<Usuario> {
       localStorage.removeItem(API.REFRESH_TOKEN);
       localStorage.removeItem(API.JWT);
       this.$actual = null;
-      this.router.navigateByUrl('/login');
+      this.router.navigateByUrl('inicio/login');
     });
   }
 
@@ -71,6 +72,7 @@ export class UsuarioService extends API<Usuario> {
     if (token) {
       let decode: any = jwt_decode(String(token));
       this.$actual = decode;
+      
     }
     /* this.http.get(`${this.URL}actual/`).pipe(
       publishReplay(),

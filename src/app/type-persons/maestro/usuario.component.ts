@@ -43,7 +43,7 @@ export class UsuarioComponent implements OnInit {
   }
 
   editar(id: string) {
-    this.router.navigate(['type-persons/maestro/', id]);
+    this.router.navigate(['inicio/type-persons/maestro/', id]);
   }
 
   eliminar(usuario: Usuario) {

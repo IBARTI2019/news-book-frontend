@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { API } from 'app/utils/api';
-import { Almacen } from 'app/news/servicios/interface';
+import { Plantilla} from 'app/plantillas/servicios/interface';
 import { map, publishReplay, refCount } from 'rxjs/operators';
 import { BehaviorSubject, Observable, Observer } from 'rxjs';
 import { JwtHelperService } from '@auth0/angular-jwt';
@@ -10,9 +10,9 @@ import { Router } from '@angular/router';
 @Injectable({
   providedIn: 'root'
 })
-export class almacennService extends API<Almacen> {
-  protected URL = `${this.URL_API}/typenews/crudtypenews/`;
-  private $actual!: Observable<Almacen> | any;
+export class PlantillaService extends API<Plantilla> {
+  protected URL = `${this.URL_API}/plantillas/crudplantilla/`;
+  private $actual!: Observable<Plantilla> | any;
   constructor(
     protected http: HttpClient,
     private router: Router,
@@ -21,11 +21,8 @@ export class almacennService extends API<Almacen> {
     super(http);
   }
 
-  public get getUsuario(): Observable<Almacen> {
+  public get getPlantilla(): Observable<Plantilla> {
     return this.$actual;
   }
-
-
-
 
 }

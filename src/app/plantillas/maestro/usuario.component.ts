@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { UsuarioService } from '../servicios/usuario.service';
 import { DTColumn } from 'app/componentes/generic-table/interface';
-import { Usuario } from '../servicios/interface';
+import { Plantilla } from '../servicios/interface';
 import { Router } from '@angular/router';
 import { ConfirmDialogService } from 'app/componentes/confirm-dialog/confirm-dialog.service';
 import { ToastrService } from 'ngx-toastr';
@@ -22,28 +22,20 @@ export class UsuarioComponent implements OnInit {
   ngOnInit(): void {
     this.columns = [
       {
-        dataAttribute: 'cod_material',
-        attribute: "Cod Material",
+        dataAttribute: 'descripcion',
+        attribute: "Descripcion",
       },
       {
-        dataAttribute: 'serial_material',
-        attribute: 'Serial Material'
+        dataAttribute: 'abreviado',
+        attribute: 'Abreviado'
       },
       {
-        dataAttribute: 'description',
-        attribute: 'Descripcion'
+        dataAttribute: 'estatus',
+        attribute: 'Status'
       },
-       {
-        dataAttribute: 'id_warehouse',
-        attribute: 'Almacen'
-      },
-     
-     {
-        dataAttribute: 'status',
-        attribute: 'Statu'
-      },
+      
       {
-        attribute: "id_material",
+        attribute: "id_plantilla",
         header: "Opciones",
         template: "opciones"
       },
@@ -51,18 +43,18 @@ export class UsuarioComponent implements OnInit {
   }
 
   editar(id: string) {
-    this.router.navigate(['inicio/materiales/maestro/', id]);
+    this.router.navigate(['inicio/plantillas/maestro/', id]);
   }
 
-  eliminar(usuario: Usuario) {
-    this.dialogService.open({ message: `Esta seguro de que desea eliminar La Informacion de ${usuario.description}?`, });
+  eliminar(plantilla: Plantilla) {
+    this.dialogService.open({ message: `Esta seguro de que desea eliminar el Tipo de Plantilla ${plantilla.descripcion}?`, });
     this.dialogService.confirmed().subscribe(confirmed => {
       if (confirmed) {
-        this.usuarioService.remove(usuario.id_material).subscribe(data => {
-          this.toastr.success("Datos eliminado con exito!.");
+        this.usuarioService.remove(plantilla.id_plantilla).subscribe(data => {
+          this.toastr.success("Plantilla eliminado con exito!.");
           this.tabla.refresh();
         }, error => {
-          this.toastr.success("Ocurrio un error al intentar eliminar los datos del Material");
+          this.toastr.success("Ocurrio un error al intentar eliminar la plantilla");
           this.tabla.refresh();
         });
       }

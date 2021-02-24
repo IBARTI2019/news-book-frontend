@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
   providedIn: 'root'
 })
 export class UsuarioService extends API<Usuario> {
-  protected URL = `${this.URL_API}/news/crudnews`;
+  protected URL = `${this.URL_API}/news/crudnews/`;
   private $actual!: Observable<Usuario> | any;
   constructor(
     protected http: HttpClient,

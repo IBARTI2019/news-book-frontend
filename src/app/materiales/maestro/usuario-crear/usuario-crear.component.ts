@@ -58,7 +58,7 @@ export class UsuarioCrearComponent implements OnInit {
   onReset() {
     this.submitted = false;
     this.fg.reset();
-    this.router.navigate(['materiales/maestro']);
+    this.router.navigate(['inicio/materiales/maestro']);
   }
 
   guardar() {
@@ -67,7 +67,7 @@ export class UsuarioCrearComponent implements OnInit {
         this.toastr.success('Datos del Material creado con éxito');
         this.submitted = false;
         this.fg.reset();
-        this.router.navigate(['materiales/maestro']);
+        this.router.navigate(['inicio/materiales/maestro']);
       },
       (result: any) => {
         this.errors = result.errors;

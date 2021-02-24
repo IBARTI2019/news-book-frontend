@@ -5,7 +5,8 @@ import { ToastrService } from 'ngx-toastr';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Clasifinews, Usuario } from 'app/type-news/servicios/interface';
 import { clasifinewsService } from "app/type-news/servicios/clasifinews.service";
-
+import {  PlantillaService } from "app/type-news/servicios/plantillas.service";
+import { Plantilla } from 'app/plantillas/servicios/interface';
 
 
 @Component({
@@ -20,10 +21,11 @@ export class UsuarioEditarComponent implements OnInit {
   errors: any;
   id: string = '';
   clasifnews: Clasifinews[] = [];
-  
+  plantillas:Plantilla[] = [];
   constructor(
     private usuarioService: UsuarioService,
     private serviceclasificacion:clasifinewsService,
+    private serviceplantilla:PlantillaService,
     private fb: FormBuilder,
     private toastr: ToastrService,
     private router: Router,
@@ -38,9 +40,13 @@ export class UsuarioEditarComponent implements OnInit {
     this.serviceclasificacion.list().subscribe((data: Clasifinews[]) => {
       this.clasifnews= data;
     });
+      this.serviceplantilla.list().subscribe((data:Plantilla[]) => {
+      this.plantillas= data;
+    });
     this.fg = this.fb.group({
       descripton: ['', Validators.required],
       id_classify: ['', Validators.required],
+      plantilla: ['', Validators.required],
       status: [true, Validators.required],
       
     }, {});
@@ -58,7 +64,7 @@ export class UsuarioEditarComponent implements OnInit {
   onReset() {
     this.submitted = false;
     this.fg.reset();
-    this.router.navigate(['type-news/maestro']);
+    this.router.navigate(['inicio/type-news/maestro']);
   }
 
   getUsuario() {
@@ -66,6 +72,7 @@ export class UsuarioEditarComponent implements OnInit {
       (data: Usuario) => {
         this.fg.get('descripton').setValue(data.descripton);
         this.fg.get('id_classify').setValue(data.id_classify);
+        this.fg.get('plantilla').setValue(data.plantilla);  
         this.fg.get('status').setValue(data.status);     
       });
   }
@@ -76,7 +83,7 @@ export class UsuarioEditarComponent implements OnInit {
         this.toastr.success('Datos del Tipo de Novedad actualizado');
         this.submitted = false;
         this.fg.reset();
-        this.router.navigate(['type-news/maestro']);
+        this.router.navigate(['inicio/type-news/maestro']);
       },
       (result: any) => {
         this.errors = result.errors;

@@ -15,6 +15,13 @@
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Plantilla</mat-label>
+                    <mat-select formControlName="plantilla" placeholder="Plantilla">
+                        <mat-option *ngFor="let clasplan of plantillas" [value]="clasplan.abreviado">{{clasplan.abreviado}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
             </div>
            
             <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="5px">

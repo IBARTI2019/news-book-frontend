@@ -1,43 +1,210 @@
-<mat-card>
-    <app-card-header modulo="Materiales" menu="Editar Materiales">
-    </app-card-header>
-    <mat-card-content>
-        <form [formGroup]="fg" fxLayout="column" fxLayoutGap="5px" (ngSubmit)="onSubmit()" #formRol
-            (ngSubmit)="onSubmit()" #formRol>
-            <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="5px">
-                  <mat-form-field>
-                    <mat-label>Codigo Material</mat-label>
-                    <input matInput placeholder="Codigomaterial" formControlName="cod_material">
-                </mat-form-field>
-                 <mat-form-field>
-                    <mat-label>Serial Material</mat-label>
-                    <input matInput placeholder="SerialMaterial" formControlName="serial_material">
-                </mat-form-field>
-                <mat-form-field>
-                    <mat-label>Nombre</mat-label>
-                    <input matInput placeholder="Description" formControlName="description">
-                </mat-form-field>
-                 <mat-form-field>
-                    <mat-label>Almacen</mat-label>
-                    <mat-select formControlName="id_warehouse" placeholder="Almacen">
-                        <mat-option *ngFor="let almacenn of almacennews" [value]="almacenn.id_warehouse">{{almacenn.descripcion}}
+<button mat-raised-button (click)="isEditable = !isEditable">
+  {{!isEditable ? 'Desactivar Novedad' : 'Activar Novedad'}}
+</button>
+
+<mat-horizontal-stepper linear #stepper>
+  <mat-step [stepControl]="firstFormGroup" [editable]="isEditable">
+    <form [formGroup]="firstFormGroup">
+      <ng-template matStepLabel>Datos de la Novedad</ng-template>
+      <mat-form-field>
+        <mat-label>Quien Notifica?</mat-label>
+        <input matInput formControlName="ced_notifica" maxlength="12"  placeholder="Cedula" >
+      </mat-form-field>
+       <mat-form-field>
+        <mat-label>Nombres y Apellidos</mat-label>
+        <input matInput formControlName="nombres_apellidos" maxlength="20" placeholder="Nombres y Apellidos" >
+      </mat-form-field>
+      <mat-form-field>
+                    <mat-label>Tipo de Novedad</mat-label>
+                    <mat-select formControlName="id_type_news" placeholder="Tipo Novedad" >
+                        <mat-option *ngFor="let almacenn of almacennews" [value]="almacenn.id_type_news">{{almacenn.descripton}}
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
+                
+      <mat-form-field>
+        <mat-label>Noticia</mat-label>
+        <input matInput formControlName="notice" placeholder="Descripcion de la Novedad">
+      </mat-form-field>
+      
+      <div>
+        <button mat-button matStepperNext>Siguiente</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step [stepControl]="SecondFormGroup" [editable]="isEditable">
+    <form [formGroup]="SecondFormGroup">
+      <ng-template matStepLabel>Tipo Noticia</ng-template>
+          
+          <mat-form-field>
+                 <mat-label>Seleccione Opcion?</mat-label>
+                 <input matInput type="number" [formControl]="selected">
+         </mat-form-field>
+        <mat-tab-group [selectedIndex]="selected.value"
+               (selectedIndexChange)="selected.setValue($event)">
+          <mat-tab *ngFor="let almacenn of almacennews; let index = index"   [label]="almacenn.descripton">
+               <div *ngIf="(almacenn.plantilla==='P1'); then elseBlock else thenBlock" fxLayout="row" fxLayout.xs="column" fxLayoutGap="2px">
+                               
+               </div> 
+             
+               <ng-template #thenBlock>
+                <div  fxLayout="row" fxLayout.xs="column" fxLayoutGap="2px">
                 <mat-form-field>
-                    <mat-label>stock</mat-label>
-                    <input matInput placeholder="Stock" formControlName="stock">
+                  <mat-label>Identificador?</mat-label>
+                 <input matInput formControlName="identificador" placeholder="Codigo ,Serial o Carnet" value={{shoes.selectedOptions.selected[0]?.value}} >
                 </mat-form-field>
-            </div>
-            
-            <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="5px">
-                <div fxFlex="50">
-                    <mat-slide-toggle formControlName="status">Activo</mat-slide-toggle>
-                </div>
-            </div>
-            <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="end">
-                <button mat-raised-button color="primary" type="submit">Guardar</button>
-            </div>
-        </form>
-    </mat-card-content>
-</mat-card>
+                 <mat-form-field>
+                 <mat-label>Descripcion del Identicador</mat-label>
+                 <input matInput formControlName="descripcion" placeholder="Descripcion">
+               </mat-form-field>
+               <mat-form-field>
+                 <mat-label>Cantidad</mat-label>
+                 <input matInput formControlName="quantity" placeholder="Cantidad">
+               </mat-form-field>
+               <mat-form-field appearance="fill">
+                   <mat-label>Condicion</mat-label>
+                     <mat-select [(ngModel)]="selectedValue" formControlName="foods">
+                       <mat-option *ngFor="let food of condicion" [value]="food.value">
+                             {{food.viewValue}}
+                        </mat-option>
+                      </mat-select>
+              
+               </mat-form-field>
+               
+               </div> 
+               </ng-template>
+               <ng-template #elseBlock>
+               <mat-form-field>
+                  <mat-label>Descripcion de la Novedad ?</mat-label>
+                 <input matInput formControlName="identificador" placeholder="Descipcion" value={{shoes.selectedOptions.selected[0]?.value}} >
+                </mat-form-field>
+              
+               </ng-template>
+               <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="end">
+                 <button mat-button (click)="agregarlist()">Agregar</button>
+                  <button mat-button (click)="moveRight(shoes)">Eliminar</button>
+               </div>    
+                <p>
+  			          Listado Items: {{shoes.selectedOptions.selected[0]?.value}}
+		           </p>
+                <mat-selection-list #shoes [multiple]="false">
+ 		              <mat-list-option *ngFor="let shoe of links" [value]="shoe">
+   		            {{shoe}}
+ 		            </mat-list-option>
+		</mat-selection-list>
+
+		
+             
+           </mat-tab>
+           </mat-tab-group>     
+
+      <div>
+        <button mat-button matStepperPrevious>Atras</button>
+        <button mat-button matStepperNext>Siguiente</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step [stepControl]="TercerFormGroup" [editable]="isEditable">
+    <form [formGroup]="TercerFormGroup">
+      <ng-template matStepLabel>Personas Involucradas</ng-template>
+          <mat-form-field>
+            <mat-label>Cedula</mat-label>
+                <input matInput formControlName="doc_ident" placeholder="Cedula">
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Nombres y Apellidos</mat-label>
+                <input matInput formControlName="nombres_apellidos" placeholder="Nombres y Apellidos">
+          </mat-form-field>
+           <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="end">
+                 <button mat-button (click)="agregarpersonas()">Agregar</button>
+                  <button mat-button (click)="eliminarpersonas(personas)">Eliminar</button>
+               </div>    
+                <p>
+  			          Listado Items: {{personas.selectedOptions.selected[0]?.value}}
+		           </p>
+                <mat-selection-list #personas [multiple]="false">
+ 		              <mat-list-option *ngFor="let shoe of listapersonas" [value]="shoe">
+   		            {{shoe}}
+ 		            </mat-list-option>
+		</mat-selection-list>
+
+          
+          
+          
+      <div>
+        <button mat-button matStepperPrevious>Atras</button>
+        <button mat-button matStepperNext>Siguiente</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step [stepControl]="CuartoFormGroup" [editable]="isEditable">
+    <form [formGroup]="CuartoFormGroup">
+      <ng-template matStepLabel>Vehiculos Involucrados</ng-template>
+          <mat-form-field>
+            <mat-label>Placa Vehiculo</mat-label>
+                <input matInput formControlName="placa_vehiculo" placeholder="Placa Vehiculo">
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Cedula ?</mat-label>
+                <input matInput formControlName="cedulachofer" placeholder="Cedula">
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Identificacion del Chofer</mat-label>
+                <input matInput formControlName="nombrechofer" placeholder="Nombres y Apellidos">
+          </mat-form-field>
+                <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="end">
+                 <button mat-button (click)="agregarvehiculos()">Agregar</button>
+                  <button mat-button (click)="eliminarvehiculos(vehiculos)">Eliminar</button>
+               </div>    
+                <p>
+  			          Listado Items: {{vehiculos.selectedOptions.selected[0]?.value}}
+		           </p>
+                <mat-selection-list #vehiculos [multiple]="false">
+ 		              <mat-list-option *ngFor="let shoe of listavehiculos" [value]="shoe">
+   		            {{shoe}}
+ 		            </mat-list-option>
+		</mat-selection-list>
+
+          
+      <div>
+        <button mat-button matStepperPrevious>Atras</button>
+        <button mat-button matStepperNext>Siguiente</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step>
+    <ng-template matStepLabel>Enviar Email</ng-template>
+    
+     <form [formGroup]="QuintoFormGroup">
+         <mat-slide-toggle
+           [checked]="stateCtrl.disabled"
+            (change)="stateCtrl.disabled ? stateCtrl.enable() : stateCtrl.disable()">
+                Enviar Email?
+            </mat-slide-toggle>
+          <mat-form-field class="example-full-width">
+         <mat-label>Email</mat-label>
+          <input matInput
+               aria-label="State"
+               [matAutocomplete]="auto"
+              [formControl]="stateCtrl">
+         <mat-autocomplete #auto="matAutocomplete">
+        <mat-option *ngFor="let state of filteredStates | async" [value]="state.name">
+             <img class="example-option-img" aria-hidden [src]="state.flag" height="25">
+             <span>{{state.name}}</span> |
+             <small>Email: {{state.population}}</small>
+        </mat-option>
+       </mat-autocomplete>
+       </mat-form-field>
+        
+    </form>
+    <div>
+      <button mat-button matStepperPrevious>Atras</button>
+      <button mat-button (click)="stepper.reset()">Limpiar</button>
+    </div>
+    <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="end">
+      <button mat-button (click)="actualizar()">Guardar</button>
+       
+    </div>  
+  </mat-step>
+</mat-horizontal-stepper>
+

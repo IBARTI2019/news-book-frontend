@@ -56,7 +56,7 @@ export class UsuarioCrearComponent implements OnInit {
   onReset() {
     this.submitted = false;
     this.fg.reset();
-    this.router.navigate(['seguridad/usuario']);
+    this.router.navigate(['inicio/seguridad/usuario']);
   }
 
   guardar() {
@@ -65,7 +65,7 @@ export class UsuarioCrearComponent implements OnInit {
         this.toastr.success('Usuario creado con éxito');
         this.submitted = false;
         this.fg.reset();
-        this.router.navigate(['seguridad/usuario']);
+        this.router.navigate(['inicio/seguridad/usuario']);
       },
       (result: any) => {
         this.errors = result.errors;

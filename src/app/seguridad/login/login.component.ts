@@ -5,6 +5,7 @@ import { Usuario } from 'app/seguridad/servicios/interface';
 import { from } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -33,10 +34,12 @@ export class LoginComponent implements OnInit {
 
   doLogin(usuario: Usuario) {
     this.cargando = true;
-    this.usuarioService.login(usuario.user, usuario.password).subscribe(
+    this.usuarioService.login(usuario).subscribe(
       (response: any) => {
         this.errors = {};
-        this.router.navigateByUrl('/');
+         
+         this.toastrService.info('Info:No ha reportado Cambio de Guardia','Novedades');
+         this.router.navigateByUrl('/inicio');
       },
       (result: any) => {
         if (result.error.challenge) {

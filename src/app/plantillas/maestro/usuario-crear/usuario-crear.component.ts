@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { UsuarioService } from 'app/classify-news/servicios/usuario.service';
+import { UsuarioService } from 'app/plantillas/servicios/usuario.service';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 
@@ -29,9 +29,9 @@ export class UsuarioCrearComponent implements OnInit {
 
   ngOnInit() {
     this.fg = this.fb.group({
-      description: ['', Validators.required],
-      level_urgency: ['', Validators.required],
-      status: [true, Validators.required],
+      descripcion: ['', Validators.required],
+      abreviado: ['', Validators.required],
+      estatus: [true, Validators.required],
       
     }, {});
    
@@ -49,20 +49,20 @@ export class UsuarioCrearComponent implements OnInit {
   onReset() {
     this.submitted = false;
     this.fg.reset();
-    this.router.navigate(['inicio/classify-news/maestro']);
+    this.router.navigate(['inico/plantillas/maestro']);
   }
 
   guardar() {
     this.usuarioService.add(this.fg.value).subscribe(
       data => {
-        this.toastr.success('Classify News creado con éxito');
+        this.toastr.success('Plantilla creada con éxito');
         this.submitted = false;
         this.fg.reset();
-        this.router.navigate(['inicio/classify-news/maestro']);
+        this.router.navigate(['inicio/plantillas/maestro']);
       },
       (result: any) => {
         this.errors = result.errors;
-        this.toastr.error('No se pudo crear el Classify News');
+        this.toastr.error('No se pudo crear la plantilla');
       }
     );
   }

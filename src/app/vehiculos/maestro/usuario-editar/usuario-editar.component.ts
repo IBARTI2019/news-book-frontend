@@ -59,7 +59,7 @@ export class UsuarioEditarComponent implements OnInit {
   onReset() {
     this.submitted = false;
     this.fg.reset();
-    this.router.navigate(['vehiuclos/maestro']);
+    this.router.navigate(['inicio/vehiuclos/maestro']);
   }
 
   getUsuario() {
@@ -79,7 +79,7 @@ export class UsuarioEditarComponent implements OnInit {
         this.toastr.success('Datos Vehiculos actualizado');
         this.submitted = false;
         this.fg.reset();
-        this.router.navigate(['vehiculos/maestro']);
+        this.router.navigate(['inicio/vehiculos/maestro']);
       },
       (result: any) => {
         this.errors = result.errors;

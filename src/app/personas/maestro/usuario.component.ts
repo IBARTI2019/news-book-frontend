@@ -66,7 +66,7 @@ export class UsuarioComponent implements OnInit {
   }
 
   editar(id: string) {
-    this.router.navigate(['personas/maestro/', id]);
+    this.router.navigate(['inicio/personas/maestro/', id]);
   }
 
   eliminar(usuario: Usuario) {
