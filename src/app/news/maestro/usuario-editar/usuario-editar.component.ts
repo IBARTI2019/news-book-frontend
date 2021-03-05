@@ -7,7 +7,6 @@ import { Almacen, Usuario } from 'app/news/servicios/interface';
 import { materialesentrance } from 'app/news/servicios/interface';
 import { personasentrance } from 'app/news/servicios/interface';
 import { vehiculosentrance } from 'app/news/servicios/interface';
-
 import { MatService} from 'app/news/servicios/materiales.service';
 import { PerService} from 'app/news/servicios/personas.service';
 import { VehService} from 'app/news/servicios/vehiculosnews.service';
@@ -17,6 +16,7 @@ import {FormControl} from '@angular/forms';
 import { values } from 'lodash';
 import { Table2SheetOpts } from 'xlsx/types';
 import { MatListModule} from '@angular/material/list';
+import {MatExpansionModule} from '@angular/material/expansion'; 
 import {map, startWith} from 'rxjs/operators';
 import {Observable} from 'rxjs';
 import { data } from 'jquery';

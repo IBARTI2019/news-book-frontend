@@ -31,7 +31,9 @@
 <mat-nav-list dense>
      <mat-expansion-panel [class.mat-elevation-z0]="true" dense>
         <mat-expansion-panel-header>
+         <mat-icon aria-hidden="false" aria-label="Example home icon">home</mat-icon>
             Archivos
+           
         </mat-expansion-panel-header>
         <mat-nav-list dense>
             <a mat-list-item [routerLink]="['wharehouses/', 'maestro']">
@@ -78,6 +80,8 @@
     </mat-expansion-panel>
     <mat-expansion-panel [class.mat-elevation-z0]="true" dense>
         <mat-expansion-panel-header>
+         <mat-icon aria-hidden="false" aria-label="Example home icon">book</mat-icon>
+       
             Operaciones Book
         </mat-expansion-panel-header>
         <mat-nav-list dense>
@@ -90,6 +94,8 @@
     </mat-expansion-panel>
      <mat-expansion-panel [class.mat-elevation-z0]="true" dense>
         <mat-expansion-panel-header>
+         <mat-icon aria-hidden="false" aria-label="Example home icon">fingerprint</mat-icon>
+      
             Seguridad
         </mat-expansion-panel-header>
         <mat-nav-list dense>
@@ -113,6 +119,8 @@
     </mat-expansion-panel>
     <mat-expansion-panel [class.mat-elevation-z0]="true" dense>
         <mat-expansion-panel-header>
+          <mat-icon aria-hidden="false" aria-label="Example home icon">build</mat-icon>
+     
             Configuracion
         </mat-expansion-panel-header>
         <mat-nav-list dense>
@@ -122,14 +130,20 @@
             </a>
         </mat-nav-list>
         <mat-nav-list dense>
-            <a mat-list-item [routerLink]="['notificaciones/', 'maestro']">
+            <a mat-list-item [routerLink]="['notificacion/', 'maestro']">
                 <span>Notificaciones</span>
                 <span fxFlex></span>
             </a>
         </mat-nav-list>
         <mat-nav-list dense>
-            <a mat-list-item [routerLink]="['listaemail/', 'maestro']">
+            <a mat-list-item [routerLink]="['listemail/', 'maestro']">
                 <span>Lista de Email</span>
+                <span fxFlex></span>
+            </a>
+        </mat-nav-list>
+         <mat-nav-list dense>
+            <a mat-list-item [routerLink]="['listaadress/', 'maestro']">
+                <span>Lista de Macaddress</span>
                 <span fxFlex></span>
             </a>
         </mat-nav-list>
@@ -140,5 +154,32 @@
             </a>
         </mat-nav-list>
     </mat-expansion-panel>
+    <mat-expansion-panel [class.mat-elevation-z0]="true" dense>
+        <mat-expansion-panel-header>
+          <mat-icon aria-hidden="false" aria-label="Example home icon">help</mat-icon>
      
+            Ayuda del Sistema
+        </mat-expansion-panel-header>
+        <mat-nav-list dense>
+            <a mat-list-item [routerLink]="['news/', 'maestro']">
+                <span>Manual de Ayuda</span>
+                <span fxFlex></span>
+            </a>
+        </mat-nav-list>
+        
+    </mat-expansion-panel>
+    <mat-expansion-panel [class.mat-elevation-z0]="true" dense>
+        <mat-expansion-panel-header>
+           <mat-icon aria-hidden="false" aria-label="Example home icon">reply</mat-icon>
+     
+            Salir del Sistema
+        </mat-expansion-panel-header>
+        <mat-nav-list dense>
+            <a mat-list-item [routerLink]="['news/', 'maestro']">
+                <span>Salir</span>
+                <span fxFlex></span>
+            </a>
+        </mat-nav-list>
+        
+    </mat-expansion-panel>
 </mat-nav-list>

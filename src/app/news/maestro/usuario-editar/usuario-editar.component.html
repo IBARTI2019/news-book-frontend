@@ -1,8 +1,4 @@
-<button mat-raised-button (click)="isEditable = !isEditable">
-  {{!isEditable ? 'Desactivar Novedad' : 'Activar Novedad'}}
-</button>
-
-<mat-horizontal-stepper linear #stepper>
+<mat-vertical-stepper linear #stepper>
   <mat-step [stepControl]="firstFormGroup" [editable]="isEditable">
     <form [formGroup]="firstFormGroup">
       <ng-template matStepLabel>Datos de la Novedad</ng-template>
@@ -43,7 +39,7 @@
         <mat-tab-group [selectedIndex]="selected.value"
                (selectedIndexChange)="selected.setValue($event)">
           <mat-tab *ngFor="let almacenn of almacennews; let index = index"   [label]="almacenn.descripton">
-               <div *ngIf="(almacenn.plantilla==='P1'); then elseBlock else thenBlock" fxLayout="row" fxLayout.xs="column" fxLayoutGap="2px">
+               <div *ngIf="(almacenn.plantilla==='P1'); then elseBlock else thenBlock " fxLayout="row" fxLayout.xs="column" fxLayoutGap="2px">
                                
                </div> 
              
@@ -80,6 +76,7 @@
                 </mat-form-field>
               
                </ng-template>
+                
                <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="end">
                  <button mat-button (click)="agregarlist()">Agregar</button>
                   <button mat-button (click)="moveRight(shoes)">Eliminar</button>
@@ -206,5 +203,12 @@
        
     </div>  
   </mat-step>
-</mat-horizontal-stepper>
+</mat-vertical-stepper>
+
+
+
+
+
+
+
 

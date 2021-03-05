@@ -70,6 +70,16 @@ export const AppRoutes: Routes = [
             loadChildren:
               () => import('app/plantillas/maestro.module').then(m => m.MaestroModule)
           },
+           {
+            path: 'listemail',
+            loadChildren:
+              () => import('app/listemail/maestro.module').then(m => m.MaestroModule)
+          },
+          {
+            path: 'listaadress',
+            loadChildren:
+              () => import('app/listaadress/maestro.module').then(m => m.MaestroModule)
+          },
           {
             path: 'seguridad',
             loadChildren:
