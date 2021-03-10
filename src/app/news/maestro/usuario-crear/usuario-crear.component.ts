@@ -68,6 +68,7 @@ export class UsuarioCrearComponent implements OnInit {
   lista4=[];
   lista3=[];
   selectedValue:string="Bueno";
+  selectedfood:string="Bueno";
   tipocondicion:any;
   default: string = 'Bueno';
   condicion: listacondicion[] = [

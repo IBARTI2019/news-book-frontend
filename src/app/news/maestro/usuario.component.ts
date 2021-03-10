@@ -31,9 +31,12 @@ export class UsuarioComponent implements OnInit {
       },
       {
         dataAttribute: 'nombres_apellidos',
-        attribute: 'Nombres Y Apellidos'
+        attribute: 'Quien Notifica?'
       },
-          
+       {
+        dataAttribute: 'createdAt',
+        attribute: 'Fecha y Hora'
+      },    
      {
         attribute: "id_news",
         header: "Opciones",

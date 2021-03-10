@@ -6,7 +6,7 @@ export interface Usuario {
   ced_notifica?: string;
   nombres_apellidos?: string;
   id_type_news?:string;
-  
+  createdAt?:string | any;
 }
 export interface Almacen{
   id_type_news: string;
