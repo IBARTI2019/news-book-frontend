@@ -4,27 +4,27 @@
             <mat-card-title>Login</mat-card-title>
         </mat-card-header>
         <mat-card-content>
-            <form (ngSubmit)="doLogin(usuario)" #login>
+            <form (ngSubmit)="handleSubmit()" #login>
 
-                <mat-form-field>
-                    <mat-label>Ingresa tu usuario</mat-label>
-                    <input matInput required placeholder="Usuario" [(ngModel)]="usuario.user"
+                <mat-form-field *ngIf="!sendCodeSucces">
+                    <mat-label>Usuario</mat-label>
+                    <input matInput required placeholder="Usuario" [(ngModel)]="signinData.username"
                         [ngModelOptions]="{standalone: true}">
                     <mat-icon matSuffix>account_circle</mat-icon>
                 </mat-form-field>
 
-                <mat-form-field>
-                    <mat-label>Ingresa tu clave</mat-label>
-                    <input matInput required [type]="hide ? 'password' : 'text'" [(ngModel)]="usuario.password"
+                <mat-form-field *ngIf="sendCodeSucces">
+                    <mat-label>Codigo</mat-label>
+                    <input matInput required [type]="hide ? 'password' : 'text'" [(ngModel)]="signinData.code"
                         [ngModelOptions]="{standalone: true}">
-                    <span mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+                    <span mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide code'"
                         [attr.aria-pressed]="hide">
                         <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                     </span>
                 </mat-form-field>
                 
                 <button mat-raised-button color="primary" class="btn-block" type="submit"
-                    [disabled]="cargando || !usuario.user || !usuario.password">Entrar</button>
+                    [disabled]="sendingCode || verifyCodeSubmit">{{ showVerifyCode ? 'Verify' : 'Send Code' }}</button>
             </form>
         </mat-card-content>
     </mat-card>

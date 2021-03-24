@@ -1,58 +1,99 @@
 import { Component, OnInit } from '@angular/core';
-import { UsuarioService } from 'app/seguridad/servicios/usuario.service'
+import { UsuarioService } from 'app/seguridad/servicios/usuario.service';
+import { SessionService } from 'app/services/session.service';
 import { Router } from '@angular/router';
 import { Usuario } from 'app/seguridad/servicios/interface';
-import { from } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
-import getMAC, { isMAC } from 'getmac';
-import {HttpClient} from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { SigninData, VerifyCodeResponse } from 'app/interfaces';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
+  signinData: SigninData = {
+    username: '',
+    code: '',
+  };
+  sendingCode = false;
+  sendCodeSucces = false;
+  verifyCodeSubmit = false;
+  showVerifyCode = false;
   usuario: Usuario = {};
-
   errors: any;
   cargando = false;
-  hide = true;
-  Equipo= false;
-  ipAddress:any;
-  pc:any;
+  hide = false;
+  // Equipo= false;
+  ipAddress: any;
+  pc: any;
   constructor(
     private usuarioService: UsuarioService,
     private http: HttpClient,
     private router: Router,
-    private toastrService: ToastrService
+    private toastrService: ToastrService,
+    private sessionService: SessionService,
   ) {
   
-  this.http.get<{ip:string}>('https://jsonip.com')
-    .subscribe( data => {
-      console.log('th data', data);
-      this.ipAddress = data
-       
-    })
+    // this.http.get<{ip:string}>('https://jsonip.com').subscribe( data => {
+    //   // console.log('th data', data);
+    //   this.ipAddress = data  
+    // })
   }
 
   ngOnInit() {
-        if (this.usuarioService.isLoggedIn) {
-          this.router.navigateByUrl('seguridad/login');
-        } 
+    if (this.usuarioService.isLoggedIn) {
+      this.router.navigateByUrl('seguridad/login');
+    }
     this.errors = {};
     this.pc= this.ipAddress;
-    
   }
 
-  
-  
+  handleSubmit() {
+    if (!this.showVerifyCode) {
+      this.sendCode();
+    } else {
+      this.verifyCode();
+    }
+  }
+
+  sendCode(): void {
+    this.sendingCode = true;
+    this.sessionService.sendCode(this.signinData).subscribe(() => {
+      this.sendingCode = false;
+      this.toastrService.success('El codigo ha sido enviado satisfactoriamente.');
+      this.showVerifyCode = true;
+    }, (error: HttpErrorResponse) => {
+      this.sendingCode = false;
+      this.sendCodeSucces = true;
+      if (error.error.challenge) {
+        const challenge = error.error.challenge[0];
+        console.log(challenge);
+      }
+      this.toastrService.error(error.error.text || 'Ha ocurrido un error inesperado');
+    })
+  }
+
+  verifyCode(): void {
+    this.verifyCodeSubmit = true;
+    this.sessionService.verifyCode(this.signinData).subscribe((data: VerifyCodeResponse) => {
+      this.verifyCodeSubmit = false;
+      console.log(data);
+      this.toastrService.success('El codigo ha sido verificado con exito.');
+      this.router.navigateByUrl('/inicio');
+    }, (error: HttpErrorResponse) => {
+      this.verifyCodeSubmit = false;
+      this.toastrService.error(error.error.text || 'No se pudo verificar el codigo.');
+    })
+  }
+
   doLogin(usuario: Usuario) {
     this.cargando = true;
     this.usuarioService.login(usuario).subscribe(
       (response: any) => {
         this.errors = {};
-         this.toastrService.info('Info:No ha reportado Cambio de Guardia','Novedades'+ this.pc);
-         this.router.navigateByUrl('/inicio');
+        this.toastrService.info('Info: No ha reportado Cambio de Guardia','Novedades'+ this.pc);
+        this.router.navigateByUrl('/inicio');
       },
       (result: any) => {
         if (result.error.challenge) {
@@ -65,5 +106,5 @@ export class LoginComponent implements OnInit {
       }
     ).add(() => this.cargando = false);
     
-  } 
+  }
 }
