@@ -43,8 +43,8 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (this.usuarioService.isLoggedIn) {
-      this.router.navigateByUrl('seguridad/login');
+    if (this.sessionService.isLoggedIn) {
+      this.router.navigateByUrl('/inicio');
     }
     this.errors = {};
     this.pc= this.ipAddress;
@@ -84,7 +84,7 @@ export class LoginComponent implements OnInit {
       this.router.navigateByUrl('/inicio');
     }, (error: HttpErrorResponse) => {
       this.verifyCodeSubmit = false;
-      console.log(error)
+      console.error(error)
       this.toastrService.error(error.error.message || 'No se pudo verificar el codigo.');
     })
   }

@@ -24,10 +24,6 @@ export class SessionService {
     return this.$user;
   }
 
-  get isLoggedIn() {
-    return localStorage.getItem(API.ISLOGGEDIN);
-  }
-
   private getLocalStorage(fieldName: string) {
     const data = localStorage.getItem(fieldName);
     return data ? JSON.parse(data) : null;
@@ -35,6 +31,10 @@ export class SessionService {
 
   private setLocalStorage(fieldName: string, value: any) {
     localStorage.setItem(fieldName, JSON.stringify(value));
+  }
+
+  get isLoggedIn() {
+    return this.getLocalStorage(API.ISLOGGEDIN);
   }
 
   /**

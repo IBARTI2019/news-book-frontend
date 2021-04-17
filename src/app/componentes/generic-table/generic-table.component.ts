@@ -7,6 +7,8 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { GlobalService } from 'app/utils/global.service';
 import { trigger, state, style, transition, animate } from '@angular/animations';
+import { HttpErrorResponse } from '@angular/common/http';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-generic-table',
@@ -165,7 +167,10 @@ export class GenericTableComponent implements OnInit {
 
   cargando = true;
 
-  constructor(private globalService: GlobalService) {
+  constructor(
+    private globalService: GlobalService,
+    private toastrService: ToastrService,
+  ) {
   }
 
   @Input()
@@ -225,9 +230,15 @@ export class GenericTableComponent implements OnInit {
   refresh() {
     this.cargando = true;
     if (this.service) {
-      this.service[this.serviceMethod](this.serviceMethodParams).subscribe((data: any) => {
-        this.setSource(data);
-      });
+      this.service[this.serviceMethod](this.serviceMethodParams).subscribe(
+        (data: any) => {
+          this.setSource(data);
+        }, (error: HttpErrorResponse) => {
+          this.cargando = false;
+          console.error(error)
+          this.toastrService.error(error.error.message || 'Origin error: refresh function from gerenic-table.component.ts');
+        }
+      );
     } else {
       this.setSource(this.data);
     }
