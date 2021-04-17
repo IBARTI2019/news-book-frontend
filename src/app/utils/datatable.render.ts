@@ -81,13 +81,13 @@ export class DataTableRender {
     // tslint:disable-next-line: variable-name
     let _url: any = url;
     let descripcion = '';
-    _url = _url.replace('#!/', '').split('/');
+    _url = _url?.replace('#!/', '').split('/');
 
     for (let i = 0; i < _url.length; i++) {
       descripcion += _url[i] + (_url.length - 1 > i ? ' > ' : '');
     }
 
-    descripcion = descripcion.replace('_', ' ').replace('-', ' ');
+    descripcion = descripcion?.replace('_', ' ')?.replace('-', ' ');
 
     return descripcion;
   }

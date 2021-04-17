@@ -13,8 +13,9 @@ import { SigninData, VerifyCodeResponse } from 'app/interfaces';
 })
 export class LoginComponent implements OnInit {
   signinData: SigninData = {
-    username: '',
-    code: '',
+    user: '',
+    password: '',
+    codigocelular: '',
   };
   sendingCode = false;
   sendCodeSucces = false;
@@ -61,11 +62,11 @@ export class LoginComponent implements OnInit {
     this.sendingCode = true;
     this.sessionService.sendCode(this.signinData).subscribe(() => {
       this.sendingCode = false;
-      this.toastrService.success('El codigo ha sido enviado satisfactoriamente.');
       this.showVerifyCode = true;
+      this.sendCodeSucces = true;
+      this.toastrService.success('El codigo ha sido enviado satisfactoriamente.');
     }, (error: HttpErrorResponse) => {
       this.sendingCode = false;
-      this.sendCodeSucces = true;
       if (error.error.challenge) {
         const challenge = error.error.challenge[0];
         console.log(challenge);
@@ -77,13 +78,14 @@ export class LoginComponent implements OnInit {
   verifyCode(): void {
     this.verifyCodeSubmit = true;
     this.sessionService.verifyCode(this.signinData).subscribe((data: VerifyCodeResponse) => {
-      this.verifyCodeSubmit = false;
+      this.verifyCodeSubmit = true;
       console.log(data);
       this.toastrService.success('El codigo ha sido verificado con exito.');
       this.router.navigateByUrl('/inicio');
     }, (error: HttpErrorResponse) => {
       this.verifyCodeSubmit = false;
-      this.toastrService.error(error.error.text || 'No se pudo verificar el codigo.');
+      console.log(error)
+      this.toastrService.error(error.error.menssage || 'No se pudo verificar el codigo.');
     })
   }
 

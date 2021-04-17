@@ -53,7 +53,7 @@
                         <mat-checkbox name="cbColumn" [checked]="checkAllValue" (change)="checkAll($event)">
                         </mat-checkbox>
                     </span>
-                    {{column.header || column.attribute.replace('_', ' ') | titlecase}}
+                    {{column.header || column.attribute?.replace('_', ' ') | titlecase}}
                 </th>
                 <td mat-cell *cdkCellDef="let item; index as i">
                     <mat-checkbox

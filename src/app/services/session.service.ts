@@ -48,7 +48,7 @@ export class SessionService {
   */
 
   sendCode(signinData: SigninData): Observable<void> {
-    return this.http.post<void>(`${this.apiURL}/users/sendCode/Pending...`, { ...signinData }).pipe(
+    return this.http.post<void>(`${this.apiURL}/users/solicitud/codigo`, { ...signinData }).pipe(
       catchError((error: HttpErrorResponse) => this.handleError(error))
     )
   }
@@ -63,10 +63,11 @@ export class SessionService {
    */
 
   verifyCode(signinData: SigninData): Observable<VerifyCodeResponse> {
-    if (!signinData.code) throwError ({ message: 'El codigo no puede estar vacio' })
-    return this.http.post<VerifyCodeResponse>(`${this.apiURL}/users/verify/Pending...`, { ...signinData }).pipe(
+    if (!signinData.codigocelular) throwError ({ message: 'El codigo no puede estar vacio' })
+    return this.http.post<VerifyCodeResponse>(`${this.apiURL}/users/validate/login`, { ...signinData }).pipe(
       map((res: VerifyCodeResponse) => {
-        this.setLocalStorage(API.ISLOGGEDIN, res.logIn);
+        if (!res.error) {
+          this.setLocalStorage(API.ISLOGGEDIN, res.logIn);
         this.setLocalStorage(API.TOKEN, res.token);
         this.actual().subscribe((user: User) => {
           if(user) {
@@ -74,6 +75,9 @@ export class SessionService {
           }
         })
         return res;
+        }
+        throw new HttpErrorResponse({error: res, status: 500});
+        
       }),
       catchError((error: HttpErrorResponse) => this.handleError(error))
     )
@@ -102,6 +106,7 @@ export class SessionService {
    * @memberof SessionService
    */
   private handleError(error: HttpErrorResponse) {
+    console.log('HE: ', error)
     return (throwError(error));
   }
 }

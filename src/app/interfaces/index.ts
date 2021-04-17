@@ -9,8 +9,9 @@ export interface User {
 }
 
 export interface SigninData {
-  username: string;
-	code?: string;
+  user: string;
+  password: string;
+	codigocelular?: string;
 }
 
 export interface APIMessage {
@@ -22,4 +23,6 @@ export interface APIMessage {
 export interface VerifyCodeResponse {
 	logIn: boolean;
 	token: string;
+  error?: boolean;
+  menssage?: string;
 }
