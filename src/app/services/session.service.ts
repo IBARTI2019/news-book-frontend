@@ -66,8 +66,7 @@ export class SessionService {
     if (!signinData.codigocelular) throwError ({ message: 'El codigo no puede estar vacio' })
     return this.http.post<VerifyCodeResponse>(`${this.apiURL}/users/validate/login`, { ...signinData }).pipe(
       map((res: VerifyCodeResponse) => {
-        if (!res.error) {
-          this.setLocalStorage(API.ISLOGGEDIN, res.logIn);
+        this.setLocalStorage(API.ISLOGGEDIN, res.logIn);
         this.setLocalStorage(API.TOKEN, res.token);
         this.actual().subscribe((user: User) => {
           if(user) {
@@ -75,9 +74,6 @@ export class SessionService {
           }
         })
         return res;
-        }
-        throw new HttpErrorResponse({error: res, status: 500});
-        
       }),
       catchError((error: HttpErrorResponse) => this.handleError(error))
     )
@@ -106,7 +102,7 @@ export class SessionService {
    * @memberof SessionService
    */
   private handleError(error: HttpErrorResponse) {
-    console.log('HE: ', error)
+    console.error('Error: ', error)
     return (throwError(error));
   }
 }

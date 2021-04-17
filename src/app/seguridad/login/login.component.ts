@@ -71,7 +71,7 @@ export class LoginComponent implements OnInit {
         const challenge = error.error.challenge[0];
         console.log(challenge);
       }
-      this.toastrService.error(error.error.text || 'Ha ocurrido un error inesperado');
+      this.toastrService.error(error.error.message || 'Ha ocurrido un error inesperado');
     })
   }
 
@@ -85,7 +85,7 @@ export class LoginComponent implements OnInit {
     }, (error: HttpErrorResponse) => {
       this.verifyCodeSubmit = false;
       console.log(error)
-      this.toastrService.error(error.error.menssage || 'No se pudo verificar el codigo.');
+      this.toastrService.error(error.error.message || 'No se pudo verificar el codigo.');
     })
   }
 

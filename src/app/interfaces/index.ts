@@ -23,6 +23,4 @@ export interface APIMessage {
 export interface VerifyCodeResponse {
 	logIn: boolean;
 	token: string;
-  error?: boolean;
-  menssage?: string;
 }
