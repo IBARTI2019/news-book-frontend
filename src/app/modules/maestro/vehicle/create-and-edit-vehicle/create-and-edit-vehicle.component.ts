@@ -2,8 +2,8 @@ import { HttpErrorResponse } from "@angular/common/http";
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
-import { Vehicle } from "app/interfaces";
-import { VehicleService } from "app/services/vehicle.service";
+import { Vehicle } from "../../../../interfaces/index";
+import { VehicleService } from "../../../../services/vehicle.service";
 import { ToastrService } from "ngx-toastr";
 
 @Component({
