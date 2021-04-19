@@ -4,14 +4,14 @@ export interface User {
   lastName: string;
   email: string;
   username: string;
-  password?:string;
+  password?: string;
   status?: boolean;
 }
 
 export interface SigninData {
   user: string;
   password: string;
-	codigocelular?: string;
+  codigocelular?: string;
 }
 
 export interface APIMessage {
@@ -21,12 +21,22 @@ export interface APIMessage {
 }
 
 export interface VerifyCodeResponse {
-	logIn: boolean;
-	token: string;
+  logIn: boolean;
+  token: string;
 }
 
 export interface Warehouse {
-  id_warehouse: string; 
+  id_warehouse: string;
   descripcion: string;
   status: string;
+}
+
+export interface Material {
+  id_material?: string | number;
+  cod_material?: string;
+  serial_material?: string;
+  id_warehouse?: string;
+  description?: string;
+  stock?: string;
+  status?: string;
 }

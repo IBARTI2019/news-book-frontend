@@ -84,7 +84,7 @@ export class CreateAndEditComponent implements OnInit {
       },
       (error: HttpErrorResponse) => {
         this.showForm = true;
-        this.toastr.error( error.error.message || 'No se obtener el almacen');
+        this.toastr.error( error.error.message || 'Error al obtener el almacen');
       }
     );
   }

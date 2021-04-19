@@ -31,6 +31,11 @@ export const AppRoutes: Routes = [
               () => import('app/materiales/maestro.module').then(m => m.MaestroModule)
           },
           {
+            path: 'materials',
+            loadChildren:
+              () => import('app/modules/maestro/materials/materials.module').then(m => m.MaterialsModule),
+          },
+          {
             path: 'vehiculos',
             loadChildren:
               () => import('app/vehiculos/maestro.module').then(m => m.MaestroModule)
