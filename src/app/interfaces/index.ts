@@ -40,3 +40,12 @@ export interface Material {
   stock?: string;
   status?: string;
 }
+
+export interface Vehicle {
+  id_vehiculo?:string;
+  doc_ident:string;
+  name?: string;
+  lastname?:string;
+  placa_vehiculo?:string;
+  status?: string ;
+}

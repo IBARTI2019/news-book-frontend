@@ -4,20 +4,20 @@ import { Router } from "@angular/router";
 import { ConfirmDialogService } from "app/componentes/confirm-dialog/confirm-dialog.service";
 import { GenericTableComponent } from "app/componentes/generic-table/generic-table.component";
 import { DTColumn } from "app/componentes/generic-table/interface";
+import { Vehicle } from "app/interfaces";
 import { ToastrService } from "ngx-toastr";
-import { Material } from "../../../interfaces/index";
-import { MaterialsService } from "../../../services/materials.service";
+import { VehicleService } from "../../../services/vehicle.service";
 
 @Component({
-  selector: "app-materials",
-  templateUrl: "./materials.component.html",
-  styleUrls: ["./materials.component.css"],
+  selector: "app-vehicle",
+  templateUrl: "./vehicle.component.html",
+  styleUrls: ["./vehicle.component.css"],
 })
-export class MaterialsComponent implements OnInit {
+export class VehicleComponent implements OnInit {
   @ViewChild("table") table!: GenericTableComponent;
   columns: DTColumn[] = [];
   constructor(
-    public materialsService: MaterialsService,
+    public vehicleService: VehicleService,
     private router: Router,
     private dialogService: ConfirmDialogService,
     private toastr: ToastrService
@@ -28,28 +28,27 @@ export class MaterialsComponent implements OnInit {
   ngOnInit(): void {
     this.columns = [
       {
-        dataAttribute: "cod_material",
-        attribute: "Cod Material",
+        dataAttribute: "name",
+        attribute: "Nombres",
       },
       {
-        dataAttribute: "serial_material",
-        attribute: "Serial Material",
+        dataAttribute: "lastname",
+        attribute: "Apellidos",
       },
       {
-        dataAttribute: "description",
-        attribute: "Descripcion",
+        dataAttribute: "doc_ident",
+        attribute: "Cedula",
       },
       {
-        dataAttribute: "id_warehouse",
-        attribute: "Almacen",
+        dataAttribute: "placa_vehiculo",
+        attribute: "Placa Vehiculo",
       },
-
       {
         dataAttribute: "status",
         attribute: "Status",
       },
       {
-        attribute: "id_material",
+        attribute: "id_vehiculo",
         header: "Opciones",
         template: "opciones",
       },
@@ -57,24 +56,24 @@ export class MaterialsComponent implements OnInit {
   }
 
   update(id: string) {
-    this.router.navigate(["inicio/materials", id]);
+    this.router.navigate(["inicio/vehiculos/maestro/", id]);
   }
 
-  delete(material: Material) {
+  delete(usuario: Vehicle) {
     this.dialogService.open({
-      message: `Esta seguro de que desea eliminar La Informacion de ${material.description}?`,
+      message: `Esta seguro de que desea eliminar La Informacion de ${usuario.placa_vehiculo}?`,
     });
     this.dialogService.confirmed().subscribe((confirmed) => {
       if (confirmed) {
-        this.materialsService.remove(material.id_material || '').subscribe(
+        this.vehicleService.remove(usuario.id_vehiculo || "").subscribe(
           (data) => {
-            this.toastr.success("Material eliminado con exito!.");
+            this.toastr.success("Vehiculo eliminado con exito!.");
             this.table.refresh();
           },
           (error: HttpErrorResponse) => {
             this.toastr.error(
-              error.error.mesaage ||
-                "No se logro eliminar el Material"
+              error.error.message ||
+                "Ocurrio un error al eliminar el Vehiculo."
             );
           }
         );
