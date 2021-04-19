@@ -24,3 +24,9 @@ export interface VerifyCodeResponse {
 	logIn: boolean;
 	token: string;
 }
+
+export interface Warehouse {
+  id_warehouse: string; 
+  descripcion: string;
+  status: string;
+}

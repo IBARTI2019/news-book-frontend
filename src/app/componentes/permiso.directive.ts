@@ -24,6 +24,7 @@ export class PermisoDirective {
     if (this.usuario) {
       let permisos = [];
       let permisos_metodos = [];
+      return true
       if (this.usuario.roll.SU === false) {
         permisos = this.usuario.permisos.filter((permiso: any) => permiso?.routers ? permiso.routers.includes(this.ruta) : false);
         if (permisos.length > 0) {

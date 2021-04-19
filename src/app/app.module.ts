@@ -17,7 +17,7 @@ import { DemoMaterialModule } from './demo-material-module';
 import { ComponentesModule } from "app/componentes/componentes.module";
 import { SeguridadModule } from "app/seguridad/seguridad.module";
 import { SharedModule } from './shared/shared.module';
-import {MatTabsModule} from '@angular/material/tabs'; 
+import { MatTabsModule } from '@angular/material/tabs'; 
 import { SpinnerComponent } from './shared/spinner.component';
 import { LoginComponent } from 'app/seguridad/login/login.component';
 import { ToastrModule } from 'ngx-toastr';

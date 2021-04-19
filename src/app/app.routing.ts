@@ -46,6 +46,11 @@ export const AppRoutes: Routes = [
               () => import('app/wharehouses/maestro.module').then(m => m.MaestroModule)
           },
           {
+            path: 'warehouse',
+            loadChildren:
+              () => import('app/modules/maestro/warehouse/warehouse.module').then(m => m.WarehouseModule)
+          },
+          {
             path: 'classify-news',
             loadChildren:
               () => import('app/classify-news/maestro.module').then(m => m.MaestroModule)
