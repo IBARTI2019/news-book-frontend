@@ -56,6 +56,13 @@ export const AppRoutes: Routes = [
               ),
           },
           {
+            path: "vehicle",
+            loadChildren: () =>
+              import("app/modules/maestro/vehicle/vehicle.module").then(
+                (m) => m.VehicleModule
+              ),
+          },
+          {
             path: "news",
             loadChildren: () =>
               import("app/news/maestro.module").then((m) => m.MaestroModule),
@@ -86,6 +93,13 @@ export const AppRoutes: Routes = [
             loadChildren: () =>
               import("app/type-persons/maestro.module").then(
                 (m) => m.MaestroModule
+              ),
+          },
+          {
+            path: "type-people",
+            loadChildren: () =>
+              import("app/modules/maestro/type-people/type-people.module").then(
+                (m) => m.TypePeopleModule
               ),
           },
           {

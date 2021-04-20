@@ -42,10 +42,17 @@ export interface Material {
 }
 
 export interface Vehicle {
-  id_vehiculo?:string;
-  doc_ident:string;
+  id_vehiculo?: string;
+  doc_ident: string;
   name?: string;
-  lastname?:string;
-  placa_vehiculo?:string;
-  status?: string ;
+  lastname?: string;
+  placa_vehiculo?: string;
+  status?: string;
+}
+
+export interface TypePeople {
+  id_type_person: string;
+  description: string;
+  priority: string;
+  status: string;
 }
