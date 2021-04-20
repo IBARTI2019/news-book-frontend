@@ -117,6 +117,13 @@ export const AppRoutes: Routes = [
               ),
           },
           {
+            path: "person",
+            loadChildren: () =>
+              import("app/modules/maestro/person/person.module").then(
+                (m) => m.PersonModule
+              ),
+          },
+          {
             path: "plantillas",
             loadChildren: () =>
               import("app/plantillas/maestro.module").then(

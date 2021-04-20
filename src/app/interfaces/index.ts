@@ -56,3 +56,16 @@ export interface TypePeople {
   priority: string;
   status: string;
 }
+
+export interface Person {
+  id_person?: string;
+  cod_person?: string;
+  name?: string;
+  lastname?: string;
+  doc_ident?: string;
+  addres?: string;
+  phono?: string;
+  movil?: string;
+  id_type_person?: string;
+  status?: string;
+}
