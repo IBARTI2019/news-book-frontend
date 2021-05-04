@@ -103,7 +103,7 @@ export class CreateAndEditMaterialComponent implements OnInit {
         this.toastr.success("Datos Material  actualizado");
         this.submitted = false;
         this.fg.reset();
-        this.router.navigate(["inicio/materiales/maestro"]);
+        this.router.navigate(["inicio/materials"]);
       },
       (error: HttpErrorResponse) => {
         this.submitted = false;

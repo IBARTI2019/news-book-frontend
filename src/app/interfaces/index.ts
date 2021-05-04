@@ -69,3 +69,19 @@ export interface Person {
   id_type_person?: string;
   status?: string;
 }
+
+export interface TypeNew {
+  id_type_news: string; 
+  descripton: string;
+  id_classify: string;
+  plantilla:string;
+  status: string;
+}
+
+export interface ClassificationNew {
+  id_classify: string; 
+  description: string;
+  codigo: string;
+  level_urgency: string;
+  status: string;
+}

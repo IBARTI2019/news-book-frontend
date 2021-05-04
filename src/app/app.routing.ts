@@ -103,6 +103,13 @@ export const AppRoutes: Routes = [
               ),
           },
           {
+            path: "type-new",
+            loadChildren: () =>
+              import("app/modules/novedades/type-new/type-new.module").then(
+                (m) => m.TypeNewModule
+              ),
+          },
+          {
             path: "personas",
             loadChildren: () =>
               import("app/personas/maestro.module").then(

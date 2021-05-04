@@ -9,3 +9,13 @@ export const environment = {
   //API: 'http://oesvica.ddns.net:5005'
   //API: 'http://161.97.112.156:5002'
 };
+
+export const TemplatesNew = [
+  'Plantilla_1',
+  'Plantilla_2',
+  'Plantilla_3',
+  'Plantilla_4',
+  'Plantilla_5',
+  'Plantilla_6',
+  'Plantilla_8',
+]
