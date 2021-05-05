@@ -20,6 +20,7 @@ import { ConfirmDialogService } from './confirm-dialog/confirm-dialog.service';
 import { MatDialogModule } from '@angular/material/dialog';
 import { PermisoDirective } from './permiso.directive';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { NewContainerComponent } from './new-container/new-container.component';
 export const entryComponentes = [
   ConfirmDialogComponent
 ];
@@ -32,10 +33,12 @@ export const entryComponentes = [
     MatTableResponsiveDirective,
     ConfirmDialogComponent,
     PermisoDirective,
+    NewContainerComponent,
   ],
   exports: [
     GenericTableComponent,
     CardHeaderComponent,
+    NewContainerComponent,
     MatTableResponsiveDirective,
     ConfirmDialogComponent,
     PermisoDirective,

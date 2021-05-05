@@ -76,6 +76,7 @@ export interface TypeNew {
   id_classify: string;
   plantilla:string;
   status: string;
+  imageUrl?: string;
 }
 
 export interface ClassificationNew {
