@@ -94,10 +94,18 @@
            Novedades
         </mat-expansion-panel-header>
         <mat-nav-list dense>
-            <a mat-list-item [routerLink]="['type-news/']">
+            <a mat-list-item [routerLink]="['type-new/']">
                 <span>
                     <mat-icon aria-hidden="false" aria-label="Tipe News">folder_special</mat-icon>
                     Tipos Novedades</span>
+                <span fxFlex></span>
+            </a>
+        </mat-nav-list>
+        <mat-nav-list dense>
+            <a mat-list-item [routerLink]="['new/']">
+                <span>
+                    <mat-icon aria-hidden="false" aria-label="News">folder_special</mat-icon>
+                    Novedades</span>
                 <span fxFlex></span>
             </a>
         </mat-nav-list>

@@ -71,18 +71,30 @@ export interface Person {
 }
 
 export interface TypeNew {
-  id_type_news: string; 
+  id_type_news: string;
   descripton: string;
   id_classify: string;
-  plantilla:string;
+  plantilla: string;
   status: string;
   imageUrl?: string;
 }
 
 export interface ClassificationNew {
-  id_classify: string; 
+  id_classify: string;
   description: string;
   codigo: string;
   level_urgency: string;
   status: string;
+}
+
+export interface New {
+  id_news: string;
+  notice: string;
+  id_user: string;
+  ced_notifica: string;
+  nombres_apellidos: string;
+  id_type_news: string;
+  createdAt: string;
+  fecha?: Date;
+  hora?: string;
 }

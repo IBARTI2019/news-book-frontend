@@ -1,0 +1,4 @@
+mat-card-content {
+    display: grid;
+    grid-template-columns: repeat(4, 25%);
+}
