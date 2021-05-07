@@ -8,7 +8,8 @@
           *ngFor="let typeNew of typeNews"
           srcNew="{{ typeNew.imageUrl }}"
           description="{{ typeNew.descripton }}"
-          link="{{ 'crear/' + typeNew.plantilla }}"
+          template="{{ typeNew.plantilla }}"
+          prevUrl = "crear"
         ></app-new-container>
       </mat-card-content>
     </mat-card>

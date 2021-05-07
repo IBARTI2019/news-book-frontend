@@ -10,12 +10,42 @@ export const environment = {
   //API: 'http://161.97.112.156:5002'
 };
 
-export const TemplatesNew = [
-  'Plantilla_1',
-  'Plantilla_2',
-  'Plantilla_3',
-  'Plantilla_4',
-  'Plantilla_5',
-  'Plantilla_6',
-  'Plantilla_8',
+export interface TemplateNew {
+  name: string;
+  url: string;
+}
+
+export const TemplatesNew: TemplateNew[] = [
+  {
+    name: 'Plantilla_1',
+    url: 'template-one',
+  },
+  {
+    name: 'Plantilla_2',
+    url: 'template-two',
+  },
+  {
+    name: 'Plantilla_3',
+    url: 'template-three',
+  },
+  {
+    name: 'Plantilla_4',
+    url: 'template-four',
+  },
+  {
+    name: 'Plantilla_5',
+    url: 'template-five',
+  },
+  {
+    name: 'Plantilla_6',
+    url: 'template-six',
+  },
+  {
+    name: 'Plantilla_7',
+    url: 'template-seven',
+  },
+  {
+    name: 'Plantilla_8',
+    url: 'template-eight',
+  },
 ]
