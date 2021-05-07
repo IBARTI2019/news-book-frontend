@@ -1,0 +1,11 @@
+<h1 mat-dialog-title>Validar ficha</h1>
+<div mat-dialog-content>
+  <mat-form-field>
+    <mat-label>Ingrese su ficha</mat-label>
+    <input matInput [(ngModel)]='data'>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cerrar</button>
+  <button mat-button (click)="validate()" cdkFocusInitial>Validar</button>
+</div>

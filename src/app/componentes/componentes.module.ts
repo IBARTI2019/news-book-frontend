@@ -21,8 +21,11 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { PermisoDirective } from './permiso.directive';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { NewContainerComponent } from './new-container/new-container.component';
+import { ValidateOesvicaTokenComponent } from './validate-oesvica-token/validate-oesvica-token.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 export const entryComponentes = [
-  ConfirmDialogComponent
+  ConfirmDialogComponent,
+  ValidateOesvicaTokenComponent,
 ];
 
 @NgModule({
@@ -34,6 +37,7 @@ export const entryComponentes = [
     ConfirmDialogComponent,
     PermisoDirective,
     NewContainerComponent,
+    ValidateOesvicaTokenComponent,
   ],
   exports: [
     GenericTableComponent,
@@ -42,6 +46,7 @@ export const entryComponentes = [
     MatTableResponsiveDirective,
     ConfirmDialogComponent,
     PermisoDirective,
+    ValidateOesvicaTokenComponent,
   ],
   imports: [
     CommonModule,
@@ -57,7 +62,9 @@ export const entryComponentes = [
     MatInputModule,
     MatSortModule,
     MatDialogModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    FormsModule,
+    ReactiveFormsModule,
   ],
   entryComponents: entryComponentes,
   providers: [ConfirmDialogService]

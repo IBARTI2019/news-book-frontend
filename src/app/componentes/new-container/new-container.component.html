@@ -1,11 +1,11 @@
 <mat-card class="example-card">
-  <img mat-card-image src="{{ srcNew }}" alt="{{ altNew }}" (click)="navigate()" width="360" height="280" />
+  <img mat-card-image src="{{ srcNew }}" alt="{{ altNew }}" (click)="openDialog()" width="360" height="280" />
   <mat-card-content>
     <p>
       {{ description }}
     </p>
   </mat-card-content>
   <mat-card-actions style="display: grid;">
-    <button mat-raised-button (click)="navigate()" color="primary">Crear</button>
+    <button mat-raised-button (click)="openDialog()" color="primary">Crear</button>
   </mat-card-actions>
 </mat-card>
