@@ -18,9 +18,4 @@ export class WarehouseService extends API<Warehouse> {
     return this.http.patch(this.URL + id + '/activar/', {});
   }
 
-  public valNroPersonal(nro_personal: any) {
-    // tslint:disable-next-line: radix
-    return !isNaN(nro_personal) ? '' + parseInt(nro_personal) : nro_personal;
-  }
-
 }

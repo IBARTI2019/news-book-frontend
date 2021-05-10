@@ -28,24 +28,10 @@ export const AppRoutes: Routes = [
               ),
           },
           {
-            path: "materiales",
-            loadChildren: () =>
-              import("app/materiales/maestro.module").then(
-                (m) => m.MaestroModule
-              ),
-          },
-          {
             path: "materials",
             loadChildren: () =>
               import("app/modules/maestro/materials/materials.module").then(
                 (m) => m.MaterialsModule
-              ),
-          },
-          {
-            path: "vehiculos",
-            loadChildren: () =>
-              import("app/vehiculos/maestro.module").then(
-                (m) => m.MaestroModule
               ),
           },
           {
@@ -56,22 +42,10 @@ export const AppRoutes: Routes = [
               ),
           },
           {
-            path: "news",
-            loadChildren: () =>
-              import("app/news/maestro.module").then((m) => m.MaestroModule),
-          },
-          {
             path: "new",
             loadChildren: () =>
               import("app/modules/novedades/new/new.module").then(
                 (m) => m.NewModule
-              ),
-          },
-          {
-            path: "wharehouses",
-            loadChildren: () =>
-              import("app/wharehouses/maestro.module").then(
-                (m) => m.MaestroModule
               ),
           },
           {
@@ -82,31 +56,10 @@ export const AppRoutes: Routes = [
               ),
           },
           {
-            path: "classify-news",
-            loadChildren: () =>
-              import("app/classify-news/maestro.module").then(
-                (m) => m.MaestroModule
-              ),
-          },
-          {
-            path: "type-persons",
-            loadChildren: () =>
-              import("app/type-persons/maestro.module").then(
-                (m) => m.MaestroModule
-              ),
-          },
-          {
             path: "type-people",
             loadChildren: () =>
               import("app/modules/maestro/type-people/type-people.module").then(
                 (m) => m.TypePeopleModule
-              ),
-          },
-          {
-            path: "type-news",
-            loadChildren: () =>
-              import("app/type-news/maestro.module").then(
-                (m) => m.MaestroModule
               ),
           },
           {
@@ -117,24 +70,10 @@ export const AppRoutes: Routes = [
               ),
           },
           {
-            path: "personas",
-            loadChildren: () =>
-              import("app/personas/maestro.module").then(
-                (m) => m.MaestroModule
-              ),
-          },
-          {
             path: "person",
             loadChildren: () =>
               import("app/modules/maestro/person/person.module").then(
                 (m) => m.PersonModule
-              ),
-          },
-          {
-            path: "plantillas",
-            loadChildren: () =>
-              import("app/plantillas/maestro.module").then(
-                (m) => m.MaestroModule
               ),
           },
           {

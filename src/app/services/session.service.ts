@@ -1,23 +1,28 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { environment } from '../../environments/environment';
-import { SigninData, User, APIMessage, VerifyCodeResponse } from '../interfaces';
-import { throwError, Observable} from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
-import * as jwt_decode from 'jwt-decode';
-import { API } from 'app/utils/api';
+import { Injectable } from "@angular/core";
+import { HttpClient, HttpErrorResponse } from "@angular/common/http";
+import { environment } from "../../environments/environment";
+import {
+  SigninData,
+  User,
+  APIMessage,
+  VerifyCodeResponse,
+} from "../interfaces";
+import { throwError, Observable } from "rxjs";
+import { catchError, map } from "rxjs/operators";
+import * as jwt_decode from "jwt-decode";
+import { API } from "app/utils/api";
+import { Router } from "@angular/router";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
-export class SessionService {
-
+export class SessionService extends API<User> {
+  protected URL = `${this.URL_API}/users/crud/`;
   private apiURL = `${environment.API}`;
   private $user!: Observable<User>;
 
-  constructor(
-    private http: HttpClient,
-  ) {
+  constructor(protected http: HttpClient, private router: Router) {
+    super(http);
   }
 
   public get getUser(): Observable<User> {
@@ -33,6 +38,10 @@ export class SessionService {
     localStorage.setItem(fieldName, JSON.stringify(value));
   }
 
+  private deleteStorageItem(fieldName: string) {
+    localStorage.removeItem(fieldName);
+  }
+
   get isLoggedIn() {
     return this.getLocalStorage(API.ISLOGGEDIN);
   }
@@ -40,17 +49,17 @@ export class SessionService {
   /**
    * @function sendCode() Recibe el username del usuario, este es enviado a un endpoint de la API
    * el cual se encargara de enviar un codigo via SMS al usuario
-   * 
+   *
    * @public
    * @param {SigninData} signinData contiene el username del usuario
    * @returns {Observable<void>}
    * @memberof SessionService
-  */
+   */
 
   sendCode(signinData: SigninData): Observable<void> {
-    return this.http.post<void>(`${this.apiURL}/users/solicitud/codigo/`, { ...signinData }).pipe(
-      catchError((error: HttpErrorResponse) => this.handleError(error))
-    )
+    return this.http
+      .post<void>(`${this.apiURL}/users/solicitud/codigo/`, { ...signinData })
+      .pipe(catchError((error: HttpErrorResponse) => this.handleError(error)));
   }
 
   /**
@@ -63,20 +72,42 @@ export class SessionService {
    */
 
   verifyCode(signinData: SigninData): Observable<VerifyCodeResponse> {
-    if (!signinData.codigocelular) throwError ({ message: 'El codigo no puede estar vacio' })
-    return this.http.post<VerifyCodeResponse>(`${this.apiURL}/users/validate/login/`, { ...signinData }).pipe(
-      map((res: VerifyCodeResponse) => {
-        this.setLocalStorage(API.ISLOGGEDIN, res.logIn);
-        this.setLocalStorage(API.TOKEN, res.token);
-        this.actual().subscribe((user: User) => {
-          if(user) {
-            this.setLocalStorage(API.USUARIO, user._id);
-          }
-        })
-        return res;
-      }),
-      catchError((error: HttpErrorResponse) => this.handleError(error))
-    )
+    if (!signinData.codigocelular)
+      throwError({ message: "El codigo no puede estar vacio" });
+    return this.http
+      .post<VerifyCodeResponse>(`${this.apiURL}/users/validate/login/`, {
+        ...signinData,
+      })
+      .pipe(
+        map((res: VerifyCodeResponse) => {
+          this.setLocalStorage(API.ISLOGGEDIN, res.logIn);
+          this.setLocalStorage(API.TOKEN, res.token);
+          this.actual().subscribe((user: User) => {
+            if (user) {
+              this.setLocalStorage(API.USUARIO, user._id);
+            }
+          });
+          return res;
+        }),
+        catchError((error: HttpErrorResponse) => this.handleError(error))
+      );
+  }
+
+  public logout() {
+    this.http
+      .post(`${this.URL_API}/users/validate/logout/`, {
+        usuario: localStorage.getItem(API.USUARIO),
+      })
+      .subscribe((data) => {
+        this.deleteStorageItem(API.TOKEN);
+        this.deleteStorageItem(API.USUARIO);
+        this.deleteStorageItem(API.MENU_ACTUAL);
+        this.deleteStorageItem(API.ISLOGGEDIN);
+        this.deleteStorageItem(API.REFRESH_TOKEN);
+        this.deleteStorageItem(API.JWT);
+        this.$user = new Observable<User>();
+        this.router.navigateByUrl("inicio/login");
+      });
   }
 
   public actual(): Observable<User> {
@@ -87,7 +118,7 @@ export class SessionService {
     if (token) {
       let decode: any = jwt_decode(String(token));
       this.$user = new Observable<User>(decode);
-      return this.$user
+      return this.$user;
     }
     return new Observable<User>();
   }
@@ -102,7 +133,7 @@ export class SessionService {
    * @memberof SessionService
    */
   private handleError(error: HttpErrorResponse) {
-    console.error('Error: ', error)
-    return (throwError(error));
+    console.error("Error: ", error);
+    return throwError(error);
   }
 }
