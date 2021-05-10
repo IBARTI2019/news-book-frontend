@@ -98,3 +98,46 @@ export interface New {
   fecha?: Date;
   hora?: string;
 }
+
+export interface TemplateOne {
+  id: string;
+  perimetro: string;
+  alumbrado: string;
+  alarmas: string;
+  sCI: string;
+}
+
+export interface TemplateTwo {
+  id: string;
+  description: string;
+}
+
+export interface TemplateThree {
+  id: string;
+  description: string;
+}
+
+export interface TemplateFour {
+  id: string;
+  description: string;
+}
+
+export interface TemplateFive {
+  id: string;
+  description: string;
+}
+
+export interface TemplateSix {
+  id: string;
+  description: string;
+}
+
+export interface TemplateSeven {
+  id: string;
+  description: string;
+}
+
+export interface TemplateEight {
+  id: string;
+  description: string;
+}

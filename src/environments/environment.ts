@@ -13,39 +13,48 @@ export const environment = {
 export interface TemplateNew {
   name: string;
   url: string;
+  id: string;
 }
 
 export const TemplatesNew: TemplateNew[] = [
   {
     name: 'Plantilla_1',
     url: 'template-one',
+    id: 'templateOne',
   },
   {
     name: 'Plantilla_2',
     url: 'template-two',
+    id: 'templateTwo',
   },
   {
     name: 'Plantilla_3',
     url: 'template-three',
+    id: 'templateThree',
   },
   {
     name: 'Plantilla_4',
     url: 'template-four',
+    id: 'templateFour',
   },
   {
     name: 'Plantilla_5',
     url: 'template-five',
+    id: 'templateFive',
   },
   {
     name: 'Plantilla_6',
     url: 'template-six',
+    id: 'templateSix',
   },
   {
     name: 'Plantilla_7',
     url: 'template-seven',
+    id: 'templateSeven',
   },
   {
     name: 'Plantilla_8',
     url: 'template-eight',
+    id: 'templateEight',
   },
 ]
