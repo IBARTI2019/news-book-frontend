@@ -6,6 +6,7 @@ export interface User {
   username: string;
   password?: string;
   status?: boolean;
+  roll?: string;
 }
 
 export interface SigninData {
@@ -140,4 +141,27 @@ export interface TemplateSeven {
 export interface TemplateEight {
   id: string;
   description: string;
+}
+
+export interface Metodo {
+  cod_metodo: string;
+  metodo: string;
+  descripcion: string;
+}
+
+export interface Modulo {
+  cod_modulo: string;
+  modulo: string;
+}
+
+export interface Permiso {
+  _id?: string;
+  descripcion?: string;
+  cod_permiso?: string;
+  metodos?: Metodo[];
+  modulo?: Modulo;
+  permiso?: string;
+  ruta?: string;
+  status?: boolean;
+  routers?: string[];
 }

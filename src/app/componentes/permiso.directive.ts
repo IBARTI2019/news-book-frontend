@@ -1,13 +1,13 @@
-import { Directive, ElementRef, Input, Renderer2 } from '@angular/core';
-import { Router } from '@angular/router';
-import { Metodo, Permiso, Usuario } from 'app/seguridad/servicios/interface';
-import { UsuarioService } from "app/seguridad/servicios/usuario.service";
+import { Directive, ElementRef, Input, Renderer2 } from "@angular/core";
+import { Router } from "@angular/router";
+import { Metodo, Permiso, User } from "app/interfaces";
+import { SessionService } from "app/services/session.service";
 
 @Directive({
-  selector: '[appPermiso]'
+  selector: "[appPermiso]",
 })
 export class PermisoDirective {
-  usuario!: any | Usuario;
+  usuario!: User;
   @Input()
   ruta!: string;
   @Input()
@@ -15,45 +15,34 @@ export class PermisoDirective {
   @Input()
   ocultar: boolean = false;
 
-  constructor(private eleRef: ElementRef, private renderer: Renderer2, private usuarioService: UsuarioService, private router: Router) {
+  constructor(
+    private eleRef: ElementRef,
+    private renderer: Renderer2,
+    private sessionService: SessionService,
+    private router: Router
+  ) {
     this.ruta = this.ruta ? this.ruta : router.url.substring(1);
   }
 
   ngOnInit() {
-    this.usuario = this.usuarioService.actual();
-    if (this.usuario) {
-      let permisos = [];
-      let permisos_metodos = [];
-      return true
-      if (this.usuario.roll.SU === false) {
-        permisos = this.usuario.permisos.filter((permiso: any) => permiso?.routers ? permiso.routers.includes(this.ruta) : false);
-        if (permisos.length > 0) {
-          if (this.metodo) {
-            permisos_metodos = permisos?.filter((p: Permiso) => p.metodos.find((m: Metodo | any) => {
-              if (typeof this.metodo === 'object') {
-                return this.metodo.includes(m.metodo);
-              } else {
-                return this.metodo === m.metodo;
-              }
-            }));
-            if (permisos_metodos.length === 0) {
-              this.ocultarElemento();
-            }
-          }
-        } else {
-          this.ocultarElemento();
-        }
+    this.sessionService.actual().subscribe((user: User) => {
+      this.usuario = user;
+      if (this.usuario) {
+        let permisos = [];
+        let permisos_metodos = [];
+        return true;
+      } else {
+        this.ocultarElemento();
       }
-    } else {
-      this.ocultarElemento();
-    }
+    });
+    
   }
 
   ocultarElemento() {
     if (this.ocultar) {
-      this.renderer.setStyle(this.eleRef.nativeElement, 'display', 'none');
+      this.renderer.setStyle(this.eleRef.nativeElement, "display", "none");
     } else {
-      this.renderer.setAttribute(this.eleRef.nativeElement, 'disabled', 'true');
+      this.renderer.setAttribute(this.eleRef.nativeElement, "disabled", "true");
     }
   }
 }

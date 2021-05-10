@@ -90,13 +90,6 @@ export const AppRoutes: Routes = [
                 (m) => m.MaestroModule
               ),
           },
-          {
-            path: "seguridad",
-            loadChildren: () =>
-              import("app/seguridad/seguridad.module").then(
-                (m) => m.SeguridadModule
-              ),
-          },
         ],
       },
     ],

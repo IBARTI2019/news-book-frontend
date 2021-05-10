@@ -5,7 +5,6 @@ import { first, filter, map } from 'rxjs/operators';
 import { Location } from '@angular/common';
 import { pathFromRootConcat } from 'app/utils/function';
 import { GlobalService } from 'app/utils/global.service';
-import { Permiso } from 'app/seguridad/servicios/interface';
 
 /**
  * Componente para la creacion del header de los modulos
@@ -27,7 +26,6 @@ export class CardHeaderComponent implements OnInit, OnDestroy {
   @Input() link = "";
   // tslint:disable-next-line: no-input-rename
   @Input('link-menu') linkMenu = "";
-  item: Permiso = { metodos: [] };
   private menuSubscription: Subscription;
   urlMenu = "";
   breadcrumbs: {

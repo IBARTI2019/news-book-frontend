@@ -1,13 +1,11 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, CanActivateChild, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
-import { UsuarioService } from '../seguridad/servicios/usuario.service';
 import { ToastrService } from 'ngx-toastr';
-import { ABSOLUTE_PATH, GlobalService } from './global.service';
-import { pathFromRootConcat } from './function';
+import { GlobalService } from './global.service';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { Permiso } from 'app/seguridad/servicios/interface';
 import { API } from './api';
+import { SessionService } from 'app/services/session.service';
+import { Permiso } from 'app/interfaces';
 
 /**
  * Guard para validar las rutas con los workflows que estan en
@@ -35,7 +33,7 @@ export class PermisoGuard implements CanActivate, CanActivateChild {
     private router: Router,
     private globalService: GlobalService,
     private toastrService: ToastrService,
-    private usuarioService: UsuarioService
+    private sessionService: SessionService
   ) {
   }
 
@@ -48,12 +46,12 @@ export class PermisoGuard implements CanActivate, CanActivateChild {
 
   canActivateChild(childRoute: ActivatedRouteSnapshot, state: RouterStateSnapshot):
     Observable<boolean> | boolean | UrlTree | Observable<boolean | UrlTree> {
-    let actual: any = this.usuarioService.actual();
+    let actual: any = this.sessionService.actual();
 
     return true; //Quitar esto para gestionar permisos
     if ((childRoute.data && childRoute.data.omitirPermiso) || childRoute.routeConfig?.path === "inicio") {
       return true;
-    } else if (!this.usuarioService.isLoggedIn || actual === undefined) {
+    } else if (!this.sessionService.isLoggedIn || actual === undefined) {
       this.router.navigateByUrl('/login');
     }
     if (actual?.roll?.SU === true || childRoute.routeConfig?.path === "") {

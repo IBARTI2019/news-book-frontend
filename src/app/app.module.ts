@@ -15,7 +15,6 @@ import { AppSidebarComponent } from './layouts/full/sidebar/sidebar.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DemoMaterialModule } from './demo-material-module';
 import { ComponentesModule } from "app/componentes/componentes.module";
-import { SeguridadModule } from "app/seguridad/seguridad.module";
 import { SharedModule } from './shared/shared.module';
 import { MatTabsModule } from '@angular/material/tabs'; 
 import { SpinnerComponent } from './shared/spinner.component';
@@ -42,7 +41,6 @@ import { LayoutModule } from '@angular/cdk/layout';
     MatTabsModule,
     BrowserAnimationsModule,
     DemoMaterialModule,
-    SeguridadModule,
     FormsModule,
     FlexLayoutModule,
     HttpClientModule,

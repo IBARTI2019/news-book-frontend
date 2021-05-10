@@ -1,7 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { SessionService } from "app/services/session.service";
 import { Router } from "@angular/router";
-import { Usuario } from "app/seguridad/servicios/interface";
 import { ToastrService } from "ngx-toastr";
 import { HttpErrorResponse } from "@angular/common/http";
 import { SigninData, VerifyCodeResponse } from "app/interfaces";
@@ -20,7 +19,6 @@ export class LoginComponent implements OnInit {
   sendCodeSucces = false;
   verifyCodeSubmit = false;
   showVerifyCode = false;
-  usuario: Usuario = {};
   hide = false;
   constructor(
     private router: Router,

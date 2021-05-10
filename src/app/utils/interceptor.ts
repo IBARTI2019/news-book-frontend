@@ -2,13 +2,11 @@ import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
-import { UsuarioService } from 'app/seguridad/servicios/usuario.service';
-import { Router } from '@angular/router';
 import { API } from './api';
 
 @Injectable()
 export class Error401Interceptor implements HttpInterceptor {
-  constructor(private usuarioService: UsuarioService, private router: Router) {
+  constructor() {
   }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
