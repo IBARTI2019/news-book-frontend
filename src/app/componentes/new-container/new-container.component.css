@@ -14,3 +14,9 @@ mat-card-content {
   cursor: pointer;
   border-radius: 8px 8px 0px 0px;
 }
+
+app-info-button {
+  position: absolute;
+  left: 0;
+  top: 0;
+}

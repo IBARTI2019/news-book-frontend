@@ -1,0 +1,13 @@
+#infoButtonContainer {
+  width: min-content;
+  height: min-content;
+  /* background-color: rgb(82 82 82 / 54%); */
+  border-radius: 5px;
+}
+
+.mat-icon-button {
+  width: 50px;
+  height: 50px;
+  color: #1e88e5;
+  font-size: 35px;
+}

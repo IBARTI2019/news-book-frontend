@@ -10,7 +10,8 @@
           description="{{ typeNew.descripton }}"
           idTN="{{ typeNew.id_type_news }}"
           template="{{ typeNew.plantilla }}"
-          prevUrl = "crear"
+          prevUrl="crear"
+          [info]="typeNew.info"
         ></app-new-container>
       </mat-card-content>
     </mat-card>

@@ -23,9 +23,12 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { NewContainerComponent } from './new-container/new-container.component';
 import { ValidateOesvicaTokenComponent } from './validate-oesvica-token/validate-oesvica-token.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { InfoDialogComponent } from './info-dialog/info-dialog.component';
+import { InfoButtonComponent } from './info-button/info-button.component';
 export const entryComponentes = [
   ConfirmDialogComponent,
   ValidateOesvicaTokenComponent,
+  InfoDialogComponent,
 ];
 
 @NgModule({
@@ -38,6 +41,8 @@ export const entryComponentes = [
     PermisoDirective,
     NewContainerComponent,
     ValidateOesvicaTokenComponent,
+    InfoDialogComponent,
+    InfoButtonComponent,
   ],
   exports: [
     GenericTableComponent,
@@ -47,6 +52,7 @@ export const entryComponentes = [
     ConfirmDialogComponent,
     PermisoDirective,
     ValidateOesvicaTokenComponent,
+    InfoButtonComponent,
   ],
   imports: [
     CommonModule,

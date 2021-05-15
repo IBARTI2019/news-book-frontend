@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from "@angular/core";
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
-import { ToastrService } from 'ngx-toastr';
+import { ToastrService } from "ngx-toastr";
 
 @Component({
   selector: "app-validate-oesvica-token",
@@ -21,10 +21,10 @@ export class ValidateOesvicaTokenComponent implements OnInit {
   }
 
   validate() {
-    console.log(this. data)
+    console.log(this.data);
     if (this.data) {
-      this.toastr.success('Verificado!');
-    this.dialogRef.close(true);
+      this.toastr.success("Verificado!");
+      this.dialogRef.close(true);
     }
   }
 }

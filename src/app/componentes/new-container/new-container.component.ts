@@ -18,6 +18,7 @@ export class NewContainerComponent implements OnInit {
   @Input() prevUrl = "";
   @Input() idTN = "";
   @Input() allowNavigate = true;
+  @Input() info = ""
 
   url = "";
 

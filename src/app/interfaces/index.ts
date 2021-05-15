@@ -78,6 +78,7 @@ export interface TypeNew {
   plantilla: string;
   status: string;
   imageUrl?: string;
+  info?: string;
 }
 
 export interface ClassificationNew {
