@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 
 import { MenuItems } from './menu-items/menu-items';
 import { AccordionAnchorDirective, AccordionLinkDirective, AccordionDirective } from './accordion';
-import { NotFountComponent } from './not-fount/not-fount.component';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 
 @NgModule({
@@ -10,12 +10,13 @@ import { NotFountComponent } from './not-fount/not-fount.component';
     AccordionAnchorDirective,
     AccordionLinkDirective,
     AccordionDirective,
-    NotFountComponent
+    NotFoundComponent
   ],
   exports: [
     AccordionAnchorDirective,
     AccordionLinkDirective,
-    AccordionDirective
+    AccordionDirective,
+    NotFoundComponent,
   ],
   providers: [MenuItems]
 })

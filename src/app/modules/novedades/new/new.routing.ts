@@ -34,7 +34,7 @@ export const NewRouting: Routes = [
         component: NewComponent,
       },
       {
-        path: "crear/:template",
+        path: "crear/:idTN",
         data: {
           breadcrumbAnt: {
             label: "Novedades",

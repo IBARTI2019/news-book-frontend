@@ -16,6 +16,7 @@ export class NewContainerComponent implements OnInit {
   @Input() altNew = "ke c llo";
   @Input() template = "";
   @Input() prevUrl = "";
+  @Input() idTN = "";
   @Input() allowNavigate = true;
 
   url = "";
@@ -28,7 +29,7 @@ export class NewContainerComponent implements OnInit {
     );
 
     if (templateNew.length) {
-      this.url = templateNew[0].url
+      this.url = this.idTN
     }
   }
 
@@ -45,7 +46,7 @@ export class NewContainerComponent implements OnInit {
   }
 
   navigate() {
-    if (this.allowNavigate) {
+    if (this.allowNavigate && this.url) {
       // console.log(this.link)
       // console.log("Router: ", this.router.routerState.snapshot);
       this.router.navigate([

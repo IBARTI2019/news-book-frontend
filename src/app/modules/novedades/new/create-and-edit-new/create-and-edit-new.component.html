@@ -4,7 +4,42 @@
       <app-card-header modulo="Novedades" menu="Crear Novedad">
       </app-card-header>
       <mat-card-content>
-        
+        <app-template-one
+          *ngIf="showOne"
+          (tSubmit)="onSubmit($event)"
+          [method]="update ? 'update' : 'create'"
+        ></app-template-one>
+        <app-template-two
+          *ngIf="showTwo"
+          (submit)="onSubmit($event)"
+        ></app-template-two>
+        <app-template-three
+          *ngIf="showThree"
+          (submit)="onSubmit($event)"
+        ></app-template-three>
+        <app-template-four
+          *ngIf="showFour"
+          (submit)="onSubmit($event)"
+        ></app-template-four>
+        <app-template-five
+          *ngIf="showFive"
+          (submit)="onSubmit($event)"
+        ></app-template-five>
+        <app-template-six
+          *ngIf="showSix"
+          (submit)="onSubmit($event)"
+        ></app-template-six>
+        <app-template-seven
+          *ngIf="showSeven"
+          (submit)="onSubmit($event)"
+        ></app-template-seven>
+        <app-template-eight
+          *ngIf="showEight"
+          (submit)="onSubmit($event)"
+        ></app-template-eight>
+        <app-not-found
+          *ngIf="showNotFound"
+        ></app-not-found>
       </mat-card-content>
     </mat-card>
   </div>

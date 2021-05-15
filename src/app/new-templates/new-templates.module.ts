@@ -22,6 +22,7 @@ import { TemplateFiveComponent } from './template-five/template-five.component';
 import { TemplateSixComponent } from './template-six/template-six.component';
 import { TemplateSevenComponent } from './template-seven/template-seven.component';
 import { TemplateEightComponent } from './template-eight/template-eight.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 @NgModule({
   declarations: [
@@ -61,6 +62,7 @@ import { TemplateEightComponent } from './template-eight/template-eight.componen
     MatProgressSpinnerModule,
     FormsModule,
     ReactiveFormsModule,
+    MatFormFieldModule,
   ],
   entryComponents: [],
   providers: []

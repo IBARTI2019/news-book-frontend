@@ -2,7 +2,7 @@ import { Routes } from "@angular/router";
 
 import { FullComponent } from "./layouts/full/full.component";
 import { LoginComponent } from "./seguridad/login/login.component";
-import { NotFountComponent } from "./shared/not-fount/not-fount.component";
+import { NotFoundComponent } from "./shared/not-found/not-found.component";
 import { PermisoGuard } from "./utils/permiso.guard";
 
 export const AppRoutes: Routes = [
@@ -96,6 +96,6 @@ export const AppRoutes: Routes = [
   },
   {
     path: "**",
-    component: NotFountComponent,
+    component: NotFoundComponent,
   },
 ];

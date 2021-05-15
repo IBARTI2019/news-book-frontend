@@ -90,12 +90,9 @@ export interface ClassificationNew {
 
 export interface New {
   id_news: string;
-  notice: string;
+  notice?: string;
   id_user: string;
-  ced_notifica: string;
-  nombres_apellidos: string;
-  id_type_news: string;
-  createdAt: string;
+  id_type_news?: string;
   fecha?: Date;
   hora?: string;
 }

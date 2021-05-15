@@ -22,6 +22,8 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSelectModule } from '@angular/material/select';
 import { MatIconModule } from '@angular/material/icon';
+import { NewTemplatesModule } from '../../../new-templates/new-templates.module'
+import { SharedModule } from 'app/shared/shared.module';
 
 
 
@@ -47,7 +49,9 @@ import { MatIconModule } from '@angular/material/icon';
     MatDialogModule,
     MatCheckboxModule,
     MatSelectModule,
-    MatIconModule
+    MatIconModule,
+    NewTemplatesModule,
+    SharedModule,
   ]
 })
 export class NewModule { }
