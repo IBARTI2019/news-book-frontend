@@ -5,7 +5,7 @@ import { DashboardComponent } from './dashboard.component';
 export const DashboardRoutes: Routes = [
   {
     path: '',
-    data: { omitirPermiso: true },
+    data: { skipPermission: true },
     redirectTo: 'inicio'
   }, {
     path: 'inicio',

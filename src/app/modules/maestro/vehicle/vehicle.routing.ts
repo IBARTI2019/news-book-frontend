@@ -13,7 +13,7 @@ export const VehicleRouting: Routes = [
           breadcrumb: {
             label: "Vehiculos",
           },
-          omitirPermiso: true,
+          skipPermission: true,
         },
         component: VehicleComponent,
       },
@@ -28,7 +28,7 @@ export const VehicleRouting: Routes = [
           breadcrumb: {
             label: "Crear Vehiculos",
           },
-          omitirPermiso: true,
+          skipPermission: true,
         },
         component: CreateAndEditVehicleComponent,
       },
@@ -43,7 +43,7 @@ export const VehicleRouting: Routes = [
           breadcrumb: {
             label: "Editar Vehiculos",
           },
-          omitirPermiso: true,
+          skipPermission: true,
         },
         component: CreateAndEditVehicleComponent,
       },

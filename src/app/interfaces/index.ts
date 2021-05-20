@@ -6,7 +6,7 @@ export interface User {
   username: string;
   password?: string;
   status?: boolean;
-  roll?: string;
+  rol?: string;
 }
 
 export interface SigninData {

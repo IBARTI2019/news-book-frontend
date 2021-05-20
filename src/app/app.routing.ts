@@ -14,7 +14,7 @@ export const AppRoutes: Routes = [
       {
         path: "",
         component: LoginComponent,
-        data: { omitirPermiso: true },
+        data: { skipPermission: true },
       },
       {
         path: "inicio",

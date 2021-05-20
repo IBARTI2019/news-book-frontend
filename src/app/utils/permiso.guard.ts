@@ -12,14 +12,14 @@ import { Permiso } from 'app/interfaces';
  * base de datos.
  *
  * Si queremos que una ruta no este bajo esta validacion debemos
- * colocar en la data de la url el atributo `omitirPermiso:true`
+ * colocar en la data de la url el atributo `skipPermission:true`
  * Ejemplo:
  * ```
  * {
  *    path: 'inicio',
  *    children: [
- *       { path: '', data: { omitirPermiso: true }, component: InicioComponent, resolve: { items: RutasResolve } },
- *       { path: ':titulo/:id', data: { omitirPermiso: true }, component: InicioComponent, resolve: { items: RutasResolve } },
+ *       { path: '', data: { skipPermission: true }, component: InicioComponent, resolve: { items: RutasResolve } },
+ *       { path: ':titulo/:id', data: { skipPermission: true }, component: InicioComponent, resolve: { items: RutasResolve } },
  *     ]
  * },
  * ```
@@ -49,7 +49,7 @@ export class PermisoGuard implements CanActivate, CanActivateChild {
     let actual: any = this.sessionService.actual();
 
     return true; //Quitar esto para gestionar permisos
-    if ((childRoute.data && childRoute.data.omitirPermiso) || childRoute.routeConfig?.path === "inicio") {
+    if ((childRoute.data && childRoute.data.skipPermission) || childRoute.routeConfig?.path === "inicio") {
       return true;
     } else if (!this.sessionService.isLoggedIn || actual === undefined) {
       this.router.navigateByUrl('/login');

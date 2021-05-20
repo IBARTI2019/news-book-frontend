@@ -14,7 +14,7 @@ export const GestionRoutes: Routes = [
                     breadcrumb: {
                         label: 'Lista Adress'
                     },
-                    omitirPermiso:true
+                    skipPermission:true
                 },
                 component: UsuarioComponent,
             },
@@ -29,7 +29,7 @@ export const GestionRoutes: Routes = [
                     breadcrumb: {
                         label: "Crear ListaAdress"
                     }, 
-                    omitirPermiso:true
+                    skipPermission:true
                 },
                 component: UsuarioCrearComponent
             },
@@ -44,7 +44,7 @@ export const GestionRoutes: Routes = [
                     breadcrumb: {
                         label: "Editar List Emails"
                     }, 
-                    omitirPermiso:true
+                    skipPermission:true
                 },
                 component: UsuarioEditarComponent
             }

@@ -14,7 +14,7 @@ export const TypePeopleRouting: Routes = [
           breadcrumb: {
             label: "Tipoe de Personas",
           },
-          omitirPermiso: true,
+          skipPermission: true,
         },
         component: TypePeopleComponent,
       },
@@ -29,7 +29,7 @@ export const TypePeopleRouting: Routes = [
           breadcrumb: {
             label: "Crear Tipo",
           },
-          omitirPermiso: true,
+          skipPermission: true,
         },
         component: CreateAndEditTypePeopleComponent,
       },
@@ -44,7 +44,7 @@ export const TypePeopleRouting: Routes = [
           breadcrumb: {
             label: "Editar Tipo",
           },
-          omitirPermiso: true,
+          skipPermission: true,
         },
         component: CreateAndEditTypePeopleComponent,
       },

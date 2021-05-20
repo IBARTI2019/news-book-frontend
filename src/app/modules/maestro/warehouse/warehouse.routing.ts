@@ -13,7 +13,7 @@ export const WarehouseRoutes: Routes = [
                     breadcrumb: {
                         label: 'Almacen',
                     },
-                    omitirPermiso:true,
+                    skipPermission:true,
                 },
                 component: WarehouseComponent,
             },
@@ -28,7 +28,7 @@ export const WarehouseRoutes: Routes = [
                     breadcrumb: {
                         label: "Crear Almacen"
                     }, 
-                    omitirPermiso:true,
+                    skipPermission:true,
                 },
                 component: CreateAndEditComponent,
             },
@@ -43,7 +43,7 @@ export const WarehouseRoutes: Routes = [
                     breadcrumb: {
                         label: "Editar Almacen",
                     }, 
-                    omitirPermiso:true,
+                    skipPermission:true,
                 },
                 component: CreateAndEditComponent,
             },

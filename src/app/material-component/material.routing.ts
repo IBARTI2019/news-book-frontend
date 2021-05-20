@@ -20,82 +20,82 @@ import { SlideToggleComponent } from './slide-toggle/slide-toggle.component';
 export const MaterialRoutes: Routes = [
   {
     path: 'button',
-    data: { omitirPermiso: true },
+    data: { skipPermission: true },
     component: ButtonsComponent
   },
   {
     path: 'grid',
-    data: { omitirPermiso: true },
+    data: { skipPermission: true },
     component: GridComponent
   },
   {
     path: 'lists',
-    data: { omitirPermiso: true },
+    data: { skipPermission: true },
     component: ListsComponent
   },
   {
     path: 'menu',
-    data: { omitirPermiso: true },
+    data: { skipPermission: true },
     component: MenuComponent
   },
   {
     path: 'tabs',
-    data: { omitirPermiso: true },
+    data: { skipPermission: true },
     component: TabsComponent
   },
   {
     path: 'stepper',
-    data: { omitirPermiso: true },
+    data: { skipPermission: true },
     component: StepperComponent
   },
   {
     path: 'expansion',
-    data: { omitirPermiso: true },
+    data: { skipPermission: true },
     component: ExpansionComponent
   },
   {
     path: 'chips',
-    data: { omitirPermiso: true },
+    data: { skipPermission: true },
     component: ChipsComponent
   },
   {
     path: 'toolbar',
-    data: { omitirPermiso: true },
+    data: { skipPermission: true },
     component: ToolbarComponent
   },
   {
     path: 'progress-snipper',
-    data: { omitirPermiso: true },
+    data: { skipPermission: true },
     component: ProgressSnipperComponent
   },
   {
     path: 'progress',
-    data: { omitirPermiso: true },
+    data: { skipPermission: true },
     component: ProgressComponent
   },
   {
     path: 'dialog',
-    data: { omitirPermiso: true },
+    data: { skipPermission: true },
     component: DialogComponent
   },
   {
     path: 'tooltip',
-    data: { omitirPermiso: true },
+    data: { skipPermission: true },
     component: TooltipComponent
   },
   {
     path: 'snackbar',
-    data: { omitirPermiso: true },
+    data: { skipPermission: true },
     component: SnackbarComponent
   },
   {
     path: 'slider',
-    data: { omitirPermiso: true },
+    data: { skipPermission: true },
     component: SliderComponent
   },
   {
     path: 'slide-toggle',
-    data: { omitirPermiso: true },
+    data: { skipPermission: true },
     component: SlideToggleComponent
   }
 ];

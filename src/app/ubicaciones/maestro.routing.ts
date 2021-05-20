@@ -14,7 +14,7 @@ export const GestionRoutes: Routes = [
                     breadcrumb: {
                         label: 'Plantilas'
                     },
-                    omitirPermiso:true
+                    skipPermission:true
                 },
                 component: UsuarioComponent,
             },
@@ -29,7 +29,7 @@ export const GestionRoutes: Routes = [
                     breadcrumb: {
                         label: "Crear Plantillas"
                     }, 
-                    omitirPermiso:true
+                    skipPermission:true
                 },
                 component: UsuarioCrearComponent
             },
@@ -44,7 +44,7 @@ export const GestionRoutes: Routes = [
                     breadcrumb: {
                         label: "Editar Plantillas"
                     }, 
-                    omitirPermiso:true
+                    skipPermission:true
                 },
                 component: UsuarioEditarComponent
             }
