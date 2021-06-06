@@ -118,6 +118,7 @@ export class SessionService extends API<User> {
     if (token) {
       let decode: any = jwt_decode(String(token));
       this.$user = new Observable<User>(decode);
+      console.log(decode)
       return this.$user;
     }
     return new Observable<User>();

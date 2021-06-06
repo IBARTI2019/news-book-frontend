@@ -4,6 +4,7 @@ import { FullComponent } from "./layouts/full/full.component";
 import { LoginComponent } from "./seguridad/login/login.component";
 import { NotFoundComponent } from "./shared/not-found/not-found.component";
 import { PermisoGuard } from "./utils/permiso.guard";
+import { ADMIN, VIEW } from "./constants";
 
 export const AppRoutes: Routes = [
   {
@@ -17,8 +18,10 @@ export const AppRoutes: Routes = [
         data: { skipPermission: true },
       },
       {
-        path: "inicio",
+        path: "",
         component: FullComponent,
+        data: { skipPermission: true, giveAccess: [ADMIN, VIEW] },
+        canActivateChild: [PermisoGuard],
         children: [
           {
             path: "",

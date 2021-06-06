@@ -96,6 +96,7 @@ export interface New {
   id_type_news?: string;
   fecha?: Date;
   hora?: string;
+  datos?: object;
 }
 
 export interface TemplateOne {

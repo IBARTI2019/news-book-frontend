@@ -23,7 +23,7 @@ export const NewRouting: Routes = [
         data: {
           breadcrumbAnt: {
             label: "Novedades",
-            url: "inicio/new",
+            url: "new",
             params: [],
           },
           breadcrumb: {
@@ -38,7 +38,7 @@ export const NewRouting: Routes = [
         data: {
           breadcrumbAnt: {
             label: "Novedades",
-            url: "inicio/new/crear",
+            url: "new/crear",
             params: [],
           },
           breadcrumb: {
@@ -49,11 +49,11 @@ export const NewRouting: Routes = [
         component: CreateAndEditNewComponent,
       },
       {
-        path: ":id",
+        path: "editar/:id",
         data: {
           breadcrumbAnt: {
             label: "Novedades",
-            url: "inicio/new",
+            url: "new",
             params: [],
           },
           breadcrumb: {

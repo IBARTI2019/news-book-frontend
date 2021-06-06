@@ -42,6 +42,7 @@ export class CreateAndEditTypeNewComponent implements OnInit {
     this.fg = this.fb.group(
       {
         descripton: ["", Validators.required],
+        info: ["", Validators.required],
         id_classify: ["", Validators.required],
         plantilla: ["", Validators.required],
         status: [true, Validators.required],
@@ -89,6 +90,7 @@ export class CreateAndEditTypeNewComponent implements OnInit {
   getTypeNew() {
     this.typeNewsService.get(this.id).subscribe((data: TypeNew) => {
       this.fg.get("descripton")!.setValue(data.descripton);
+      this.fg.get("info")!.setValue(data.info);
       this.fg.get("id_classify")!.setValue(data.id_classify);
       this.fg.get("plantilla")!.setValue(data.plantilla);
       this.fg.get("status")!.setValue(data.status);

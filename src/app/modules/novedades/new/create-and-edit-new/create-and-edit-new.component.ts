@@ -36,6 +36,7 @@ export class CreateAndEditNewComponent implements OnInit {
     id_news: "",
     id_user: "",
     id_type_news: "",
+    datos: {},
   };
 
   constructor(
@@ -62,7 +63,7 @@ export class CreateAndEditNewComponent implements OnInit {
         this.setShowCorrespondent();
       },
       (error: HttpErrorResponse) => {
-        this.setShowCorrespondent()
+        this.setShowCorrespondent();
         this.toastr.error(
           error.error.message || "No se pudo obtener el tipo de novedad."
         );
@@ -102,8 +103,9 @@ export class CreateAndEditNewComponent implements OnInit {
   }
 
   onSubmit(data: object) {
-    console.log(data);
-    this.submitted = true
+    this.currentNew.datos = { ...data };
+    console.log(data, this.currentNew);
+    this.submitted = true;
     this.update ? this.updateNew(data) : this.save(data);
   }
 
@@ -112,7 +114,7 @@ export class CreateAndEditNewComponent implements OnInit {
       (data) => {
         this.toastr.success("Novedad creada con éxito.");
         this.submitted = false;
-        this.router.navigate(["inicio/new"]);
+        this.router.navigate(["new"]);
       },
       (error: HttpErrorResponse) => {
         this.toastr.error(
@@ -127,7 +129,7 @@ export class CreateAndEditNewComponent implements OnInit {
       (data) => {
         this.toastr.success("La Novedad se actualizo correctamente.");
         this.submitted = false;
-        this.router.navigate(["inicio/new"]);
+        this.router.navigate(["new"]);
       },
       (error: HttpErrorResponse) => {
         this.toastr.error(
