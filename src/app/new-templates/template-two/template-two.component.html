@@ -1,1 +1,34 @@
-<p>template-two works!</p>
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>{{ name }}</mat-card-title>
+    <mat-card-subtitle>{{ operation }}</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <form [formGroup]="fg" fxLayout="column" fxLayoutGap="5px" #formT>
+      <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="5px">
+        <mat-form-field>
+          <mat-label>Noticia</mat-label>
+          <textarea matInput formControlName="notice"></textarea>
+        </mat-form-field>
+      </div>
+    </form>
+    <div>
+      <mat-list style="max-height: 450px; overflow-y: auto;">
+        <div mat-subheader>Placas Seleccionadas</div>
+        <mat-list-item *ngFor="let plate of selectedPlates; let i = index">
+          <mat-icon mat-list-icon>directions_car</mat-icon>
+          <div mat-line>{{ plate }}</div>
+          <button mat-icon-button (click)="deselect(i)">
+            <mat-icon mat-list-icon>close</mat-icon>
+          </button>
+          <mat-divider></mat-divider>
+        </mat-list-item>
+      </mat-list>
+    </div>
+  </mat-card-content>
+  <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="end">
+    <button mat-raised-button color="primary" (click)="onSubmit()">
+      {{ update ? "Actualizar" : "Crear" }}
+    </button>
+  </mat-card-actions>
+</mat-card>

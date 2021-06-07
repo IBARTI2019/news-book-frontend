@@ -107,12 +107,13 @@ export interface TemplateOne {
   sCI: string;
 }
 
-export interface TemplateTwo {
+export interface TemplateTwoVehicle {
   id: string;
-  description: string;
+  notice: string;
+  vehiculos: string[];
 }
 
-export interface TemplateThree {
+export interface TemplateThreeMaterials {
   id: string;
   description: string;
 }

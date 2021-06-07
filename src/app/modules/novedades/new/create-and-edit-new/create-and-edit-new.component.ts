@@ -27,6 +27,7 @@ export class CreateAndEditNewComponent implements OnInit {
     name: "",
     id: "",
     url: "",
+    operation: "",
   };
   update = false;
   submitted = false;
@@ -52,11 +53,11 @@ export class CreateAndEditNewComponent implements OnInit {
     this.typeNewService.get(this.idTN).subscribe(
       (typeNew: TypeNew) => {
         if (typeNew) {
-          const template = TemplatesNew.filter(
+          this.template = TemplatesNew.filter(
             (currentTemplate) => currentTemplate.name === typeNew.plantilla
           )[0];
-          if (template) {
-            this.templateUrl = template.url;
+          if (this.template) {
+            this.templateUrl = this.template.url;
             this.currentNew.id_type_news = typeNew.id_type_news;
           }
         }

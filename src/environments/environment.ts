@@ -14,6 +14,7 @@ export interface TemplateNew {
   name: string;
   url: string;
   id: string;
+  operation: string
 }
 
 export const TemplatesNew: TemplateNew[] = [
@@ -21,40 +22,60 @@ export const TemplatesNew: TemplateNew[] = [
     name: 'Plantilla_1',
     url: 'template-one',
     id: 'templateOne',
+    operation: 'N/A',
   },
   {
-    name: 'Plantilla_2',
+    name: 'Entrada de Vehiculos',
     url: 'template-two',
-    id: 'templateTwo',
+    id: 'templateTwoIn',
+    operation: 'ENTRADA',
   },
   {
-    name: 'Plantilla_3',
+    name: 'Salida de Vehiculos',
+    url: 'template-two',
+    id: 'templateTwoOut',
+    operation: 'SALIDA',
+  },
+  {
+    name: 'Entrada de Materiales',
     url: 'template-three',
-    id: 'templateThree',
+    id: 'templateThreeIn',
+    operation: 'ENTRADA',
+  },
+  {
+    name: 'Salida de Materiales',
+    url: 'template-three',
+    id: 'templateThereOut',
+    operation: 'SALIDA',
   },
   {
     name: 'Plantilla_4',
     url: 'template-four',
     id: 'templateFour',
+    operation: 'N/A',
   },
   {
     name: 'Plantilla_5',
     url: 'template-five',
     id: 'templateFive',
+    operation: 'N/A',
   },
   {
     name: 'Plantilla_6',
     url: 'template-six',
     id: 'templateSix',
+    operation: 'N/A',
   },
   {
     name: 'Plantilla_7',
     url: 'template-seven',
     id: 'templateSeven',
+    operation: 'N/A',
   },
   {
     name: 'Plantilla_8',
     url: 'template-eight',
     id: 'templateEight',
+    operation: 'N/A',
   },
 ]

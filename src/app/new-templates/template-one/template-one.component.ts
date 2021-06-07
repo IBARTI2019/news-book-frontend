@@ -12,6 +12,8 @@ import { ToastrService } from "ngx-toastr";
 export class TemplateOneComponent implements OnInit {
   @Output() tSubmit = new EventEmitter<TemplateOne>();
   @Input() method: string = "view";
+  @Input() name: string = '';
+  @Input() operation: string = '';
   @Input() data: TemplateOne = {
     id: "",
     perimetro: "",
@@ -28,7 +30,7 @@ export class TemplateOneComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private toastr: ToastrService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
   ) {
     this.fg = this.fb.group({});
   }
