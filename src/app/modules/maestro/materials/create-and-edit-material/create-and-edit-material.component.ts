@@ -57,13 +57,14 @@ export class CreateAndEditMaterialComponent implements OnInit {
       return;
     }
     this.submitted = true;
+    console.log('Que pasa?')
     this.update ? this.updateMaterial : this.save();
   }
 
   onReset() {
     this.submitted = false;
     this.fg.reset();
-    // this.router.navigate(['inicio/materials']);
+    this.router.navigate(['materials']);
   }
 
   save() {
@@ -72,7 +73,7 @@ export class CreateAndEditMaterialComponent implements OnInit {
         this.toastr.success("Datos del Material creado con éxito");
         this.submitted = false;
         this.fg.reset();
-        this.router.navigate(["inicio/materials"]);
+        this.router.navigate(["materials"]);
       },
       (error: HttpErrorResponse) => {
         this.submitted = false;
@@ -103,7 +104,7 @@ export class CreateAndEditMaterialComponent implements OnInit {
         this.toastr.success("Datos Material  actualizado");
         this.submitted = false;
         this.fg.reset();
-        this.router.navigate(["inicio/materials"]);
+        this.router.navigate(["materials"]);
       },
       (error: HttpErrorResponse) => {
         this.submitted = false;
