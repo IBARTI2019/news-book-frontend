@@ -117,7 +117,8 @@ export interface TemplateTwoVehicle {
 
 export interface TemplateThreeMaterials {
   id: string;
-  description: string;
+  notice: string;
+  materiales: string[];
 }
 
 export interface TemplateFour {

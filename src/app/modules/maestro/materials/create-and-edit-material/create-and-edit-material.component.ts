@@ -18,6 +18,8 @@ export class CreateAndEditMaterialComponent implements OnInit {
   warehouses: Warehouse[] = [];
   update = false;
   id = "";
+  routeState: any;
+  redirectTo = "";
 
   constructor(
     private materialService: MaterialsService,
@@ -28,10 +30,12 @@ export class CreateAndEditMaterialComponent implements OnInit {
     private route: ActivatedRoute
   ) {
     this.fg = this.fb.group({});
+    this.routeState = history.state
   }
 
   ngOnInit() {
     this.id = this.route.snapshot.params.id;
+    this.redirectTo = this.routeState.redirectTo || ""
     this.warehouseService.list().subscribe((data: Warehouse[]) => {
       this.warehouses = [...data];
     });
@@ -64,7 +68,7 @@ export class CreateAndEditMaterialComponent implements OnInit {
   onReset() {
     this.submitted = false;
     this.fg.reset();
-    this.router.navigate(['materials']);
+    this.router.navigate([this.redirectTo || "materials"]);
   }
 
   save() {
@@ -73,7 +77,7 @@ export class CreateAndEditMaterialComponent implements OnInit {
         this.toastr.success("Datos del Material creado con éxito");
         this.submitted = false;
         this.fg.reset();
-        this.router.navigate(["materials"]);
+        this.router.navigate([this.redirectTo || "materials"]);
       },
       (error: HttpErrorResponse) => {
         this.submitted = false;
