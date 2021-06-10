@@ -56,7 +56,7 @@ export class CreateAndEditVehicleComponent implements OnInit {
       this.submitted = false;
       return;
     }
-    this.update ? this.updateVehicle : this.save();
+    this.update ? this.updateVehicle() : this.save();
   }
 
   onReset() {

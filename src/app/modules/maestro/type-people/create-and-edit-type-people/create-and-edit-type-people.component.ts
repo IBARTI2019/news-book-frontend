@@ -94,7 +94,7 @@ export class CreateAndEditTypePeopleComponent implements OnInit {
         this.toastr.success("El Tipo de Persona se actualizo correctamente.");
         this.submitted = false;
         this.fg.reset();
-        this.router.navigate(["type-persons/maestro"]);
+        this.router.navigate(["type-people"]);
       },
       (error: HttpErrorResponse) => {
         this.toastr.error(

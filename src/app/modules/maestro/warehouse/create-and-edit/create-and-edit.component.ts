@@ -95,7 +95,7 @@ export class CreateAndEditComponent implements OnInit {
         this.toastr.success('El almacen se ha actualizado satisfactoriamente!');
         this.submitted = false;
         this.fg.reset();
-        this.router.navigate(['inicio/warehouse']);
+        this.router.navigate(['warehouse']);
       },
       (error: HttpErrorResponse) => {
         this.submitted = false;

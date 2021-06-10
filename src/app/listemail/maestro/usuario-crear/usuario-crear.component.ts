@@ -69,7 +69,7 @@ export class UsuarioCrearComponent implements OnInit {
         this.toastr.success('Plantilla creada con éxito');
         this.submitted = false;
         this.fg.reset();
-        this.router.navigate(['inicio/listemail/maestro']);
+        this.router.navigate(['listemail/maestro']);
       },
       (result: any) => {
         this.errors = result.errors;

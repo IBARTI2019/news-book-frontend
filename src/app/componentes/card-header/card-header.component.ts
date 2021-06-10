@@ -35,7 +35,7 @@ export class CardHeaderComponent implements OnInit, OnDestroy {
   }[] = [];
   private subscription: Subscription;
   private INICIO = {
-    url: '/inicio',
+    url: '/',
     label: 'Inicio',
     params: []
   };

@@ -61,7 +61,7 @@ export class UsuarioEditarComponent implements OnInit {
   onReset() {
     this.submitted = false;
     this.fg.reset();
-    this.router.navigate(['inicio/listemail/maestro']);
+    this.router.navigate(['listemail/maestro']);
   }
 
   getUsuario() {
@@ -80,7 +80,7 @@ export class UsuarioEditarComponent implements OnInit {
         this.toastr.success('Datos Actualizado');
         this.submitted = false;
         this.fg.reset();
-        this.router.navigate(['inicio/listemail/maestro']);
+        this.router.navigate(['listemail/maestro']);
       },
       (result: any) => {
         this.errors = result.errors;

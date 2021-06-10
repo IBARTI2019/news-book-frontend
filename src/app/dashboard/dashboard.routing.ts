@@ -6,9 +6,9 @@ export const DashboardRoutes: Routes = [
   {
     path: '',
     data: { skipPermission: true },
-    redirectTo: 'inicio'
+    redirectTo: ''
   }, {
-    path: 'inicio',
+    path: '',
     component: DashboardComponent
   }
 ];
