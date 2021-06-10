@@ -24,6 +24,7 @@ import { TemplateSevenComponent } from './template-seven/template-seven.componen
 import { TemplateEightComponent } from './template-eight/template-eight.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatListModule } from '@angular/material/list';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
 @NgModule({
   declarations: [
@@ -65,6 +66,7 @@ import { MatListModule } from '@angular/material/list';
     ReactiveFormsModule,
     MatFormFieldModule,
     MatListModule,
+    Ng2SearchPipeModule,
   ],
   entryComponents: [],
   providers: []

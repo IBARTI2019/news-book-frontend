@@ -101,6 +101,7 @@ export interface New {
 
 export interface TemplateOne {
   id: string;
+  notice: string;
   perimetro: string;
   alumbrado: string;
   alarmas: string;

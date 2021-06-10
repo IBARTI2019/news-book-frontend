@@ -1,7 +1,17 @@
 <mat-card>
+    <mat-card-header>
+        <mat-card-title>{{ name }}</mat-card-title>
+        <button mat-icon-button color="primary" (click)="onReset()" [disabled]="submitted">
+          <mat-icon mat-list-icon>loop</mat-icon>
+        </button>
+      </mat-card-header>
     <mat-card-content>
         <form [formGroup]="fg" fxLayout="column" fxLayoutGap="5px" #formT>
             <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="5px">
+                <mat-form-field>
+                    <mat-label>Noticia</mat-label>
+                    <textarea matInput formControlName="notice"></textarea>
+                </mat-form-field>
                 <mat-form-field>
                     <mat-label>Perimetro</mat-label>
                     <textarea matInput formControlName="perimetro"></textarea>

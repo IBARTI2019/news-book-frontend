@@ -25,17 +25,16 @@ export class PermisoDirective {
   }
 
   ngOnInit() {
+    return true;
     this.sessionService.actual().subscribe((user: User) => {
       this.usuario = user;
       if (this.usuario) {
         let permisos = [];
         let permisos_metodos = [];
-        return true;
       } else {
         this.ocultarElemento();
       }
     });
-    
   }
 
   ocultarElemento() {

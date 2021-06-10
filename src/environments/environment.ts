@@ -19,7 +19,7 @@ export interface TemplateNew {
 
 export const TemplatesNew: TemplateNew[] = [
   {
-    name: 'Plantilla_1',
+    name: 'Registro de Rondas',
     url: 'template-one',
     id: 'templateOne',
     operation: 'N/A',

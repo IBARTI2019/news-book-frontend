@@ -2,18 +2,46 @@
   <mat-card-header>
     <mat-card-title>{{ name }}</mat-card-title>
     <mat-card-subtitle>{{ operation }}</mat-card-subtitle>
+    <button mat-icon-button color="primary" (click)="onReset()" [disabled]="submitted">
+      <mat-icon mat-list-icon>loop</mat-icon>
+    </button>
   </mat-card-header>
-  <mat-card-content>
-    <form [formGroup]="fg" fxLayout="column" fxLayoutGap="5px" #formT>
+  <mat-card-content style="max-height: 550px">
+    <form [formGroup]="fg" (ngSubmit)="onSubmit()" fxLayout="column" fxLayoutGap="5px" #formT="ngForm">
       <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="5px">
         <mat-form-field>
-          <mat-label>Noticia</mat-label>
+          <mat-label style="font-size: 20px">Noticia</mat-label>
           <textarea matInput formControlName="notice"></textarea>
         </mat-form-field>
       </div>
     </form>
-    <div>
-      <mat-list style="max-height: 450px; overflow-y: auto;">
+    <mat-form-field>
+      <mat-label style="font-size: 20px">Buscar Placa...</mat-label>
+      <input matInput type="text" [(ngModel)]="plateToSearch" />
+    </mat-form-field>
+    <div class="lists-container">
+      <mat-selection-list [multiple]="false" style="max-height: 390px; overflow-y: auto" #selectionList>
+        <div mat-subheader>Placas Registradas</div>
+        <mat-list-option
+          class="item-select"
+          *ngFor="
+            let plate of filterPlatesDataSet | filter: plateToSearch;
+            let i = index
+          "
+          (click)="select(plate.plate, platesRegistered)"
+        >
+          <mat-icon mat-list-icon>directions_car</mat-icon>
+          <div mat-line>{{ plate.plate }}</div>
+          <mat-divider></mat-divider>
+        </mat-list-option>
+        <div *ngIf="!filteredLength" class="plate-not-found">
+          <strong>Esta placa no se encuentra registrada...</strong>
+          <button mat-raised-button (click)="saveAndRediret()" color="primary">
+            Registrar
+          </button>
+        </div>
+      </mat-selection-list>
+      <mat-list style="max-height: 390px; overflow-y: auto">
         <div mat-subheader>Placas Seleccionadas</div>
         <mat-list-item *ngFor="let plate of selectedPlates; let i = index">
           <mat-icon mat-list-icon>directions_car</mat-icon>
@@ -27,8 +55,8 @@
     </div>
   </mat-card-content>
   <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="end">
-    <button mat-raised-button color="primary" (click)="onSubmit()">
-      {{ update ? "Actualizar" : "Crear" }}
+    <button mat-raised-button color="primary" (click)="formT.ngSubmit.emit()" [disabled]="submitted">
+      {{ update ? "Actualizar Novedad" : "Guardar Novedad" }}
     </button>
   </mat-card-actions>
 </mat-card>

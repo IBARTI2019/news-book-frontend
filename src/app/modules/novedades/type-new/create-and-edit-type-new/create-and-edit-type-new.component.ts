@@ -62,13 +62,13 @@ export class CreateAndEditTypeNewComponent implements OnInit {
       this.submitted = false;
       return;
     }
-    this.update ? this.updateTypeNew : this.save()
+    this.update ? this.updateTypeNew() : this.save()
   }
 
   onReset() {
     this.submitted = false;
     this.fg.reset();
-    this.router.navigate(["inicio/type-new"]);
+    this.router.navigate(["type-new"]);
   }
 
   save() {
@@ -77,7 +77,7 @@ export class CreateAndEditTypeNewComponent implements OnInit {
         this.toastr.success("Tipo de Novedad creado con éxito");
         this.submitted = false;
         this.fg.reset();
-        this.router.navigate(["inicio/type-new"]);
+        this.router.navigate(["type-new"]);
       },
       (error: HttpErrorResponse) => {
         this.toastr.error(
@@ -98,12 +98,13 @@ export class CreateAndEditTypeNewComponent implements OnInit {
   }
 
   updateTypeNew() {
+    console.log('Pero que pasa?')
     this.typeNewsService.update(this.id, this.fg.value).subscribe(
       (data) => {
         this.toastr.success("Tipo de Novedad actualizado");
         this.submitted = false;
         this.fg.reset();
-        this.router.navigate(["inicio/type-new"]);
+        this.router.navigate(["type-new"]);
       },
       (error: HttpErrorResponse) => {
         this.toastr.error(

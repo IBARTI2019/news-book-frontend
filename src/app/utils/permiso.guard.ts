@@ -47,8 +47,8 @@ export class PermisoGuard implements CanActivate, CanActivateChild {
   canActivateChild(childRoute: ActivatedRouteSnapshot, state: RouterStateSnapshot):
     Observable<boolean> | boolean | UrlTree | Observable<boolean | UrlTree> {
     let actual: Observable<User> = this.sessionService.actual();
-    console.log('Observable: ', actual)
-    console.log('Data Route: ', childRoute.data)
+    // console.log('Observable: ', actual)
+    // console.log('Data Route: ', childRoute.data)
     
     return true; //Quitar esto para gestionar permisos
     // if ((childRoute.data && childRoute.data.omitirPermiso) || childRoute.routeConfig?.path === "inicio") {

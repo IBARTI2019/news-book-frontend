@@ -50,6 +50,7 @@ export class CreateAndEditNewComponent implements OnInit {
 
   ngOnInit(): void {
     this.idTN = this.route.snapshot.params.idTN;
+    this.currentNew.id_user = this.getLocalStorage('id_user')
     this.typeNewService.get(this.idTN).subscribe(
       (typeNew: TypeNew) => {
         if (typeNew) {
@@ -70,6 +71,18 @@ export class CreateAndEditNewComponent implements OnInit {
         );
       }
     );
+  }
+
+  private getLocalStorage(fieldName: string) {
+    if (fieldName) {
+      const data = localStorage.getItem(fieldName);
+      return data ? JSON.parse(data) : null;
+    }
+    return null
+  }
+
+  private deleteStorageItem(fieldName: string) {
+    if (fieldName) localStorage.removeItem(fieldName)
   }
 
   setShowCorrespondent() {
@@ -105,7 +118,7 @@ export class CreateAndEditNewComponent implements OnInit {
 
   onSubmit(data: object) {
     this.currentNew.datos = { ...data };
-    console.log(data, this.currentNew);
+    console.log(this.currentNew);
     this.submitted = true;
     this.update ? this.updateNew(data) : this.save(data);
   }
@@ -115,6 +128,8 @@ export class CreateAndEditNewComponent implements OnInit {
       (data) => {
         this.toastr.success("Novedad creada con éxito.");
         this.submitted = false;
+        this.deleteStorageItem(this.template.id)
+        this.deleteStorageItem('id_user')
         this.router.navigate(["new"]);
       },
       (error: HttpErrorResponse) => {
@@ -130,6 +145,8 @@ export class CreateAndEditNewComponent implements OnInit {
       (data) => {
         this.toastr.success("La Novedad se actualizo correctamente.");
         this.submitted = false;
+        this.deleteStorageItem(this.template.id)
+        this.deleteStorageItem('id_user')
         this.router.navigate(["new"]);
       },
       (error: HttpErrorResponse) => {

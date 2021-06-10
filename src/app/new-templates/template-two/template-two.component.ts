@@ -1,47 +1,109 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
-import { TemplateTwoVehicle } from 'app/interfaces';
-import { ToastrService } from 'ngx-toastr';
+import {
+  AfterViewChecked,
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  ViewChild,
+} from "@angular/core";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { MatSelectionList } from "@angular/material/list";
+import { ActivatedRoute, Router } from "@angular/router";
+import { TemplateTwoVehicle } from "app/interfaces";
+import { TemplateNew, TemplatesNew } from 'environments/environment';
+import { ToastrService } from "ngx-toastr";
 
 @Component({
-  selector: 'app-template-two',
-  templateUrl: './template-two.component.html',
-  styleUrls: ['./template-two.component.css']
+  selector: "app-template-two",
+  templateUrl: "./template-two.component.html",
+  styleUrls: ["./template-two.component.css"],
 })
-export class TemplateTwoComponent implements OnInit {
+export class TemplateTwoComponent implements OnInit, AfterViewChecked {
   @Output() tSubmit = new EventEmitter<TemplateTwoVehicle>();
   @Input() method: string = "view";
-  @Input() name: string = '';
-  @Input() operation: string = '';
+  @Input() name: string = "";
+  @Input() operation: string = "";
   @Input() data: TemplateTwoVehicle = {
     id: "",
     notice: "",
-    vehiculos: []
+    vehiculos: [],
   };
+  @ViewChild("selectionList") filteredItems!: MatSelectionList;
   fg: FormGroup;
   submitted = false;
   id: string = "";
   update: boolean = false;
   selectedPlates: string[];
+  plateToSearch: string = "";
+  filterPlatesDataSet: Array<object>;
+  filteredLength = 0;
+  currentTemplate: TemplateNew = {
+    name: '',
+    url: '',
+    id: '',
+    operation: '',
+  }
+  storageData = {
+    notice: "",
+    vehiculos: [],
+  }
   view = true;
   constructor(
     private fb: FormBuilder,
     private toastr: ToastrService,
+    private router: Router,
     private route: ActivatedRoute,
+    private cdRef: ChangeDetectorRef
   ) {
     this.fg = this.fb.group({});
-    this.selectedPlates = ['Placa_1', 'Placa_2', 'Placa_3', 'Placa_1', 'Placa_2', 'Placa_3', 'Placa_1', 'Placa_2', 'Placa_3'];
+    this.selectedPlates = ["6063 WGH", "7101 SYR", "2974 UKH"];
+    this.filterPlatesDataSet = [
+      {
+        plate: "6063 WGH",
+      },
+      {
+        plate: "7101 SYR",
+      },
+      {
+        plate: "2974 UKH",
+      },
+      {
+        plate: "2369 QUT",
+      },
+      {
+        plate: "8098 JSC",
+      },
+      {
+        plate: "7390 NOL",
+      },
+      {
+        plate: "6810 TYJ",
+      },
+      {
+        plate: "1847 CES",
+      },
+      {
+        plate: "4308 SWR",
+      },
+      {
+        plate: "6747 VOB",
+      },
+    ];
   }
 
   ngOnInit(): void {
     this.id = this.route.snapshot.params.id;
-    console.log('Metodo: ', this.method)
+    this.currentTemplate = TemplatesNew.filter((currentT) => currentT.name === this.name)[0]
+    console.log('Current Template: ', this.currentTemplate)
+    this.storageData = this.currentTemplate.id ? this.getLocalStorage(this.currentTemplate.id) : null
+    this.selectedPlates = this.storageData?.vehiculos || []
     this.setMethods();
     this.fg = this.fb.group(
       {
         notice: [
-          this.data.notice,
+          this.data.notice || this.storageData?.notice || null,
           this.view ? Validators.nullValidator : Validators.required,
         ],
       },
@@ -50,6 +112,27 @@ export class TemplateTwoComponent implements OnInit {
     if (this.id) {
       this.update = true;
     }
+  }
+
+  private getLocalStorage(fieldName: string) {
+    if (fieldName) {
+      const data = localStorage.getItem(fieldName);
+      return data ? JSON.parse(data) : null;
+    }
+    return null
+  }
+
+  private setLocalStorage(fieldName: string, value: any) {
+    if (fieldName) localStorage.setItem(fieldName, JSON.stringify(value));
+  }
+
+  private deleteStorageItem(fieldName: string) {
+    if (fieldName) localStorage.removeItem(fieldName)
+  }
+
+  ngAfterViewChecked(): void {
+    this.filteredLength = this.filteredItems.options.length;
+    this.cdRef.detectChanges();
   }
 
   setMethods(): void {
@@ -70,19 +153,42 @@ export class TemplateTwoComponent implements OnInit {
   onSubmit() {
     this.submitted = true;
     if (this.fg.invalid) {
-      console.log('Invalid')
+      console.log("Invalid");
       this.submitted = false;
       return;
     }
-    console.log('Valid')
-    // this.tSubmit.emit(this.fg.value);
+    this.tSubmit.emit({
+      ...this.fg.value,
+      vehiculos: [...this.selectedPlates],
+    });
     this.submitted = false;
   }
 
-  deselect(position: number) {
-    const newArray = [ ...this.selectedPlates ]
-    newArray.splice(position, 1)
-    this.selectedPlates = [ ...newArray ]
+  onReset() {
+    this.submitted = false;
+    this.fg.reset();
+    this.deleteStorageItem(this.currentTemplate.id);
+    this.selectedPlates = []
+    this.plateToSearch = ''
   }
 
+  select(plate: string) {
+    if (!this.selectedPlates.includes(plate)) {
+      this.selectedPlates.unshift(plate);
+    }
+  }
+
+  deselect(position: number) {
+    this.selectedPlates.splice(position, 1);
+  }
+
+  saveAndRediret() {
+    this.setLocalStorage(this.currentTemplate.id, {
+      ...this.fg.value,
+      vehiculos: [...this.selectedPlates],
+    });
+    this.router.navigateByUrl("/vehicle/crear", {
+      state: { redirectTo: this.router.url },
+    });
+  }
 }
