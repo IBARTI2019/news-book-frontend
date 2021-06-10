@@ -28,7 +28,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     if (this.sessionService.isLoggedIn) {
-      this.router.navigateByUrl("/inicio");
+      this.router.navigateByUrl("/new");
     }
   }
 
@@ -67,7 +67,7 @@ export class LoginComponent implements OnInit {
       (data: VerifyCodeResponse) => {
         this.verifyCodeSubmit = true;
         this.toastrService.success("El codigo ha sido verificado con exito.");
-        this.router.navigateByUrl("/inicio");
+        this.router.navigateByUrl("/new");
       },
       (error: HttpErrorResponse) => {
         console.error(error);
