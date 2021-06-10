@@ -1,1 +1,34 @@
-<p>template-four works!</p>
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>{{ name }}</mat-card-title>
+    <button
+      mat-icon-button
+      color="primary"
+      (click)="onReset()"
+      [disabled]="submitted"
+    >
+      <mat-icon mat-list-icon>loop</mat-icon>
+    </button>
+  </mat-card-header>
+  <mat-card-content>
+    <form
+      [formGroup]="fg"
+      fxLayout="column"
+      fxLayoutGap="5px"
+      (ngSubmit)="onSubmit()"
+      #formT="ngForm"
+    >
+      <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="5px">
+        <mat-form-field>
+          <mat-label>Noticia</mat-label>
+          <textarea matInput formControlName="notice"></textarea>
+        </mat-form-field>
+      </div>
+      <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="end">
+        <button mat-raised-button color="primary" type="submit" [disabled]="view">
+          {{ update ? "Actualizar" : "Crear" }}
+        </button>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>

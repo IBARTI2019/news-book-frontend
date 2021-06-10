@@ -51,7 +51,7 @@ export class PermisoGuard implements CanActivate, CanActivateChild {
     // console.log('Data Route: ', childRoute.data)
     
     return true; //Quitar esto para gestionar permisos
-    // if ((childRoute.data && childRoute.data.omitirPermiso) || childRoute.routeConfig?.path === "inicio") {
+    // if ((childRoute.data && childRoute.data.omitirPermiso) || childRoute.routeConfig?.path === "") {
     //   return true;
     // } else if (!this.sessionService.isLoggedIn || actual === undefined) {
     //   this.router.navigateByUrl('/login');

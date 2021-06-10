@@ -22,7 +22,7 @@ export const WarehouseRoutes: Routes = [
                 data:{
                    breadcrumbAnt:{
                         label: "Almacen",
-                        url: "inicio/warehouse/" ,  
+                        url: "warehouse" ,  
                         params: [],
                     },
                     breadcrumb: {
@@ -37,7 +37,7 @@ export const WarehouseRoutes: Routes = [
                 data:{
                    breadcrumbAnt:{
                      label :"Almacen",
-                     url:"inicio/warehouse/" ,
+                     url:"warehouse" ,
                      params:[],
                     },
                     breadcrumb: {

@@ -22,7 +22,7 @@ export const MaterialsRouting: Routes = [
         data: {
           breadcrumbAnt: {
             label: "Materiales y Suministros",
-            url: "inicio/materials",
+            url: "materials",
             params: [],
           },
           breadcrumb: {
@@ -37,7 +37,7 @@ export const MaterialsRouting: Routes = [
         data: {
           breadcrumbAnt: {
             label: "Materiales y Suministros",
-            url: "inicio/materials",
+            url: "materials",
             params: [],
           },
           breadcrumb: {

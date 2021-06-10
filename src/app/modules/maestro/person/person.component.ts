@@ -72,7 +72,7 @@ export class PersonComponent implements OnInit {
   }
 
   update(id: string) {
-    this.router.navigate(["inicio/person", id]);
+    this.router.navigate(["person", id]);
   }
 
   delete(person: Person) {

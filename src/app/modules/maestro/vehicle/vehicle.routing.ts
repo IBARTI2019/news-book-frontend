@@ -22,7 +22,7 @@ export const VehicleRouting: Routes = [
         data: {
           breadcrumbAnt: {
             label: "Vehiculos",
-            url: "inicio/vehicle",
+            url: "vehicle",
             params: [],
           },
           breadcrumb: {
@@ -37,7 +37,7 @@ export const VehicleRouting: Routes = [
         data: {
           breadcrumbAnt: {
             label: "Vehiculos",
-            url: "inicio/vehicle",
+            url: "vehicle",
             params: [],
           },
           breadcrumb: {

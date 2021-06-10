@@ -23,6 +23,7 @@ export class SelectNewComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.deleteStorageItem('id_user')
     this.typeNewService.list().subscribe(
       (typeNewsResponse: TypeNew[]) => {
         this.typeNews = [...typeNewsResponse];
@@ -34,5 +35,9 @@ export class SelectNewComponent implements OnInit {
         );
       }
     );
+  }
+
+  private deleteStorageItem(fieldName: string) {
+    if (fieldName) localStorage.removeItem(fieldName)
   }
 }

@@ -22,7 +22,7 @@ export const TypeNewsRouting: Routes = [
         data: {
           breadcrumbAnt: {
             label: "Tipos de Novedades",
-            url: "inicio/type-new",
+            url: "type-new",
             params: [],
           },
           breadcrumb: {
@@ -37,7 +37,7 @@ export const TypeNewsRouting: Routes = [
         data: {
           breadcrumbAnt: {
             label: "Tipos de Novedades",
-            url: "inicio/type-new",
+            url: "type-new",
             params: [],
           },
           breadcrumb: {

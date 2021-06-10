@@ -56,7 +56,7 @@ export class VehicleComponent implements OnInit {
   }
 
   update(id: string) {
-    this.router.navigate(["inicio/vehiculos/maestro/", id]);
+    this.router.navigate(["vehicle", id]);
   }
 
   delete(usuario: Vehicle) {

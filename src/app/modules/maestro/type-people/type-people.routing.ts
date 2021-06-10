@@ -23,7 +23,7 @@ export const TypePeopleRouting: Routes = [
         data: {
           breadcrumbAnt: {
             label: "Tipo de Personas",
-            url: "inicio/type-people",
+            url: "type-people",
             params: [],
           },
           breadcrumb: {
@@ -38,7 +38,7 @@ export const TypePeopleRouting: Routes = [
         data: {
           breadcrumbAnt: {
             label: "Tipo de Personas",
-            url: "inicio/type-people",
+            url: "type-people",
             params: [],
           },
           breadcrumb: {

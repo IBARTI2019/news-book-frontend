@@ -49,7 +49,7 @@ export class TypePeopleComponent implements OnInit {
   }
 
   update(id: string) {
-    this.router.navigate(["inicio/type-people", id]);
+    this.router.navigate(["type-people", id]);
   }
 
   delete(typePeople: TypePeople) {

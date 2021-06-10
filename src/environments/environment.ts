@@ -19,6 +19,12 @@ export interface TemplateNew {
 
 export const TemplatesNew: TemplateNew[] = [
   {
+    name: 'Plantilla por Defecto',
+    url: 'template-four',
+    id: 'templateFour',
+    operation: 'N/A',
+  },
+  {
     name: 'Registro de Rondas',
     url: 'template-one',
     id: 'templateOne',
@@ -47,12 +53,6 @@ export const TemplatesNew: TemplateNew[] = [
     url: 'template-three',
     id: 'templateThereOut',
     operation: 'SALIDA',
-  },
-  {
-    name: 'Plantilla_4',
-    url: 'template-four',
-    id: 'templateFour',
-    operation: 'N/A',
   },
   {
     name: 'Plantilla_5',

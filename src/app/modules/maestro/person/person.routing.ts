@@ -22,7 +22,7 @@ export const PersonRouting: Routes = [
         data: {
           breadcrumbAnt: {
             label: "Personas",
-            url: "inicio/person",
+            url: "person",
             params: [],
           },
           breadcrumb: {
@@ -37,7 +37,7 @@ export const PersonRouting: Routes = [
         data: {
           breadcrumbAnt: {
             label: "Personas",
-            url: "inicio/person",
+            url: "person",
             params: [],
           },
           breadcrumb: {

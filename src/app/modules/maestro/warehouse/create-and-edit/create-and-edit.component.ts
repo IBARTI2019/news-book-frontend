@@ -57,7 +57,7 @@ export class CreateAndEditComponent implements OnInit {
   onReset() {
     this.submitted = false;
     this.fg.reset();
-    this.router.navigate(["inicio/warehouse"]);
+    this.router.navigate(["warehouse"]);
   }
 
   save() {
@@ -66,7 +66,7 @@ export class CreateAndEditComponent implements OnInit {
         this.toastr.success("Almacen creado con éxito!.");
         this.submitted = false;
         this.fg.reset();
-        this.router.navigate(["inicio/warehouse"]);
+        this.router.navigate(["warehouse"]);
       },
       (error: HttpErrorResponse) => {
         this.submitted = false;

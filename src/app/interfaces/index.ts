@@ -121,8 +121,8 @@ export interface TemplateThreeMaterials {
 }
 
 export interface TemplateFour {
-  id: string;
-  description: string;
+  id?: string;
+  notice: string;
 }
 
 export interface TemplateFive {
