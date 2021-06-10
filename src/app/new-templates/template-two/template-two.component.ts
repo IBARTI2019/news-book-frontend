@@ -11,7 +11,8 @@ import {
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { MatSelectionList } from "@angular/material/list";
 import { ActivatedRoute, Router } from "@angular/router";
-import { TemplateTwoVehicle } from "app/interfaces";
+import { TemplateTwoVehicle, Vehicle } from "app/interfaces";
+import { VehicleService } from 'app/services/vehicle.service';
 import { TemplateNew, TemplatesNew } from 'environments/environment';
 import { ToastrService } from "ngx-toastr";
 
@@ -37,7 +38,7 @@ export class TemplateTwoComponent implements OnInit, AfterViewChecked {
   update: boolean = false;
   selectedPlates: string[];
   plateToSearch: string = "";
-  filterPlatesDataSet: Array<object>;
+  filterPlatesDataSet: Array<{ plate: string }>;
   filteredLength = 0;
   currentTemplate: TemplateNew = {
     name: '',
@@ -55,7 +56,8 @@ export class TemplateTwoComponent implements OnInit, AfterViewChecked {
     private toastr: ToastrService,
     private router: Router,
     private route: ActivatedRoute,
-    private cdRef: ChangeDetectorRef
+    private cdRef: ChangeDetectorRef,
+    private vehicleService: VehicleService,
   ) {
     this.fg = this.fb.group({});
     this.selectedPlates = ["6063 WGH", "7101 SYR", "2974 UKH"];
@@ -100,6 +102,9 @@ export class TemplateTwoComponent implements OnInit, AfterViewChecked {
     this.storageData = this.currentTemplate.id ? this.getLocalStorage(this.currentTemplate.id) : null
     this.selectedPlates = this.storageData?.vehiculos || []
     this.setMethods();
+    this.vehicleService.list(this.id).subscribe((data: Vehicle[]) => {
+      this.filterPlatesDataSet = data.map((currentVehicle) => ({ plate: currentVehicle.placa_vehiculo || '' }))
+    });
     this.fg = this.fb.group(
       {
         notice: [
