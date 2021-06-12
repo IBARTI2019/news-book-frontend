@@ -36,7 +36,7 @@
         </mat-list-option>
         <div *ngIf="!filteredLength" class="plate-not-found">
           <strong>Esta placa no se encuentra registrada...</strong>
-          <button mat-raised-button (click)="saveAndRediret()" color="primary">
+          <button mat-raised-button (click)="saveAndRediret()" color="primary" [disabled]="view">
             Registrar
           </button>
         </div>
@@ -55,7 +55,7 @@
     </div>
   </mat-card-content>
   <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="end">
-    <button mat-raised-button color="primary" (click)="formT.ngSubmit.emit()" [disabled]="submitted">
+    <button mat-raised-button color="primary" (click)="formT.ngSubmit.emit()" [disabled]="submitted || view">
       {{ update ? "Actualizar Novedad" : "Guardar Novedad" }}
     </button>
   </mat-card-actions>

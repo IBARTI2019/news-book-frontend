@@ -1,16 +1,24 @@
-import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatSelectionList } from '@angular/material/list';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Material, TemplateThreeMaterials } from 'app/interfaces';
-import { MaterialsService } from 'app/services/materials.service';
-import { TemplateNew, TemplatesNew } from 'environments/environment';
-import { ToastrService } from 'ngx-toastr';
+import {
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  ViewChild,
+} from "@angular/core";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { MatSelectionList } from "@angular/material/list";
+import { ActivatedRoute, Router } from "@angular/router";
+import { Material, TemplateThreeMaterials } from "app/interfaces";
+import { MaterialsService } from "app/services/materials.service";
+import { TemplateNew, TemplatesNew } from "environments/environment";
+import { ToastrService } from "ngx-toastr";
 
 @Component({
-  selector: 'app-template-three',
-  templateUrl: './template-three.component.html',
-  styleUrls: ['./template-three.component.css']
+  selector: "app-template-three",
+  templateUrl: "./template-three.component.html",
+  styleUrls: ["./template-three.component.css"],
 })
 export class TemplateThreeComponent implements OnInit {
   @Output() tSubmit = new EventEmitter<TemplateThreeMaterials>();
@@ -32,15 +40,15 @@ export class TemplateThreeComponent implements OnInit {
   filterMaterialsDataSet: Array<{ material: string }>;
   filteredLength = 0;
   currentTemplate: TemplateNew = {
-    name: '',
-    url: '',
-    id: '',
-    operation: '',
-  }
+    name: "",
+    url: "",
+    id: "",
+    operation: "",
+  };
   storageData = {
     notice: "",
-    vehiculos: [],
-  }
+    materials: [],
+  };
   view = true;
 
   constructor(
@@ -49,7 +57,7 @@ export class TemplateThreeComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private cdRef: ChangeDetectorRef,
-    private materialService: MaterialsService,
+    private materialService: MaterialsService
   ) {
     this.fg = this.fb.group({});
     this.selectedMaterials = ["6063 WGH", "7101 SYR", "2974 UKH"];
@@ -88,15 +96,14 @@ export class TemplateThreeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.id = this.route.snapshot.params.id;
-    this.currentTemplate = TemplatesNew.filter((currentT) => currentT.name === this.name)[0]
-    console.log('Current Template: ', this.currentTemplate)
-    this.storageData = this.currentTemplate.id ? this.getLocalStorage(this.currentTemplate.id) : null
-    this.selectedMaterials = this.storageData?.vehiculos || []
     this.setMethods();
-    this.materialService.list(this.id).subscribe((data: Material[]) => {
-      this.filterMaterialsDataSet = data.map((currentVehicle) => ({ material: currentVehicle.description || '' }))
-    });
+    this.currentTemplate = TemplatesNew.filter(
+      (currentT) => currentT.name === this.name
+    )[0];
+    console.log("Current Template: ", this.currentTemplate);
+    this.storageData = this.currentTemplate.id
+      ? this.getLocalStorage(this.currentTemplate.id)
+      : null;
     this.fg = this.fb.group(
       {
         notice: [
@@ -106,8 +113,17 @@ export class TemplateThreeComponent implements OnInit {
       },
       {}
     );
-    if (this.id) {
-      this.update = true;
+    if (!this.view) {
+      this.selectedMaterials = this.storageData?.materials || [];
+      this.id = this.route.snapshot.params.id;
+      this.materialService.list(this.id).subscribe((data: Material[]) => {
+        this.filterMaterialsDataSet = data.map((currentVehicle) => ({
+          material: currentVehicle.description || "",
+        }));
+      });
+      if (this.id) {
+        this.update = true;
+      }
     }
   }
 
@@ -116,7 +132,7 @@ export class TemplateThreeComponent implements OnInit {
       const data = localStorage.getItem(fieldName);
       return data ? JSON.parse(data) : null;
     }
-    return null
+    return null;
   }
 
   private setLocalStorage(fieldName: string, value: any) {
@@ -124,7 +140,7 @@ export class TemplateThreeComponent implements OnInit {
   }
 
   private deleteStorageItem(fieldName: string) {
-    if (fieldName) localStorage.removeItem(fieldName)
+    if (fieldName) localStorage.removeItem(fieldName);
   }
 
   ngAfterViewChecked(): void {
@@ -165,8 +181,8 @@ export class TemplateThreeComponent implements OnInit {
     this.submitted = false;
     this.fg.reset();
     this.deleteStorageItem(this.currentTemplate.id);
-    this.selectedMaterials = []
-    this.materialToSearch = ''
+    this.selectedMaterials = [];
+    this.materialToSearch = "";
   }
 
   select(plate: string) {
@@ -182,11 +198,10 @@ export class TemplateThreeComponent implements OnInit {
   saveAndRediret() {
     this.setLocalStorage(this.currentTemplate.id, {
       ...this.fg.value,
-      vehiculos: [...this.selectedMaterials],
+      materials: [...this.selectedMaterials],
     });
     this.router.navigateByUrl("/materials/crear", {
       state: { redirectTo: this.router.url },
     });
   }
-
 }

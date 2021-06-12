@@ -1,20 +1,20 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
-import { TemplateFour } from 'app/interfaces';
-import { TemplateNew, TemplatesNew } from 'environments/environment';
-import { ToastrService } from 'ngx-toastr';
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { ActivatedRoute } from "@angular/router";
+import { TemplateFour } from "app/interfaces";
+import { TemplateNew, TemplatesNew } from "environments/environment";
+import { ToastrService } from "ngx-toastr";
 
 @Component({
-  selector: 'app-template-four',
-  templateUrl: './template-four.component.html',
-  styleUrls: ['./template-four.component.css']
+  selector: "app-template-four",
+  templateUrl: "./template-four.component.html",
+  styleUrls: ["./template-four.component.css"],
 })
 export class TemplateFourComponent implements OnInit {
   @Output() tSubmit = new EventEmitter<TemplateFour>();
   @Input() method: string = "view";
-  @Input() name: string = '';
-  @Input() operation: string = '';
+  @Input() name: string = "";
+  @Input() operation: string = "";
   @Input() data: TemplateFour = {
     id: "",
     notice: "",
@@ -30,28 +30,31 @@ export class TemplateFourComponent implements OnInit {
     alumbrado: "",
     alarmas: "",
     sCI: "",
-  }
+  };
   currentTemplate: TemplateNew = {
-    name: '',
-    url: '',
-    id: '',
-    operation: '',
-  }
+    name: "",
+    url: "",
+    id: "",
+    operation: "",
+  };
 
   constructor(
     private fb: FormBuilder,
     private toastr: ToastrService,
-    private route: ActivatedRoute,
+    private route: ActivatedRoute
   ) {
     this.fg = this.fb.group({});
   }
 
   ngOnInit(): void {
-    this.id = this.route.snapshot.params.id;
-    this.currentTemplate = TemplatesNew.filter((currentT) => currentT.name === this.name)[0]
-    console.log('Current Template: ', this.currentTemplate)
-    this.storageData = this.currentTemplate.id ? this.getLocalStorage(this.currentTemplate.id) : null
     this.setMethods();
+    this.currentTemplate = TemplatesNew.filter(
+      (currentT) => currentT.name === this.name
+    )[0];
+    console.log("Current Template Four: ", this.currentTemplate);
+    this.storageData = this.currentTemplate.id
+      ? this.getLocalStorage(this.currentTemplate.id)
+      : null;
     this.fg = this.fb.group(
       {
         notice: [
@@ -61,8 +64,12 @@ export class TemplateFourComponent implements OnInit {
       },
       {}
     );
-    if (this.id) {
-      this.update = true;
+    if (!this.view) {
+      this.id = this.route.snapshot.params.id;
+      
+      if (this.id) {
+        this.update = true;
+      }
     }
   }
 
@@ -71,11 +78,11 @@ export class TemplateFourComponent implements OnInit {
       const data = localStorage.getItem(fieldName);
       return data ? JSON.parse(data) : null;
     }
-    return null
+    return null;
   }
 
   private deleteStorageItem(fieldName: string) {
-    if (fieldName) localStorage.removeItem(fieldName)
+    if (fieldName) localStorage.removeItem(fieldName);
   }
 
   setMethods(): void {
@@ -96,11 +103,11 @@ export class TemplateFourComponent implements OnInit {
   onSubmit() {
     this.submitted = true;
     if (this.fg.invalid) {
-      console.log('Invalid')
+      console.log("Invalid");
       this.submitted = false;
       return;
     }
-    console.log('Valid')
+    console.log("Valid");
     this.tSubmit.emit(this.fg.value);
     this.submitted = false;
   }
@@ -110,5 +117,4 @@ export class TemplateFourComponent implements OnInit {
     this.fg.reset();
     this.deleteStorageItem(this.currentTemplate.id);
   }
-
 }

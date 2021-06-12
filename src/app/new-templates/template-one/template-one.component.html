@@ -30,7 +30,7 @@
                 </mat-form-field>
             </div>
             <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="end">
-                <button mat-raised-button color="primary" (click)="onSubmit()">{{ update ? 'Actualizar' : 'Crear' }}</button>
+                <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="view">{{ update ? 'Actualizar' : 'Crear' }}</button>
             </div>
         </form>
     </mat-card-content>

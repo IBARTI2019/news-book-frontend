@@ -12,8 +12,8 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { MatSelectionList } from "@angular/material/list";
 import { ActivatedRoute, Router } from "@angular/router";
 import { TemplateTwoVehicle, Vehicle } from "app/interfaces";
-import { VehicleService } from 'app/services/vehicle.service';
-import { TemplateNew, TemplatesNew } from 'environments/environment';
+import { VehicleService } from "app/services/vehicle.service";
+import { TemplateNew, TemplatesNew } from "environments/environment";
 import { ToastrService } from "ngx-toastr";
 
 @Component({
@@ -41,15 +41,15 @@ export class TemplateTwoComponent implements OnInit, AfterViewChecked {
   filterPlatesDataSet: Array<{ plate: string }>;
   filteredLength = 0;
   currentTemplate: TemplateNew = {
-    name: '',
-    url: '',
-    id: '',
-    operation: '',
-  }
+    name: "",
+    url: "",
+    id: "",
+    operation: "",
+  };
   storageData = {
     notice: "",
     vehiculos: [],
-  }
+  };
   view = true;
   constructor(
     private fb: FormBuilder,
@@ -57,7 +57,7 @@ export class TemplateTwoComponent implements OnInit, AfterViewChecked {
     private router: Router,
     private route: ActivatedRoute,
     private cdRef: ChangeDetectorRef,
-    private vehicleService: VehicleService,
+    private vehicleService: VehicleService
   ) {
     this.fg = this.fb.group({});
     this.selectedPlates = ["6063 WGH", "7101 SYR", "2974 UKH"];
@@ -97,14 +97,16 @@ export class TemplateTwoComponent implements OnInit, AfterViewChecked {
 
   ngOnInit(): void {
     this.id = this.route.snapshot.params.id;
-    this.currentTemplate = TemplatesNew.filter((currentT) => currentT.name === this.name)[0]
-    console.log('Current Template: ', this.currentTemplate)
-    this.storageData = this.currentTemplate.id ? this.getLocalStorage(this.currentTemplate.id) : null
-    this.selectedPlates = this.storageData?.vehiculos || []
+    this.currentTemplate = TemplatesNew.filter(
+      (currentT) => currentT.name === this.name
+    )[0];
+    console.log("Current Template: ", this.currentTemplate);
+    this.storageData = this.currentTemplate.id
+      ? this.getLocalStorage(this.currentTemplate.id)
+      : null;
+    this.selectedPlates = this.storageData?.vehiculos || [];
     this.setMethods();
-    this.vehicleService.list(this.id).subscribe((data: Vehicle[]) => {
-      this.filterPlatesDataSet = data.map((currentVehicle) => ({ plate: currentVehicle.placa_vehiculo || '' }))
-    });
+
     this.fg = this.fb.group(
       {
         notice: [
@@ -114,8 +116,15 @@ export class TemplateTwoComponent implements OnInit, AfterViewChecked {
       },
       {}
     );
-    if (this.id) {
-      this.update = true;
+    if (!this.view) {
+      this.vehicleService.list(this.id).subscribe((data: Vehicle[]) => {
+        this.filterPlatesDataSet = data.map((currentVehicle) => ({
+          plate: currentVehicle.placa_vehiculo || "",
+        }));
+      });
+      if (this.id) {
+        this.update = true;
+      }
     }
   }
 
@@ -124,7 +133,7 @@ export class TemplateTwoComponent implements OnInit, AfterViewChecked {
       const data = localStorage.getItem(fieldName);
       return data ? JSON.parse(data) : null;
     }
-    return null
+    return null;
   }
 
   private setLocalStorage(fieldName: string, value: any) {
@@ -132,7 +141,7 @@ export class TemplateTwoComponent implements OnInit, AfterViewChecked {
   }
 
   private deleteStorageItem(fieldName: string) {
-    if (fieldName) localStorage.removeItem(fieldName)
+    if (fieldName) localStorage.removeItem(fieldName);
   }
 
   ngAfterViewChecked(): void {
@@ -173,8 +182,8 @@ export class TemplateTwoComponent implements OnInit, AfterViewChecked {
     this.submitted = false;
     this.fg.reset();
     this.deleteStorageItem(this.currentTemplate.id);
-    this.selectedPlates = []
-    this.plateToSearch = ''
+    this.selectedPlates = [];
+    this.plateToSearch = "";
   }
 
   select(plate: string) {
