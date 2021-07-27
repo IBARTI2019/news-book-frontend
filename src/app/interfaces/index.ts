@@ -10,9 +10,11 @@ export interface User {
 }
 
 export interface SigninData {
-  user: string;
-  password: string;
+  email?: string;
+  user?: string;
+  password?: string;
   codigocelular?: string;
+  security_code?: string;
 }
 
 export interface APIMessage {
@@ -87,6 +89,7 @@ export interface ClassificationNew {
   codigo: string;
   level_urgency: string;
   status: string;
+  value: string;
 }
 
 export interface New {
