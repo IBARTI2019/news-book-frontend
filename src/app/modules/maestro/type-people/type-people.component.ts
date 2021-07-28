@@ -37,11 +37,11 @@ export class TypePeopleComponent implements OnInit {
       },
       {
         dataAttribute: "is_active",
-        attribute: "is_active",
+        attribute: "Status",
       },
 
       {
-        attribute: "id_type_person",
+        attribute: "id",
         header: "Opciones",
         template: "opciones",
       },
@@ -49,6 +49,7 @@ export class TypePeopleComponent implements OnInit {
   }
 
   update(id: string) {
+    console.log('Y el Id? ', id)
     this.router.navigate(["type-people", id]);
   }
 
@@ -58,7 +59,7 @@ export class TypePeopleComponent implements OnInit {
     });
     this.dialogService.confirmed().subscribe((confirmed) => {
       if (confirmed) {
-        this.typePeopleService.remove(typePeople.id_type_person).subscribe(
+        this.typePeopleService.remove(typePeople.id).subscribe(
           (data) => {
             this.toastr.success("Tipo de Persona eliminado con exito!.");
             this.table.refresh();

@@ -28,19 +28,7 @@ export class VehicleComponent implements OnInit {
   ngOnInit(): void {
     this.columns = [
       {
-        dataAttribute: "name",
-        attribute: "Nombres",
-      },
-      {
-        dataAttribute: "last_name",
-        attribute: "Apellidos",
-      },
-      {
-        dataAttribute: "doc_ident",
-        attribute: "Cedula",
-      },
-      {
-        dataAttribute: "placa_vehiculo",
+        dataAttribute: "license_plate",
         attribute: "Placa Vehiculo",
       },
       {
@@ -48,7 +36,7 @@ export class VehicleComponent implements OnInit {
         attribute: "is_active",
       },
       {
-        attribute: "id_vehiculo",
+        attribute: "id",
         header: "Opciones",
         template: "opciones",
       },
@@ -61,11 +49,11 @@ export class VehicleComponent implements OnInit {
 
   delete(usuario: Vehicle) {
     this.dialogService.open({
-      message: `Esta seguro de que desea eliminar La Informacion de ${usuario.placa_vehiculo}?`,
+      message: `Esta seguro de que desea eliminar La Informacion de ${usuario.license_plate}?`,
     });
     this.dialogService.confirmed().subscribe((confirmed) => {
       if (confirmed) {
-        this.vehicleService.remove(usuario.id_vehiculo || "").subscribe(
+        this.vehicleService.remove(usuario.id).subscribe(
           (data) => {
             this.toastr.success("Vehiculo eliminado con exito!.");
             this.table.refresh();

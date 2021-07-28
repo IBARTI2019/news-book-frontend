@@ -4,9 +4,10 @@ import { DTColumn } from "../../../componentes/generic-table/interface";
 import { NewService } from "../../../services/new.service";
 import { Router } from "@angular/router";
 import { ConfirmDialogService } from "../../../componentes/confirm-dialog/confirm-dialog.service";
-import { ToastrService } from 'ngx-toastr';
-import { New } from '../../../interfaces';
-import { HttpErrorResponse } from '@angular/common/http';
+import { ToastrService } from "ngx-toastr";
+import { New } from "../../../interfaces";
+import { HttpErrorResponse } from "@angular/common/http";
+import { SessionService } from 'app/services/session.service';
 
 @Component({
   selector: "app-new",
@@ -19,33 +20,27 @@ export class NewComponent implements OnInit {
 
   constructor(
     public newService: NewService,
+    private sessionService: SessionService,
     private router: Router,
     private dialogService: ConfirmDialogService,
-    private toastr: ToastrService,
+    private toastr: ToastrService
   ) {}
 
   showCheck = () => true;
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.columns = [
       {
-        dataAttribute: "notice",
-        attribute: "Noticia",
+        dataAttribute: "message",
+        attribute: "Mensaje",
       },
       {
-        dataAttribute: "ced_notifica",
-        attribute: "Cedula",
+        dataAttribute: "employee",
+        attribute: "Empleado",
       },
+      
       {
-        dataAttribute: "nombres_apellidos",
-        attribute: "Quien Notifica?",
-      },
-      {
-        dataAttribute: "createdAt",
-        attribute: "Fecha y Hora",
-      },
-      {
-        attribute: "id_news",
+        attribute: "id",
         header: "Opciones",
         template: "opciones",
       },
@@ -53,24 +48,23 @@ export class NewComponent implements OnInit {
   }
 
   update(id: string) {
-    this.router.navigate(["snew", id]);
+    this.router.navigate(["new", id]);
   }
 
   delete(localNew: New) {
     this.dialogService.open({
-      message: `Esta seguro de que desea eliminar La Informacion de ${localNew.id_news}?`,
+      message: `Esta seguro de que desea eliminar La Informacion de ${localNew.id}?`,
     });
     this.dialogService.confirmed().subscribe((confirmed) => {
       if (confirmed) {
-        this.newService.remove(localNew.id_news).subscribe(
+        this.newService.remove(localNew.id).subscribe(
           (data) => {
             this.toastr.success("Se elimino correctamente.");
             this.table.refresh();
           },
           (error: HttpErrorResponse) => {
             this.toastr.error(
-              error.error.message ||
-              "No se pudo eliminar la novedad"
+              error.error.message || "No se pudo eliminar la novedad"
             );
           }
         );

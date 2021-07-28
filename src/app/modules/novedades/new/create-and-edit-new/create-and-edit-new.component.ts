@@ -3,6 +3,7 @@ import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { New, TypeNew } from "app/interfaces";
 import { NewService } from "app/services/new.service";
+import { SessionService } from 'app/services/session.service';
 import { TypeNewService } from "app/services/type-new.service";
 import { TemplateNew, TemplatesNew } from "environments/environment";
 import { ToastrService } from "ngx-toastr";
@@ -34,14 +35,14 @@ export class CreateAndEditNewComponent implements OnInit {
   id = "";
   idTN = "";
   currentNew: New = {
-    id_news: "",
-    id_user: "",
     id: "",
-    datos: {},
+    created_by: "",
+    employee: "",
   };
 
   constructor(
     private newService: NewService,
+    private sessionService: SessionService,
     private typeNewService: TypeNewService,
     private toastr: ToastrService,
     private router: Router,
@@ -50,12 +51,12 @@ export class CreateAndEditNewComponent implements OnInit {
 
   ngOnInit(): void {
     this.idTN = this.route.snapshot.params.idTN;
-    this.currentNew.id_user = this.getLocalStorage('id_user')
+    this.currentNew.employee = this.currentNew.created_by = this.getLocalStorage('id_user')
     this.typeNewService.get(this.idTN).subscribe(
       (typeNew: TypeNew) => {
         if (typeNew) {
           this.template = TemplatesNew.filter(
-            (currentTemplate) => currentTemplate.name === typeNew.plantilla
+            (currentTemplate) => currentTemplate.name === typeNew.template
           )[0];
           if (this.template) {
             this.templateUrl = this.template.url;
@@ -117,7 +118,7 @@ export class CreateAndEditNewComponent implements OnInit {
   }
 
   onSubmit(data: object) {
-    this.currentNew.datos = { ...data };
+    this.currentNew = { ...data, ...this.currentNew };
     console.log(this.currentNew);
     this.submitted = true;
     this.update ? this.updateNew(data) : this.save(data);

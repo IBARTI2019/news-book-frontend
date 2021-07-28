@@ -35,10 +35,7 @@ export class CreateAndEditVehicleComponent implements OnInit {
     this.redirectTo = this.routeState.redirectTo || ""
     this.fg = this.fb.group(
       {
-        name: ["", Validators.required],
-        last_name: ["", Validators.required],
-        doc_ident: ["", Validators.required],
-        placa_vehiculo: ["", Validators.required],
+        license_plate: ["", Validators.required],
         is_active: [true, Validators.required],
       },
       {}
@@ -83,11 +80,8 @@ export class CreateAndEditVehicleComponent implements OnInit {
 
   getVehicle() {
     this.vehicleService.get(this.id).subscribe((data: Vehicle) => {
-      this.fg.get("name")!.setValue(data.name);
-      this.fg.get("last_name")!.setValue(data.last_name);
       this.fg.get("is_active")!.setValue(data.is_active);
-      this.fg.get("doc_ident")!.setValue(data.doc_ident);
-      this.fg.get("placa_vehiculo")!.setValue(data.placa_vehiculo);
+      this.fg.get("license_plate")!.setValue(data.license_plate);
     });
   }
 

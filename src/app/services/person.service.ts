@@ -7,7 +7,7 @@ import { API } from '../utils/api'
   providedIn: 'root'
 })
 export class PersonService extends API<Person> {
-  protected URL = `${this.URL_API}/persons/crudpersons/`;
+  protected URL = `${this.URL_API}/main/person/`;
   constructor(
     protected http: HttpClient,
   ) {

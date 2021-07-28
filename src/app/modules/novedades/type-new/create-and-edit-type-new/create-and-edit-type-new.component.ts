@@ -18,7 +18,6 @@ export class CreateAndEditTypeNewComponent implements OnInit {
   fg: FormGroup;
   // modal variables
   submitted = false;
-  clasifnews: ClassificationNew[] = [];
   templates = TemplatesNew;
   id: string = "";
   update = false;
@@ -32,7 +31,7 @@ export class CreateAndEditTypeNewComponent implements OnInit {
   showSeven = false;
   showEight = false;
   showNotFound = false;
-  templateUrl = "";
+  templateUrl = "template-four";
   template: TemplateNew = {
     name: "",
     id: "",
@@ -42,7 +41,6 @@ export class CreateAndEditTypeNewComponent implements OnInit {
 
   constructor(
     private typeNewsService: TypeNewService,
-    private serviceclasificacion: ClassificationNewService,
     private fb: FormBuilder,
     private toastr: ToastrService,
     private router: Router,
@@ -53,20 +51,16 @@ export class CreateAndEditTypeNewComponent implements OnInit {
 
   ngOnInit() {
     this.id = this.route.snapshot.params.id;
-    this.serviceclasificacion.list().subscribe((data: ClassificationNew[]) => {
-      this.clasifnews = data;
-    });
-    this.templateUrl = "template-four";
     this.setShowCorrespondent();
     this.template = this.templates.filter(
       (currentT) => currentT.url === this.templateUrl
     )[0];
     this.fg = this.fb.group(
       {
-        descripton: ["", Validators.required],
+        description: ["", Validators.required],
         info: ["", Validators.required],
-        id_classify: ["", Validators.required],
-        plantilla: ["Plantilla por Defecto", Validators.required],
+        code: ["", Validators.required],
+        template: ["Plantilla por Defecto", Validators.required],
         is_active: [true, Validators.required],
       },
       {}
@@ -112,16 +106,20 @@ export class CreateAndEditTypeNewComponent implements OnInit {
 
   getTypeNew() {
     this.typeNewsService.get(this.id).subscribe((data: TypeNew) => {
-      this.fg.get("descripton")!.setValue(data.descripton);
+      this.fg.get("description")!.setValue(data.description);
       this.fg.get("info")!.setValue(data.info);
-      this.fg.get("id_classify")!.setValue(data.id_classify);
-      this.fg.get("plantilla")!.setValue(data.plantilla);
+      this.fg.get("code")!.setValue(data.code);
+      this.fg.get("template")!.setValue(data.template);
       this.fg.get("is_active")!.setValue(data.is_active);
+      this.template = this.templates.filter(
+        (currentT) => currentT.name === data.template
+      )[0];
+      this.templateUrl = this.template.url;
+      this.setShowCorrespondent();
     });
   }
 
   updateTypeNew() {
-    console.log("Pero que pasa?");
     this.typeNewsService.update(this.id, this.fg.value).subscribe(
       (data) => {
         this.toastr.success("Tipo de Novedad actualizado");
@@ -169,7 +167,6 @@ export class CreateAndEditTypeNewComponent implements OnInit {
   }
 
   selectionTemplateChange(event: MatSelectChange) {
-    console.log(event);
     this.showOne = false;
     this.showTwo = false;
     this.showThree = false;

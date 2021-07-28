@@ -16,8 +16,15 @@
         <mat-form-field>
           <input
             matInput
+            placeholder="Codigo"
+            formControlName="code"
+          />
+        </mat-form-field>
+        <mat-form-field>
+          <input
+            matInput
             placeholder="Descripcion"
-            formControlName="descripton"
+            formControlName="description"
           />
         </mat-form-field>
         <mat-form-field>
@@ -28,16 +35,7 @@
           ></textarea>
         </mat-form-field>
         <mat-form-field>
-          <mat-select formControlName="id_classify" placeholder="Clasificacion">
-            <mat-option
-              *ngFor="let clasican of clasifnews"
-              [value]="clasican.id_classify"
-              >{{ clasican.description }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-        <mat-form-field>
-          <mat-select formControlName="plantilla" (selectionChange)="selectionTemplateChange($event)" placeholder="Plantilla">
+          <mat-select formControlName="template" (selectionChange)="selectionTemplateChange($event)" placeholder="Plantilla">
             <mat-option
               *ngFor="let template of templates"
               [value]="template.name"
@@ -50,7 +48,7 @@
 
       <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="5px">
         <div fxFlex="50">
-          <mat-slide-toggle formControlName="is_active">is_active</mat-slide-toggle>
+          <mat-slide-toggle formControlName="is_active">Status</mat-slide-toggle>
         </div>
       </div>
       <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="end">

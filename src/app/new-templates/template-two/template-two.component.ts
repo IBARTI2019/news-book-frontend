@@ -28,8 +28,8 @@ export class TemplateTwoComponent implements OnInit, AfterViewChecked {
   @Input() operation: string = "";
   @Input() data: TemplateTwoVehicle = {
     id: "",
-    notice: "",
-    vehiculos: [],
+    message: "",
+    vehicles: [],
   };
   @ViewChild("selectionList") filteredItems!: MatSelectionList;
   fg: FormGroup;
@@ -47,8 +47,8 @@ export class TemplateTwoComponent implements OnInit, AfterViewChecked {
     operation: "",
   };
   storageData = {
-    notice: "",
-    vehiculos: [],
+    message: "",
+    vehicles: [],
   };
   view = true;
   constructor(
@@ -104,13 +104,13 @@ export class TemplateTwoComponent implements OnInit, AfterViewChecked {
     this.storageData = this.currentTemplate.id
       ? this.getLocalStorage(this.currentTemplate.id)
       : null;
-    this.selectedPlates = this.storageData?.vehiculos || [];
+    this.selectedPlates = this.storageData?.vehicles || [];
     this.setMethods();
 
     this.fg = this.fb.group(
       {
-        notice: [
-          this.data.notice || this.storageData?.notice || null,
+        message: [
+          this.data.message || this.storageData?.message || null,
           this.view ? Validators.nullValidator : Validators.required,
         ],
       },
@@ -119,7 +119,7 @@ export class TemplateTwoComponent implements OnInit, AfterViewChecked {
     if (!this.view) {
       this.vehicleService.list(this.id).subscribe((data: Vehicle[]) => {
         this.filterPlatesDataSet = data.map((currentVehicle) => ({
-          plate: currentVehicle.placa_vehiculo || "",
+          plate: currentVehicle.license_plate || "",
         }));
       });
       if (this.id) {
@@ -173,7 +173,7 @@ export class TemplateTwoComponent implements OnInit, AfterViewChecked {
     }
     this.tSubmit.emit({
       ...this.fg.value,
-      vehiculos: [...this.selectedPlates],
+      vehicles: [...this.selectedPlates],
     });
     this.submitted = false;
   }
@@ -199,7 +199,7 @@ export class TemplateTwoComponent implements OnInit, AfterViewChecked {
   saveAndRediret() {
     this.setLocalStorage(this.currentTemplate.id, {
       ...this.fg.value,
-      vehiculos: [...this.selectedPlates],
+      vehicles: [...this.selectedPlates],
     });
     this.router.navigateByUrl("/vehicle/crear", {
       state: { redirectTo: this.router.url },

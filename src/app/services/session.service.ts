@@ -17,7 +17,7 @@ import { Router } from "@angular/router";
   providedIn: "root",
 })
 export class SessionService extends API<User> {
-  protected URL = `${this.URL_API}/users/crud/`;
+  protected URL = `${this.URL_API}/security`;
   private apiURL = `${environment.API}`;
   private $user!: BehaviorSubject<User>;
 
@@ -82,11 +82,11 @@ export class SessionService extends API<User> {
       })
       .pipe(
         map((res: VerifyCodeResponse) => {
-          this.setLocalStorage(API.ISLOGGEDIN, res.logIn);
+          this.setLocalStorage(API.ISLOGGEDIN, true);
           this.setLocalStorage(API.TOKEN, res.token);
-          this.actual().subscribe((user: User) => {
+          this.actual().subscribe(async (user: User) => {
             if (user) {
-              this.setLocalStorage(API.USUARIO, user.id);
+              this.setLocalStorage(API.USUARIO, user.user_id);
             }
           });
           return res;
@@ -97,7 +97,6 @@ export class SessionService extends API<User> {
 
   public logout() {
     this.$user.subscribe((user: User) => {
-      console.log("User: ", user);
       this.http
         .post(`${this.URL_API}/users/validate/logout/`, {
           _id: user.id,
@@ -113,7 +112,7 @@ export class SessionService extends API<User> {
             name: "",
             last_name: "",
             email: "",
-            username: "",
+            user_id: "",
           });
           this.router.navigateByUrl("/");
         });
@@ -134,8 +133,25 @@ export class SessionService extends API<User> {
       name: "",
       last_name: "",
       email: "",
-      username: "",
+      user_id: "",
     });
+  }
+
+  /**
+   * isSuperUser
+   */
+  public async isSuperUser(): Promise<boolean> {
+    // const userId = this.getLocalStorage(API.USUARIO)
+    // const user = await this.http.get<User>(`${this.apiURL}/security/user/${userId}/`).toPromise();
+    // return (user.is_superuser || false);
+    return true;
+  }
+
+  public async isStaff(): Promise<boolean> {
+    // const userId = this.getLocalStorage(API.USUARIO)
+    // const user = await this.http.get<User>(`${this.apiURL}/security/user/${userId}/`).toPromise();
+    // return (user.is_staff || false);
+    return false;
   }
 
   /**

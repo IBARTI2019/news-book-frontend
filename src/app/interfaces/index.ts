@@ -1,19 +1,22 @@
 export interface User {
   id?: string;
-  _id?: string;
+  is_superuser?: boolean;
   code?: string;
+  email: string;
   name: string;
   last_name: string;
-  email: string;
-  username: string;
-  info?: string;
-  is_superuser?: boolean;
   password?: string;
-  is_active?: boolean;
-  is_staff?: boolean;
-  role?: string;
   address?: string;
   phone?: string;
+  telephone?: string;
+  security_code?: string;
+  photo?: string;
+  is_staff?: boolean;
+  is_active?: boolean;
+  info?: string;
+  user_permissions?: Number[];
+  jwt_id?: string;
+  user_id?: string;
 }
 
 export interface SigninData {
@@ -41,56 +44,50 @@ export interface Warehouse {
 }
 
 export interface Material {
-  id_material?: string | number;
-  cod_material?: string;
-  serial_material?: string;
-  id_warehouse?: string;
-  description?: string;
-  stock?: string;
+  id?: string;
+  code: string;
+  serial: string;
+  description: string;
   is_active?: string;
 }
 
 export interface Vehicle {
-  id_vehiculo?: string;
-  doc_ident: string;
-  name?: string;
-  last_name?: string;
-  placa_vehiculo?: string;
+  id: string;
+  license_plate: string;
   is_active?: string;
 }
 
 export interface TypePeople {
-  id_type_person: string;
+  id: string;
   description: string;
   priority: string;
   is_active: string;
 }
 
 export interface Person {
-  id_person?: string;
-  cod_person?: string;
-  name?: string;
-  last_name?: string;
-  doc_ident?: string;
-  addres?: string;
-  phono?: string;
-  movil?: string;
-  id_type_person?: string;
+  id: string;
+  code: string;
+  name: string;
+  last_name: string;
+  doc_ident: string;
+  address: string;
+  phone: string;
+  mobile: string;
+  type_person?: string;
   is_active?: string;
 }
 
 export interface TypeNew {
   id: string;
-  descripton: string;
-  id_classify: string;
-  plantilla: string;
+  description: string;
+  code: string;
+  template: string;
   is_active: string;
-  imageUrl?: string;
+  image?: string;
   info?: string;
 }
 
 export interface ClassificationNew {
-  id_classify: string;
   description: string;
   codigo: string;
   level_urgency: string;
@@ -99,18 +96,20 @@ export interface ClassificationNew {
 }
 
 export interface New {
-  id_news: string;
-  notice?: string;
-  id_user: string;
-  id?: string;
-  fecha?: Date;
-  hora?: string;
-  datos?: object;
+  id: string;
+  materials?: string[];
+  people?: string[];
+  vehicles?: string[];
+  employee: string;
+  message?: string;
+  info?: string;
+  type_news?: string;
+  created_by: string;
 }
 
 export interface TemplateOne {
   id: string;
-  notice: string;
+  message: string;
   perimetro: string;
   alumbrado: string;
   alarmas: string;
@@ -119,19 +118,19 @@ export interface TemplateOne {
 
 export interface TemplateTwoVehicle {
   id: string;
-  notice: string;
-  vehiculos: string[];
+  message: string;
+  vehicles: string[];
 }
 
 export interface TemplateThreeMaterials {
   id: string;
-  notice: string;
-  materiales: string[];
+  message: string;
+  materials: string[];
 }
 
 export interface TemplateFour {
   id?: string;
-  notice: string;
+  message: string;
 }
 
 export interface TemplateFive {
@@ -175,4 +174,11 @@ export interface Permiso {
   ruta?: string;
   is_active?: boolean;
   routers?: string[];
+}
+
+export interface Role {
+  id: string;
+  description: string;
+  name: string;
+  permissions: Number[];
 }

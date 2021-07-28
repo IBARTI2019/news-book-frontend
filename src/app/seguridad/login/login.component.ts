@@ -65,10 +65,16 @@ export class LoginComponent implements OnInit {
   verifyCode(): void {
     this.verifyCodeSubmit = true;
     this.sessionService.verifyCode(this.signinData).subscribe(
-      (data: VerifyCodeResponse) => {
+      async (data: VerifyCodeResponse) => {
         this.verifyCodeSubmit = true;
         this.toastrService.success("El codigo ha sido verificado con exito.");
-        this.router.navigateByUrl("/new");
+        const isSuperUser = await this.sessionService.isSuperUser()
+        if (isSuperUser) {
+          this.router.navigateByUrl("/new");
+        } else {
+          const isStaff = await this.sessionService.isStaff()
+          this.router.navigateByUrl(isStaff ? "/new/view" : "/new");
+        }
       },
       (error: HttpErrorResponse) => {
         console.error(error);

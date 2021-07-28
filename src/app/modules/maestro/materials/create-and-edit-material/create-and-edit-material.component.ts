@@ -2,9 +2,8 @@ import { HttpErrorResponse } from "@angular/common/http";
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
-import { Material, Warehouse } from "app/interfaces";
+import { Material } from "app/interfaces";
 import { MaterialsService } from "app/services/materials.service";
-import { WarehouseService } from "app/services/warehouse.service";
 import { ToastrService } from "ngx-toastr";
 
 @Component({
@@ -15,7 +14,6 @@ import { ToastrService } from "ngx-toastr";
 export class CreateAndEditMaterialComponent implements OnInit {
   fg: FormGroup;
   submitted = false;
-  warehouses: Warehouse[] = [];
   update = false;
   id = "";
   routeState: any;
@@ -23,7 +21,6 @@ export class CreateAndEditMaterialComponent implements OnInit {
 
   constructor(
     private materialService: MaterialsService,
-    private warehouseService: WarehouseService,
     private fb: FormBuilder,
     private toastr: ToastrService,
     private router: Router,
@@ -36,16 +33,12 @@ export class CreateAndEditMaterialComponent implements OnInit {
   ngOnInit() {
     this.id = this.route.snapshot.params.id;
     this.redirectTo = this.routeState.redirectTo || ""
-    this.warehouseService.list().subscribe((data: Warehouse[]) => {
-      this.warehouses = [...data];
-    });
+
     this.fg = this.fb.group(
       {
-        cod_material: ["", Validators.required],
-        serial_material: ["", Validators.required],
-        id_warehouse: ["", Validators.required],
+        code: ["", Validators.required],
+        serial: ["", Validators.required],
         description: ["", Validators.required],
-        stock: ["", Validators.required],
         is_active: [true, Validators.required],
       },
       {}
@@ -62,7 +55,7 @@ export class CreateAndEditMaterialComponent implements OnInit {
     }
     this.submitted = true;
     console.log('Que pasa?')
-    this.update ? this.updateMaterial : this.save();
+    this.update ? this.updateMaterial() : this.save();
   }
 
   onReset() {
@@ -89,12 +82,10 @@ export class CreateAndEditMaterialComponent implements OnInit {
   getMaterial() {
     this.materialService.get(this.id).subscribe(
       (data: Material) => {
-        this.fg.get("cod_material")!.setValue(data.cod_material);
-        this.fg.get("serial_material")!.setValue(data.serial_material);
+        this.fg.get("code")!.setValue(data.code);
+        this.fg.get("serial")!.setValue(data.serial);
         this.fg.get("description")!.setValue(data.description);
         this.fg.get("is_active")!.setValue(data.is_active);
-        this.fg.get("id_warehouse")!.setValue(data.id_warehouse);
-        this.fg.get("stock")!.setValue(data.stock);
       },
       (error: HttpErrorResponse) => {
         this.toastr.error( error.error.message || 'Error al obtener el material');

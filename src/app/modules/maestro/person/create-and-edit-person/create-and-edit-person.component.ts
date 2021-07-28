@@ -37,14 +37,14 @@ export class CreateAndEditPersonComponent implements OnInit {
     });
     this.fg = this.fb.group(
       {
-        cod_person: ["", Validators.required],
+        code: ["", Validators.required],
         name: ["", Validators.required],
         last_name: ["", Validators.required],
         doc_ident: ["", Validators.required],
-        addres: ["", Validators.required],
-        phono: ["", Validators.required],
-        movil: ["", Validators.required],
-        id_type_person: ["", Validators.required],
+        address: ["", Validators.required],
+        phone: ["", Validators.required],
+        mobile: ["", Validators.required],
+        // type_person: ["", Validators.required],
         is_active: [true, Validators.required],
       },
       {}
@@ -58,6 +58,7 @@ export class CreateAndEditPersonComponent implements OnInit {
   onSubmit() {
     this.submitted = true;
     if (this.fg.invalid) {
+      console.log('Invalid?')
       this.submitted = false;
       return;
     }
@@ -89,15 +90,15 @@ export class CreateAndEditPersonComponent implements OnInit {
 
   getPerson() {
     this.personService.get(this.id || '').subscribe((data: Person) => {
-      this.fg.get("cod_person")!.setValue(data.cod_person);
+      this.fg.get("code")!.setValue(data.code);
       this.fg.get("name")!.setValue(data.name);
       this.fg.get("last_name")!.setValue(data.last_name);
       this.fg.get("is_active")!.setValue(data.is_active);
       this.fg.get("doc_ident")!.setValue(data.doc_ident);
-      this.fg.get("addres")!.setValue(data.addres);
-      this.fg.get("phono")!.setValue(data.phono);
-      this.fg.get("movil")!.setValue(data.movil);
-      this.fg.get("id_type_person")!.setValue(data.id_type_person);
+      this.fg.get("address")!.setValue(data.address);
+      this.fg.get("phone")!.setValue(data.phone);
+      this.fg.get("mobile")!.setValue(data.mobile);
+      this.fg.get("type_person")!.setValue(data.type_person);
     });
   }
 

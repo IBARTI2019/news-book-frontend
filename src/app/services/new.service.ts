@@ -7,7 +7,7 @@ import { New } from '../interfaces'
   providedIn: 'root'
 })
 export class NewService extends API<New> {
-  protected URL = `${this.URL_API}/news/crudnews/`;
+  protected URL = `${this.URL_API}/main/news/`;
   constructor(
     protected http: HttpClient,
   ) {
