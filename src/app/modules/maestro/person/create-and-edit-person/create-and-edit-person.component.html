@@ -6,7 +6,7 @@
             <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="5px">
                 <mat-form-field>
                     <mat-label>Codigo</mat-label>
-                    <input matInput placeholder="Codigo" formControlName="cod_person">
+                    <input matInput placeholder="Codigo" formControlName="code">
                 </mat-form-field>
                  <mat-form-field>
                     <mat-label>Cedula</mat-label>
@@ -25,11 +25,11 @@
             <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="5px">
                 <mat-form-field>
                     <mat-label>Telefono Habitacion</mat-label>
-                    <input matInput placeholder="Telefono hab" formControlName="phono">
+                    <input matInput placeholder="Telefono hab" formControlName="phone">
                 </mat-form-field>
                  <mat-form-field>
                     <mat-label>Movil</mat-label>
-                    <input matInput placeholder="Celular" formControlName="movil">
+                    <input matInput placeholder="Celular" formControlName="mobile">
                 </mat-form-field>
                 <mat-form-field>
                     <mat-label>Direccion</mat-label>
@@ -37,7 +37,7 @@
                 </mat-form-field>
                 <mat-form-field>
                     <mat-label>Tipo Persona</mat-label>
-                    <mat-select formControlName="id_type_person" placeholder="Tipo de Persona">
+                    <mat-select formControlName="type_person" placeholder="Tipo de Persona">
                         <mat-option *ngFor="let personan of listap" [value]="personan.id_type_person">{{personan.description}}
                         </mat-option>
                     </mat-select>

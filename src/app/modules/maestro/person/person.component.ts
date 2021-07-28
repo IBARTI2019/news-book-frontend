@@ -28,7 +28,7 @@ export class PersonComponent implements OnInit {
   ngOnInit(): void {
     this.columns = [
       {
-        dataAttribute: "cod_person",
+        dataAttribute: "code",
         attribute: "Cod Persona",
       },
       {
@@ -48,11 +48,11 @@ export class PersonComponent implements OnInit {
         attribute: "Direccion",
       },
       {
-        dataAttribute: "phono",
+        dataAttribute: "phone",
         attribute: "Telefono Hab.",
       },
       {
-        dataAttribute: "movil",
+        dataAttribute: "mobile",
         attribute: "Celular",
       },
       {
@@ -64,7 +64,7 @@ export class PersonComponent implements OnInit {
         attribute: "is_active",
       },
       {
-        attribute: "id_person",
+        attribute: "id",
         header: "Opciones",
         template: "opciones",
       },
@@ -81,7 +81,7 @@ export class PersonComponent implements OnInit {
     });
     this.dialogService.confirmed().subscribe((confirmed) => {
       if (confirmed) {
-        this.personService.remove(person.id_person || '').subscribe(
+        this.personService.remove(person.id).subscribe(
           (data) => {
             this.toastr.success("Datos eliminado con exito!.");
             this.table.refresh();

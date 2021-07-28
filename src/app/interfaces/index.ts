@@ -65,15 +65,15 @@ export interface TypePeople {
 }
 
 export interface Person {
-  id_person?: string;
-  cod_person?: string;
-  name?: string;
-  last_name?: string;
-  doc_ident?: string;
-  addres?: string;
-  phono?: string;
-  movil?: string;
-  id_type_person?: string;
+  id: string;
+  code: string;
+  name: string;
+  last_name: string;
+  doc_ident: string;
+  addres: string;
+  phone: string;
+  mobile: string;
+  type_person?: string;
   is_active?: string;
 }
 
