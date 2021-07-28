@@ -28,7 +28,7 @@ export class TypeNewComponent implements OnInit {
   ngOnInit(): void {
     this.columns = [
       {
-        dataAttribute: "descripton",
+        dataAttribute: "description",
         attribute: "Descripcion",
       },
       {

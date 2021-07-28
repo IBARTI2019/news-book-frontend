@@ -18,7 +18,6 @@ export class CreateAndEditTypeNewComponent implements OnInit {
   fg: FormGroup;
   // modal variables
   submitted = false;
-  clasifnews: ClassificationNew[] = [];
   templates = TemplatesNew;
   id: string = "";
   update = false;
@@ -32,7 +31,7 @@ export class CreateAndEditTypeNewComponent implements OnInit {
   showSeven = false;
   showEight = false;
   showNotFound = false;
-  templateUrl = "";
+  templateUrl = "template-four";
   template: TemplateNew = {
     name: "",
     id: "",
@@ -42,7 +41,6 @@ export class CreateAndEditTypeNewComponent implements OnInit {
 
   constructor(
     private typeNewsService: TypeNewService,
-    private serviceclasificacion: ClassificationNewService,
     private fb: FormBuilder,
     private toastr: ToastrService,
     private router: Router,
@@ -53,10 +51,6 @@ export class CreateAndEditTypeNewComponent implements OnInit {
 
   ngOnInit() {
     this.id = this.route.snapshot.params.id;
-    this.serviceclasificacion.list().subscribe((data: ClassificationNew[]) => {
-      this.clasifnews = data;
-    });
-    this.templateUrl = "template-four";
     this.setShowCorrespondent();
     this.template = this.templates.filter(
       (currentT) => currentT.url === this.templateUrl
@@ -65,7 +59,7 @@ export class CreateAndEditTypeNewComponent implements OnInit {
       {
         description: ["", Validators.required],
         info: ["", Validators.required],
-        code: [""],
+        code: ["", Validators.required],
         template: ["Plantilla por Defecto", Validators.required],
         is_active: [true, Validators.required],
       },
@@ -117,6 +111,11 @@ export class CreateAndEditTypeNewComponent implements OnInit {
       this.fg.get("code")!.setValue(data.code);
       this.fg.get("template")!.setValue(data.template);
       this.fg.get("is_active")!.setValue(data.is_active);
+      this.template = this.templates.filter(
+        (currentT) => currentT.name === data.template
+      )[0];
+      this.templateUrl = this.template.url;
+      this.setShowCorrespondent();
     });
   }
 

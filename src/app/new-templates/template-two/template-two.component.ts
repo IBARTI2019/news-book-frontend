@@ -173,7 +173,7 @@ export class TemplateTwoComponent implements OnInit, AfterViewChecked {
     }
     this.tSubmit.emit({
       ...this.fg.value,
-      vehiculos: [...this.selectedPlates],
+      vehicles: [...this.selectedPlates],
     });
     this.submitted = false;
   }
@@ -199,7 +199,7 @@ export class TemplateTwoComponent implements OnInit, AfterViewChecked {
   saveAndRediret() {
     this.setLocalStorage(this.currentTemplate.id, {
       ...this.fg.value,
-      vehiculos: [...this.selectedPlates],
+      vehicles: [...this.selectedPlates],
     });
     this.router.navigateByUrl("/vehicle/crear", {
       state: { redirectTo: this.router.url },
