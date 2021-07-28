@@ -6,8 +6,8 @@
       <mat-card-content>
         <app-new-container
           *ngFor="let typeNew of typeNews"
-          srcNew="{{ typeNew.imageUrl }}"
-          description="{{ typeNew.descripton }}"
+          srcNew="{{ typeNew.image || '/assets/images/news/default.jpg' }}"
+          description="{{ typeNew.description }}"
           idTN="{{ typeNew.id }}"
           template="{{ typeNew.template }}"
           prevUrl="crear"

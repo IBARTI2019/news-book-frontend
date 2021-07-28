@@ -7,7 +7,7 @@ import { API } from '../utils/api';
   providedIn: 'root'
 })
 export class TypeNewService extends API<TypeNew> {
-  protected URL = `${this.URL_API}/core/type_news/?not_paginator=true`;
+  protected URL = `${this.URL_API}/core/type_news/`;
   constructor(
     protected http: HttpClient,
   ) {

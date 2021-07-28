@@ -17,7 +17,7 @@ export class TemplateFourComponent implements OnInit {
   @Input() operation: string = "";
   @Input() data: TemplateFour = {
     id: "",
-    notice: "",
+    message: "",
   };
   fg: FormGroup;
   submitted = false;
@@ -25,7 +25,7 @@ export class TemplateFourComponent implements OnInit {
   update: boolean = false;
   view = true;
   storageData = {
-    notice: "",
+    message: "",
     perimetro: "",
     alumbrado: "",
     alarmas: "",
@@ -51,14 +51,13 @@ export class TemplateFourComponent implements OnInit {
     this.currentTemplate = TemplatesNew.filter(
       (currentT) => currentT.name === this.name
     )[0];
-    console.log("Current Template Four: ", this.currentTemplate);
     this.storageData = this.currentTemplate.id
       ? this.getLocalStorage(this.currentTemplate.id)
       : null;
     this.fg = this.fb.group(
       {
-        notice: [
-          this.data.notice || this.storageData?.notice || null,
+        message: [
+          this.data.message || this.storageData?.message || null,
           this.view ? Validators.nullValidator : Validators.required,
         ],
       },

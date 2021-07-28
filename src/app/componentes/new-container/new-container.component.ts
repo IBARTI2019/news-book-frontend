@@ -1,8 +1,7 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
-import { ActivatedRoute, Event, NavigationEnd, Router } from "@angular/router";
-import { TemplateNew, TemplatesNew } from "environments/environment";
-import { filter } from "rxjs/operators";
+import { Router } from "@angular/router";
+import { TemplatesNew } from "environments/environment";
 import { ValidateOesvicaTokenComponent } from "../validate-oesvica-token/validate-oesvica-token.component";
 
 @Component({
@@ -28,6 +27,7 @@ export class NewContainerComponent implements OnInit {
     const templateNew = TemplatesNew.filter(
       (currentTemplate) => currentTemplate.name === this.template
     );
+    console.log(templateNew)
     if (templateNew.length) {
       this.url = this.idTN
     }

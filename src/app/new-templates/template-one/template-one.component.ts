@@ -17,7 +17,7 @@ export class TemplateOneComponent implements OnInit {
   @Input() operation: string = "";
   @Input() data: TemplateOne = {
     id: "",
-    notice: "",
+    message: "",
     perimetro: "",
     alumbrado: "",
     alarmas: "",
@@ -29,7 +29,7 @@ export class TemplateOneComponent implements OnInit {
   update: boolean = false;
   view = true;
   storageData = {
-    notice: "",
+    message: "",
     perimetro: "",
     alumbrado: "",
     alarmas: "",
@@ -60,8 +60,8 @@ export class TemplateOneComponent implements OnInit {
       : null;
     this.fg = this.fb.group(
       {
-        notice: [
-          this.data.notice || this.storageData?.notice || null,
+        message: [
+          this.data.message || this.storageData?.message || null,
           this.view ? Validators.nullValidator : Validators.required,
         ],
         perimetro: [

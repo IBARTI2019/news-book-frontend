@@ -27,8 +27,8 @@ export class TemplateThreeComponent implements OnInit {
   @Input() operation: string = "";
   @Input() data: TemplateThreeMaterials = {
     id: "",
-    notice: "",
-    materiales: [],
+    message: "",
+    materials: [],
   };
   @ViewChild("selectionList") filteredItems!: MatSelectionList;
   fg: FormGroup;
@@ -46,7 +46,7 @@ export class TemplateThreeComponent implements OnInit {
     operation: "",
   };
   storageData = {
-    notice: "",
+    message: "",
     materials: [],
   };
   view = true;
@@ -106,8 +106,8 @@ export class TemplateThreeComponent implements OnInit {
       : null;
     this.fg = this.fb.group(
       {
-        notice: [
-          this.data.notice || this.storageData?.notice || null,
+        message: [
+          this.data.message || this.storageData?.message || null,
           this.view ? Validators.nullValidator : Validators.required,
         ],
       },

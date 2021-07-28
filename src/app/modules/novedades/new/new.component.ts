@@ -31,23 +31,16 @@ export class NewComponent implements OnInit {
   ngOnInit() {
     this.columns = [
       {
-        dataAttribute: "notice",
-        attribute: "Noticia",
+        dataAttribute: "message",
+        attribute: "Mensaje",
       },
       {
-        dataAttribute: "ced_notifica",
-        attribute: "Cedula",
+        dataAttribute: "employee",
+        attribute: "Empleado",
       },
+      
       {
-        dataAttribute: "nombres_apellidos",
-        attribute: "Quien Notifica?",
-      },
-      {
-        dataAttribute: "createdAt",
-        attribute: "Fecha y Hora",
-      },
-      {
-        attribute: "id_news",
+        attribute: "id",
         header: "Opciones",
         template: "opciones",
       },
@@ -55,7 +48,7 @@ export class NewComponent implements OnInit {
   }
 
   update(id: string) {
-    this.router.navigate(["snew", id]);
+    this.router.navigate(["new", id]);
   }
 
   delete(localNew: New) {

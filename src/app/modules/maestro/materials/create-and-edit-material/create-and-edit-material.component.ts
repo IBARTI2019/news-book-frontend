@@ -2,9 +2,8 @@ import { HttpErrorResponse } from "@angular/common/http";
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
-import { Material, Warehouse } from "app/interfaces";
+import { Material } from "app/interfaces";
 import { MaterialsService } from "app/services/materials.service";
-import { WarehouseService } from "app/services/warehouse.service";
 import { ToastrService } from "ngx-toastr";
 
 @Component({
@@ -15,7 +14,6 @@ import { ToastrService } from "ngx-toastr";
 export class CreateAndEditMaterialComponent implements OnInit {
   fg: FormGroup;
   submitted = false;
-  warehouses: Warehouse[] = [];
   update = false;
   id = "";
   routeState: any;
@@ -23,7 +21,6 @@ export class CreateAndEditMaterialComponent implements OnInit {
 
   constructor(
     private materialService: MaterialsService,
-    private warehouseService: WarehouseService,
     private fb: FormBuilder,
     private toastr: ToastrService,
     private router: Router,
@@ -36,9 +33,7 @@ export class CreateAndEditMaterialComponent implements OnInit {
   ngOnInit() {
     this.id = this.route.snapshot.params.id;
     this.redirectTo = this.routeState.redirectTo || ""
-    this.warehouseService.list().subscribe((data: Warehouse[]) => {
-      this.warehouses = [...data];
-    });
+
     this.fg = this.fb.group(
       {
         code: ["", Validators.required],
@@ -60,7 +55,7 @@ export class CreateAndEditMaterialComponent implements OnInit {
     }
     this.submitted = true;
     console.log('Que pasa?')
-    this.update ? this.updateMaterial : this.save();
+    this.update ? this.updateMaterial() : this.save();
   }
 
   onReset() {

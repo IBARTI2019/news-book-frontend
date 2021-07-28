@@ -41,7 +41,13 @@ export class MaterialsComponent implements OnInit {
       },
       {
         dataAttribute: "is_active",
-        attribute: "is_active",
+        attribute: "Status",
+      },
+      {
+        attribute: "id",
+        header: "Opciones",
+        template: "opciones",
+        default: 'false'
       },
     ];
   }

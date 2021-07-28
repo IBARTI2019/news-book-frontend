@@ -70,7 +70,7 @@ export interface Person {
   name: string;
   last_name: string;
   doc_ident: string;
-  addres: string;
+  address: string;
   phone: string;
   mobile: string;
   type_person?: string;
@@ -109,7 +109,7 @@ export interface New {
 
 export interface TemplateOne {
   id: string;
-  notice: string;
+  message: string;
   perimetro: string;
   alumbrado: string;
   alarmas: string;
@@ -118,19 +118,19 @@ export interface TemplateOne {
 
 export interface TemplateTwoVehicle {
   id: string;
-  notice: string;
-  vehiculos: string[];
+  message: string;
+  vehicles: string[];
 }
 
 export interface TemplateThreeMaterials {
   id: string;
-  notice: string;
-  materiales: string[];
+  message: string;
+  materials: string[];
 }
 
 export interface TemplateFour {
   id?: string;
-  notice: string;
+  message: string;
 }
 
 export interface TemplateFive {

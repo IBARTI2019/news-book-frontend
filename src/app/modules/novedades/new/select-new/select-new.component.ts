@@ -29,7 +29,7 @@ export class SelectNewComponent implements OnInit {
     this.typeNewService.list().subscribe(
       (typeNewsResponse: TypeNew[]) => {
         this.typeNews = [...typeNewsResponse];
-        this.typeNews.shift()
+        this.typeNews
       },
       (error: HttpErrorResponse) => {
         this.toastr.error(

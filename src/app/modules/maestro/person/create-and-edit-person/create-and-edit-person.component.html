@@ -33,15 +33,15 @@
                 </mat-form-field>
                 <mat-form-field>
                     <mat-label>Direccion</mat-label>
-                    <input matInput placeholder="Direccion" formControlName="addres">
+                    <input matInput placeholder="Direccion" formControlName="address">
                 </mat-form-field>
-                <mat-form-field>
+                <!-- <mat-form-field>
                     <mat-label>Tipo Persona</mat-label>
                     <mat-select formControlName="type_person" placeholder="Tipo de Persona">
-                        <mat-option *ngFor="let personan of listap" [value]="personan.id_type_person">{{personan.description}}
+                        <mat-option *ngFor="let personan of listap" [value]="personan.id">{{personan.description}}
                         </mat-option>
                     </mat-select>
-                </mat-form-field>
+                </mat-form-field> -->
                 <div fxFlex="50">
                     <mat-slide-toggle formControlName="is_active">Activo</mat-slide-toggle>
                 </div>
