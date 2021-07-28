@@ -1,6 +1,8 @@
 export interface User {
   id?: string;
   _id?: string;
+  id?: string;
+  code?: string;
   firstName: string;
   lastName: string;
   email: string;
@@ -11,9 +13,10 @@ export interface User {
 }
 
 export interface SigninData {
-  user: string;
-  password: string;
-  codigocelular?: string;
+  code?: string;
+  user?: string;
+  password?: string;
+  security_code?: string;
 }
 
 export interface APIMessage {
@@ -88,6 +91,7 @@ export interface ClassificationNew {
   codigo: string;
   level_urgency: string;
   status: string;
+  value: string;
 }
 
 export interface New {

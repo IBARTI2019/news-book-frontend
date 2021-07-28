@@ -58,7 +58,7 @@ export class SessionService extends API<User> {
 
   sendCode(signinData: SigninData): Observable<void> {
     return this.http
-      .post<void>(`${this.apiURL}/users/solicitud/codigo/`, { ...signinData })
+      .post<void>(`${this.apiURL}/security/valid/request_security_code/`, { ...signinData })
       .pipe(catchError((error: HttpErrorResponse) => this.handleError(error)));
   }
 
@@ -72,10 +72,10 @@ export class SessionService extends API<User> {
    */
 
   verifyCode(signinData: SigninData): Observable<VerifyCodeResponse> {
-    if (!signinData.codigocelular)
+    if (!signinData.security_code)
       throwError({ message: "El codigo no puede estar vacio" });
     return this.http
-      .post<VerifyCodeResponse>(`${this.apiURL}/users/validate/login/`, {
+      .post<VerifyCodeResponse>(`${this.apiURL}/token/`, {
         ...signinData,
       })
       .pipe(

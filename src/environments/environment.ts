@@ -5,7 +5,7 @@
 
 export const environment = {
   production: false,
-  API: 'http://localhost:3000'
+  API: 'http://66.23.233.252:9999/api'
   //API: 'http://oesvica.ddns.net:5005'
   //API: 'http://161.97.112.156:5002'
 };

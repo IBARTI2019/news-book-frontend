@@ -11,9 +11,10 @@ import { SigninData, VerifyCodeResponse } from "app/interfaces";
 })
 export class LoginComponent implements OnInit {
   signinData: SigninData = {
+    code: "",
     user: "",
     password: "",
-    codigocelular: "",
+    security_code: ""
   };
   sendingCode = false;
   sendCodeSucces = false;
@@ -24,7 +25,7 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private toastrService: ToastrService,
     private sessionService: SessionService
-  ) {}
+  ) { }
 
   ngOnInit() {
     if (this.sessionService.isLoggedIn) {
