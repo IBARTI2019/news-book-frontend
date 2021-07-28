@@ -57,7 +57,7 @@ export class MaterialsComponent implements OnInit {
   }
 
   update(id: string) {
-    this.router.navigate(["inicio/materials", id]);
+    this.router.navigate(["materials", id]);
   }
 
   delete(material: Material) {

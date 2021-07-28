@@ -14,7 +14,7 @@ export const TypePeopleRouting: Routes = [
           breadcrumb: {
             label: "Tipoe de Personas",
           },
-          omitirPermiso: true,
+          skipPermission: true,
         },
         component: TypePeopleComponent,
       },
@@ -23,13 +23,13 @@ export const TypePeopleRouting: Routes = [
         data: {
           breadcrumbAnt: {
             label: "Tipo de Personas",
-            url: "inicio/type-people",
+            url: "type-people",
             params: [],
           },
           breadcrumb: {
             label: "Crear Tipo",
           },
-          omitirPermiso: true,
+          skipPermission: true,
         },
         component: CreateAndEditTypePeopleComponent,
       },
@@ -38,13 +38,13 @@ export const TypePeopleRouting: Routes = [
         data: {
           breadcrumbAnt: {
             label: "Tipo de Personas",
-            url: "inicio/type-people",
+            url: "type-people",
             params: [],
           },
           breadcrumb: {
             label: "Editar Tipo",
           },
-          omitirPermiso: true,
+          skipPermission: true,
         },
         component: CreateAndEditTypePeopleComponent,
       },

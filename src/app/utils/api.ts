@@ -71,6 +71,7 @@ export abstract class API<T> {
    * @param value objeto con las modificaciones
    */
   update(id: string | number, value: T): Observable<T> {
+    console.log('Quejesto vale: ', id, value)
     return this.http
       .put<T>(this.URL + id + '/', value);
   }

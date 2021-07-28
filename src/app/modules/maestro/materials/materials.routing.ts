@@ -13,7 +13,7 @@ export const MaterialsRouting: Routes = [
           breadcrumb: {
             label: "Materiales y Suministros",
           },
-          omitirPermiso: true,
+          skipPermission: true,
         },
         component: MaterialsComponent,
       },
@@ -22,13 +22,13 @@ export const MaterialsRouting: Routes = [
         data: {
           breadcrumbAnt: {
             label: "Materiales y Suministros",
-            url: "inicio/materials",
+            url: "materials",
             params: [],
           },
           breadcrumb: {
             label: "Crear Materiales",
           },
-          omitirPermiso: true,
+          skipPermission: true,
         },
         component: CreateAndEditMaterialComponent,
       },
@@ -37,13 +37,13 @@ export const MaterialsRouting: Routes = [
         data: {
           breadcrumbAnt: {
             label: "Materiales y Suministros",
-            url: "inicio/materials",
+            url: "materials",
             params: [],
           },
           breadcrumb: {
             label: "Editar Materiales",
           },
-          omitirPermiso: true,
+          skipPermission: true,
         },
         component: CreateAndEditMaterialComponent,
       },

@@ -13,7 +13,7 @@ export const TypeNewsRouting: Routes = [
           breadcrumb: {
             label: "Tipos de Novedades",
           },
-          omitirPermiso: true,
+          skipPermission: true,
         },
         component: TypeNewComponent,
       },
@@ -22,13 +22,13 @@ export const TypeNewsRouting: Routes = [
         data: {
           breadcrumbAnt: {
             label: "Tipos de Novedades",
-            url: "inicio/type-new",
+            url: "type-new",
             params: [],
           },
           breadcrumb: {
             label: "Crear Tipo de Novedad",
           },
-          omitirPermiso: true,
+          skipPermission: true,
         },
         component: CreateAndEditTypeNewComponent,
       },
@@ -37,13 +37,13 @@ export const TypeNewsRouting: Routes = [
         data: {
           breadcrumbAnt: {
             label: "Tipos de Novedades",
-            url: "inicio/type-new",
+            url: "type-new",
             params: [],
           },
           breadcrumb: {
             label: "Editar Tipo de Novedad",
           },
-          omitirPermiso: true,
+          skipPermission: true,
         },
         component: CreateAndEditTypeNewComponent,
       },

@@ -16,19 +16,23 @@ export class CreateAndEditVehicleComponent implements OnInit {
   submitted = false;
   update: boolean = false;
   id: string = "";
+  routeState: any;
+  redirectTo = "";
 
   constructor(
     private vehicleService: VehicleService,
     private fb: FormBuilder,
     private toastr: ToastrService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
   ) {
     this.fg = this.fb.group({});
+    this.routeState = history.state
   }
 
   ngOnInit() {
     this.id = this.route.snapshot.params.id;
+    this.redirectTo = this.routeState.redirectTo || ""
     this.fg = this.fb.group(
       {
         name: ["", Validators.required],
@@ -52,13 +56,13 @@ export class CreateAndEditVehicleComponent implements OnInit {
       this.submitted = false;
       return;
     }
-    this.update ? this.updateVehicle : this.save();
+    this.update ? this.updateVehicle() : this.save();
   }
 
   onReset() {
     this.submitted = false;
     this.fg.reset();
-    this.router.navigate(["inicio/vehicle"]);
+    this.router.navigate([this.redirectTo || "vehicle"]);
   }
 
   save() {
@@ -67,7 +71,7 @@ export class CreateAndEditVehicleComponent implements OnInit {
         this.toastr.success("Vehiculo creado con éxito");
         this.submitted = false;
         this.fg.reset();
-        this.router.navigate(["inicio/vehicle"]);
+        this.router.navigate([this.redirectTo || "vehicle"]);
       },
       (error: HttpErrorResponse) => {
         this.toastr.error(
@@ -95,7 +99,7 @@ export class CreateAndEditVehicleComponent implements OnInit {
         );
         this.submitted = false;
         this.fg.reset();
-        this.router.navigate(["inicio/vehicle"]);
+        this.router.navigate(["vehicle"]);
       },
       (error: HttpErrorResponse) => {
         this.toastr.error(

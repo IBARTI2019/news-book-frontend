@@ -20,9 +20,6 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { SpinnerComponent } from './shared/spinner.component';
 import { LoginComponent } from 'app/seguridad/login/login.component';
 import { ToastrModule } from 'ngx-toastr';
-import { JwtModule, JWT_OPTIONS } from '@auth0/angular-jwt';
-import { environment } from 'environments/environment';
-import { API } from './utils/api';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { MatNativeDateModule } from '@angular/material/core';
 import { LayoutModule } from '@angular/cdk/layout';
@@ -51,17 +48,6 @@ import { LayoutModule } from '@angular/cdk/layout';
     MatNativeDateModule,
     ReactiveFormsModule,
     LayoutModule,
-    JwtModule.forRoot({
-      jwtOptionsProvider: {
-        provide: JWT_OPTIONS,
-        useFactory: () => {
-          return {
-            whitelistedDomains: [new URL(environment.API).host],
-            tokenGetter: () => localStorage.getItem(API.TOKEN)
-          };
-        }
-      }
-    }),
   ],
   providers: [
    // { provide: LocationStrategy,  useClass: PathLocationStrategy},

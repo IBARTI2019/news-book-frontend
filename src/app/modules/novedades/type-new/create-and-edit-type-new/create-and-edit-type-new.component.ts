@@ -4,9 +4,10 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { ClassificationNew, TypeNew } from "app/interfaces";
 import { TypeNewService } from "app/services/type-new.service";
 import { ClassificationNewService } from "app/services/classification-new.service";
-import { TemplatesNew } from "environments/environment";
+import { TemplateNew, TemplatesNew } from "environments/environment";
 import { ToastrService } from "ngx-toastr";
 import { HttpErrorResponse } from "@angular/common/http";
+import { MatSelectChange } from '@angular/material/select';
 
 @Component({
   selector: "app-create-and-edit-type-new",
@@ -21,6 +22,23 @@ export class CreateAndEditTypeNewComponent implements OnInit {
   templates = TemplatesNew;
   id: string = "";
   update = false;
+
+  showOne = false;
+  showTwo = false;
+  showThree = false;
+  showFour = false;
+  showFive = false;
+  showSix = false;
+  showSeven = false;
+  showEight = false;
+  showNotFound = false;
+  templateUrl = "";
+  template: TemplateNew = {
+    name: "",
+    id: "",
+    url: "",
+    operation: "",
+  };
 
   constructor(
     private typeNewsService: TypeNewService,
@@ -38,12 +56,17 @@ export class CreateAndEditTypeNewComponent implements OnInit {
     this.serviceclasificacion.list().subscribe((data: ClassificationNew[]) => {
       this.clasifnews = data;
     });
-
+    this.templateUrl = "template-four";
+    this.setShowCorrespondent();
+    this.template = this.templates.filter(
+      (currentT) => currentT.url === this.templateUrl
+    )[0];
     this.fg = this.fb.group(
       {
         descripton: ["", Validators.required],
+        info: ["", Validators.required],
         id_classify: ["", Validators.required],
-        plantilla: ["", Validators.required],
+        plantilla: ["Plantilla por Defecto", Validators.required],
         status: [true, Validators.required],
       },
       {}
@@ -51,7 +74,7 @@ export class CreateAndEditTypeNewComponent implements OnInit {
 
     if (this.id) {
       this.update = true;
-      this.getTypeNew()
+      this.getTypeNew();
     }
   }
 
@@ -61,13 +84,14 @@ export class CreateAndEditTypeNewComponent implements OnInit {
       this.submitted = false;
       return;
     }
-    this.update ? this.updateTypeNew : this.save()
+    console.log("Que pasa?");
+    this.update ? this.updateTypeNew() : this.save();
   }
 
   onReset() {
     this.submitted = false;
     this.fg.reset();
-    this.router.navigate(["inicio/type-new"]);
+    this.router.navigate(["type-new"]);
   }
 
   save() {
@@ -76,7 +100,7 @@ export class CreateAndEditTypeNewComponent implements OnInit {
         this.toastr.success("Tipo de Novedad creado con éxito");
         this.submitted = false;
         this.fg.reset();
-        this.router.navigate(["inicio/type-new"]);
+        this.router.navigate(["type-new"]);
       },
       (error: HttpErrorResponse) => {
         this.toastr.error(
@@ -89,6 +113,7 @@ export class CreateAndEditTypeNewComponent implements OnInit {
   getTypeNew() {
     this.typeNewsService.get(this.id).subscribe((data: TypeNew) => {
       this.fg.get("descripton")!.setValue(data.descripton);
+      this.fg.get("info")!.setValue(data.info);
       this.fg.get("id_classify")!.setValue(data.id_classify);
       this.fg.get("plantilla")!.setValue(data.plantilla);
       this.fg.get("status")!.setValue(data.status);
@@ -96,12 +121,13 @@ export class CreateAndEditTypeNewComponent implements OnInit {
   }
 
   updateTypeNew() {
+    console.log("Pero que pasa?");
     this.typeNewsService.update(this.id, this.fg.value).subscribe(
       (data) => {
         this.toastr.success("Tipo de Novedad actualizado");
         this.submitted = false;
         this.fg.reset();
-        this.router.navigate(["inicio/type-new"]);
+        this.router.navigate(["type-new"]);
       },
       (error: HttpErrorResponse) => {
         this.toastr.error(
@@ -109,5 +135,54 @@ export class CreateAndEditTypeNewComponent implements OnInit {
         );
       }
     );
+  }
+
+  setShowCorrespondent() {
+    switch (this.templateUrl) {
+      case "template-one":
+        this.showOne = true;
+        break;
+      case "template-two":
+        this.showTwo = true;
+        break;
+      case "template-three":
+        this.showThree = true;
+        break;
+      case "template-four":
+        this.showFour = true;
+        break;
+      case "template-five":
+        this.showFive = true;
+        break;
+      case "template-six":
+        this.showSix = true;
+        break;
+      case "template-seven":
+        this.showSeven = true;
+        break;
+      case "template-eight":
+        this.showEight = true;
+        break;
+      default:
+        this.showNotFound = true;
+    }
+  }
+
+  selectionTemplateChange(event: MatSelectChange) {
+    console.log(event);
+    this.showOne = false;
+    this.showTwo = false;
+    this.showThree = false;
+    this.showFour = false;
+    this.showFive = false;
+    this.showSix = false;
+    this.showSeven = false;
+    this.showEight = false;
+    this.showNotFound = false;
+    this.template = this.templates.filter(
+      (currentT) => currentT.name === event.value
+    )[0];
+    this.templateUrl = this.template.url;
+    this.setShowCorrespondent();
   }
 }

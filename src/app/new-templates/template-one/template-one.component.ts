@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { TemplateOne } from "app/interfaces";
+import { TemplateNew, TemplatesNew } from "environments/environment";
 import { ToastrService } from "ngx-toastr";
 
 @Component({
@@ -12,8 +13,11 @@ import { ToastrService } from "ngx-toastr";
 export class TemplateOneComponent implements OnInit {
   @Output() tSubmit = new EventEmitter<TemplateOne>();
   @Input() method: string = "view";
+  @Input() name: string = "";
+  @Input() operation: string = "";
   @Input() data: TemplateOne = {
     id: "",
+    notice: "",
     perimetro: "",
     alumbrado: "",
     alarmas: "",
@@ -24,6 +28,19 @@ export class TemplateOneComponent implements OnInit {
   id: string = "";
   update: boolean = false;
   view = true;
+  storageData = {
+    notice: "",
+    perimetro: "",
+    alumbrado: "",
+    alarmas: "",
+    sCI: "",
+  };
+  currentTemplate: TemplateNew = {
+    name: "",
+    url: "",
+    id: "",
+    operation: "",
+  };
 
   constructor(
     private fb: FormBuilder,
@@ -34,33 +51,56 @@ export class TemplateOneComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.id = this.route.snapshot.params.id;
-    console.log('Metodo: ', this.method)
     this.setMethods();
+    this.currentTemplate = TemplatesNew.filter(
+      (currentT) => currentT.name === this.name
+    )[0];
+    this.storageData = this.currentTemplate.id
+      ? this.getLocalStorage(this.currentTemplate.id)
+      : null;
     this.fg = this.fb.group(
       {
+        notice: [
+          this.data.notice || this.storageData?.notice || null,
+          this.view ? Validators.nullValidator : Validators.required,
+        ],
         perimetro: [
-          this.data.perimetro,
+          this.data.perimetro || this.storageData?.perimetro || null,
           this.view ? Validators.nullValidator : Validators.required,
         ],
         alumbrado: [
-          this.data.alumbrado,
+          this.data.alumbrado || this.storageData?.alumbrado || null,
           this.view ? Validators.nullValidator : Validators.required,
         ],
         alarmas: [
-          this.data.alarmas,
+          this.data.alarmas || this.storageData?.alarmas || null,
           this.view ? Validators.nullValidator : Validators.required,
         ],
         sCI: [
-          this.data.sCI,
+          this.data.sCI || this.storageData?.sCI || null,
           this.view ? Validators.nullValidator : Validators.required,
         ],
       },
       {}
     );
-    if (this.id) {
-      this.update = true;
+    if (!this.view) {
+      this.id = this.route.snapshot.params.id;
+      if (this.id) {
+        this.update = true;
+      }
     }
+  }
+
+  private getLocalStorage(fieldName: string) {
+    if (fieldName) {
+      const data = localStorage.getItem(fieldName);
+      return data ? JSON.parse(data) : null;
+    }
+    return null;
+  }
+
+  private deleteStorageItem(fieldName: string) {
+    if (fieldName) localStorage.removeItem(fieldName);
   }
 
   setMethods(): void {
@@ -81,12 +121,18 @@ export class TemplateOneComponent implements OnInit {
   onSubmit() {
     this.submitted = true;
     if (this.fg.invalid) {
-      console.log('Invalid')
+      console.log("Invalid");
       this.submitted = false;
       return;
     }
-    console.log('Valid')
+    console.log("Valid");
     this.tSubmit.emit(this.fg.value);
     this.submitted = false;
+  }
+
+  onReset() {
+    this.submitted = false;
+    this.fg.reset();
+    this.deleteStorageItem(this.currentTemplate.id);
   }
 }

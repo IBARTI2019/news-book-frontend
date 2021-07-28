@@ -49,7 +49,7 @@ export class TypeNewComponent implements OnInit {
   }
 
   update(id: string) {
-    this.router.navigate(["inicio/type-new/", id]);
+    this.router.navigate(["type-new/", id]);
   }
 
   delete(typeNew: TypeNew) {

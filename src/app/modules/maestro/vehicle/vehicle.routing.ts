@@ -13,7 +13,7 @@ export const VehicleRouting: Routes = [
           breadcrumb: {
             label: "Vehiculos",
           },
-          omitirPermiso: true,
+          skipPermission: true,
         },
         component: VehicleComponent,
       },
@@ -22,13 +22,13 @@ export const VehicleRouting: Routes = [
         data: {
           breadcrumbAnt: {
             label: "Vehiculos",
-            url: "inicio/vehicle",
+            url: "vehicle",
             params: [],
           },
           breadcrumb: {
             label: "Crear Vehiculos",
           },
-          omitirPermiso: true,
+          skipPermission: true,
         },
         component: CreateAndEditVehicleComponent,
       },
@@ -37,13 +37,13 @@ export const VehicleRouting: Routes = [
         data: {
           breadcrumbAnt: {
             label: "Vehiculos",
-            url: "inicio/vehicle",
+            url: "vehicle",
             params: [],
           },
           breadcrumb: {
             label: "Editar Vehiculos",
           },
-          omitirPermiso: true,
+          skipPermission: true,
         },
         component: CreateAndEditVehicleComponent,
       },

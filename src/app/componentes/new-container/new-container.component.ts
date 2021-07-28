@@ -28,7 +28,6 @@ export class NewContainerComponent implements OnInit {
     const templateNew = TemplatesNew.filter(
       (currentTemplate) => currentTemplate.name === this.template
     );
-
     if (templateNew.length) {
       this.url = this.idTN
     }

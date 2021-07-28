@@ -1,16 +1,19 @@
 <mat-card>
-  <app-card-header modulo="Novedades" menu="{{ update ? 'Actualizar Tipo de Novedad' : 'Crear Tipo de Novedad' }}"> </app-card-header>
+  <app-card-header
+    modulo="Novedades"
+    menu="{{ update ? 'Actualizar Tipo de Novedad' : 'Crear Tipo de Novedad' }}"
+  >
+  </app-card-header>
   <mat-card-content>
     <form
       [formGroup]="fg"
       fxLayout="column"
       fxLayoutGap="5px"
       (ngSubmit)="onSubmit()"
-      #formRol
+      #formT="ngForm"
     >
-      <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="5px">
+      <div fxLayout="column" fxLayout.xs="column" fxLayoutGap="5px">
         <mat-form-field>
-          <mat-label>Descripcion</mat-label>
           <input
             matInput
             placeholder="Descripcion"
@@ -18,7 +21,13 @@
           />
         </mat-form-field>
         <mat-form-field>
-          <mat-label>Clasificacion</mat-label>
+          <textarea
+            matInput
+            placeholder="Informacion..."
+            formControlName="info"
+          ></textarea>
+        </mat-form-field>
+        <mat-form-field>
           <mat-select formControlName="id_classify" placeholder="Clasificacion">
             <mat-option
               *ngFor="let clasican of clasifnews"
@@ -28,8 +37,7 @@
           </mat-select>
         </mat-form-field>
         <mat-form-field>
-          <mat-label>Plantilla</mat-label>
-          <mat-select formControlName="plantilla" placeholder="Plantilla">
+          <mat-select formControlName="plantilla" (selectionChange)="selectionTemplateChange($event)" placeholder="Plantilla">
             <mat-option
               *ngFor="let template of templates"
               [value]="template.name"
@@ -46,8 +54,73 @@
         </div>
       </div>
       <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="end">
-        <button mat-raised-button color="primary" type="submit">{{ update ? 'Actualizar' : 'Crear' }}</button>
+        <button
+          mat-raised-button
+          color="primary"
+          type='submit'
+        >
+          {{ update ? "Actualizar" : "Crear" }}
+        </button>
       </div>
     </form>
   </mat-card-content>
 </mat-card>
+<div fxLayout="row wrap">
+  <div fxFlex.gt-xs="100" fxFlex="100">
+    <mat-card>
+      <mat-card-content>
+        <app-template-one
+          *ngIf="showOne"
+          [method]="view"
+          [name]="template.name"
+          [operation]="template.operation"
+        ></app-template-one>
+        <app-template-two
+          *ngIf="showTwo"
+          [method]="view"
+          [name]="template.name"
+          [operation]="template.operation"
+        ></app-template-two>
+        <app-template-three
+          *ngIf="showThree"
+          [method]="view"
+          [name]="template.name"
+          [operation]="template.operation"
+        ></app-template-three>
+        <app-template-four
+          *ngIf="showFour"
+          [method]="view"
+          [name]="template.name"
+          [operation]="template.operation"
+        ></app-template-four>
+        <app-template-five
+          *ngIf="showFive"
+          [method]="view"
+          [name]="template.name"
+          [operation]="template.operation"
+        ></app-template-five>
+        <app-template-six
+          *ngIf="showSix"
+          [method]="view"
+          [name]="template.name"
+          [operation]="template.operation"
+        ></app-template-six>
+        <app-template-seven
+          *ngIf="showSeven"
+          [method]="view"
+          [name]="template.name"
+          [operation]="template.operation"
+        ></app-template-seven>
+        <app-template-eight
+          *ngIf="showEight"
+          [method]="view"
+          [name]="template.name"
+          [operation]="template.operation"
+        ></app-template-eight>
+        <app-not-found
+          *ngIf="showNotFound"
+        ></app-not-found>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

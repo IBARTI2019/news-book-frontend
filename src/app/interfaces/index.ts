@@ -1,4 +1,5 @@
 export interface User {
+  id?: string;
   _id?: string;
   id?: string;
   code?: string;
@@ -8,7 +9,7 @@ export interface User {
   username: string;
   password?: string;
   status?: boolean;
-  roll?: string;
+  rol?: string;
 }
 
 export interface SigninData {
@@ -100,29 +101,33 @@ export interface New {
   id_type_news?: string;
   fecha?: Date;
   hora?: string;
+  datos?: object;
 }
 
 export interface TemplateOne {
   id: string;
+  notice: string;
   perimetro: string;
   alumbrado: string;
   alarmas: string;
   sCI: string;
 }
 
-export interface TemplateTwo {
+export interface TemplateTwoVehicle {
   id: string;
-  description: string;
+  notice: string;
+  vehiculos: string[];
 }
 
-export interface TemplateThree {
+export interface TemplateThreeMaterials {
   id: string;
-  description: string;
+  notice: string;
+  materiales: string[];
 }
 
 export interface TemplateFour {
-  id: string;
-  description: string;
+  id?: string;
+  notice: string;
 }
 
 export interface TemplateFive {

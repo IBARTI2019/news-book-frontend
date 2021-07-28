@@ -5,7 +5,7 @@ import { GlobalService } from './global.service';
 import { Observable } from 'rxjs';
 import { API } from './api';
 import { SessionService } from 'app/services/session.service';
-import { Permiso } from 'app/interfaces';
+import { Permiso, User } from 'app/interfaces';
 
 /**
  * Guard para validar las rutas con los workflows que estan en
@@ -46,34 +46,36 @@ export class PermisoGuard implements CanActivate, CanActivateChild {
 
   canActivateChild(childRoute: ActivatedRouteSnapshot, state: RouterStateSnapshot):
     Observable<boolean> | boolean | UrlTree | Observable<boolean | UrlTree> {
-    let actual: any = this.sessionService.actual();
-
+    let actual: Observable<User> = this.sessionService.actual();
+    // console.log('Observable: ', actual)
+    // console.log('Data Route: ', childRoute.data)
+    
     return true; //Quitar esto para gestionar permisos
-    if ((childRoute.data && childRoute.data.omitirPermiso) || childRoute.routeConfig?.path === "inicio") {
-      return true;
-    } else if (!this.sessionService.isLoggedIn || actual === undefined) {
-      this.router.navigateByUrl('/login');
-    }
-    if (actual?.roll?.SU === true || childRoute.routeConfig?.path === "") {
-      return true;
-    } else {
-      let menus: any[] = actual?.permisos.filter((permiso: Permiso) => {
-        return permiso.routers?.find((ruta: string) => {
-          let url = state.url.split("/");
-          return `/${url[1]}/${url[2]}` === `/ ${ruta.split(":")[0]}` !== undefined;
-        });
-      });
-      if (menus?.length > 0) {
-        localStorage.setItem(API.MENU_ACTUAL, menus[0]);
-        return true;
-      } else {
-        if (childRoute.routeConfig?.path !== "") {
-          this.toastrService.error('No tienes permisos para acceder a esta opción');
-        }
-        //this.router.navigate(['inicio']);
-        return false;
-      }
-    }
+    // if ((childRoute.data && childRoute.data.omitirPermiso) || childRoute.routeConfig?.path === "") {
+    //   return true;
+    // } else if (!this.sessionService.isLoggedIn || actual === undefined) {
+    //   this.router.navigateByUrl('/login');
+    // }
+    // if (actual?.roll?.SU === true || childRoute.routeConfig?.path === "") {
+    //   return true;
+    // } else {
+    //   let menus: any[] = actual?.permisos.filter((permiso: Permiso) => {
+    //     return permiso.routers?.find((ruta: string) => {
+    //       let url = state.url.split("/");
+    //       return `/${url[1]}/${url[2]}` === `/ ${ruta.split(":")[0]}` !== undefined;
+    //     });
+    //   });
+    //   if (menus?.length > 0) {
+    //     localStorage.setItem(API.MENU_ACTUAL, menus[0]);
+    //     return true;
+    //   } else {
+    //     if (childRoute.routeConfig?.path !== "") {
+    //       this.toastrService.error('No tienes permisos para acceder a esta opción');
+    //     }
+    //     //this.router.navigate(['inicio']);
+    //     return false;
+    //   }
+    // }
   }
 
 

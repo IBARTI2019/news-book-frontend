@@ -13,7 +13,7 @@ export const GestionRoutes: Routes = [
                     breadcrumb: {
                         label: 'Usuario'
                     },
-                    omitirPermiso:true
+                    skipPermission:true
                 },
                 component: UsuarioComponent,
             },
@@ -28,7 +28,7 @@ export const GestionRoutes: Routes = [
                     breadcrumb: {
                         label: "Crear Usuario"
                     }, 
-                    omitirPermiso:true
+                    skipPermission:true
                 },
                 component: UsuarioCrearComponent
             }

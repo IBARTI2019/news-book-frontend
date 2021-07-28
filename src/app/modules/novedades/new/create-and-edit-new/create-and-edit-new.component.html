@@ -8,34 +8,57 @@
           *ngIf="showOne"
           (tSubmit)="onSubmit($event)"
           [method]="update ? 'update' : 'create'"
+          [name]="template.name"
+          [operation]="template.operation"
         ></app-template-one>
         <app-template-two
           *ngIf="showTwo"
-          (submit)="onSubmit($event)"
+          (tSubmit)="onSubmit($event)"
+          [method]="update ? 'update' : 'create'"
+          [name]="template.name"
+          [operation]="template.operation"
         ></app-template-two>
         <app-template-three
           *ngIf="showThree"
-          (submit)="onSubmit($event)"
+          (tSubmit)="onSubmit($event)"
+          [method]="update ? 'update' : 'create'"
+          [name]="template.name"
+          [operation]="template.operation"
         ></app-template-three>
         <app-template-four
           *ngIf="showFour"
-          (submit)="onSubmit($event)"
+          (tSubmit)="onSubmit($event)"
+          [method]="update ? 'update' : 'create'"
+          [name]="template.name"
+          [operation]="template.operation"
         ></app-template-four>
         <app-template-five
           *ngIf="showFive"
-          (submit)="onSubmit($event)"
+          (tSubmit)="onSubmit($event)"
+          [method]="update ? 'update' : 'create'"
+          [name]="template.name"
+          [operation]="template.operation"
         ></app-template-five>
         <app-template-six
           *ngIf="showSix"
-          (submit)="onSubmit($event)"
+          (tSubmit)="onSubmit($event)"
+          [method]="update ? 'update' : 'create'"
+          [name]="template.name"
+          [operation]="template.operation"
         ></app-template-six>
         <app-template-seven
           *ngIf="showSeven"
-          (submit)="onSubmit($event)"
+          (tSubmit)="onSubmit($event)"
+          [method]="update ? 'update' : 'create'"
+          [name]="template.name"
+          [operation]="template.operation"
         ></app-template-seven>
         <app-template-eight
           *ngIf="showEight"
-          (submit)="onSubmit($event)"
+          (tSubmit)="onSubmit($event)"
+          [method]="update ? 'update' : 'create'"
+          [name]="template.name"
+          [operation]="template.operation"
         ></app-template-eight>
         <app-not-found
           *ngIf="showNotFound"

@@ -53,7 +53,7 @@ export class NewComponent implements OnInit {
   }
 
   update(id: string) {
-    this.router.navigate(["inicio/new", id]);
+    this.router.navigate(["snew", id]);
   }
 
   delete(localNew: New) {

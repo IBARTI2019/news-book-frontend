@@ -47,7 +47,7 @@ export class UsuarioComponent implements OnInit {
   }
 
   editar(id: string) {
-    this.router.navigate(['inicio/listemail/maestro/', id]);
+    this.router.navigate(['listemail/maestro/', id]);
   }
 
   eliminar(plantillaemail: listemail) {

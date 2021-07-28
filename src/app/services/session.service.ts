@@ -7,7 +7,7 @@ import {
   APIMessage,
   VerifyCodeResponse,
 } from "../interfaces";
-import { throwError, Observable } from "rxjs";
+import { throwError, Observable, BehaviorSubject } from "rxjs";
 import { catchError, map } from "rxjs/operators";
 import * as jwt_decode from "jwt-decode";
 import { API } from "app/utils/api";
@@ -19,7 +19,7 @@ import { Router } from "@angular/router";
 export class SessionService extends API<User> {
   protected URL = `${this.URL_API}/users/crud/`;
   private apiURL = `${environment.API}`;
-  private $user!: Observable<User>;
+  private $user!: BehaviorSubject<User>;
 
   constructor(protected http: HttpClient, private router: Router) {
     super(http);
@@ -94,9 +94,11 @@ export class SessionService extends API<User> {
   }
 
   public logout() {
-    this.http
+    this.$user.subscribe((user: User) => {
+      console.log('User: ', user)
+      this.http
       .post(`${this.URL_API}/users/validate/logout/`, {
-        usuario: localStorage.getItem(API.USUARIO),
+        _id: user.id,
       })
       .subscribe((data) => {
         this.deleteStorageItem(API.TOKEN);
@@ -105,22 +107,33 @@ export class SessionService extends API<User> {
         this.deleteStorageItem(API.ISLOGGEDIN);
         this.deleteStorageItem(API.REFRESH_TOKEN);
         this.deleteStorageItem(API.JWT);
-        this.$user = new Observable<User>();
-        this.router.navigateByUrl("inicio/login");
+        this.$user = new BehaviorSubject<User>({
+          firstName: '',
+          lastName: '',
+          email: '',
+          username: '',
+        });
+        this.router.navigateByUrl("/");
       });
+    })
   }
 
-  public actual(): Observable<User> {
+  public actual(): BehaviorSubject<User> {
     if (this.$user) {
       return this.$user;
     }
     let token = this.getLocalStorage(API.TOKEN);
     if (token) {
       let decode: any = jwt_decode(String(token));
-      this.$user = new Observable<User>(decode);
+      this.$user = new BehaviorSubject<User>(decode);
       return this.$user;
     }
-    return new Observable<User>();
+    return new BehaviorSubject<User>({
+      firstName: '',
+      lastName: '',
+      email: '',
+      username: '',
+    });
   }
 
   /**

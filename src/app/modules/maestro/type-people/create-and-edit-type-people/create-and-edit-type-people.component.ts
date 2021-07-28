@@ -54,7 +54,7 @@ export class CreateAndEditTypePeopleComponent implements OnInit {
   onReset() {
     this.submitted = false;
     this.fg.reset();
-    this.router.navigate(["inicio/type-people"]);
+    this.router.navigate(["type-people"]);
   }
 
   save() {
@@ -63,7 +63,7 @@ export class CreateAndEditTypePeopleComponent implements OnInit {
         this.toastr.success("Tipo de Persona creado con éxito.");
         this.submitted = false;
         this.fg.reset();
-        this.router.navigate(["inicio/type-people"]);
+        this.router.navigate(["type-people"]);
       },
       (error: HttpErrorResponse) => {
         this.toastr.error(
@@ -94,7 +94,7 @@ export class CreateAndEditTypePeopleComponent implements OnInit {
         this.toastr.success("El Tipo de Persona se actualizo correctamente.");
         this.submitted = false;
         this.fg.reset();
-        this.router.navigate(["inicio/type-persons/maestro"]);
+        this.router.navigate(["type-people"]);
       },
       (error: HttpErrorResponse) => {
         this.toastr.error(

@@ -14,7 +14,7 @@ export const NewRouting: Routes = [
           breadcrumb: {
             label: "Seleccionar Tipo de Novedad",
           },
-          omitirPermiso: true,
+          skipPermission: true,
         },
         component: SelectNewComponent,
       },
@@ -23,13 +23,13 @@ export const NewRouting: Routes = [
         data: {
           breadcrumbAnt: {
             label: "Novedades",
-            url: "inicio/new",
+            url: "new",
             params: [],
           },
           breadcrumb: {
             label: "Novedades",
           },
-          omitirPermiso: true,
+          skipPermission: true,
         },
         component: NewComponent,
       },
@@ -38,28 +38,28 @@ export const NewRouting: Routes = [
         data: {
           breadcrumbAnt: {
             label: "Novedades",
-            url: "inicio/new/crear",
+            url: "new/crear",
             params: [],
           },
           breadcrumb: {
             label: "Crear Novedad",
           },
-          omitirPermiso: true,
+          skipPermission: true,
         },
         component: CreateAndEditNewComponent,
       },
       {
-        path: ":id",
+        path: "editar/:id",
         data: {
           breadcrumbAnt: {
             label: "Novedades",
-            url: "inicio/new",
+            url: "new",
             params: [],
           },
           breadcrumb: {
             label: "Editar Novedades",
           },
-          omitirPermiso: true,
+          skipPermission: true,
         },
         component: CreateAndEditNewComponent,
       },

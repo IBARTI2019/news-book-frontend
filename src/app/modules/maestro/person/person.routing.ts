@@ -13,7 +13,7 @@ export const PersonRouting: Routes = [
           breadcrumb: {
             label: "Personas",
           },
-          omitirPermiso: true,
+          skipPermission: true,
         },
         component: PersonComponent,
       },
@@ -22,13 +22,13 @@ export const PersonRouting: Routes = [
         data: {
           breadcrumbAnt: {
             label: "Personas",
-            url: "inicio/person",
+            url: "person",
             params: [],
           },
           breadcrumb: {
             label: "Crear Persona",
           },
-          omitirPermiso: true,
+          skipPermission: true,
         },
         component: CreateAndEditPersonComponent,
       },
@@ -37,13 +37,13 @@ export const PersonRouting: Routes = [
         data: {
           breadcrumbAnt: {
             label: "Personas",
-            url: "inicio/person",
+            url: "person",
             params: [],
           },
           breadcrumb: {
             label: "Editar Persona",
           },
-          omitirPermiso: true,
+          skipPermission: true,
         },
         component: CreateAndEditPersonComponent,
       },

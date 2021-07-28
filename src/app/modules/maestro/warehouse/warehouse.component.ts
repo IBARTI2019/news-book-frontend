@@ -46,7 +46,7 @@ export class WarehouseComponent implements OnInit {
 
   edit(id_warehouse: string) {
     console.log('Warehouse id: ', id_warehouse)
-    this.router.navigate(['inicio/warehouse', id_warehouse]);
+    this.router.navigate(['warehouse', id_warehouse]);
   }
 
   delete(warehouse: Warehouse) {

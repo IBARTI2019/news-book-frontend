@@ -67,7 +67,7 @@ export class CreateAndEditPersonComponent implements OnInit {
   onReset() {
     this.submitted = false;
     this.fg.reset();
-    this.router.navigate(["inicio/person"]);
+    this.router.navigate(["person"]);
   }
 
   save() {
@@ -76,7 +76,7 @@ export class CreateAndEditPersonComponent implements OnInit {
         this.toastr.success("Persona creada con éxito!");
         this.submitted = false;
         this.fg.reset();
-        this.router.navigate(["inicio/person"]);
+        this.router.navigate(["person"]);
       },
       (error: HttpErrorResponse) => {
         this.submitted = false;
@@ -107,7 +107,7 @@ export class CreateAndEditPersonComponent implements OnInit {
         this.toastr.success("Persona actualizada!");
         this.submitted = false;
         this.fg.reset();
-        this.router.navigate(["inicio/person"]);
+        this.router.navigate(["person"]);
       },
       (error: HttpErrorResponse) => {
         this.submitted = false;

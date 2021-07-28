@@ -20,9 +20,14 @@ export class ValidateOesvicaTokenComponent implements OnInit {
     this.dialogRef.close(false);
   }
 
+  private setLocalStorage(fieldName: string, value: any) {
+    if (fieldName) localStorage.setItem(fieldName, JSON.stringify(value));
+  }
+
   validate() {
     console.log(this.data);
     if (this.data) {
+      this.setLocalStorage('id_user', this.data)
       this.toastr.success("Verificado!");
       this.dialogRef.close(true);
     }
