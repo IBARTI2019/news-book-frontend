@@ -49,11 +49,8 @@ export interface Material {
 }
 
 export interface Vehicle {
-  id_vehiculo?: string;
-  doc_ident: string;
-  name?: string;
-  last_name?: string;
-  placa_vehiculo?: string;
+  id: string;
+  license_plate: string;
   is_active?: string;
 }
 

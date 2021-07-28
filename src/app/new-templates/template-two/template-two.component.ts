@@ -119,7 +119,7 @@ export class TemplateTwoComponent implements OnInit, AfterViewChecked {
     if (!this.view) {
       this.vehicleService.list(this.id).subscribe((data: Vehicle[]) => {
         this.filterPlatesDataSet = data.map((currentVehicle) => ({
-          plate: currentVehicle.placa_vehiculo || "",
+          plate: currentVehicle.license_plate || "",
         }));
       });
       if (this.id) {

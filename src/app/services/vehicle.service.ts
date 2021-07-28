@@ -7,7 +7,7 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class VehicleService extends API<Vehicle> {
-  protected URL = `${this.URL_API}/vehiculos/crudvehiculos/`;
+  protected URL = `${this.URL_API}/main/vehicle/`;
   constructor(
     protected http: HttpClient,
   ) {
