@@ -28,11 +28,11 @@ export class MaterialsComponent implements OnInit {
   ngOnInit(): void {
     this.columns = [
       {
-        dataAttribute: "cod_material",
+        dataAttribute: "code",
         attribute: "Cod Material",
       },
       {
-        dataAttribute: "serial_material",
+        dataAttribute: "serial",
         attribute: "Serial Material",
       },
       {
@@ -40,18 +40,8 @@ export class MaterialsComponent implements OnInit {
         attribute: "Descripcion",
       },
       {
-        dataAttribute: "id_warehouse",
-        attribute: "Almacen",
-      },
-
-      {
         dataAttribute: "is_active",
         attribute: "is_active",
-      },
-      {
-        attribute: "id_material",
-        header: "Opciones",
-        template: "opciones",
       },
     ];
   }
@@ -66,7 +56,7 @@ export class MaterialsComponent implements OnInit {
     });
     this.dialogService.confirmed().subscribe((confirmed) => {
       if (confirmed) {
-        this.materialsService.remove(material.id_material || '').subscribe(
+        this.materialsService.remove(material.id || '').subscribe(
           (data) => {
             this.toastr.success("Material eliminado con exito!.");
             this.table.refresh();

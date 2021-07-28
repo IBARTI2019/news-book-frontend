@@ -41,12 +41,10 @@ export interface Warehouse {
 }
 
 export interface Material {
-  id_material?: string | number;
-  cod_material?: string;
-  serial_material?: string;
-  id_warehouse?: string;
-  description?: string;
-  stock?: string;
+  id?: string | number;
+  code: string;
+  serial: string;
+  description: string;
   is_active?: string;
 }
 

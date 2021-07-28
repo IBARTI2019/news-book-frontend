@@ -41,8 +41,8 @@ export class CreateAndEditMaterialComponent implements OnInit {
     });
     this.fg = this.fb.group(
       {
-        cod_material: ["", Validators.required],
-        serial_material: ["", Validators.required],
+        code: ["", Validators.required],
+        serial: ["", Validators.required],
         id_warehouse: ["", Validators.required],
         description: ["", Validators.required],
         stock: ["", Validators.required],
@@ -89,12 +89,10 @@ export class CreateAndEditMaterialComponent implements OnInit {
   getMaterial() {
     this.materialService.get(this.id).subscribe(
       (data: Material) => {
-        this.fg.get("cod_material")!.setValue(data.cod_material);
-        this.fg.get("serial_material")!.setValue(data.serial_material);
+        this.fg.get("code")!.setValue(data.code);
+        this.fg.get("serial")!.setValue(data.serial);
         this.fg.get("description")!.setValue(data.description);
         this.fg.get("is_active")!.setValue(data.is_active);
-        this.fg.get("id_warehouse")!.setValue(data.id_warehouse);
-        this.fg.get("stock")!.setValue(data.stock);
       },
       (error: HttpErrorResponse) => {
         this.toastr.error( error.error.message || 'Error al obtener el material');
