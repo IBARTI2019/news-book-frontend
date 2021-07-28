@@ -84,7 +84,7 @@ export class SessionService extends API<User> {
         map((res: VerifyCodeResponse) => {
           this.setLocalStorage(API.ISLOGGEDIN, true);
           this.setLocalStorage(API.TOKEN, res.token);
-          this.actual().subscribe((user: User) => {
+          this.actual().subscribe(async (user: User) => {
             if (user) {
               this.setLocalStorage(API.USUARIO, user.user_id);
             }
@@ -145,6 +145,13 @@ export class SessionService extends API<User> {
     // const user = await this.http.get<User>(`${this.apiURL}/security/user/${userId}/`).toPromise();
     // return (user.is_superuser || false);
     return true;
+  }
+
+  public async isStaff(): Promise<boolean> {
+    // const userId = this.getLocalStorage(API.USUARIO)
+    // const user = await this.http.get<User>(`${this.apiURL}/security/user/${userId}/`).toPromise();
+    // return (user.is_staff || false);
+    return false;
   }
 
   /**

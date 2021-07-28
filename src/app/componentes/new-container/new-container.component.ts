@@ -18,6 +18,8 @@ export class NewContainerComponent implements OnInit {
   @Input() idTN = "";
   @Input() allowNavigate = true;
   @Input() info = ""
+  @Input() isSuperUser = false;
+  @Input() isStaff = true;
 
   url = "";
 
@@ -27,13 +29,13 @@ export class NewContainerComponent implements OnInit {
     const templateNew = TemplatesNew.filter(
       (currentTemplate) => currentTemplate.name === this.template
     );
-    console.log(templateNew)
     if (templateNew.length) {
       this.url = this.idTN
     }
   }
 
   openDialog(): void {
+    if (this.isStaff) return
     const dialogRef = this.dialog.open(ValidateOesvicaTokenComponent, {
       width: "400px",
       data: "",
@@ -46,6 +48,7 @@ export class NewContainerComponent implements OnInit {
   }
 
   navigate() {
+    if (this.isStaff) return
     if (this.allowNavigate && this.url) {
       // console.log(this.link)
       // console.log("Router: ", this.router.routerState.snapshot);

@@ -15,6 +15,8 @@ import { ToastrService } from "ngx-toastr";
 })
 export class SelectNewComponent implements OnInit {
   typeNews: TypeNew[] = [];
+  isSuperUser = false;
+  isStaff = false;
 
   constructor(
     public typeNewService: TypeNewService,
@@ -24,12 +26,13 @@ export class SelectNewComponent implements OnInit {
     private toastr: ToastrService
   ) {}
 
-  ngOnInit() {
+  async ngOnInit() {
+    this.isSuperUser = await this.sessionService.isSuperUser()
+    this.isStaff = await this.sessionService.isStaff()
     this.deleteStorageItem('id_user')
     this.typeNewService.list().subscribe(
       (typeNewsResponse: TypeNew[]) => {
         this.typeNews = [...typeNewsResponse];
-        this.typeNews
       },
       (error: HttpErrorResponse) => {
         this.toastr.error(

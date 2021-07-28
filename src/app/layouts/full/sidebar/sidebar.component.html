@@ -92,7 +92,7 @@
          <mat-icon aria-hidden="false" aria-label="News">book</mat-icon>
            Novedades
         </mat-expansion-panel-header>
-        <mat-nav-list dense>
+        <mat-nav-list *ngIf="superUser" dense>
             <a mat-list-item [routerLink]="['type-new']">
                 <span>
                     <mat-icon aria-hidden="false" aria-label="Tipe News">folder_special</mat-icon>
