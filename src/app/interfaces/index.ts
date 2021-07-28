@@ -58,7 +58,7 @@ export interface Vehicle {
 }
 
 export interface TypePeople {
-  id_type_person: string;
+  id: string;
   description: string;
   priority: string;
   is_active: string;

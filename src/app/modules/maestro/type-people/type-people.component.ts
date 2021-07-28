@@ -58,7 +58,7 @@ export class TypePeopleComponent implements OnInit {
     });
     this.dialogService.confirmed().subscribe((confirmed) => {
       if (confirmed) {
-        this.typePeopleService.remove(typePeople.id_type_person).subscribe(
+        this.typePeopleService.remove(typePeople.id).subscribe(
           (data) => {
             this.toastr.success("Tipo de Persona eliminado con exito!.");
             this.table.refresh();
