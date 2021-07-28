@@ -47,11 +47,12 @@ export class CreateAndEditNewComponent implements OnInit {
     private toastr: ToastrService,
     private router: Router,
     private route: ActivatedRoute
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.idTN = this.route.snapshot.params.idTN;
-    this.currentNew.employee = this.currentNew.created_by = this.getLocalStorage('id_user')
+    this.currentNew.employee = this.currentNew.employee = this.getLocalStorage('id_user')
+    this.currentNew.type_news = this.idTN;
     this.typeNewService.get(this.idTN).subscribe(
       (typeNew: TypeNew) => {
         if (typeNew) {
