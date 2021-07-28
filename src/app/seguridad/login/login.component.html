@@ -7,8 +7,8 @@
             <form (ngSubmit)="handleSubmit()" #login>
 
                 <mat-form-field [hidden]="sendCodeSucces">
-                    <mat-label>Email</mat-label>
-                    <input matInput required placeholder="Usuario" [(ngModel)]="signinData.email"
+                    <mat-label>Código</mat-label>
+                    <input matInput required placeholder="Código" [(ngModel)]="signinData.code"
                         [ngModelOptions]="{standalone: true}">
                     <mat-icon matSuffix>account_circle</mat-icon>
                 </mat-form-field>

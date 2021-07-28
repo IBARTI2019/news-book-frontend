@@ -11,10 +11,10 @@ import { SigninData, VerifyCodeResponse } from "app/interfaces";
 })
 export class LoginComponent implements OnInit {
   signinData: SigninData = {
-    email: "",
+    code: "",
     user: "",
     password: "",
-    security_code: "",
+    security_code: ""
   };
   sendingCode = false;
   sendCodeSucces = false;

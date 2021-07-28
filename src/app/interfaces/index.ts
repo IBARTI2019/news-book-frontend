@@ -1,5 +1,7 @@
 export interface User {
   _id?: string;
+  id?: string;
+  code?: string;
   firstName: string;
   lastName: string;
   email: string;
@@ -10,10 +12,9 @@ export interface User {
 }
 
 export interface SigninData {
-  email?: string;
+  code?: string;
   user?: string;
   password?: string;
-  codigocelular?: string;
   security_code?: string;
 }
 

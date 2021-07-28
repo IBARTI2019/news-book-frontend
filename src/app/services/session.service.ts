@@ -72,7 +72,7 @@ export class SessionService extends API<User> {
    */
 
   verifyCode(signinData: SigninData): Observable<VerifyCodeResponse> {
-    if (!signinData.codigocelular)
+    if (!signinData.security_code)
       throwError({ message: "El codigo no puede estar vacio" });
     return this.http
       .post<VerifyCodeResponse>(`${this.apiURL}/token/`, {
@@ -84,7 +84,7 @@ export class SessionService extends API<User> {
           this.setLocalStorage(API.TOKEN, res.token);
           this.actual().subscribe((user: User) => {
             if (user) {
-              this.setLocalStorage(API.USUARIO, user._id);
+              this.setLocalStorage(API.USUARIO, user.id);
             }
           });
           return res;
