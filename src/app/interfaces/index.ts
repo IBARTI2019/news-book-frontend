@@ -1,6 +1,5 @@
 export interface User {
   id?: string;
-  _id?: string;
   code?: string;
   name: string;
   last_name: string;
@@ -171,4 +170,11 @@ export interface Permiso {
   ruta?: string;
   is_active?: boolean;
   routers?: string[];
+}
+
+export interface Role {
+  id: string;
+  description: string;
+  name: string;
+  permissions: Number[];
 }
