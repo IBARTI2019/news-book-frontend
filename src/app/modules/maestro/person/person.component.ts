@@ -36,7 +36,7 @@ export class PersonComponent implements OnInit {
         attribute: "Nombres",
       },
       {
-        dataAttribute: "lastname",
+        dataAttribute: "last_name",
         attribute: "Apellidos",
       },
       {
@@ -60,8 +60,8 @@ export class PersonComponent implements OnInit {
         attribute: "Tipo de Persona",
       },
       {
-        dataAttribute: "status",
-        attribute: "Status",
+        dataAttribute: "is_active",
+        attribute: "is_active",
       },
       {
         attribute: "id_person",

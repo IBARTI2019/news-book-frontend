@@ -42,10 +42,10 @@ export class UsuarioEditarComponent implements OnInit {
   ngOnInit() {
     this.id = this.route.snapshot.params.id;
     this.fg = this.fb.group({
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
+      name: ['', Validators.required],
+      last_name: ['', Validators.required],
       email: ['', Validators.required],
-      status: [true, Validators.required],
+      is_active: [true, Validators.required],
       }, {});
     this.getUsuario();
   }
@@ -67,10 +67,10 @@ export class UsuarioEditarComponent implements OnInit {
   getUsuario() {
     this.usuarioService.get(this.id).subscribe(
       (data: listemail) => {
-        this.fg.get('firstName').setValue(data.firstName);
-        this.fg.get('lastName').setValue(data.lastName);
+        this.fg.get('name').setValue(data.name);
+        this.fg.get('last_name').setValue(data.last_name);
         this.fg.get('email').setValue(data.email);
-        this.fg.get('status').setValue(data.status);       
+        this.fg.get('is_active').setValue(data.is_active);       
       });
   }
 

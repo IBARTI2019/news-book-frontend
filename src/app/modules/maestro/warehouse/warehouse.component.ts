@@ -33,8 +33,8 @@ export class WarehouseComponent implements OnInit {
         attribute: "Descripcion",
       },
       {
-        dataAttribute: 'status',
-        attribute: 'Status'
+        dataAttribute: 'is_active',
+        attribute: 'is_active'
       },
       {
         attribute: "id_warehouse",

@@ -34,7 +34,7 @@ export class UsuarioComponent implements OnInit {
         attribute: 'Mascara de Red'
       },
       {
-        dataAttribute: 'status',
+        dataAttribute: 'is_active',
         attribute: 'Estatus'
       },
       

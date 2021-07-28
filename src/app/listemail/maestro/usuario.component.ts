@@ -22,11 +22,11 @@ export class UsuarioComponent implements OnInit {
   ngOnInit(): void {
     this.columns = [
       {
-        dataAttribute: 'firstName',
+        dataAttribute: 'name',
         attribute: "Nombres",
       },
       {
-        dataAttribute: 'lastName',
+        dataAttribute: 'last_name',
         attribute: 'Apellidos'
       },
        {
@@ -34,7 +34,7 @@ export class UsuarioComponent implements OnInit {
         attribute: 'Email'
       },
       {
-        dataAttribute: 'status',
+        dataAttribute: 'is_active',
         attribute: 'Estatus'
       },
       
@@ -51,7 +51,7 @@ export class UsuarioComponent implements OnInit {
   }
 
   eliminar(plantillaemail: listemail) {
-    this.dialogService.open({ message: `Esta seguro de que desea eliminar la Informacion ${plantillaemail.firstName}?`, });
+    this.dialogService.open({ message: `Esta seguro de que desea eliminar la Informacion ${plantillaemail.name}?`, });
     this.dialogService.confirmed().subscribe(confirmed => {
       if (confirmed) {
         this.usuarioService.remove(plantillaemail.id_listemail).subscribe(data => {

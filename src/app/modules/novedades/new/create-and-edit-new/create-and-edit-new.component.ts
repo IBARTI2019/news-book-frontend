@@ -36,7 +36,7 @@ export class CreateAndEditNewComponent implements OnInit {
   currentNew: New = {
     id_news: "",
     id_user: "",
-    id_type_news: "",
+    id: "",
     datos: {},
   };
 
@@ -59,7 +59,7 @@ export class CreateAndEditNewComponent implements OnInit {
           )[0];
           if (this.template) {
             this.templateUrl = this.template.url;
-            this.currentNew.id_type_news = typeNew.id_type_news;
+            this.currentNew.id = typeNew.id;
           }
         }
         this.setShowCorrespondent();

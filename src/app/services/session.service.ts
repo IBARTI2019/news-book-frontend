@@ -58,7 +58,9 @@ export class SessionService extends API<User> {
 
   sendCode(signinData: SigninData): Observable<void> {
     return this.http
-      .post<void>(`${this.apiURL}/security/valid/request_security_code/`, { ...signinData })
+      .post<void>(`${this.apiURL}/security/valid/request_security_code/`, {
+        ...signinData,
+      })
       .pipe(catchError((error: HttpErrorResponse) => this.handleError(error)));
   }
 
@@ -95,27 +97,27 @@ export class SessionService extends API<User> {
 
   public logout() {
     this.$user.subscribe((user: User) => {
-      console.log('User: ', user)
+      console.log("User: ", user);
       this.http
-      .post(`${this.URL_API}/users/validate/logout/`, {
-        _id: user.id,
-      })
-      .subscribe((data) => {
-        this.deleteStorageItem(API.TOKEN);
-        this.deleteStorageItem(API.USUARIO);
-        this.deleteStorageItem(API.MENU_ACTUAL);
-        this.deleteStorageItem(API.ISLOGGEDIN);
-        this.deleteStorageItem(API.REFRESH_TOKEN);
-        this.deleteStorageItem(API.JWT);
-        this.$user = new BehaviorSubject<User>({
-          firstName: '',
-          lastName: '',
-          email: '',
-          username: '',
+        .post(`${this.URL_API}/users/validate/logout/`, {
+          _id: user.id,
+        })
+        .subscribe((data) => {
+          this.deleteStorageItem(API.TOKEN);
+          this.deleteStorageItem(API.USUARIO);
+          this.deleteStorageItem(API.MENU_ACTUAL);
+          this.deleteStorageItem(API.ISLOGGEDIN);
+          this.deleteStorageItem(API.REFRESH_TOKEN);
+          this.deleteStorageItem(API.JWT);
+          this.$user = new BehaviorSubject<User>({
+            name: "",
+            last_name: "",
+            email: "",
+            username: "",
+          });
+          this.router.navigateByUrl("/");
         });
-        this.router.navigateByUrl("/");
-      });
-    })
+    });
   }
 
   public actual(): BehaviorSubject<User> {
@@ -129,10 +131,10 @@ export class SessionService extends API<User> {
       return this.$user;
     }
     return new BehaviorSubject<User>({
-      firstName: '',
-      lastName: '',
-      email: '',
-      username: '',
+      name: "",
+      last_name: "",
+      email: "",
+      username: "",
     });
   }
 

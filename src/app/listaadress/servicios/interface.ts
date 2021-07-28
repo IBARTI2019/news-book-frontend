@@ -3,5 +3,5 @@ export interface listaadress {
     ipinternet:string;
     ubicacionpc: string;
     macadress: string;
-    status:string;
+    is_active:string;
 }

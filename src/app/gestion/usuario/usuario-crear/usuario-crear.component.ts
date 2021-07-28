@@ -33,7 +33,7 @@ export class UsuarioCrearComponent implements OnInit {
       roll: ['', Validators.required],
       sucursales: [[], null],
       usuario: ['', Validators.required],
-      status: [true, Validators.required],
+      is_active: [true, Validators.required],
       clave: ['', null],
       clave2: ['', null]
     }, {});

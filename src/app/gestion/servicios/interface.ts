@@ -4,5 +4,5 @@ export interface UsuarioG {
     apellido?: string;
     usuario?: string;
     clave?: string;
-    status?: boolean;
+    is_active?: boolean;
 }

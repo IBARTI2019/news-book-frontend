@@ -39,10 +39,10 @@ export class UsuarioCrearComponent implements OnInit {
 
   ngOnInit() {
     this.fg = this.fb.group({
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
+      name: ['', Validators.required],
+      last_name: ['', Validators.required],
       email: ['', Validators.required],
-      status: [true, Validators.required],
+      is_active: [true, Validators.required],
       
     }, {});
    

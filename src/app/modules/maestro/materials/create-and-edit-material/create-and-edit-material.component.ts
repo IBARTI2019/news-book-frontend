@@ -46,7 +46,7 @@ export class CreateAndEditMaterialComponent implements OnInit {
         id_warehouse: ["", Validators.required],
         description: ["", Validators.required],
         stock: ["", Validators.required],
-        status: [true, Validators.required],
+        is_active: [true, Validators.required],
       },
       {}
     );
@@ -92,7 +92,7 @@ export class CreateAndEditMaterialComponent implements OnInit {
         this.fg.get("cod_material")!.setValue(data.cod_material);
         this.fg.get("serial_material")!.setValue(data.serial_material);
         this.fg.get("description")!.setValue(data.description);
-        this.fg.get("status")!.setValue(data.status);
+        this.fg.get("is_active")!.setValue(data.is_active);
         this.fg.get("id_warehouse")!.setValue(data.id_warehouse);
         this.fg.get("stock")!.setValue(data.stock);
       },

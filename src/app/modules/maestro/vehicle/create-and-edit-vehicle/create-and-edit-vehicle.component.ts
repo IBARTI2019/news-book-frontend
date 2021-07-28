@@ -36,10 +36,10 @@ export class CreateAndEditVehicleComponent implements OnInit {
     this.fg = this.fb.group(
       {
         name: ["", Validators.required],
-        lastname: ["", Validators.required],
+        last_name: ["", Validators.required],
         doc_ident: ["", Validators.required],
         placa_vehiculo: ["", Validators.required],
-        status: [true, Validators.required],
+        is_active: [true, Validators.required],
       },
       {}
     );
@@ -84,8 +84,8 @@ export class CreateAndEditVehicleComponent implements OnInit {
   getVehicle() {
     this.vehicleService.get(this.id).subscribe((data: Vehicle) => {
       this.fg.get("name")!.setValue(data.name);
-      this.fg.get("lastname")!.setValue(data.lastname);
-      this.fg.get("status")!.setValue(data.status);
+      this.fg.get("last_name")!.setValue(data.last_name);
+      this.fg.get("is_active")!.setValue(data.is_active);
       this.fg.get("doc_ident")!.setValue(data.doc_ident);
       this.fg.get("placa_vehiculo")!.setValue(data.placa_vehiculo);
     });

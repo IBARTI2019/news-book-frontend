@@ -36,8 +36,8 @@ export class TypePeopleComponent implements OnInit {
         attribute: "Prioridad",
       },
       {
-        dataAttribute: "status",
-        attribute: "Status",
+        dataAttribute: "is_active",
+        attribute: "is_active",
       },
 
       {

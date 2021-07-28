@@ -16,7 +16,7 @@ export class UsuarioComponent implements OnInit {
   ngOnInit(): void {
     this.columns = [
       {
-        attribute: 'firstName',
+        attribute: 'name',
         header: "Nombre"
       },
       {

@@ -16,8 +16,8 @@ export class Error401Interceptor implements HttpInterceptor {
     });
     return next.handle(req1).pipe(
       catchError(err => {
-        // Ignorar token refresh si status es 0F
-        if (err.status === 401 || (err.status === 0 && !req1.url.endsWith('token-refresh/'))) {
+        // Ignorar token refresh si is_active es 0F
+        if (err.is_active === 401 || (err.is_active === 0 && !req1.url.endsWith('token-refresh/'))) {
           //this.usuarioService.logout();
         }
         return throwError(err);

@@ -36,12 +36,12 @@ export class TypeNewComponent implements OnInit {
         attribute: "Clasificacion",
       },
       {
-        dataAttribute: "status",
-        attribute: "Status",
+        dataAttribute: "is_active",
+        attribute: "is_active",
       },
 
       {
-        attribute: "id_type_news",
+        attribute: "id",
         header: "Opciones",
         template: "opciones",
       },
@@ -58,7 +58,7 @@ export class TypeNewComponent implements OnInit {
     });
     this.dialogService.confirmed().subscribe((confirmed) => {
       if (confirmed) {
-        this.typeNewService.remove(typeNew.id_type_news).subscribe(
+        this.typeNewService.remove(typeNew.id).subscribe(
           (data) => {
             this.toastr.success("El Tipo de Novedad ha sido eliminado con exito!.");
             this.tabla.refresh();

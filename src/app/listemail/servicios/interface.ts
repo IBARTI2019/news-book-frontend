@@ -1,7 +1,7 @@
 export interface listemail {
     id_listemail:string | any; 
-    firstName:string;
-    lastName: string;
+    name:string;
+    last_name: string;
     email: string;
-    status:string;
+    is_active:string;
 }

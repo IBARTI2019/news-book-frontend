@@ -1,15 +1,19 @@
 export interface User {
   id?: string;
   _id?: string;
-  id?: string;
   code?: string;
-  firstName: string;
-  lastName: string;
+  name: string;
+  last_name: string;
   email: string;
   username: string;
+  info?: string;
+  is_superuser?: boolean;
   password?: string;
-  status?: boolean;
-  rol?: string;
+  is_active?: boolean;
+  is_staff?: boolean;
+  role?: string;
+  address?: string;
+  phone?: string;
 }
 
 export interface SigninData {
@@ -21,7 +25,7 @@ export interface SigninData {
 
 export interface APIMessage {
   text: string;
-  status?: number;
+  is_active?: number;
   type?: string;
 }
 
@@ -33,7 +37,7 @@ export interface VerifyCodeResponse {
 export interface Warehouse {
   id_warehouse: string;
   descripcion: string;
-  status: string;
+  is_active: string;
 }
 
 export interface Material {
@@ -43,44 +47,44 @@ export interface Material {
   id_warehouse?: string;
   description?: string;
   stock?: string;
-  status?: string;
+  is_active?: string;
 }
 
 export interface Vehicle {
   id_vehiculo?: string;
   doc_ident: string;
   name?: string;
-  lastname?: string;
+  last_name?: string;
   placa_vehiculo?: string;
-  status?: string;
+  is_active?: string;
 }
 
 export interface TypePeople {
   id_type_person: string;
   description: string;
   priority: string;
-  status: string;
+  is_active: string;
 }
 
 export interface Person {
   id_person?: string;
   cod_person?: string;
   name?: string;
-  lastname?: string;
+  last_name?: string;
   doc_ident?: string;
   addres?: string;
   phono?: string;
   movil?: string;
   id_type_person?: string;
-  status?: string;
+  is_active?: string;
 }
 
 export interface TypeNew {
-  id_type_news: string;
+  id: string;
   descripton: string;
   id_classify: string;
   plantilla: string;
-  status: string;
+  is_active: string;
   imageUrl?: string;
   info?: string;
 }
@@ -90,7 +94,7 @@ export interface ClassificationNew {
   description: string;
   codigo: string;
   level_urgency: string;
-  status: string;
+  is_active: string;
   value: string;
 }
 
@@ -98,7 +102,7 @@ export interface New {
   id_news: string;
   notice?: string;
   id_user: string;
-  id_type_news?: string;
+  id?: string;
   fecha?: Date;
   hora?: string;
   datos?: object;
@@ -169,6 +173,6 @@ export interface Permiso {
   modulo?: Modulo;
   permiso?: string;
   ruta?: string;
-  status?: boolean;
+  is_active?: boolean;
   routers?: string[];
 }

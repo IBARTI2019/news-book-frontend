@@ -32,7 +32,7 @@ export class VehicleComponent implements OnInit {
         attribute: "Nombres",
       },
       {
-        dataAttribute: "lastname",
+        dataAttribute: "last_name",
         attribute: "Apellidos",
       },
       {
@@ -44,8 +44,8 @@ export class VehicleComponent implements OnInit {
         attribute: "Placa Vehiculo",
       },
       {
-        dataAttribute: "status",
-        attribute: "Status",
+        dataAttribute: "is_active",
+        attribute: "is_active",
       },
       {
         attribute: "id_vehiculo",

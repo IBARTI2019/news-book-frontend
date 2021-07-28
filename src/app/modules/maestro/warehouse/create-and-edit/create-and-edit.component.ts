@@ -34,7 +34,7 @@ export class CreateAndEditComponent implements OnInit {
     this.fg = this.fb.group(
       {
         descripcion: ['', Validators.required],
-        status: [true, Validators.required],
+        is_active: [true, Validators.required],
       },
       {}
     );
@@ -79,7 +79,7 @@ export class CreateAndEditComponent implements OnInit {
     this.warehouseService.get(this.id).subscribe(
       (data: Warehouse) => {
         this.fg.get('descripcion')!.setValue(data.descripcion || '');
-        this.fg.get('status')!.setValue(data.status || false);
+        this.fg.get('is_active')!.setValue(data.is_active || false);
         this.showForm = true;
       },
       (error: HttpErrorResponse) => {

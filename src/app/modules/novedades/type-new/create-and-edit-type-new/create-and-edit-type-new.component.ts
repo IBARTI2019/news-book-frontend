@@ -67,7 +67,7 @@ export class CreateAndEditTypeNewComponent implements OnInit {
         info: ["", Validators.required],
         id_classify: ["", Validators.required],
         plantilla: ["Plantilla por Defecto", Validators.required],
-        status: [true, Validators.required],
+        is_active: [true, Validators.required],
       },
       {}
     );
@@ -116,7 +116,7 @@ export class CreateAndEditTypeNewComponent implements OnInit {
       this.fg.get("info")!.setValue(data.info);
       this.fg.get("id_classify")!.setValue(data.id_classify);
       this.fg.get("plantilla")!.setValue(data.plantilla);
-      this.fg.get("status")!.setValue(data.status);
+      this.fg.get("is_active")!.setValue(data.is_active);
     });
   }
 
