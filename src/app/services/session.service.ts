@@ -17,7 +17,7 @@ import { Router } from "@angular/router";
   providedIn: "root",
 })
 export class SessionService extends API<User> {
-  protected URL = `${this.URL_API}/users/crud/`;
+  protected URL = `${this.URL_API}/security`;
   private apiURL = `${environment.API}`;
   private $user!: BehaviorSubject<User>;
 
@@ -58,7 +58,7 @@ export class SessionService extends API<User> {
 
   sendCode(signinData: SigninData): Observable<void> {
     return this.http
-      .post<void>(`${this.apiURL}/security/valid/request_security_code/`, {
+      .post<void>(`${this.apiURL}/valid/request_security_code/`, {
         ...signinData,
       })
       .pipe(catchError((error: HttpErrorResponse) => this.handleError(error)));
@@ -113,7 +113,6 @@ export class SessionService extends API<User> {
             name: "",
             last_name: "",
             email: "",
-            username: "",
           });
           this.router.navigateByUrl("/");
         });
@@ -134,7 +133,6 @@ export class SessionService extends API<User> {
       name: "",
       last_name: "",
       email: "",
-      username: "",
     });
   }
 

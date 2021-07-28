@@ -1,18 +1,20 @@
 export interface User {
   id?: string;
+  is_superuser?: boolean;
   code?: string;
+  email: string;
   name: string;
   last_name: string;
-  email: string;
-  username: string;
-  info?: string;
-  is_superuser?: boolean;
   password?: string;
-  is_active?: boolean;
-  is_staff?: boolean;
-  role?: string;
   address?: string;
   phone?: string;
+  telephone?: string;
+  security_code?: string;
+  photo?: string;
+  is_staff?: boolean;
+  is_active?: boolean;
+  info?: string;
+  user_permissions?: Number[];
 }
 
 export interface SigninData {
