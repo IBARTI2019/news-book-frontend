@@ -81,16 +81,15 @@ export interface Person {
 
 export interface TypeNew {
   id: string;
-  descripton: string;
-  id_classify: string;
-  plantilla: string;
+  description: string;
+  code: string;
+  template: string;
   is_active: string;
-  imageUrl?: string;
+  image?: string;
   info?: string;
 }
 
 export interface ClassificationNew {
-  id_classify: string;
   description: string;
   codigo: string;
   level_urgency: string;

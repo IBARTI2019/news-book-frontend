@@ -55,7 +55,7 @@ export class CreateAndEditNewComponent implements OnInit {
       (typeNew: TypeNew) => {
         if (typeNew) {
           this.template = TemplatesNew.filter(
-            (currentTemplate) => currentTemplate.name === typeNew.plantilla
+            (currentTemplate) => currentTemplate.name === typeNew.template
           )[0];
           if (this.template) {
             this.templateUrl = this.template.url;

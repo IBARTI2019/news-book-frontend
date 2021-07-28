@@ -32,10 +32,6 @@ export class TypeNewComponent implements OnInit {
         attribute: "Descripcion",
       },
       {
-        dataAttribute: "id_classify",
-        attribute: "Clasificacion",
-      },
-      {
         dataAttribute: "is_active",
         attribute: "is_active",
       },
@@ -54,7 +50,7 @@ export class TypeNewComponent implements OnInit {
 
   delete(typeNew: TypeNew) {
     this.dialogService.open({
-      message: `Esta seguro de que desea eliminar el Type News ${typeNew.descripton}?`,
+      message: `Esta seguro de que desea eliminar el Type News ${typeNew.description}?`,
     });
     this.dialogService.confirmed().subscribe((confirmed) => {
       if (confirmed) {

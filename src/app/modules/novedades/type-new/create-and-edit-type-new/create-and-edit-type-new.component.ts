@@ -65,8 +65,8 @@ export class CreateAndEditTypeNewComponent implements OnInit {
       {
         descripton: ["", Validators.required],
         info: ["", Validators.required],
-        id_classify: ["", Validators.required],
-        plantilla: ["Plantilla por Defecto", Validators.required],
+        code: [""],
+        template: ["Plantilla por Defecto", Validators.required],
         is_active: [true, Validators.required],
       },
       {}
@@ -112,16 +112,15 @@ export class CreateAndEditTypeNewComponent implements OnInit {
 
   getTypeNew() {
     this.typeNewsService.get(this.id).subscribe((data: TypeNew) => {
-      this.fg.get("descripton")!.setValue(data.descripton);
+      this.fg.get("descripton")!.setValue(data.description);
       this.fg.get("info")!.setValue(data.info);
-      this.fg.get("id_classify")!.setValue(data.id_classify);
-      this.fg.get("plantilla")!.setValue(data.plantilla);
+      this.fg.get("code")!.setValue(data.code);
+      this.fg.get("template")!.setValue(data.template);
       this.fg.get("is_active")!.setValue(data.is_active);
     });
   }
 
   updateTypeNew() {
-    console.log("Pero que pasa?");
     this.typeNewsService.update(this.id, this.fg.value).subscribe(
       (data) => {
         this.toastr.success("Tipo de Novedad actualizado");
@@ -169,7 +168,6 @@ export class CreateAndEditTypeNewComponent implements OnInit {
   }
 
   selectionTemplateChange(event: MatSelectChange) {
-    console.log(event);
     this.showOne = false;
     this.showTwo = false;
     this.showThree = false;
