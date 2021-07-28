@@ -41,7 +41,7 @@ export interface Warehouse {
 }
 
 export interface Material {
-  id?: string | number;
+  id?: string;
   code: string;
   serial: string;
   description: string;
@@ -96,13 +96,15 @@ export interface ClassificationNew {
 }
 
 export interface New {
-  id_news: string;
-  notice?: string;
-  id_user: string;
-  id?: string;
-  fecha?: Date;
-  hora?: string;
-  datos?: object;
+  id: string;
+  materials?: string[];
+  people?: string[];
+  vehicles?: string[];
+  employee: string;
+  message?: string;
+  info?: string;
+  type_news?: string;
+  created_by: string;
 }
 
 export interface TemplateOne {

@@ -43,9 +43,7 @@ export class CreateAndEditMaterialComponent implements OnInit {
       {
         code: ["", Validators.required],
         serial: ["", Validators.required],
-        id_warehouse: ["", Validators.required],
         description: ["", Validators.required],
-        stock: ["", Validators.required],
         is_active: [true, Validators.required],
       },
       {}

@@ -34,10 +34,9 @@ export class CreateAndEditNewComponent implements OnInit {
   id = "";
   idTN = "";
   currentNew: New = {
-    id_news: "",
-    id_user: "",
     id: "",
-    datos: {},
+    created_by: "",
+    employee: "",
   };
 
   constructor(
@@ -50,7 +49,7 @@ export class CreateAndEditNewComponent implements OnInit {
 
   ngOnInit(): void {
     this.idTN = this.route.snapshot.params.idTN;
-    this.currentNew.id_user = this.getLocalStorage('id_user')
+    this.currentNew.employee = this.currentNew.created_by = this.getLocalStorage('id_user')
     this.typeNewService.get(this.idTN).subscribe(
       (typeNew: TypeNew) => {
         if (typeNew) {
@@ -117,7 +116,7 @@ export class CreateAndEditNewComponent implements OnInit {
   }
 
   onSubmit(data: object) {
-    this.currentNew.datos = { ...data };
+    this.currentNew = { ...data, ...this.currentNew };
     console.log(this.currentNew);
     this.submitted = true;
     this.update ? this.updateNew(data) : this.save(data);

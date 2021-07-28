@@ -6,7 +6,7 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class MaterialsService extends API<Material> {
-  protected URL = `${this.URL_API}/materials/crudmaterials/`;
+  protected URL = `${this.URL_API}/main/material/`;
   constructor(
     protected http: HttpClient,
   ) {

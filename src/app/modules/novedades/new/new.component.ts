@@ -58,11 +58,11 @@ export class NewComponent implements OnInit {
 
   delete(localNew: New) {
     this.dialogService.open({
-      message: `Esta seguro de que desea eliminar La Informacion de ${localNew.id_news}?`,
+      message: `Esta seguro de que desea eliminar La Informacion de ${localNew.id}?`,
     });
     this.dialogService.confirmed().subscribe((confirmed) => {
       if (confirmed) {
-        this.newService.remove(localNew.id_news).subscribe(
+        this.newService.remove(localNew.id).subscribe(
           (data) => {
             this.toastr.success("Se elimino correctamente.");
             this.table.refresh();
