@@ -15,6 +15,8 @@ export interface User {
   is_active?: boolean;
   info?: string;
   user_permissions?: Number[];
+  jwt_id?: string;
+  user_id?: string;
 }
 
 export interface SigninData {

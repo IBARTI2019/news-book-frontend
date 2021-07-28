@@ -58,7 +58,7 @@ export class SessionService extends API<User> {
 
   sendCode(signinData: SigninData): Observable<void> {
     return this.http
-      .post<void>(`${this.apiURL}/valid/request_security_code/`, {
+      .post<void>(`${this.apiURL}/security/valid/request_security_code/`, {
         ...signinData,
       })
       .pipe(catchError((error: HttpErrorResponse) => this.handleError(error)));
@@ -82,11 +82,11 @@ export class SessionService extends API<User> {
       })
       .pipe(
         map((res: VerifyCodeResponse) => {
-          this.setLocalStorage(API.ISLOGGEDIN, res.logIn);
+          this.setLocalStorage(API.ISLOGGEDIN, true);
           this.setLocalStorage(API.TOKEN, res.token);
           this.actual().subscribe((user: User) => {
             if (user) {
-              this.setLocalStorage(API.USUARIO, user.id);
+              this.setLocalStorage(API.USUARIO, user.user_id);
             }
           });
           return res;
@@ -97,7 +97,6 @@ export class SessionService extends API<User> {
 
   public logout() {
     this.$user.subscribe((user: User) => {
-      console.log("User: ", user);
       this.http
         .post(`${this.URL_API}/users/validate/logout/`, {
           _id: user.id,
@@ -113,6 +112,7 @@ export class SessionService extends API<User> {
             name: "",
             last_name: "",
             email: "",
+            user_id: "",
           });
           this.router.navigateByUrl("/");
         });
@@ -133,7 +133,18 @@ export class SessionService extends API<User> {
       name: "",
       last_name: "",
       email: "",
+      user_id: "",
     });
+  }
+
+  /**
+   * isSuperUser
+   */
+  public async isSuperUser(): Promise<boolean> {
+    // const userId = this.getLocalStorage(API.USUARIO)
+    // const user = await this.http.get<User>(`${this.apiURL}/security/user/${userId}/`).toPromise();
+    // return (user.is_superuser || false);
+    return true;
   }
 
   /**

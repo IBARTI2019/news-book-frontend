@@ -3,6 +3,7 @@ import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { New, TypeNew } from "app/interfaces";
 import { NewService } from "app/services/new.service";
+import { SessionService } from 'app/services/session.service';
 import { TypeNewService } from "app/services/type-new.service";
 import { TemplateNew, TemplatesNew } from "environments/environment";
 import { ToastrService } from "ngx-toastr";
@@ -41,6 +42,7 @@ export class CreateAndEditNewComponent implements OnInit {
 
   constructor(
     private newService: NewService,
+    private sessionService: SessionService,
     private typeNewService: TypeNewService,
     private toastr: ToastrService,
     private router: Router,

@@ -4,9 +4,10 @@ import { DTColumn } from "../../../componentes/generic-table/interface";
 import { NewService } from "../../../services/new.service";
 import { Router } from "@angular/router";
 import { ConfirmDialogService } from "../../../componentes/confirm-dialog/confirm-dialog.service";
-import { ToastrService } from 'ngx-toastr';
-import { New } from '../../../interfaces';
-import { HttpErrorResponse } from '@angular/common/http';
+import { ToastrService } from "ngx-toastr";
+import { New } from "../../../interfaces";
+import { HttpErrorResponse } from "@angular/common/http";
+import { SessionService } from 'app/services/session.service';
 
 @Component({
   selector: "app-new",
@@ -19,14 +20,15 @@ export class NewComponent implements OnInit {
 
   constructor(
     public newService: NewService,
+    private sessionService: SessionService,
     private router: Router,
     private dialogService: ConfirmDialogService,
-    private toastr: ToastrService,
+    private toastr: ToastrService
   ) {}
 
   showCheck = () => true;
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.columns = [
       {
         dataAttribute: "notice",
@@ -69,8 +71,7 @@ export class NewComponent implements OnInit {
           },
           (error: HttpErrorResponse) => {
             this.toastr.error(
-              error.error.message ||
-              "No se pudo eliminar la novedad"
+              error.error.message || "No se pudo eliminar la novedad"
             );
           }
         );

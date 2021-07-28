@@ -9,8 +9,7 @@
     <!-- Profile - style you can find in header.scss -->
     <!-- ============================================================== -->
     <div class="profile-text"><a [matMenuTriggerFor]="sdprofile" class="">
-            {{ usuario?.firsName }} {{ usuario?.last_name }} <br>
-            {{ usuario?.user}}
+            {{ user?.name }} {{ user?.last_name }} <br>
             <i class="ti-angle-down font-12 m-l-5"></i></a></div>
     <mat-menu #sdprofile="matMenu" class="mymegamenu">
            <!--  <button mat-menu-item>
@@ -29,7 +28,7 @@
 
 </div>
 <mat-nav-list dense>
-     <mat-expansion-panel [class.mat-elevation-z0]="true" dense>
+     <mat-expansion-panel *ngIf="superUser" [class.mat-elevation-z0]="true" dense>
         <mat-expansion-panel-header>
          <mat-icon aria-hidden="false" aria-label="Home Icon">home</mat-icon>
             Maestro
@@ -135,11 +134,11 @@
             </a>
         </mat-nav-list>
         <mat-nav-list dense>
-            <a mat-list-item [routerLink]="['seguridad/', 'usuario']">
+            <a mat-list-item [routerLink]="['seguridad/', 'user']">
                 <span>
                    <mat-icon aria-hidden="false" aria-label="Example home icon">people_outline</mat-icon>
               
-                Usuarios</span>
+                users</span>
                 <span fxFlex></span>
             </a>
         </mat-nav-list>
