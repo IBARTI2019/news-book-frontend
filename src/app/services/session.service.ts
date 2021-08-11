@@ -96,27 +96,28 @@ export class SessionService extends API<User> {
   }
 
   public logout() {
-    this.$user.subscribe((user: User) => {
-      this.http
-        .post(`${this.URL_API}/users/validate/logout/`, {
-          _id: user.id,
-        })
-        .subscribe((data) => {
-          this.deleteStorageItem(API.TOKEN);
-          this.deleteStorageItem(API.USUARIO);
-          this.deleteStorageItem(API.MENU_ACTUAL);
-          this.deleteStorageItem(API.ISLOGGEDIN);
-          this.deleteStorageItem(API.REFRESH_TOKEN);
-          this.deleteStorageItem(API.JWT);
-          this.$user = new BehaviorSubject<User>({
-            name: "",
-            last_name: "",
-            email: "",
-            user_id: "",
-          });
-          this.router.navigateByUrl("/");
-        });
+    /*     this.$user.subscribe((user: User) => {
+          this.http
+            .post(`${this.URL_API}/users/validate/logout/`, {
+              _id: user.id,
+            })
+            .subscribe((data) => { */
+    this.deleteStorageItem(API.TOKEN);
+    this.deleteStorageItem(API.USUARIO);
+    this.deleteStorageItem(API.MENU_ACTUAL);
+    this.deleteStorageItem(API.ISLOGGEDIN);
+    this.deleteStorageItem(API.REFRESH_TOKEN);
+    this.deleteStorageItem(API.JWT);
+    this.$user = new BehaviorSubject<User>({
+      name: "",
+      last_name: "",
+      email: "",
+      user_id: "",
     });
+    this.router.navigateByUrl("/");
+    /*
+   });
+}); */
   }
 
   public actual(): BehaviorSubject<User> {
