@@ -93,6 +93,13 @@ export const AppRoutes: Routes = [
                 (m) => m.MaestroModule
               ),
           },
+          {
+            path: "schedule",
+            loadChildren: () =>
+              import("app/modules/maestro/schedule/schedule.module").then(
+                (m) => m.ScheduleModule
+              ),
+          },
         ],
       },
     ],

@@ -12,7 +12,7 @@
             {{ user?.name }} {{ user?.last_name }} <br>
             <i class="ti-angle-down font-12 m-l-5"></i></a></div>
     <mat-menu #sdprofile="matMenu" class="mymegamenu">
-           <!--  <button mat-menu-item>
+        <!--  <button mat-menu-item>
             <mat-icon>settings</mat-icon> Settings
         </button>
         <button mat-menu-item>
@@ -28,9 +28,9 @@
 
 </div>
 <mat-nav-list dense>
-     <mat-expansion-panel *ngIf="superUser" [class.mat-elevation-z0]="true" dense>
+    <mat-expansion-panel *ngIf="superUser" [class.mat-elevation-z0]="true" dense>
         <mat-expansion-panel-header>
-         <mat-icon aria-hidden="false" aria-label="Home Icon">home</mat-icon>
+            <mat-icon aria-hidden="false" aria-label="Home Icon">home</mat-icon>
             Maestro
         </mat-expansion-panel-header>
         <!-- <mat-nav-list dense>
@@ -72,16 +72,26 @@
         <mat-nav-list dense>
             <a mat-list-item [routerLink]="['type-people']">
                 <span>
-                <mat-icon aria-hidden="false" aria-label="Tipo de Persona">group_add</mat-icon>
-                Tipos Personas</span>
+                    <mat-icon aria-hidden="false" aria-label="Tipo de Persona">group_add</mat-icon>
+                    Tipos Personas
+                </span>
                 <span fxFlex></span>
             </a>
         </mat-nav-list>
         <mat-nav-list dense>
             <a mat-list-item [routerLink]="['person']">
                 <span>
-                   <mat-icon aria-hidden="false" aria-label="Person">face</mat-icon>
+                    <mat-icon aria-hidden="false" aria-label="Person">face</mat-icon>
                     Personas
+                </span>
+                <span fxFlex></span>
+            </a>
+        </mat-nav-list>
+        <mat-nav-list dense>
+            <a mat-list-item [routerLink]="['schedule']">
+                <span>
+                    <mat-icon aria-hidden="false" aria-label="Horario">schedule</mat-icon>
+                    Horarios
                 </span>
                 <span fxFlex></span>
             </a>
@@ -89,14 +99,15 @@
     </mat-expansion-panel>
     <mat-expansion-panel [class.mat-elevation-z0]="true" dense>
         <mat-expansion-panel-header>
-         <mat-icon aria-hidden="false" aria-label="News">book</mat-icon>
-           Novedades
+            <mat-icon aria-hidden="false" aria-label="News">book</mat-icon>
+            Novedades
         </mat-expansion-panel-header>
         <mat-nav-list *ngIf="superUser" dense>
             <a mat-list-item [routerLink]="['type-new']">
                 <span>
                     <mat-icon aria-hidden="false" aria-label="Tipe News">folder_special</mat-icon>
-                    Tipos Novedades</span>
+                    Tipos Novedades
+                </span>
                 <span fxFlex></span>
             </a>
         </mat-nav-list>
@@ -104,7 +115,8 @@
             <a mat-list-item [routerLink]="['new']">
                 <span>
                     <mat-icon aria-hidden="false" aria-label="News">folder_special</mat-icon>
-                    Novedades</span>
+                    Novedades
+                </span>
                 <span fxFlex></span>
             </a>
         </mat-nav-list>

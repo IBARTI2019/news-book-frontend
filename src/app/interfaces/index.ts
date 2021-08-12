@@ -182,3 +182,11 @@ export interface Role {
   name: string;
   permissions: Number[];
 }
+
+export interface Schedule {
+  id: string;
+  description: string;
+  start_time: string;
+  final_hour: string;
+  is_active: boolean;
+}

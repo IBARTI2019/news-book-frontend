@@ -1,0 +1,44 @@
+<mat-card>
+    <app-card-header modulo="Personas" menu="{{ update ? 'Actualizar Horario' : 'Crear Horario' }}">
+    </app-card-header>
+    <mat-card-content>
+        <form [formGroup]="fg" fxLayout="column" fxLayoutGap="5px" (ngSubmit)="onSubmit()" #formRol>
+            <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="5px">
+                <mat-form-field>
+                    <mat-label>Descripción</mat-label>
+                    <input matInput placeholder="Descripción" formControlName="description">
+                </mat-form-field>
+            </div>
+
+            <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="5px">
+                <div fxFlex="50" class="ngx-timepicker-field-example">
+                    <mat-label>Hora inicial</mat-label>
+                    <ngx-timepicker-field #start [format]="24" [defaultTime]="'06:00'" [toggleIcon]="icon_start"
+                        formControlName="start_time">
+                    </ngx-timepicker-field>
+                    <ng-template #icon_start>
+                        <mat-icon aria-hidden="false" aria-label="Horario">schedule</mat-icon>
+                    </ng-template>
+                </div>
+                <div fxFlex="50" class="ngx-timepicker-field-example">
+                    <mat-label>Hora final</mat-label>
+                    <ngx-timepicker-field #final [format]="24" [defaultTime]="'18:00'" [toggleIcon]="icon_final"
+                        formControlName="final_hour">
+                    </ngx-timepicker-field>
+                    <ng-template #icon_final>
+                        <mat-icon aria-hidden="false" aria-label="Horario">schedule</mat-icon>
+                    </ng-template>
+                </div>
+            </div>
+            <br>
+            <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="5px">
+                <div fxFlex="50">
+                    <mat-slide-toggle formControlName="is_active">Activo</mat-slide-toggle>
+                </div>
+            </div>
+            <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="end">
+                <button mat-raised-button color="primary" type="submit">{{ update ? 'Actualizar' : 'Crear' }}</button>
+            </div>
+        </form>
+    </mat-card-content>
+</mat-card>
