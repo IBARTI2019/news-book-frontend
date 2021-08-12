@@ -99,7 +99,7 @@ export const AppRoutes: Routes = [
               import("app/modules/maestro/schedule/schedule.module").then(
                 (m) => m.ScheduleModule
               ),
-          },{
+          }, {
             path: 'security',
             loadChildren: () =>
               import("app/modules/security/security.module").then(
