@@ -7,7 +7,7 @@ import { User } from '../interfaces'
     providedIn: 'root'
 })
 export class UserService extends API<User> {
-    protected URL = `${this.URL_API}/security/user`;
+    protected URL = `${this.URL_API}/security/user/`;
     constructor(
         protected http: HttpClient,
     ) {

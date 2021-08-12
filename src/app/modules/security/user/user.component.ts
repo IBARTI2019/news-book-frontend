@@ -37,8 +37,9 @@ export class UserComponent implements OnInit {
         attribute: "Telefono",
       },
       {
-        dataAttribute: "is_active",
-        attribute: "Status",
+        header: "Activo",
+        attribute: "is_active",
+        type: "bool"
       },
       {
         attribute: "id",

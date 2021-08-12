@@ -48,7 +48,7 @@ export class UserEditComponent implements OnInit {
         address: ["", Validators.required],
         email: ["", Validators.required],
         phone: ["", Validators.required],
-        groups: [[], Validators.required],
+        groups: [[]],
         is_staff: [false, Validators.required],
         is_active: [true, Validators.required],
       }
