@@ -1,7 +1,8 @@
 import { Routes } from '@angular/router';
 import { UserEditComponent } from './user/user-edit/user-edit.component';
 import { UserComponent } from './user/user.component';
-
+import { GroupUserComponent } from './group-user/group-user.component';
+import { GroupUserEditComponent } from './group-user/group-user-edit/group-user-edit.component';
 export const SecurityRoutes: Routes = [
     {
         path: '',
@@ -48,6 +49,23 @@ export const SecurityRoutes: Routes = [
                             skipPermission: true,
                         },
                         component: UserEditComponent
+                    }
+                ]
+            },
+            {
+                path: 'group',
+                children: [
+                    {
+                        path: '',
+                        component: GroupUserComponent
+                    },
+                    {
+                        path: 'crear',
+                        component: GroupUserEditComponent
+                    },
+                    {
+                        path: ':id',
+                        component: GroupUserEditComponent
                     }
                 ]
             }

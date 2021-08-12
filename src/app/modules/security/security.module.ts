@@ -16,13 +16,17 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
+import { GroupUserComponent } from './group-user/group-user.component';
+import { GroupUserEditComponent } from './group-user/group-user-edit/group-user-edit.component';
 
 
 
 @NgModule({
   declarations: [
     UserComponent,
-    UserEditComponent
+    UserEditComponent,
+    GroupUserComponent,
+    GroupUserEditComponent
   ],
   imports: [
     CommonModule,

@@ -7,7 +7,7 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class UserGroupService extends API<GroupUser>{
-  protected URL = `${this.URL_API}/security/group`;
+  protected URL = `${this.URL_API}/security/group/`;
   constructor(
     protected http: HttpClient,
   ) {

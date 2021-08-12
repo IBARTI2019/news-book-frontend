@@ -131,7 +131,16 @@
             <a mat-list-item [routerLink]="['security','user']">
                 <span>
                     <mat-icon aria-hidden="false" aria-label="Tipe News">person</mat-icon>
-                    Gestion de Usuarios
+                    Usuarios
+                </span>
+                <span fxFlex></span>
+            </a>
+        </mat-nav-list>
+        <mat-nav-list *ngIf="superUser" dense>
+            <a mat-list-item [routerLink]="['security','group']">
+                <span>
+                    <mat-icon aria-hidden="false" aria-label="Tipe News">group_work</mat-icon>
+                    Grupos
                 </span>
                 <span fxFlex></span>
             </a>
