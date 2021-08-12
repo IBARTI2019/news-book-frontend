@@ -1,20 +1,20 @@
 <div fxLayout="row wrap" fxLayoutAlign="center center">
     <mat-card>
         <mat-card-header>
-            <mat-card-title>Login</mat-card-title>
+            <mat-card-title class="title" >Ingreso al Sistema</mat-card-title>
         </mat-card-header>
         <mat-card-content>
             <form (ngSubmit)="handleSubmit()" #login>
 
                 <mat-form-field [hidden]="sendCodeSucces">
                     <mat-label>Usuario</mat-label>
-                    <input matInput required placeholder="Código" [(ngModel)]="signinData.code"
+                    <input matInput required placeholder="Por favor ingrese su usuario" [(ngModel)]="signinData.code"
                         [ngModelOptions]="{standalone: true}">
                     <mat-icon matSuffix>account_circle</mat-icon>
                 </mat-form-field>
                 <mat-form-field *ngIf="!sendCodeSucces">
-                    <mat-label>Contrase#a</mat-label>
-                    <input matInput required [type]="hide ? 'password' : 'text'" [(ngModel)]="signinData.password"
+                    <mat-label>Contraseña</mat-label>
+                    <input matInput required placeholder="Por favor ingrese su contraseña" [type]="hide ? 'password' : 'text'" [(ngModel)]="signinData.password"
                         [ngModelOptions]="{standalone: true}">
                     <span mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide code'"
                         [attr.aria-pressed]="hide">
@@ -32,7 +32,7 @@
                 </mat-form-field>
 
                 <button mat-raised-button color="primary" class="btn-block" type="submit"
-                    [disabled]="sendingCode || verifyCodeSubmit">{{ showVerifyCode ? 'Verify' : 'Send Code' }}</button>
+                    [disabled]="sendingCode || verifyCodeSubmit">{{ showVerifyCode ? 'Verificar' : 'Enviar Codigo' }}</button>
             </form>
         </mat-card-content>
     </mat-card>
