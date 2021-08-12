@@ -106,6 +106,13 @@ export const AppRoutes: Routes = [
                 (m) => m.SecurityModule
               )
           }
+          , {
+            path: 'notification',
+            loadChildren: () =>
+              import("app/modules/setting/notification/notification.module").then(
+                (m) => m.NotificationModule
+              )
+          }
         ],
       },
     ],

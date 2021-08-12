@@ -146,6 +146,21 @@
             </a>
         </mat-nav-list>
     </mat-expansion-panel>
+    <mat-expansion-panel [class.mat-elevation-z0]="true" dense>
+        <mat-expansion-panel-header>
+            <mat-icon aria-hidden="false" aria-label="News">settings</mat-icon>
+            Configuración
+        </mat-expansion-panel-header>
+        <mat-nav-list *ngIf="superUser" dense>
+            <a mat-list-item [routerLink]="['notification']">
+                <span>
+                    <mat-icon aria-hidden="false" aria-label="Notifications">notification_important</mat-icon>
+                    Notificaciones
+                </span>
+                <span fxFlex></span>
+            </a>
+        </mat-nav-list>
+    </mat-expansion-panel>
     <!-- <mat-expansion-panel [class.mat-elevation-z0]="true" dense>
         <mat-expansion-panel-header>
          <mat-icon aria-hidden="false" aria-label="Example home icon">vpn_key</mat-icon>

@@ -93,4 +93,24 @@ export abstract class API<T> {
     //const params = DataTableRender.buildQueryParams(parametros);
     return this.http.get<T>(this.URL + '?not_paginator=true', { params: parametros });
   }
+
+  /**
+ * Funcion que ejecuta un solicitud get y retorna una lista
+ * con los valores y los nombres de los campos en el modelo
+ * que tienen el atributo `choices`
+ * @param field nombre del campo del modelo
+ */
+  field_options(field: string): Observable<{ description: string, value: string }[]> {
+    return this.http.get<{ description: string, value: string }[]>(this.URL + 'field_options/', { params: { field } });
+  }
+
+  /**
+ * Funcion que ejecuta un solicitud get y retorna una lista
+ * con los valores y los nombres de los campos en el modelo
+ * que tienen el atributo `choices` de manera multiple
+ * @param fields nombre del campo del modelo
+ */
+  field_options_multiple(fields: string[]): Observable<any> {
+    return this.http.get<any>(this.URL + 'field_options/', { params: { fields } });
+  }
 }

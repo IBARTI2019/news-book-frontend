@@ -197,3 +197,23 @@ export interface Schedule {
   final_hour: string;
   is_active: boolean;
 }
+
+export interface NotificationSetting {
+  id: string;
+  description: string;
+  type: number;
+  groups: number[];
+  schedule?: Schedule;
+  type_news: TypeNew;
+  week_days: string[];
+  day?: string;
+  days?: string[];
+  is_active: boolean;
+  frequency: number;
+  groups_display?: GroupUser[]
+}
+
+export interface OptionField {
+  value: string;
+  description: string;
+}

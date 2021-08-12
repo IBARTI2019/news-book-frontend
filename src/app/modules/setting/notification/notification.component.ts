@@ -4,20 +4,20 @@ import { Router } from '@angular/router';
 import { ConfirmDialogService } from 'app/componentes/confirm-dialog/confirm-dialog.service';
 import { GenericTableComponent } from 'app/componentes/generic-table/generic-table.component';
 import { DTColumn } from 'app/componentes/generic-table/interface';
-import { Schedule } from 'app/interfaces';
-import { ScheduleService } from 'app/services/schedule.service';
+import { NotificationSetting } from 'app/interfaces';
 import { ToastrService } from 'ngx-toastr';
+import { SettingNotificationService } from "../../../services/setting-notification.service";
 
 @Component({
-  selector: 'app-schedule',
-  templateUrl: './schedule.component.html',
-  styleUrls: ['./schedule.component.css']
+  selector: 'app-notification',
+  templateUrl: './notification.component.html',
+  styleUrls: ['./notification.component.css']
 })
-export class ScheduleComponent implements OnInit {
+export class NotificationComponent implements OnInit {
   @ViewChild("table") table!: GenericTableComponent;
   columns: DTColumn[] = [];
   constructor(
-    public scheduleService: ScheduleService,
+    public settingNotificationService: SettingNotificationService,
     private router: Router,
     private dialogService: ConfirmDialogService,
     private toastr: ToastrService
@@ -32,12 +32,12 @@ export class ScheduleComponent implements OnInit {
         attribute: "description",
       },
       {
-        header: "Hora inicial",
-        attribute: "start_time",
+        header: "Tipo",
+        attribute: "type_display",
       },
       {
-        header: "Hora final",
-        attribute: "final_hour",
+        header: "Grupos",
+        attribute: "groups_display"
       },
       {
         header: "Activo",
@@ -54,24 +54,24 @@ export class ScheduleComponent implements OnInit {
   }
 
   update(id: string) {
-    this.router.navigate(["schedule", id]);
+    this.router.navigate(["notification", id]);
   }
 
-  delete(schedule: Schedule) {
+  delete(notification: NotificationSetting) {
     this.dialogService.open({
-      message: `Esta seguro de que desea eliminar La Informacion de ${schedule.description}?`,
+      message: `Esta seguro de que desea eliminar La Informacion de ${notification.description}?`,
     });
     this.dialogService.confirmed().subscribe((confirmed) => {
       if (confirmed) {
-        this.scheduleService.remove(schedule.id || '').subscribe(
+        this.settingNotificationService.remove(notification.id || '').subscribe(
           (data) => {
-            this.toastr.success("Horario eliminado con exito!.");
+            this.toastr.success("Eliminado con exito!.");
             this.table.refresh();
           },
           (error: HttpErrorResponse) => {
             this.toastr.error(
               error.error.mesaage ||
-              "No se logro eliminar el Horario"
+              "No se logro eliminar"
             );
           }
         );

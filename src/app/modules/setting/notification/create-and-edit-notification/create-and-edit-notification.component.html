@@ -1,0 +1,100 @@
+<mat-card>
+    <app-card-header modulo="Notificaciones" menu="{{ update ? 'Actualizar Notificación' : 'Crear Notificación' }}">
+    </app-card-header>
+    <mat-card-content>
+        {{fg.value | json}}
+        <form [formGroup]="fg" fxLayout="column" fxLayoutGap="5px" (ngSubmit)="onSubmit()" #formNotification>
+            <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="5px">
+                <mat-form-field>
+                    <mat-label>Descripción</mat-label>
+                    <input matInput placeholder="Descripción" formControlName="description">
+                </mat-form-field>
+                <mat-form-field appearance="fill">
+                    <mat-label>Tipo de Novedad</mat-label>
+                    <mat-select formControlName="type_news">
+                        <mat-option *ngFor="let type of listTypeNew" [value]="type.id">{{type.description | titlecase}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+            </div>
+            <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="5px">
+                <mat-form-field appearance="fill">
+                    <mat-label>Grupos</mat-label>
+                    <mat-select formControlName="groups" multiple>
+                        <mat-option *ngFor="let group of listGroups" [value]="group.id">{{group.name | titlecase}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <div fxFlex="50">
+                    <mat-label>Tipo</mat-label><br>
+                    <mat-radio-group aria-label="Tipo de notificación" formControlName="type">
+                        <mat-radio-button [value]="type.value" *ngFor="let type of types">{{type.description}}
+                        </mat-radio-button>
+                    </mat-radio-group>
+                </div>
+            </div>
+            <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="5px">
+                <mat-form-field appearance="fill" *ngIf="fg.value.type === TYPE_OBLIGATORY">
+                    <mat-label>Horario</mat-label>
+                    <mat-select formControlName="schedule">
+                        <mat-option *ngFor="let schedule of listSchedule" [value]="schedule.id">{{schedule.description}}
+                            {{schedule.start_time}} - {{schedule.final_hour}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field appearance="fill" *ngIf="fg.value.type === TYPE_OBLIGATORY">
+                    <mat-label>Frecuencia</mat-label>
+                    <mat-select formControlName="frequency">
+                        <mat-option *ngFor="let frequency of fequencies" [value]="frequency.value">
+                            {{frequency.description}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="5px">
+                <mat-form-field appearance="fill"
+                    *ngIf="fg.value.type === TYPE_OBLIGATORY && fg.value.frequency === FREQUENCY_JUST_ONE_DAY">
+                    <mat-label>Seleccione el día</mat-label>
+                    <input matInput [matDatepicker]="picker" formControlName="day">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+                <mat-form-field appearance="fill"
+                    *ngIf="fg.value.type === TYPE_OBLIGATORY && fg.value.frequency === FREQUENCY_BY_DAY_DAYS">
+                    <mat-label>Dias de la semana</mat-label>
+                    <mat-select formControlName="week_days" multiple>
+                        <mat-option value="0"> Lunes</mat-option>
+                        <mat-option value="1"> Martes</mat-option>
+                        <mat-option value="2"> Miércoles</mat-option>
+                        <mat-option value="3"> Jueves</mat-option>
+                        <mat-option value="4"> Viernes</mat-option>
+                        <mat-option value="5"> Sabado</mat-option>
+                        <mat-option value="6"> Domingo</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field
+                    *ngIf="fg.value.type === TYPE_OBLIGATORY && fg.value.frequency === FREQUENCY_MORE_THAN_ONE_DAY">
+                    <mat-chip-list #chipList aria-label="Seleccione los dias" (click)="picker_days.open()">
+                        <mat-chip *ngFor="let value of fg.value.days" [selectable]="false" [removable]="true"
+                            (removed)="remove(value)">
+                            {{ value | date: 'yyyy/M/d' }}
+                            <mat-icon matChipRemove *ngIf="true">cancel</mat-icon>
+                        </mat-chip>
+                        <input [value]="resetModel" matInput [matDatepicker]="picker_days"
+                            placeholder="Seleccione los dias" (dateChange)="dateChanged($event)"
+                            [matChipInputFor]="chipList" hidden />
+                    </mat-chip-list>
+                    <mat-datepicker-toggle matPrefix [for]="picker_days"></mat-datepicker-toggle>
+                    <mat-datepicker #picker_days [startAt]="init" [dateClass]="dateClass"></mat-datepicker>
+                </mat-form-field>
+                <div fxFlex="50">
+                    <mat-slide-toggle formControlName="is_active">Activo</mat-slide-toggle>
+                </div>
+            </div>
+            <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="end">
+                <button mat-raised-button color="primary" type="submit">{{ update ? 'Actualizar' : 'Crear' }}</button>
+            </div>
+        </form>
+    </mat-card-content>
+</mat-card>
