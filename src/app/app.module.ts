@@ -31,7 +31,7 @@ import { LayoutModule } from '@angular/cdk/layout';
     AppHeaderComponent,
     SpinnerComponent,
     AppSidebarComponent,
-    LoginComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,

@@ -121,6 +121,22 @@
             </a>
         </mat-nav-list>
     </mat-expansion-panel>
+
+    <mat-expansion-panel [class.mat-elevation-z0]="true" dense>
+        <mat-expansion-panel-header>
+            <mat-icon aria-hidden="false" aria-label="News">security</mat-icon>
+            Seguridad
+        </mat-expansion-panel-header>
+        <mat-nav-list *ngIf="superUser" dense>
+            <a mat-list-item [routerLink]="['security','user']">
+                <span>
+                    <mat-icon aria-hidden="false" aria-label="Tipe News">person</mat-icon>
+                    Gestion de Usuarios
+                </span>
+                <span fxFlex></span>
+            </a>
+        </mat-nav-list>
+    </mat-expansion-panel>
     <!-- <mat-expansion-panel [class.mat-elevation-z0]="true" dense>
         <mat-expansion-panel-header>
          <mat-icon aria-hidden="false" aria-label="Example home icon">vpn_key</mat-icon>

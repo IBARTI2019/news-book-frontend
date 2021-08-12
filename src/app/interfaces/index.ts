@@ -17,6 +17,13 @@ export interface User {
   user_permissions?: Number[];
   jwt_id?: string;
   user_id?: string;
+  groups?: string[];
+
+}
+
+export interface GroupUser {
+  id?: string;
+  name?: string;
 }
 
 export interface SigninData {
