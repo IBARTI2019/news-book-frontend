@@ -53,10 +53,10 @@ export class LoginComponent implements OnInit {
         );
       },
       (error: HttpErrorResponse) => {
-        console.error(error);
+        console.error(error.error.error);
         this.sendingCode = false;
         this.toastrService.error(
-          error.error.message || "Ha ocurrido un error inesperado"
+          error.error.error || "Ha ocurrido un error inesperado"
         );
       }
     );
@@ -77,10 +77,10 @@ export class LoginComponent implements OnInit {
         }
       },
       (error: HttpErrorResponse) => {
-        console.error(error);
+        console.error(error.error.error);
         this.verifyCodeSubmit = false;
         this.toastrService.error(
-          error.error.message || "No se pudo verificar el codigo."
+          error.error.error || "No se pudo verificar el codigo."
         );
       }
     );
