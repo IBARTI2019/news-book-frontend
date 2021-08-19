@@ -57,14 +57,42 @@ export const SecurityRoutes: Routes = [
                 children: [
                     {
                         path: '',
+                        data: {
+                            breadcrumb: {
+                                label: "Grupos",
+                            },
+                            skipPermission: true,
+                        },
                         component: GroupUserComponent
                     },
                     {
                         path: 'crear',
+                        data: {
+                            breadcrumbAnt: {
+                                label: "Grupos",
+                                url: "security/group",
+                                params: [],
+                            },
+                            breadcrumb: {
+                                label: "Crear Grupos",
+                            },
+                            skipPermission: true,
+                        },
                         component: GroupUserEditComponent
                     },
                     {
                         path: ':id',
+                        data: {
+                            breadcrumbAnt: {
+                                label: "Grupos",
+                                url: "security/group",
+                                params: [],
+                            },
+                            breadcrumb: {
+                                label: "Actualizar Grupos",
+                            },
+                            skipPermission: true,
+                        },
                         component: GroupUserEditComponent
                     }
                 ]
