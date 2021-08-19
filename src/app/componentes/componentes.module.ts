@@ -25,6 +25,7 @@ import { ValidateOesvicaTokenComponent } from './validate-oesvica-token/validate
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { InfoDialogComponent } from './info-dialog/info-dialog.component';
 import { InfoButtonComponent } from './info-button/info-button.component';
+import { MatTooltipModule } from '@angular/material/tooltip';
 export const entryComponentes = [
   ConfirmDialogComponent,
   ValidateOesvicaTokenComponent,
@@ -71,6 +72,7 @@ export const entryComponentes = [
     MatProgressSpinnerModule,
     FormsModule,
     ReactiveFormsModule,
+    MatTooltipModule,
   ],
   entryComponents: entryComponentes,
   providers: [ConfirmDialogService]

@@ -17,7 +17,7 @@ export class NewContainerComponent implements OnInit {
   @Input() prevUrl = "";
   @Input() idTN = "";
   @Input() allowNavigate = true;
-  @Input() info = ""
+  @Input() info = "No hay información disponible."
   @Input() isSuperUser = false;
   @Input() isStaff = true;
 

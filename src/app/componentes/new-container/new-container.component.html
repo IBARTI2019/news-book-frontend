@@ -13,9 +13,14 @@
     </p>
   </mat-card-content>
   <mat-card-actions style="display: grid">
-    <button [disabled]="!isSuperUser && isStaff" mat-raised-button (click)="openDialog()" color="primary">
+    <button
+      [disabled]="!isSuperUser && isStaff"
+      mat-raised-button
+      (click)="openDialog()"
+      color="primary"
+    >
       Crear
     </button>
   </mat-card-actions>
-  <app-info-button [text]="info"></app-info-button>
+  <mat-icon id="info" [matTooltip]="info" matTooltipClass="mat-tooltip-class" inline="true">info</mat-icon>
 </mat-card>
