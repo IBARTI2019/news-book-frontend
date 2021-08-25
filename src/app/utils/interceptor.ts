@@ -10,7 +10,8 @@ export class Error401Interceptor implements HttpInterceptor {
   }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const token = localStorage.getItem(API.TOKEN);
+    let token = localStorage.getItem(API.TOKEN);
+    if (token) token = token.replace(/"/g, "");
     const req1 = request.clone({
       headers: request.headers.set('Authorization', `Bearer ${token}`),
     });
