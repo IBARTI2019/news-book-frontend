@@ -35,9 +35,9 @@ export class TemplateThreeComponent implements OnInit {
   submitted = false;
   id: string = "";
   update: boolean = false;
-  selectedMaterials: string[];
+  selectedMaterials: Material[] = [];
   materialToSearch: string = "";
-  filterMaterialsDataSet: Array<{ material: string }>;
+  filterMaterialsDataSet: Array<{ description: string }>;
   filteredLength = 0;
   currentTemplate: TemplateNew = {
     name: "",
@@ -60,37 +60,36 @@ export class TemplateThreeComponent implements OnInit {
     private materialService: MaterialsService
   ) {
     this.fg = this.fb.group({});
-    this.selectedMaterials = ["6063 WGH", "7101 SYR", "2974 UKH"];
     this.filterMaterialsDataSet = [
       {
-        material: "6063 WGH",
+        description: "6063 WGH",
       },
       {
-        material: "7101 SYR",
+        description: "7101 SYR",
       },
       {
-        material: "2974 UKH",
+        description: "2974 UKH",
       },
       {
-        material: "2369 QUT",
+        description: "2369 QUT",
       },
       {
-        material: "8098 JSC",
+        description: "8098 JSC",
       },
       {
-        material: "7390 NOL",
+        description: "7390 NOL",
       },
       {
-        material: "6810 TYJ",
+        description: "6810 TYJ",
       },
       {
-        material: "1847 CES",
+        description: "1847 CES",
       },
       {
-        material: "4308 SWR",
+        description: "4308 SWR",
       },
       {
-        material: "6747 VOB",
+        description: "6747 VOB",
       },
     ];
   }
@@ -100,7 +99,6 @@ export class TemplateThreeComponent implements OnInit {
     this.currentTemplate = TemplatesNew.filter(
       (currentT) => currentT.name === this.name
     )[0];
-    console.log("Current Template: ", this.currentTemplate);
     this.storageData = this.currentTemplate.id
       ? this.getLocalStorage(this.currentTemplate.id)
       : null;
@@ -118,7 +116,8 @@ export class TemplateThreeComponent implements OnInit {
       this.id = this.route.snapshot.params.id;
       this.materialService.list(this.id).subscribe((data: Material[]) => {
         this.filterMaterialsDataSet = data.map((currentVehicle) => ({
-          material: currentVehicle.description || "",
+          id: currentVehicle.id,
+          description: currentVehicle.description || "",
         }));
       });
       if (this.id) {
@@ -185,9 +184,9 @@ export class TemplateThreeComponent implements OnInit {
     this.materialToSearch = "";
   }
 
-  select(plate: string) {
-    if (!this.selectedMaterials.includes(plate)) {
-      this.selectedMaterials.unshift(plate);
+  select(material: Material) {
+    if (!this.selectedMaterials.includes(material)) {
+      this.selectedMaterials.unshift(material);
     }
   }
 
