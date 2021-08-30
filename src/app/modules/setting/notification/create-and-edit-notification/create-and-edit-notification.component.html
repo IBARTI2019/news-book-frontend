@@ -36,7 +36,7 @@
             <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="5px">
                 <mat-form-field appearance="fill" *ngIf="fg.value.type === TYPE_OBLIGATORY">
                     <mat-label>Horario</mat-label>
-                    <mat-select formControlName="schedule">
+                    <mat-select formControlName="schedule" multiple>
                         <mat-option *ngFor="let schedule of listSchedule" [value]="schedule.id">{{schedule.description}}
                             {{schedule.start_time}} - {{schedule.final_hour}}
                         </mat-option>
