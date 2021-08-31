@@ -1,6 +1,6 @@
 
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -23,6 +23,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { MatNativeDateModule } from '@angular/material/core';
 import { LayoutModule } from '@angular/cdk/layout';
+import { NgxPermissionsGuard, NgxPermissionsModule, NgxPermissionsService } from 'ngx-permissions';
 
 @NgModule({
   declarations: [
@@ -48,6 +49,7 @@ import { LayoutModule } from '@angular/cdk/layout';
     MatNativeDateModule,
     ReactiveFormsModule,
     LayoutModule,
+    NgxPermissionsModule.forRoot()
   ],
   providers: [
     // { provide: LocationStrategy,  useClass: PathLocationStrategy},
@@ -55,6 +57,8 @@ import { LayoutModule } from '@angular/cdk/layout';
     { provide: LocationStrategy, useClass: HashLocationStrategy },
     { provide: HTTP_INTERCEPTORS, useClass: Error401Interceptor, multi: true, },
     { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { floatLabel: 'always' } },
+    NgxPermissionsGuard,
+    NgxPermissionsService,
   ],
   bootstrap: [AppComponent]
 })

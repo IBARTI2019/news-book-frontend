@@ -12,6 +12,8 @@ export interface User {
   security_code?: string;
   photo?: string;
   is_staff?: boolean;
+  type?: number;
+  oesvica_user?: boolean;
   is_active?: boolean;
   info?: string;
   user_permissions?: Number[];
@@ -42,6 +44,7 @@ export interface APIMessage {
 export interface VerifyCodeResponse {
   logIn: boolean;
   token: string;
+  jwt_id: string;
 }
 
 export interface Warehouse {

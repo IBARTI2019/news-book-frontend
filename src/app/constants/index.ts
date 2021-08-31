@@ -1,3 +1,5 @@
-export const ADMIN = 'admin'
-export const VIEW = 'observer'
-export const USER = 'user'
+export const ADMIN = 'ADMIN'
+export const SUPERVISOR = 'SUPERVISOR'
+export const AUDITOR = 'AUDITOR'
+export const USER = 'USER'
+export const ID_CRYPT = 'B_N_CRYPT'

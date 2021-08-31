@@ -4,6 +4,7 @@ import { SessionService } from 'app/services/session.service';
 import { User } from 'app/interfaces';
 import { USER } from 'app/constants';
 import { BehaviorSubject } from 'rxjs';
+import { UserService } from 'app/services/user.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -24,9 +25,10 @@ export class AppSidebarComponent implements OnInit, OnDestroy {
     changeDetectorRef: ChangeDetectorRef,
     media: MediaMatcher,
     private sessionService: SessionService,
+    private userService: UserService,
   ) {
-    this.sessionService.actual().subscribe((currentUser: User) => {
-      this.user = currentUser
+    this.userService.user$.subscribe((user) => {
+      console.log('Behavior Subject: ', user)
     })
     this.mobileQuery = media.matchMedia('(min-width: 768px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
