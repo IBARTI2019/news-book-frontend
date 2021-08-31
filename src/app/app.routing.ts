@@ -39,7 +39,7 @@ export const AppRoutes: Routes = [
             canLoad: [NgxPermissionsGuard],
             data: {
               permissions: {
-                only: [ADMIN, USER],
+                only: [ADMIN, USER, SUPERVISOR],
               }
             },
             loadChildren: () =>
@@ -52,7 +52,7 @@ export const AppRoutes: Routes = [
             canLoad: [NgxPermissionsGuard],
             data: {
               permissions: {
-                only: [ADMIN, USER],
+                only: [ADMIN, USER, SUPERVISOR],
               }
             },
             loadChildren: () =>
@@ -78,7 +78,7 @@ export const AppRoutes: Routes = [
             canLoad: [NgxPermissionsGuard],
             data: {
               permissions: {
-                only: [ADMIN],
+                only: [ADMIN, SUPERVISOR],
               }
             },
             loadChildren: () =>
@@ -91,7 +91,7 @@ export const AppRoutes: Routes = [
             canLoad: [NgxPermissionsGuard],
             data: {
               permissions: {
-                only: [ADMIN],
+                only: [ADMIN, SUPERVISOR],
               }
             },
             loadChildren: () =>
@@ -117,7 +117,7 @@ export const AppRoutes: Routes = [
             canLoad: [NgxPermissionsGuard],
             data: {
               permissions: {
-                only: [ADMIN, USER],
+                only: [ADMIN, USER, SUPERVISOR],
               }
             },
             loadChildren: () =>
