@@ -27,7 +27,6 @@ export class PermisoDirective {
 
   ngOnInit() {
     this.userService.user$.subscribe((user) => {
-      console.log('Behavior Subject: ', user)
     });
   }
 
