@@ -47,6 +47,7 @@ export const NewRouting: Routes = [
         data: {
           permissions: {
             only: [ADMIN, USER, SUPERVISOR],
+            redirectTo: '/new/view'
           },
           breadcrumbAnt: {
             label: "Novedades",
@@ -65,6 +66,7 @@ export const NewRouting: Routes = [
         data: {
           permissions: {
             only: [ADMIN, USER, SUPERVISOR],
+            redirectTo: '/new/view'
           },
           breadcrumbAnt: {
             label: "Novedades",
