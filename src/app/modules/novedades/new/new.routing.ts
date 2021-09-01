@@ -32,7 +32,7 @@ export const NewRouting: Routes = [
             only: [ADMIN, USER, SUPERVISOR, AUDITOR],
           },
           breadcrumbAnt: {
-            label: "Novedades",
+            label: "Seleccionar Tipo de Novedad",
             url: "new",
             params: [],
           },
@@ -52,7 +52,7 @@ export const NewRouting: Routes = [
           },
           breadcrumbAnt: {
             label: "Novedades",
-            url: "new/crear",
+            url: "new",
             params: [],
           },
           breadcrumb: {
@@ -62,7 +62,7 @@ export const NewRouting: Routes = [
         component: CreateAndEditNewComponent,
       },
       {
-        path: "editar/:id",
+        path: ":idTN",
         canActivate: [NgxPermissionsGuard],
         data: {
           permissions: {
@@ -75,7 +75,7 @@ export const NewRouting: Routes = [
             params: [],
           },
           breadcrumb: {
-            label: "Editar Novedades",
+            label: "Editar Novedad",
           },
         },
         component: CreateAndEditNewComponent,

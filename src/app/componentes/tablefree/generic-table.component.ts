@@ -67,7 +67,7 @@ export class GenericTableComponentf implements OnInit {
 
   @Input()
   /** Texto por defecto en columnas vacías */
-  textDefault = 'N/A';
+  textDefault = '- -';
 
   @Input()
   /** Imagen por defecto si la columna imagen es nula */

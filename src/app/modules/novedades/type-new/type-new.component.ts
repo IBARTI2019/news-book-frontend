@@ -28,14 +28,14 @@ export class TypeNewComponent implements OnInit {
   ngOnInit(): void {
     this.columns = [
       {
-        dataAttribute: "description",
-        attribute: "Descripcion",
+        header: "Descripcion",
+        attribute: "description",
       },
       {
-        dataAttribute: "is_active",
+        header: "Activo",
         attribute: "is_active",
+        type: "bool",
       },
-
       {
         attribute: "id",
         header: "Opciones",
