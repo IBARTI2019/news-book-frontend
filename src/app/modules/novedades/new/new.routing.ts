@@ -31,11 +31,6 @@ export const NewRouting: Routes = [
           permissions: {
             only: [ADMIN, USER, SUPERVISOR, AUDITOR],
           },
-          breadcrumbAnt: {
-            label: "Seleccionar Tipo de Novedad",
-            url: "new",
-            params: [],
-          },
           breadcrumb: {
             label: "Novedades",
           },

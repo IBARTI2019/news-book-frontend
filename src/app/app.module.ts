@@ -39,7 +39,6 @@ const getPermissionsFromLocalStorage = () => {
   const permissionsCrypt = getLocalStorage(PERMISSIONS);
   if (permissionsCrypt) {
     const permissions = decryptUsingAES256(permissionsCrypt)
-    console.log(permissions)
     return JSON.parse(permissions || '[]');
   }
   return [];
