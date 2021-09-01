@@ -1,4 +1,6 @@
 export interface User {
+  ficha?: string;
+  ci?: string;
   id?: string;
   is_superuser?: boolean;
   code?: string;
@@ -10,7 +12,9 @@ export interface User {
   phone?: string;
   telephone?: string;
   security_code?: string;
+  security_user?: string;
   photo?: string;
+  books?: string[];
   is_staff?: boolean;
   type?: number;
   oesvica_user?: boolean;

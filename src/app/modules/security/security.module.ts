@@ -18,6 +18,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { GroupUserComponent } from './group-user/group-user.component';
 import { GroupUserEditComponent } from './group-user/group-user-edit/group-user-edit.component';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 
 
@@ -43,7 +44,8 @@ import { GroupUserEditComponent } from './group-user/group-user-edit/group-user-
     MatFormFieldModule,
     MatCheckboxModule,
     MatSelectModule,
-    MatInputModule
+    MatInputModule,
+    MatTooltipModule,
   ]
 })
 export class SecurityModule { }

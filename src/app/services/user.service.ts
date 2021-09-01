@@ -41,7 +41,7 @@ export class UserService extends API<User> {
           this.user$.next({
             exist: true,
             type: res.type || 0,
-            oesvica_user: res.oesvica_user || false,
+            oesvica_user: res.oesvica_user || true,
           });
           setLocalStorage(ID_CRYPT, encryptUsingAES256(res.id || ""));
           setLocalStorage(PERMISSIONS, encryptUsingAES256(JSON.stringify(getPermissions())))
@@ -56,11 +56,11 @@ export class UserService extends API<User> {
       if (userCrypt) {
         const userDecrypt = decryptUsingAES256(userCrypt);
         if (userDecrypt) {
-          // this.get(userDecrypt).subscribe((user: User) => {
-          //   console.log("User: ", user);
+          this.get(userDecrypt).subscribe((user: User) => {
+            console.log("User: ", user, userDecrypt);
           this.ngxPermissionService.loadPermissions(getPermissions());
           resolve(true);
-          // });
+          });
         } else {
           resolve(false);
         }
