@@ -1,6 +1,6 @@
 import { _MatTabLinkBase } from "@angular/material/tabs";
 import { Routes } from "@angular/router";
-import { ADMIN } from 'app/constants';
+import { ADMIN, SUPERVISOR, USER } from 'app/constants';
 import { NgxPermissionsGuard } from 'ngx-permissions';
 import { CreateAndEditPersonComponent } from './create-and-edit-person/create-and-edit-person.component';
 import { PersonComponent } from './person.component';
@@ -14,7 +14,7 @@ export const PersonRouting: Routes = [
         canActivate: [NgxPermissionsGuard],
         data: {
           permissions: {
-            only: [ADMIN],
+            only: [ADMIN, USER, SUPERVISOR],
             redirectTo: "/",
           },
           breadcrumb: {
@@ -28,7 +28,7 @@ export const PersonRouting: Routes = [
         canActivate: [NgxPermissionsGuard],
         data: {
           permissions: {
-            only: [ADMIN],
+            only: [ADMIN, USER, SUPERVISOR],
             redirectTo: "/",
           },
           breadcrumbAnt: {
@@ -47,7 +47,7 @@ export const PersonRouting: Routes = [
         canActivate: [NgxPermissionsGuard],
         data: {
           permissions: {
-            only: [ADMIN],
+            only: [ADMIN, USER, SUPERVISOR],
             redirectTo: "/",
           },
           breadcrumbAnt: {
