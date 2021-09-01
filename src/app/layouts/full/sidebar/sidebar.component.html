@@ -1,18 +1,26 @@
 <!-- ============================================================== -->
 <!-- sidebar -->
 <!-- ============================================================== -->
-<div class="user-profile" style="background: url(assets/images/IbartiSoftware-logo.png) no-repeat;">
-    <!-- User profile image -->
-    <div class="profile-img"> <img src="assets/images/IbartiSoftware-logo.png" alt="ibarti"> </div>
-    <!-- User profile text-->
-    <!-- ============================================================== -->
-    <!-- Profile - style you can find in header.scss -->
-    <!-- ============================================================== -->
-    <div class="profile-text"><a [matMenuTriggerFor]="sdprofile" class="">
-            {{ user?.name }} {{ user?.last_name }} <br>
-            <i class="ti-angle-down font-12 m-l-5"></i></a></div>
-    <mat-menu #sdprofile="matMenu" class="mymegamenu">
-        <!--  <button mat-menu-item>
+<div
+  class="user-profile"
+  style="background: url(assets/images/IbartiSoftware-logo.png) no-repeat"
+>
+  <!-- User profile image -->
+  <div class="profile-img">
+    <img src="assets/images/IbartiSoftware-logo.png" alt="ibarti" />
+  </div>
+  <!-- User profile text-->
+  <!-- ============================================================== -->
+  <!-- Profile - style you can find in header.scss -->
+  <!-- ============================================================== -->
+  <div class="profile-text">
+    <a [matMenuTriggerFor]="sdprofile" class="">
+      {{ user?.name }} {{ user?.last_name }} <br />
+      <i class="ti-angle-down font-12 m-l-5"></i
+    ></a>
+  </div>
+  <mat-menu #sdprofile="matMenu" class="mymegamenu">
+    <!--  <button mat-menu-item>
             <mat-icon>settings</mat-icon> Settings
         </button>
         <button mat-menu-item>
@@ -21,147 +29,194 @@
         <button mat-menu-item>
             <mat-icon>notifications_off</mat-icon> Disable notifications
         </button> -->
-        <button mat-menu-item (click)="logout()">
-            <mat-icon>exit_to_app</mat-icon> Sign Out
-        </button>
-    </mat-menu>
-
+    <button mat-menu-item (click)="logout()">
+      <mat-icon>exit_to_app</mat-icon> Sign Out
+    </button>
+  </mat-menu>
 </div>
 <mat-nav-list dense>
-    <mat-expansion-panel *ngIf="superUser" [class.mat-elevation-z0]="true" dense>
-        <mat-expansion-panel-header>
-            <mat-icon aria-hidden="false" aria-label="Home Icon">home</mat-icon>
-            Maestro
-        </mat-expansion-panel-header>
-        <!-- <mat-nav-list dense>
-            <a mat-list-item [routerLink]="['warehouse']">
-                <span>
-                  <mat-icon aria-hidden="false" aria-label="Shopping Cart">add_shopping_cart</mat-icon>
-                    Almacen
-                 </span>
-                <span fxFlex></span>
-            </a>
-        </mat-nav-list> -->
-        <mat-nav-list dense>
-            <a mat-list-item [routerLink]="['materials']">
-                <span>
-                    <mat-icon aria-hidden="false" aria-label="Assignment">assignment</mat-icon>
-                    Materiales
-                </span>
-                <span fxFlex></span>
-            </a>
-        </mat-nav-list>
-        <!-- <mat-nav-list dense>
-            <a mat-list-item [routerLink]="['classify-news/', 'maestro']">
-                <span>
-                    <mat-icon aria-hidden="false" aria-label="Example home icon">add_shopping_cart</mat-icon>
-                    Novedades
-                </span>
-                <span fxFlex></span>
-            </a>
-        </mat-nav-list> -->
-        <mat-nav-list dense>
-            <a mat-list-item [routerLink]="['vehicle']">
-                <span>
-                    <mat-icon aria-hidden="false" aria-label="Vehicle">drive_eta</mat-icon>
-                    Vehiculos
-                </span>
-                <span fxFlex></span>
-            </a>
-        </mat-nav-list>
-        <mat-nav-list dense>
-            <a mat-list-item [routerLink]="['type-people']">
-                <span>
-                    <mat-icon aria-hidden="false" aria-label="Tipo de Persona">group_add</mat-icon>
-                    Tipos Personas
-                </span>
-                <span fxFlex></span>
-            </a>
-        </mat-nav-list>
-        <mat-nav-list dense>
-            <a mat-list-item [routerLink]="['person']">
-                <span>
-                    <mat-icon aria-hidden="false" aria-label="Person">face</mat-icon>
-                    Personas
-                </span>
-                <span fxFlex></span>
-            </a>
-        </mat-nav-list>
-        <mat-nav-list dense>
-            <a mat-list-item [routerLink]="['schedule']">
-                <span>
-                    <mat-icon aria-hidden="false" aria-label="Horario">schedule</mat-icon>
-                    Horarios
-                </span>
-                <span fxFlex></span>
-            </a>
-        </mat-nav-list>
-    </mat-expansion-panel>
+  <ng-template [ngxPermissionsOnly]="['ADMIN']">
     <mat-expansion-panel [class.mat-elevation-z0]="true" dense>
-        <mat-expansion-panel-header>
-            <mat-icon aria-hidden="false" aria-label="News">book</mat-icon>
-            Novedades
-        </mat-expansion-panel-header>
-        <mat-nav-list *ngIf="superUser" dense>
-            <a mat-list-item [routerLink]="['type-new']">
-                <span>
-                    <mat-icon aria-hidden="false" aria-label="Tipe News">folder_special</mat-icon>
-                    Tipos Novedades
-                </span>
-                <span fxFlex></span>
-            </a>
-        </mat-nav-list>
+      <mat-expansion-panel-header>
+        <mat-icon aria-hidden="false" aria-label="Home Icon">home</mat-icon>
+        Maestro
+      </mat-expansion-panel-header>
+      <!-- <mat-nav-list dense>
+                <a mat-list-item [routerLink]="['warehouse']">
+                    <span>
+                      <mat-icon aria-hidden="false" aria-label="Shopping Cart">add_shopping_cart</mat-icon>
+                        Almacen
+                     </span>
+                    <span fxFlex></span>
+                </a>
+            </mat-nav-list> -->
+      <ng-template [ngxPermissionsOnly]="['ADMIN']">
         <mat-nav-list dense>
-            <a mat-list-item [routerLink]="['new']">
-                <span>
-                    <mat-icon aria-hidden="false" aria-label="News">folder_special</mat-icon>
-                    Novedades
-                </span>
-                <span fxFlex></span>
-            </a>
+          <a mat-list-item [routerLink]="['materials']">
+            <span>
+              <mat-icon aria-hidden="false" aria-label="Assignment"
+                >assignment</mat-icon
+              >
+              Materiales
+            </span>
+            <span fxFlex></span>
+          </a>
         </mat-nav-list>
+      </ng-template>
+      <!-- <mat-nav-list dense>
+                <a mat-list-item [routerLink]="['classify-news/', 'maestro']">
+                    <span>
+                        <mat-icon aria-hidden="false" aria-label="Example home icon">add_shopping_cart</mat-icon>
+                        Novedades
+                    </span>
+                    <span fxFlex></span>
+                </a>
+            </mat-nav-list> -->
+      <ng-template [ngxPermissionsOnly]="['ADMIN']">
+        <mat-nav-list dense>
+          <a mat-list-item [routerLink]="['vehicle']">
+            <span>
+              <mat-icon aria-hidden="false" aria-label="Vehicle"
+                >drive_eta</mat-icon
+              >
+              Vehiculos
+            </span>
+            <span fxFlex></span>
+          </a>
+        </mat-nav-list>
+      </ng-template>
+      <ng-template [ngxPermissionsOnly]="['ADMIN']">
+        <mat-nav-list dense>
+          <a mat-list-item [routerLink]="['type-people']">
+            <span>
+              <mat-icon aria-hidden="false" aria-label="Tipo de Persona"
+                >group_add</mat-icon
+              >
+              Tipos Personas
+            </span>
+            <span fxFlex></span>
+          </a>
+        </mat-nav-list>
+      </ng-template>
+      <ng-template [ngxPermissionsOnly]="['ADMIN']">
+        <mat-nav-list dense>
+          <a mat-list-item [routerLink]="['person']">
+            <span>
+              <mat-icon aria-hidden="false" aria-label="Person">face</mat-icon>
+              Personas
+            </span>
+            <span fxFlex></span>
+          </a>
+        </mat-nav-list>
+      </ng-template>
+      <ng-template [ngxPermissionsOnly]="['ADMIN']">
+        <mat-nav-list dense>
+          <a mat-list-item [routerLink]="['schedule']">
+            <span>
+              <mat-icon aria-hidden="false" aria-label="Horario"
+                >schedule</mat-icon
+              >
+              Horarios
+            </span>
+            <span fxFlex></span>
+          </a>
+        </mat-nav-list>
+      </ng-template>
     </mat-expansion-panel>
+  </ng-template>
+  <ng-template [ngxPermissionsOnly]="['ADMIN']">
+    <mat-expansion-panel [class.mat-elevation-z0]="true" dense>
+      <mat-expansion-panel-header>
+        <mat-icon aria-hidden="false" aria-label="News">book</mat-icon>
+        Novedades
+      </mat-expansion-panel-header>
+      <ng-template [ngxPermissionsOnly]="['ADMIN']">
+        <mat-nav-list dense>
+          <a mat-list-item [routerLink]="['type-new']">
+            <span>
+              <mat-icon aria-hidden="false" aria-label="Tipe News"
+                >folder_special</mat-icon
+              >
+              Tipos Novedades
+            </span>
+            <span fxFlex></span>
+          </a>
+        </mat-nav-list>
+      </ng-template>
+      <ng-template
+        [ngxPermissionsOnly]="['ADMIN', 'AUDITOR', 'SUPERVISOR', 'USER']"
+      >
+        <mat-nav-list dense>
+          <a mat-list-item [routerLink]="['new']">
+            <span>
+              <mat-icon aria-hidden="false" aria-label="News"
+                >folder_special</mat-icon
+              >
+              Novedades
+            </span>
+            <span fxFlex></span>
+          </a>
+        </mat-nav-list>
+      </ng-template>
+    </mat-expansion-panel>
+  </ng-template>
 
+  <ng-template [ngxPermissionsOnly]="['ADMIN']">
     <mat-expansion-panel [class.mat-elevation-z0]="true" dense>
-        <mat-expansion-panel-header>
-            <mat-icon aria-hidden="false" aria-label="News">security</mat-icon>
-            Seguridad
-        </mat-expansion-panel-header>
-        <mat-nav-list *ngIf="superUser" dense>
-            <a mat-list-item [routerLink]="['security','user']">
-                <span>
-                    <mat-icon aria-hidden="false" aria-label="Tipe News">person</mat-icon>
-                    Usuarios
-                </span>
-                <span fxFlex></span>
-            </a>
+      <mat-expansion-panel-header>
+        <mat-icon aria-hidden="false" aria-label="News">security</mat-icon>
+        Seguridad
+      </mat-expansion-panel-header>
+      <ng-template [ngxPermissionsOnly]="['ADMIN']">
+        <mat-nav-list dense>
+          <a mat-list-item [routerLink]="['security', 'user']">
+            <span>
+              <mat-icon aria-hidden="false" aria-label="Tipe News"
+                >person</mat-icon
+              >
+              Usuarios
+            </span>
+            <span fxFlex></span>
+          </a>
         </mat-nav-list>
-        <mat-nav-list *ngIf="superUser" dense>
-            <a mat-list-item [routerLink]="['security','group']">
-                <span>
-                    <mat-icon aria-hidden="false" aria-label="Tipe News">group_work</mat-icon>
-                    Grupos
-                </span>
-                <span fxFlex></span>
-            </a>
+      </ng-template>
+      <ng-template [ngxPermissionsOnly]="['ADMIN']">
+        <mat-nav-list dense>
+          <a mat-list-item [routerLink]="['security', 'group']">
+            <span>
+              <mat-icon aria-hidden="false" aria-label="Tipe News"
+                >group_work</mat-icon
+              >
+              Grupos
+            </span>
+            <span fxFlex></span>
+          </a>
         </mat-nav-list>
+      </ng-template>
     </mat-expansion-panel>
+  </ng-template>
+  <ng-template [ngxPermissionsOnly]="['ADMIN']">
     <mat-expansion-panel [class.mat-elevation-z0]="true" dense>
-        <mat-expansion-panel-header>
-            <mat-icon aria-hidden="false" aria-label="News">settings</mat-icon>
-            Configuración
-        </mat-expansion-panel-header>
-        <mat-nav-list *ngIf="superUser" dense>
-            <a mat-list-item [routerLink]="['notification']">
-                <span>
-                    <mat-icon aria-hidden="false" aria-label="Notifications">notification_important</mat-icon>
-                    Notificaciones
-                </span>
-                <span fxFlex></span>
-            </a>
+      <mat-expansion-panel-header>
+        <mat-icon aria-hidden="false" aria-label="News">settings</mat-icon>
+        Configuración
+      </mat-expansion-panel-header>
+      <ng-template [ngxPermissionsOnly]="['ADMIN']">
+        <mat-nav-list dense>
+          <a mat-list-item [routerLink]="['notification']">
+            <span>
+              <mat-icon aria-hidden="false" aria-label="Notifications"
+                >notification_important</mat-icon
+              >
+              Notificaciones
+            </span>
+            <span fxFlex></span>
+          </a>
         </mat-nav-list>
+      </ng-template>
     </mat-expansion-panel>
-    <!-- <mat-expansion-panel [class.mat-elevation-z0]="true" dense>
+  </ng-template>
+  <!-- <mat-expansion-panel [class.mat-elevation-z0]="true" dense>
         <mat-expansion-panel-header>
          <mat-icon aria-hidden="false" aria-label="Example home icon">vpn_key</mat-icon>
       
