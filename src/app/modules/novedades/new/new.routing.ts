@@ -26,6 +26,7 @@ export const NewRouting: Routes = [
       },
       {
         path: "view",
+        canActivate: [NgxPermissionsGuard],
         data: {
           permissions: {
             only: [ADMIN, USER, SUPERVISOR, AUDITOR],
@@ -43,6 +44,7 @@ export const NewRouting: Routes = [
       },
       {
         path: "crear/:idTN",
+        canActivate: [NgxPermissionsGuard],
         data: {
           permissions: {
             only: [ADMIN, USER, SUPERVISOR],
@@ -61,6 +63,7 @@ export const NewRouting: Routes = [
       },
       {
         path: "editar/:id",
+        canActivate: [NgxPermissionsGuard],
         data: {
           permissions: {
             only: [ADMIN, USER, SUPERVISOR],
