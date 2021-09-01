@@ -19,7 +19,6 @@ export const NotificationRoutes: Routes = [
           breadcrumb: {
             label: "Notificaciones",
           },
-          skipPermission: true,
         },
         component: NotificationComponent,
       },
@@ -39,7 +38,6 @@ export const NotificationRoutes: Routes = [
           breadcrumb: {
             label: "Crear Notificación",
           },
-          skipPermission: true,
         },
         component: CreateAndEditNotificationComponent,
       },
@@ -59,7 +57,6 @@ export const NotificationRoutes: Routes = [
           breadcrumb: {
             label: "Editar Notificación",
           },
-          skipPermission: true,
         },
         component: CreateAndEditNotificationComponent,
       },
