@@ -3,7 +3,7 @@ import { CreateAndEditMaterialComponent } from "./create-and-edit-material/creat
 import { MaterialsComponent } from "./materials.component";
 import { _MatTabLinkBase } from "@angular/material/tabs";
 import { NgxPermissionsGuard } from "ngx-permissions";
-import { ADMIN, SUPERVISOR, USER } from "app/constants";
+import { ADMIN } from "app/constants";
 
 export const MaterialsRouting: Routes = [
   {

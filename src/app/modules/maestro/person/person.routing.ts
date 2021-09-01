@@ -1,5 +1,7 @@
 import { _MatTabLinkBase } from "@angular/material/tabs";
 import { Routes } from "@angular/router";
+import { ADMIN } from 'app/constants';
+import { NgxPermissionsGuard } from 'ngx-permissions';
 import { CreateAndEditPersonComponent } from './create-and-edit-person/create-and-edit-person.component';
 import { PersonComponent } from './person.component';
 
@@ -9,17 +11,26 @@ export const PersonRouting: Routes = [
     children: [
       {
         path: "",
+        canActivate: [NgxPermissionsGuard],
         data: {
+          permissions: {
+            only: [ADMIN],
+            redirectTo: "/",
+          },
           breadcrumb: {
             label: "Personas",
           },
-          skipPermission: true,
         },
         component: PersonComponent,
       },
       {
         path: "crear",
+        canActivate: [NgxPermissionsGuard],
         data: {
+          permissions: {
+            only: [ADMIN],
+            redirectTo: "/",
+          },
           breadcrumbAnt: {
             label: "Personas",
             url: "person",
@@ -28,13 +39,17 @@ export const PersonRouting: Routes = [
           breadcrumb: {
             label: "Crear Persona",
           },
-          skipPermission: true,
         },
         component: CreateAndEditPersonComponent,
       },
       {
         path: ":id",
+        canActivate: [NgxPermissionsGuard],
         data: {
+          permissions: {
+            only: [ADMIN],
+            redirectTo: "/",
+          },
           breadcrumbAnt: {
             label: "Personas",
             url: "person",
@@ -43,7 +58,6 @@ export const PersonRouting: Routes = [
           breadcrumb: {
             label: "Editar Persona",
           },
-          skipPermission: true,
         },
         component: CreateAndEditPersonComponent,
       },
