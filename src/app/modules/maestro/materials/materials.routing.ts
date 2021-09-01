@@ -1,7 +1,9 @@
 import { Routes } from "@angular/router";
 import { CreateAndEditMaterialComponent } from "./create-and-edit-material/create-and-edit-material.component";
 import { MaterialsComponent } from "./materials.component";
-import { _MatTabLinkBase } from '@angular/material/tabs';
+import { _MatTabLinkBase } from "@angular/material/tabs";
+import { NgxPermissionsGuard } from "ngx-permissions";
+import { ADMIN, SUPERVISOR, USER } from "app/constants";
 
 export const MaterialsRouting: Routes = [
   {
@@ -9,17 +11,26 @@ export const MaterialsRouting: Routes = [
     children: [
       {
         path: "",
+        canActivate: [NgxPermissionsGuard],
         data: {
+          permissions: {
+            only: [ADMIN],
+            redirectTo: "/",
+          },
           breadcrumb: {
             label: "Materiales y Suministros",
           },
-          skipPermission: true,
         },
         component: MaterialsComponent,
       },
       {
         path: "crear",
+        canActivate: [NgxPermissionsGuard],
         data: {
+          permissions: {
+            only: [ADMIN],
+            redirectTo: "/",
+          },
           breadcrumbAnt: {
             label: "Materiales y Suministros",
             url: "materials",
@@ -28,13 +39,17 @@ export const MaterialsRouting: Routes = [
           breadcrumb: {
             label: "Crear Materiales",
           },
-          skipPermission: true,
         },
         component: CreateAndEditMaterialComponent,
       },
       {
         path: ":id",
+        canActivate: [NgxPermissionsGuard],
         data: {
+          permissions: {
+            only: [ADMIN],
+            redirectTo: "/",
+          },
           breadcrumbAnt: {
             label: "Materiales y Suministros",
             url: "materials",
@@ -43,7 +58,6 @@ export const MaterialsRouting: Routes = [
           breadcrumb: {
             label: "Editar Materiales",
           },
-          skipPermission: true,
         },
         component: CreateAndEditMaterialComponent,
       },
