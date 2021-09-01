@@ -11,8 +11,10 @@ import { catchError, map } from "rxjs/operators";
 import { API } from "app/utils/api";
 import { Router } from "@angular/router";
 import { getLocalStorage, setLocalStorage, deleteLocalStorageItem } from '../utils/localStorage'
-import { ID_CRYPT } from 'app/constants';
+import { ID_CRYPT, PERMISSIONS } from 'app/constants';
 import { encryptUsingAES256 } from 'app/utils/crypt';
+import { getPermissions } from 'app/utils/permissions';
+import { UserService } from './user.service';
 
 @Injectable({
   providedIn: "root",
@@ -22,7 +24,7 @@ export class SessionService extends API<User> {
   private apiURL = `${environment.API}`;
   private $user!: BehaviorSubject<User>;
 
-  constructor(protected http: HttpClient, private router: Router) {
+  constructor(protected http: HttpClient, private router: Router, private userService: UserService) {
     super(http);
   }
 
@@ -72,6 +74,12 @@ export class SessionService extends API<User> {
         map((res: VerifyCodeResponse) => {
           setLocalStorage(ID_CRYPT, encryptUsingAES256(res.jwt_id || ""))
           setLocalStorage(API.TOKEN, res.token)
+          setLocalStorage(PERMISSIONS, encryptUsingAES256(JSON.stringify(getPermissions())))
+          this.userService.user$.next({
+            exist: true,
+            type: 1,
+            oesvica_user: true,
+          })
           return res;
         }),
         catchError((error: HttpErrorResponse) => this.handleError(error))

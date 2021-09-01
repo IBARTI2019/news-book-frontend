@@ -4,10 +4,11 @@ import { API } from "../utils/api";
 import { User } from "../interfaces";
 import { BehaviorSubject, Observable } from "rxjs";
 import { map } from "rxjs/operators";
-import { getLocalStorage } from "app/utils/localStorage";
-import { ADMIN, AUDITOR, ID_CRYPT, SUPERVISOR, USER } from "app/constants";
+import { getLocalStorage, setLocalStorage } from "app/utils/localStorage";
+import { ID_CRYPT, PERMISSIONS } from "app/constants";
 import { NgxPermissionsService } from "ngx-permissions";
-import { decryptUsingAES256, encryptUsingAES256 } from "../utils/crypt"
+import { decryptUsingAES256, encryptUsingAES256 } from "../utils/crypt";
+import { getPermissions } from "../utils/permissions"
 
 @Injectable({
   providedIn: "root",
@@ -37,13 +38,13 @@ export class UserService extends API<User> {
       })
       .pipe(
         map((res: User) => {
-          console.log('Response: ', res)
           this.user$.next({
             exist: true,
             type: res.type || 0,
             oesvica_user: res.oesvica_user || false,
           });
-          encryptUsingAES256(res.id || "");
+          setLocalStorage(ID_CRYPT, encryptUsingAES256(res.id || ""));
+          setLocalStorage(PERMISSIONS, encryptUsingAES256(JSON.stringify(getPermissions())))
           return res;
         })
       );
@@ -57,8 +58,8 @@ export class UserService extends API<User> {
         if (userDecrypt) {
           // this.get(userDecrypt).subscribe((user: User) => {
           //   console.log("User: ", user);
-            this.ngxPermissionService.loadPermissions(this.getPermissions());
-            resolve(true);
+          this.ngxPermissionService.loadPermissions(getPermissions());
+          resolve(true);
           // });
         } else {
           resolve(false);
@@ -68,18 +69,4 @@ export class UserService extends API<User> {
       }
     });
   }
-
-  private getPermissions(role: string = "ADMIN"): string[] {
-    // if (role === ADMIN) {
-    //   return [ADMIN]
-    // } else if (role === SUPERVISOR) {
-    //   return [SUPERVISOR]
-    // } else if (role === AUDITOR) {
-    //   return [AUDITOR]
-    // } else if (role === USER) {
-    //   return [USER]
-    // }
-    return [role];
-  }
-
 }

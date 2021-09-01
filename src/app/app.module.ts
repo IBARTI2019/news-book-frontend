@@ -32,14 +32,17 @@ import {
   NgxPermissionsService,
 } from "ngx-permissions";
 import { getLocalStorage } from "./utils/localStorage";
-import { ADMIN } from "./constants";
+import { PERMISSIONS } from "./constants";
+import { decryptUsingAES256 } from './utils/crypt';
 
 const getPermissionsFromLocalStorage = () => {
-  const userCrypt = getLocalStorage("permissions");
-  if (userCrypt) {
-    return [ADMIN];
+  const permissionsCrypt = getLocalStorage(PERMISSIONS);
+  if (permissionsCrypt) {
+    const permissions = decryptUsingAES256(permissionsCrypt)
+    console.log(permissions)
+    return JSON.parse(permissions || '[]');
   }
-  return [ADMIN];
+  return [];
 };
 
 @NgModule({
