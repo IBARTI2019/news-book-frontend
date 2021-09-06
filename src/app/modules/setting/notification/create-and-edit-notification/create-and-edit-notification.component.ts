@@ -1,20 +1,31 @@
-import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { MatDatepicker, MatDatepickerInputEvent } from '@angular/material/datepicker';
-import { Router, ActivatedRoute } from '@angular/router';
-import { GroupUser, NotificationSetting, OptionField, Schedule, TypeNew } from 'app/interfaces';
-import { ScheduleService } from 'app/services/schedule.service';
-import { SettingNotificationService } from 'app/services/setting-notification.service';
-import { TypeNewService } from 'app/services/type-new.service';
-import { UserGroupService } from 'app/services/user-group.service';
-import * as moment from 'moment';
-import { ToastrService } from 'ngx-toastr';
+import { HttpErrorResponse } from "@angular/common/http";
+import { Component, OnInit, ViewChild } from "@angular/core";
+import { FormGroup, FormBuilder, Validators } from "@angular/forms";
+import {
+  MatDatepicker,
+  MatDatepickerInputEvent,
+} from "@angular/material/datepicker";
+import { MatRadioChange } from "@angular/material/radio";
+import { Router, ActivatedRoute } from "@angular/router";
+import {
+  GroupUser,
+  NotificationSetting,
+  OptionField,
+  Schedule,
+  TypeNew,
+} from "app/interfaces";
+import { ScheduleService } from "app/services/schedule.service";
+import { SettingNotificationService } from "app/services/setting-notification.service";
+import { TypeNewService } from "app/services/type-new.service";
+import { UserGroupService } from "app/services/user-group.service";
+import * as moment from "moment";
+import { ToastrService } from "ngx-toastr";
+import { ErrorStateFrequencyMatcher } from "../../../../validators";
 
 @Component({
-  selector: 'app-create-and-edit-notification',
-  templateUrl: './create-and-edit-notification.component.html',
-  styleUrls: ['./create-and-edit-notification.component.css']
+  selector: "app-create-and-edit-notification",
+  templateUrl: "./create-and-edit-notification.component.html",
+  styleUrls: ["./create-and-edit-notification.component.css"],
 })
 export class CreateAndEditNotificationComponent implements OnInit {
   fg: FormGroup;
@@ -26,17 +37,21 @@ export class CreateAndEditNotificationComponent implements OnInit {
   listSchedule: Schedule[] = [];
   listTypeNew: TypeNew[] = [];
   fequencies: OptionField[] = [];
+  frequencyMatcher = new ErrorStateFrequencyMatcher();
   public TYPE_OBLIGATORY = SettingNotificationService.TYPE_OBLIGATORY;
   public TYPE_RECURRENT = SettingNotificationService.TYPE_RECURRENT;
   public FREQUENCY_EVERY_DAY = SettingNotificationService.FREQUENCY_EVERY_DAY;
-  public FREQUENCY_JUST_ONE_DAY = SettingNotificationService.FREQUENCY_JUST_ONE_DAY;
-  public FREQUENCY_MORE_THAN_ONE_DAY = SettingNotificationService.FREQUENCY_MORE_THAN_ONE_DAY;
-  public FREQUENCY_BY_DAY_DAYS = SettingNotificationService.FREQUENCY_BY_DAY_DAYS;
+  public FREQUENCY_JUST_ONE_DAY =
+    SettingNotificationService.FREQUENCY_JUST_ONE_DAY;
+  public FREQUENCY_MORE_THAN_ONE_DAY =
+    SettingNotificationService.FREQUENCY_MORE_THAN_ONE_DAY;
+  public FREQUENCY_BY_DAY_DAYS =
+    SettingNotificationService.FREQUENCY_BY_DAY_DAYS;
 
   public CLOSE_ON_SELECTED = false;
   public init = new Date();
   public resetModel = new Date(0);
-  @ViewChild('picker_days', { static: true }) _picker!: MatDatepicker<Date>;
+  @ViewChild("picker_days") _picker!: MatDatepicker<Date>;
 
   constructor(
     private settingNotificationService: SettingNotificationService,
@@ -62,15 +77,17 @@ export class CreateAndEditNotificationComponent implements OnInit {
         description: ["", Validators.required],
         type: [null, Validators.required],
         groups: [[], Validators.required],
-        schedule: [null],
+        schedule: [null, Validators.required],
         type_news: [null, Validators.required],
         week_days: [[]],
         day: [""],
         days: [[]],
         frequency: [1, Validators.required],
-        is_active: [true, Validators.required]
+        is_active: [true, Validators.required],
       },
-      {}
+      {
+        validator: this.checkFrequency,
+      }
     );
     if (this.id) {
       this.update = true;
@@ -81,7 +98,7 @@ export class CreateAndEditNotificationComponent implements OnInit {
   onSubmit() {
     this.submitted = true;
     if (this.fg.invalid) {
-      console.log('Invalid?')
+      console.log("Invalid?");
       this.submitted = false;
       return;
     }
@@ -89,9 +106,34 @@ export class CreateAndEditNotificationComponent implements OnInit {
     if (data.type === this.TYPE_RECURRENT) {
       delete data.day;
     } else {
-      if (data.day) data.day = moment(data.day).format('YYYY-MM-DD');
-      if (data.week_days) data.week_days = data.week_days.map((day: string) => Number(day));
-      if (data.days) data.days = data.days.map((date: Date) => moment(date).format('YYYY-MM-DD'));
+      switch (this.fg.get("frequency")?.value) {
+        case 1:
+          data.week_days = [];
+          data.day = "";
+          data.days = [];
+          break;
+        case 2:
+          data.week_days = [];
+          data.days = [];
+          if (data.day) data.day = moment(data.day).format("YYYY-MM-DD");
+          break;
+        case 3:
+          data.week_days = [];
+          data.day = "";
+          if (data.days)
+            data.days = data.days.map((date: Date) =>
+              moment(date).format("YYYY-MM-DD")
+            );
+          break;
+        case 4:
+          data.day = "";
+          data.days = [];
+          if (data.week_days)
+            data.week_days = data.week_days.map((day: string) => Number(day));
+          break;
+        default:
+          console.warn("Unhandled Frequency");
+      }
     }
     this.update ? this.updateNotificationSetting(data) : this.save(data);
   }
@@ -99,7 +141,7 @@ export class CreateAndEditNotificationComponent implements OnInit {
   onReset() {
     this.submitted = false;
     this.fg.reset();
-    this.router.navigate(["notificatión"]);
+    this.router.navigateByUrl("/notification");
   }
 
   save(obj: NotificationSetting) {
@@ -108,7 +150,7 @@ export class CreateAndEditNotificationComponent implements OnInit {
         this.toastr.success("Notificación creada con éxito!");
         this.submitted = false;
         this.fg.reset();
-        this.router.navigate(["person"]);
+        this.router.navigateByUrl("/notification");
       },
       (error: HttpErrorResponse) => {
         this.submitted = false;
@@ -120,21 +162,24 @@ export class CreateAndEditNotificationComponent implements OnInit {
   }
 
   getNotificationSetting() {
-    this.settingNotificationService.get(this.id || '').subscribe((data: NotificationSetting) => {
-      this.fg.get("description")!.setValue(data.description);
-      this.fg.get("type")!.setValue(data.type);
-      this.fg.get("groups")!.setValue(data.groups);
-      this.fg.get("schedule")!.setValue(data.schedule);
-      this.fg.get("type_news")!.setValue(data.type_news);
-      if (data.week_days) {
-        data.week_days = data.week_days.map((day: string) => String(day));
-      }
-      this.fg.get("week_days")!.setValue(data.week_days);
-      this.fg.get("day")!.setValue(data.day);
-      this.fg.get("days")!.setValue(data.days);
-      this.fg.get("frequency")!.setValue(data.frequency);
-      this.fg.get("is_active")!.setValue(data.is_active);
-    });
+    this.settingNotificationService
+      .get(this.id || "")
+      .subscribe((data: NotificationSetting) => {
+        console.log("NotiData: ", data);
+        this.fg.get("description")!.setValue(data.description);
+        this.fg.get("type")!.setValue(data.type);
+        this.fg.get("groups")!.setValue(data.groups);
+        this.fg.get("schedule")!.setValue(data.schedule);
+        this.fg.get("type_news")!.setValue(data.type_news);
+        if (data.week_days) {
+          data.week_days = data.week_days.map((day: string) => String(day));
+        }
+        this.fg.get("week_days")!.setValue(data.week_days);
+        this.fg.get("day")!.setValue(data.day);
+        this.fg.get("days")!.setValue(data.days);
+        this.fg.get("frequency")!.setValue(data.frequency);
+        this.fg.get("is_active")!.setValue(data.is_active);
+      });
   }
 
   updateNotificationSetting(obj: NotificationSetting) {
@@ -143,7 +188,7 @@ export class CreateAndEditNotificationComponent implements OnInit {
         this.toastr.success("Notificación actualizada!");
         this.submitted = false;
         this.fg.reset();
-        this.router.navigate(["notification"]);
+        this.router.navigateByUrl("/notification");
       },
       (error: HttpErrorResponse) => {
         this.submitted = false;
@@ -166,11 +211,13 @@ export class CreateAndEditNotificationComponent implements OnInit {
   }
 
   getOptions() {
-    this.settingNotificationService.field_options_multiple(['type', 'frequency']).subscribe((response: any) => {
-      console.log('options', response);
-      this.types = [...response.type];
-      this.fequencies = [...response.frequency];
-    });
+    this.settingNotificationService
+      .field_options_multiple(["type", "frequency"])
+      .subscribe((response: any) => {
+        console.log("options", response);
+        this.types = [...response.type];
+        this.fequencies = [...response.frequency];
+      });
   }
 
   getTypeNews() {
@@ -179,13 +226,12 @@ export class CreateAndEditNotificationComponent implements OnInit {
     });
   }
 
-
   public dateClass = (date: Date) => {
     if (this._findDate(date) !== -1) {
-      return ['selected'];
+      return ["selected"];
     }
     return [];
-  }
+  };
 
   public dateChanged(event: MatDatepickerInputEvent<Date>): void {
     if (event.value) {
@@ -194,13 +240,15 @@ export class CreateAndEditNotificationComponent implements OnInit {
       if (index === -1) {
         this.fg.value.days.push(date);
       } else {
-        this.fg.value.days.splice(index, 1)
+        this.fg.value.days.splice(index, 1);
       }
       this.resetModel = new Date(0);
       if (!this.CLOSE_ON_SELECTED) {
-        const closeFn = this._picker.close;
-        this._picker.close = () => { };
-        this._picker['_popupComponentRef'].instance._calendar.monthView._createWeekCells()
+        const closeFn = this._picker?.close;
+        this._picker.close = () => {};
+        this._picker[
+          "_popupComponentRef"
+        ].instance._calendar.monthView._createWeekCells();
         setTimeout(() => {
           this._picker.close = closeFn;
         });
@@ -210,10 +258,39 @@ export class CreateAndEditNotificationComponent implements OnInit {
 
   public remove(date: Date): void {
     const index = this._findDate(date);
-    this.fg.value.days.splice(index, 1)
+    this.fg.value.days.splice(index, 1);
   }
 
   private _findDate(date: Date): number {
     return this.fg.value.days.map((m: string) => +m).indexOf(+date);
+  }
+
+  handleType = (event: MatRadioChange) => {
+    console.log(event.value);
+  };
+
+  checkFrequency(group: FormGroup) {
+    switch (group.controls.frequency.value) {
+      case 2:
+        if (!group.controls.day.value)
+          return {
+            dayIsRequired: true,
+          };
+        break;
+      // case 3:
+      //   if (!group.controls.days.value.length || (group.controls.days.value.length < 2))
+      //     return {
+      //       daysIsRequired: "Debe ingresar al menos 2 días.",
+      //     };
+      //   break;
+      case 4:
+        if (!group.controls.week_days.value.length)
+          return {
+            weekDaysIsRequired: true,
+          };
+        break;
+      default:
+        return null;
+    }
   }
 }

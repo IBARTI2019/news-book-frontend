@@ -2,6 +2,7 @@ import { Directive, ElementRef, Input, Renderer2 } from "@angular/core";
 import { Router } from "@angular/router";
 import { Metodo, Permiso, User } from "app/interfaces";
 import { SessionService } from "app/services/session.service";
+import { UserService } from 'app/services/user.service';
 
 @Directive({
   selector: "[appPermiso]",
@@ -18,22 +19,14 @@ export class PermisoDirective {
   constructor(
     private eleRef: ElementRef,
     private renderer: Renderer2,
-    private sessionService: SessionService,
+    private userService: UserService,
     private router: Router
   ) {
-    this.ruta = this.ruta ? this.ruta : router.url.substring(1);
+    this.ruta = this.ruta || router.url.substring(1);
   }
 
   ngOnInit() {
-    return true;
-    this.sessionService.actual().subscribe((user: User) => {
-      this.usuario = user;
-      if (this.usuario) {
-        let permisos = [];
-        let permisos_metodos = [];
-      } else {
-        this.ocultarElemento();
-      }
+    this.userService.user$.subscribe((user) => {
     });
   }
 

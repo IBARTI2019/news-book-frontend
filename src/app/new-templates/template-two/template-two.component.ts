@@ -36,7 +36,7 @@ export class TemplateTwoComponent implements OnInit, AfterViewChecked {
   submitted = false;
   id: string = "";
   update: boolean = false;
-  selectedPlates: string[];
+  selectedPlates: Vehicle[] = [];
   plateToSearch: string = "";
   filterPlatesDataSet: Array<{ plate: string }>;
   filteredLength = 0;
@@ -60,7 +60,6 @@ export class TemplateTwoComponent implements OnInit, AfterViewChecked {
     private vehicleService: VehicleService
   ) {
     this.fg = this.fb.group({});
-    this.selectedPlates = ["6063 WGH", "7101 SYR", "2974 UKH"];
     this.filterPlatesDataSet = [
       {
         plate: "6063 WGH",
@@ -100,7 +99,6 @@ export class TemplateTwoComponent implements OnInit, AfterViewChecked {
     this.currentTemplate = TemplatesNew.filter(
       (currentT) => currentT.name === this.name
     )[0];
-    console.log("Current Template: ", this.currentTemplate);
     this.storageData = this.currentTemplate.id
       ? this.getLocalStorage(this.currentTemplate.id)
       : null;
@@ -119,6 +117,7 @@ export class TemplateTwoComponent implements OnInit, AfterViewChecked {
     if (!this.view) {
       this.vehicleService.list(this.id).subscribe((data: Vehicle[]) => {
         this.filterPlatesDataSet = data.map((currentVehicle) => ({
+          id: currentVehicle.id,
           plate: currentVehicle.license_plate || "",
         }));
       });
@@ -173,7 +172,7 @@ export class TemplateTwoComponent implements OnInit, AfterViewChecked {
     }
     this.tSubmit.emit({
       ...this.fg.value,
-      vehicles: [...this.selectedPlates],
+      vehicles: [...this.selectedPlates.map((v: Vehicle) => v.id)],
     });
     this.submitted = false;
   }
@@ -186,9 +185,10 @@ export class TemplateTwoComponent implements OnInit, AfterViewChecked {
     this.plateToSearch = "";
   }
 
-  select(plate: string) {
-    if (!this.selectedPlates.includes(plate)) {
-      this.selectedPlates.unshift(plate);
+  select(vehicle: Vehicle) {
+    console.log(vehicle)
+    if (!this.selectedPlates.includes(vehicle)) {
+      this.selectedPlates.unshift(vehicle);
     }
   }
 

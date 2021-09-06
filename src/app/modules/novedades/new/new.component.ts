@@ -31,12 +31,12 @@ export class NewComponent implements OnInit {
   ngOnInit() {
     this.columns = [
       {
-        dataAttribute: "message",
-        attribute: "Mensaje",
+        header: "Mensaje",
+        attribute: "message",
       },
       {
-        dataAttribute: "employee",
-        attribute: "Empleado",
+        attribute: "employee",
+        header: "Empleado",
       },
       
       {

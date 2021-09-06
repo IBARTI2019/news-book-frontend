@@ -4,14 +4,17 @@ import { environment } from "../../environments/environment";
 import {
   SigninData,
   User,
-  APIMessage,
   VerifyCodeResponse,
 } from "../interfaces";
 import { throwError, Observable, BehaviorSubject } from "rxjs";
 import { catchError, map } from "rxjs/operators";
-import * as jwt_decode from "jwt-decode";
 import { API } from "app/utils/api";
 import { Router } from "@angular/router";
+import { getLocalStorage, setLocalStorage, deleteLocalStorageItem } from '../utils/localStorage'
+import { ID_CRYPT, PERMISSIONS } from 'app/constants';
+import { encryptUsingAES256 } from 'app/utils/crypt';
+import { getPermissions } from 'app/utils/permissions';
+import { UserService } from './user.service';
 
 @Injectable({
   providedIn: "root",
@@ -21,7 +24,7 @@ export class SessionService extends API<User> {
   private apiURL = `${environment.API}`;
   private $user!: BehaviorSubject<User>;
 
-  constructor(protected http: HttpClient, private router: Router) {
+  constructor(protected http: HttpClient, private router: Router, private userService: UserService) {
     super(http);
   }
 
@@ -29,21 +32,8 @@ export class SessionService extends API<User> {
     return this.$user;
   }
 
-  private getLocalStorage(fieldName: string) {
-    const data = localStorage.getItem(fieldName);
-    return data ? JSON.parse(data) : null;
-  }
-
-  private setLocalStorage(fieldName: string, value: any) {
-    localStorage.setItem(fieldName, JSON.stringify(value));
-  }
-
-  private deleteStorageItem(fieldName: string) {
-    localStorage.removeItem(fieldName);
-  }
-
   get isLoggedIn() {
-    return this.getLocalStorage(API.ISLOGGEDIN);
+    return getLocalStorage(API.ISLOGGEDIN);
   }
 
   /**
@@ -82,13 +72,14 @@ export class SessionService extends API<User> {
       })
       .pipe(
         map((res: VerifyCodeResponse) => {
-          this.setLocalStorage(API.ISLOGGEDIN, true);
-          this.setLocalStorage(API.TOKEN, res.token);
-          this.actual().subscribe(async (user: User) => {
-            if (user) {
-              this.setLocalStorage(API.USUARIO, user.user_id);
-            }
-          });
+          setLocalStorage(ID_CRYPT, encryptUsingAES256(res.jwt_id || ""))
+          setLocalStorage(API.TOKEN, res.token)
+          setLocalStorage(PERMISSIONS, encryptUsingAES256(JSON.stringify(getPermissions())))
+          this.userService.user$.next({
+            exist: true,
+            type: 1,
+            oesvica_user: true,
+          })
           return res;
         }),
         catchError((error: HttpErrorResponse) => this.handleError(error))
@@ -96,60 +87,22 @@ export class SessionService extends API<User> {
   }
 
   public logout() {
-    /*     this.$user.subscribe((user: User) => {
-          this.http
-            .post(`${this.URL_API}/users/validate/logout/`, {
-              _id: user.id,
-            })
-            .subscribe((data) => { */
-    this.deleteStorageItem(API.TOKEN);
-    this.deleteStorageItem(API.USUARIO);
-    this.deleteStorageItem(API.MENU_ACTUAL);
-    this.deleteStorageItem(API.ISLOGGEDIN);
-    this.deleteStorageItem(API.REFRESH_TOKEN);
-    this.deleteStorageItem(API.JWT);
-    this.$user = new BehaviorSubject<User>({
-      name: "",
-      last_name: "",
-      email: "",
-      user_id: "",
-    });
-    this.router.navigateByUrl("/");
-    /*
-   });
-}); */
-  }
-
-  public actual(): BehaviorSubject<User> {
-    if (this.$user) {
-      return this.$user;
-    }
-    let token = this.getLocalStorage(API.TOKEN);
-    if (token) {
-      let decode: any = jwt_decode(String(token));
-      this.$user = new BehaviorSubject<User>(decode);
-      return this.$user;
-    }
-    return new BehaviorSubject<User>({
-      name: "",
-      last_name: "",
-      email: "",
-      user_id: "",
-    });
+    deleteLocalStorageItem(ID_CRYPT);
+    this.router.navigateByUrl("/sign-in");
   }
 
   /**
    * isSuperUser
    */
   public async isSuperUser(): Promise<boolean> {
-    // const userId = this.getLocalStorage(API.USUARIO)
+    // const userId = getLocalStorage(API.USUARIO)
     // const user = await this.http.get<User>(`${this.apiURL}/security/user/${userId}/`).toPromise();
     // return (user.is_superuser || false);
     return true;
   }
 
   public async isStaff(): Promise<boolean> {
-    // const userId = this.getLocalStorage(API.USUARIO)
+    // const userId = getLocalStorage(API.USUARIO)
     // const user = await this.http.get<User>(`${this.apiURL}/security/user/${userId}/`).toPromise();
     // return (user.is_staff || false);
     return false;

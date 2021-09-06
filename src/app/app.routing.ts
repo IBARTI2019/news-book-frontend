@@ -3,28 +3,32 @@ import { Routes } from "@angular/router";
 import { FullComponent } from "./layouts/full/full.component";
 import { LoginComponent } from "./seguridad/login/login.component";
 import { NotFoundComponent } from "./shared/not-found/not-found.component";
-import { PermisoGuard } from "./utils/permiso.guard";
-import { ADMIN, VIEW } from "./constants";
+import { AuthGuard } from "./utils/permiso.guard";
+import { ADMIN, AUDITOR, SUPERVISOR, USER } from "./constants";
+import { NgxPermissionsGuard } from 'ngx-permissions';
 
 export const AppRoutes: Routes = [
   {
     path: "",
-    canActivateChild: [PermisoGuard],
+    canActivate: [AuthGuard],
     runGuardsAndResolvers: "always",
     children: [
       {
         path: "",
-        component: LoginComponent,
-        data: { skipPermission: true },
-      },
-      {
-        path: "",
         component: FullComponent,
-        data: { skipPermission: true, giveAccess: [ADMIN, VIEW] },
-        canActivateChild: [PermisoGuard],
+        data: {
+          permissions: {
+            only: [ADMIN]
+          }
+        },
         children: [
           {
             path: "",
+            data: {
+              permissions: {
+                only: [ADMIN],
+              }
+            },
             loadChildren: () =>
               import("app/dashboard/dashboard.module").then(
                 (m) => m.DashboardModule
@@ -32,6 +36,12 @@ export const AppRoutes: Routes = [
           },
           {
             path: "materials",
+            canLoad: [NgxPermissionsGuard],
+            data: {
+              permissions: {
+                only: [ADMIN, USER, SUPERVISOR],
+              }
+            },
             loadChildren: () =>
               import("app/modules/maestro/materials/materials.module").then(
                 (m) => m.MaterialsModule
@@ -39,6 +49,12 @@ export const AppRoutes: Routes = [
           },
           {
             path: "vehicle",
+            canLoad: [NgxPermissionsGuard],
+            data: {
+              permissions: {
+                only: [ADMIN, USER, SUPERVISOR],
+              }
+            },
             loadChildren: () =>
               import("app/modules/maestro/vehicle/vehicle.module").then(
                 (m) => m.VehicleModule
@@ -46,6 +62,12 @@ export const AppRoutes: Routes = [
           },
           {
             path: "new",
+            canLoad: [NgxPermissionsGuard],
+            data: {
+              permissions: {
+                only: [ADMIN, AUDITOR, USER, SUPERVISOR],
+              }
+            },
             loadChildren: () =>
               import("app/modules/novedades/new/new.module").then(
                 (m) => m.NewModule
@@ -53,6 +75,12 @@ export const AppRoutes: Routes = [
           },
           {
             path: "warehouse",
+            canLoad: [NgxPermissionsGuard],
+            data: {
+              permissions: {
+                only: [ADMIN, SUPERVISOR],
+              }
+            },
             loadChildren: () =>
               import("app/modules/maestro/warehouse/warehouse.module").then(
                 (m) => m.WarehouseModule
@@ -60,6 +88,12 @@ export const AppRoutes: Routes = [
           },
           {
             path: "type-people",
+            canLoad: [NgxPermissionsGuard],
+            data: {
+              permissions: {
+                only: [ADMIN, SUPERVISOR],
+              }
+            },
             loadChildren: () =>
               import("app/modules/maestro/type-people/type-people.module").then(
                 (m) => m.TypePeopleModule
@@ -67,6 +101,12 @@ export const AppRoutes: Routes = [
           },
           {
             path: "type-new",
+            canLoad: [NgxPermissionsGuard],
+            data: {
+              permissions: {
+                only: [ADMIN],
+              }
+            },
             loadChildren: () =>
               import("app/modules/novedades/type-new/type-new.module").then(
                 (m) => m.TypeNewModule
@@ -74,6 +114,12 @@ export const AppRoutes: Routes = [
           },
           {
             path: "person",
+            canLoad: [NgxPermissionsGuard],
+            data: {
+              permissions: {
+                only: [ADMIN, USER, SUPERVISOR],
+              }
+            },
             loadChildren: () =>
               import("app/modules/maestro/person/person.module").then(
                 (m) => m.PersonModule
@@ -81,6 +127,12 @@ export const AppRoutes: Routes = [
           },
           {
             path: "listemail",
+            canLoad: [NgxPermissionsGuard],
+            data: {
+              permissions: {
+                only: [ADMIN],
+              }
+            },
             loadChildren: () =>
               import("app/listemail/maestro.module").then(
                 (m) => m.MaestroModule
@@ -88,6 +140,12 @@ export const AppRoutes: Routes = [
           },
           {
             path: "listaadress",
+            canLoad: [NgxPermissionsGuard],
+            data: {
+              permissions: {
+                only: [ADMIN],
+              }
+            },
             loadChildren: () =>
               import("app/listaadress/maestro.module").then(
                 (m) => m.MaestroModule
@@ -95,12 +153,24 @@ export const AppRoutes: Routes = [
           },
           {
             path: "schedule",
+            canLoad: [NgxPermissionsGuard],
+            data: {
+              permissions: {
+                only: [ADMIN],
+              }
+            },
             loadChildren: () =>
               import("app/modules/maestro/schedule/schedule.module").then(
                 (m) => m.ScheduleModule
               ),
           }, {
             path: 'security',
+            canLoad: [NgxPermissionsGuard],
+            data: {
+              permissions: {
+                only: [ADMIN],
+              }
+            },
             loadChildren: () =>
               import("app/modules/security/security.module").then(
                 (m) => m.SecurityModule
@@ -108,6 +178,12 @@ export const AppRoutes: Routes = [
           }
           , {
             path: 'notification',
+            canLoad: [NgxPermissionsGuard],
+            data: {
+              permissions: {
+                only: [ADMIN],
+              }
+            },
             loadChildren: () =>
               import("app/modules/setting/notification/notification.module").then(
                 (m) => m.NotificationModule
@@ -116,6 +192,10 @@ export const AppRoutes: Routes = [
         ],
       },
     ],
+  },
+  {
+    path: "sign-in",
+    component: LoginComponent,
   },
   {
     path: "**",

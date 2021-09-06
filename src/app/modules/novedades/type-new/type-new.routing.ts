@@ -1,5 +1,7 @@
 import { _MatTabLinkBase } from "@angular/material/tabs";
 import { Routes } from "@angular/router";
+import { ADMIN } from 'app/constants';
+import { NgxPermissionsGuard } from 'ngx-permissions';
 import { CreateAndEditTypeNewComponent } from "./create-and-edit-type-new/create-and-edit-type-new.component";
 import { TypeNewComponent } from "./type-new.component";
 
@@ -9,17 +11,26 @@ export const TypeNewsRouting: Routes = [
     children: [
       {
         path: "",
+        canActivate: [NgxPermissionsGuard],
         data: {
+          permissions: {
+            only: [ADMIN],
+            redirectTo: "/",
+          },
           breadcrumb: {
             label: "Tipos de Novedades",
           },
-          skipPermission: true,
         },
         component: TypeNewComponent,
       },
       {
         path: "crear",
+        canActivate: [NgxPermissionsGuard],
         data: {
+          permissions: {
+            only: [ADMIN],
+            redirectTo: "/",
+          },
           breadcrumbAnt: {
             label: "Tipos de Novedades",
             url: "type-new",
@@ -28,13 +39,17 @@ export const TypeNewsRouting: Routes = [
           breadcrumb: {
             label: "Crear Tipo de Novedad",
           },
-          skipPermission: true,
         },
         component: CreateAndEditTypeNewComponent,
       },
       {
         path: ":id",
+        canActivate: [NgxPermissionsGuard],
         data: {
+          permissions: {
+            only: [ADMIN],
+            redirectTo: "/",
+          },
           breadcrumbAnt: {
             label: "Tipos de Novedades",
             url: "type-new",
@@ -43,7 +58,6 @@ export const TypeNewsRouting: Routes = [
           breadcrumb: {
             label: "Editar Tipo de Novedad",
           },
-          skipPermission: true,
         },
         component: CreateAndEditTypeNewComponent,
       },

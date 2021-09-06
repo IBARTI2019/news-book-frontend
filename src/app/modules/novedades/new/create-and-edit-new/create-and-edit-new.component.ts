@@ -42,7 +42,6 @@ export class CreateAndEditNewComponent implements OnInit {
 
   constructor(
     private newService: NewService,
-    private sessionService: SessionService,
     private typeNewService: TypeNewService,
     private toastr: ToastrService,
     private router: Router,

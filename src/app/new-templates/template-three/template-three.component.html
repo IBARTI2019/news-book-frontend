@@ -28,10 +28,10 @@
               let material of filterMaterialsDataSet | filter: materialToSearch;
               let i = index
             "
-            (click)="select(material.material)"platesRegistered
+            (click)="select(material)"platesRegistered
           >
             <mat-icon mat-list-icon>business_center</mat-icon>
-            <div mat-line>{{ material.material}}</div>
+            <div mat-line>{{ material.description}}</div>
             <mat-divider></mat-divider>
           </mat-list-option>
           <div *ngIf="!filteredLength" class="material-not-found">
@@ -45,7 +45,7 @@
           <div mat-subheader>Materiales Seleccionados</div>
           <mat-list-item *ngFor="let material of selectedMaterials; let i = index">
             <mat-icon mat-list-icon>business_center</mat-icon>
-            <div mat-line>{{ material }}</div>
+            <div mat-line>{{ material.description }}</div>
             <button mat-icon-button (click)="deselect(i)">
               <mat-icon mat-list-icon>close</mat-icon>
             </button>

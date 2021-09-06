@@ -21,20 +21,20 @@ export class UserComponent implements OnInit {
   ngOnInit(): void {
     this.columns = [
       {
-        dataAttribute: "name",
-        attribute: "Nombre",
+        attribute: "name",
+        header: "Nombre",
       },
       {
-        dataAttribute: "code",
-        attribute: "Usuario",
+        attribute: "code",
+        header: "Usuario",
       },
       {
-        dataAttribute: "email",
-        attribute: "Correo",
+        attribute: "email",
+        header: "Correo",
       },
       {
-        dataAttribute: "phone",
-        attribute: "Telefono",
+        attribute: "phone",
+        header: "Telefono",
       },
       {
         header: "Activo",

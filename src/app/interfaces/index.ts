@@ -1,4 +1,6 @@
 export interface User {
+  ficha?: string;
+  ci?: string;
   id?: string;
   is_superuser?: boolean;
   code?: string;
@@ -10,8 +12,12 @@ export interface User {
   phone?: string;
   telephone?: string;
   security_code?: string;
+  security_user?: string;
   photo?: string;
+  books?: string[];
   is_staff?: boolean;
+  type?: number;
+  oesvica_user?: boolean;
   is_active?: boolean;
   info?: string;
   user_permissions?: Number[];
@@ -42,6 +48,7 @@ export interface APIMessage {
 export interface VerifyCodeResponse {
   logIn: boolean;
   token: string;
+  jwt_id: string;
 }
 
 export interface Warehouse {
