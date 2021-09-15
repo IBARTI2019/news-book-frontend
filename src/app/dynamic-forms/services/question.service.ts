@@ -3,13 +3,16 @@ import { QuestionBase, DropdownQuestion, TextboxQuestion, StaffReceivingTheGuard
 import { of } from 'rxjs';
 import { API } from '../../utils/api';
 import { HttpClient } from '@angular/common/http';
+import { IbartiService } from 'app/services/ibarti.service';
+import { TemplateTypeNew } from '../../interfaces';
 
 @Injectable()
 export class QuestionService extends API<any> {
 
-  protected URL = `${this.URL_API}/main/material/`;
+  protected URL = `${this.URL_API}/core/template_data/`;
   constructor(
     protected http: HttpClient,
+    public ibartiService: IbartiService
   ) {
     super(http);
   }
@@ -20,16 +23,10 @@ export class QuestionService extends API<any> {
     const questions: QuestionBase<string>[] = [
 
       new StaffReceivingTheGuard({
-        key: 'StaffReceivingTheGuard',
+        key: 'staffReceivingTheGuard',
         label: 'Personal que recibe la guardia',
-        options: [
-          { key: 'solid', value: 'Solid' },
-          { key: 'great', value: 'Great' },
-          { key: 'good', value: 'Good' },
-          { key: 'unproven', value: 'Unproven' }
-        ],
         order: 3
-      }),
+      }, this.ibartiService),
 
       new DropdownQuestion({
         key: 'brave',
@@ -41,7 +38,7 @@ export class QuestionService extends API<any> {
           { key: 'unproven', value: 'Unproven' }
         ],
         order: 3
-      }),
+      }, null),
 
       new TextboxQuestion({
         key: 'firstName',
@@ -49,30 +46,49 @@ export class QuestionService extends API<any> {
         value: 'Bombasto',
         required: true,
         order: 1
-      }),
+      }, null),
 
       new TextboxQuestion({
         key: 'emailAddress',
         label: 'Email',
         type: 'email',
         order: 4
-      }),
+      }, null),
 
       new TextboxQuestion({
         key: 'emailAddress2',
         label: 'Email2',
         type: 'email',
         order: 1
-      })
+      }, null)
     ];
 
     return of(questions.sort((a, b) => a.order - b.order));
   }
 
-  /**
-   * obtener fichas planificadas para el turno ibarti
-   */
-  getPlannedTokensForTheIbartiTurn() {
-
+  generatePreviewQuentions(data: TemplateTypeNew[]) {
+    let questions: QuestionBase<string>[] = [];
+    data.forEach(d => {
+      if (d?.code === "PLANNED_STAFF") {
+        questions.push(
+          new StaffReceivingTheGuard({
+            key: d.code,
+            label: 'Personal que recibe la guardia',
+            order: d.order
+          }, this.ibartiService)
+        )
+      }
+      if (d?.code === "PLANNED_PERSONNEL_WITH_SAFETY_PROTOCOL") {
+        questions.push(
+          new StaffReceivingTheGuard({
+            key: d.code,
+            applies_security_protocol: true,
+            label: 'Personal que recibe la guardia 2',
+            order: d.order
+          }, this.ibartiService)
+        )
+      }
+    });
+    return of(questions.sort((a, b) => a.order - b.order));
   }
 }

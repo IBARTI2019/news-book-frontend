@@ -196,7 +196,7 @@
     <mat-expansion-panel [class.mat-elevation-z0]="true" dense>
       <mat-expansion-panel-header>
         <mat-icon aria-hidden="false" aria-label="News">settings</mat-icon>
-        Dynamic forms
+        Generación de Formatos
       </mat-expansion-panel-header>
       <ng-template [ngxPermissionsOnly]="['ADMIN']">
         <mat-nav-list dense>
@@ -204,6 +204,15 @@
             <span>
               <mat-icon aria-hidden="false" aria-label="Dynamic Forms">notification_important</mat-icon>
               Test
+            </span>
+            <span fxFlex></span>
+          </a>
+        </mat-nav-list>
+        <mat-nav-list dense>
+          <a mat-list-item [routerLink]="['dynamic-forms/generator']">
+            <span>
+              <mat-icon aria-hidden="false" aria-label="Dynamic Forms">notification_important</mat-icon>
+              Generador
             </span>
             <span fxFlex></span>
           </a>

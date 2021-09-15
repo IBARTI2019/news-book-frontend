@@ -1,0 +1,33 @@
+<mat-card>
+    <app-card-header modulo="Formularios Dinamicos" menu="Prueba">
+    </app-card-header>
+    <mat-card-content>
+        <h2>Datos</h2>
+        <mat-chip-list aria-label="Datos" cdkDropList #todoList="cdkDropList" [cdkDropListData]="data"
+            [cdkDropListConnectedTo]="[doneList]" class="example-list" (cdkDropListDropped)="drop($event)">
+            <mat-chip *ngFor="let d of data" cdkDrag>{{d?.code_display}}</mat-chip>
+        </mat-chip-list>
+        <div>
+            {{template | json}}
+        </div>
+
+        <div class="example-container">
+            <h2>Configuración</h2>
+
+            <div cdkDropList #doneList="cdkDropList" [cdkDropListData]="template" [cdkDropListConnectedTo]="[todoList]"
+                class="example-list" (cdkDropListDropped)="drop($event)">
+                <div *ngFor="let d of template">
+                    <mat-chip cdkDrag>{{d?.code_display}}</mat-chip>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Columnas</mat-label>
+                        <input matInput type="number" />
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+        <br>
+        <h2>Vista Previa</h2>
+        <app-dymamic-form *ngIf="!generating_preview" [questions]="questions$ | async" [withSaved]="false">
+        </app-dymamic-form>
+    </mat-card-content>
+</mat-card>

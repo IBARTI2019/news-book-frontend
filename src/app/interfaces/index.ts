@@ -224,3 +224,21 @@ export interface OptionField {
   value: string;
   description: string;
 }
+
+export interface TemplateData {
+  code: string;
+  code_display?: string;
+  columns?: number;
+}
+
+
+export interface TemplateTypeNew {
+  key: string;
+  code: string;
+  label?: string;
+  required?: boolean;
+  order?: number;
+  controlType?: string;
+  type?: string;
+  applies_security_protocol?: boolean;
+}

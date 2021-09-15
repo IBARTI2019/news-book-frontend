@@ -12,4 +12,8 @@ export class IbartiService extends API<any> {
     ) {
         super(http);
     }
+
+    public planned_staff(code_location?: string) {
+        return this.http.get(this.URL + 'planned_staff/', {});
+    }
 }

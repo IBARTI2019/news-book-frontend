@@ -13,10 +13,12 @@ import { ControlService } from '../services/control.service';
 export class DynamicFormComponent implements OnInit {
 
   @Input() questions: QuestionBase<string>[] | null = [];
+  @Input() withSaved: boolean = true;
   form!: FormGroup;
   payLoad = '';
 
-  constructor(private qcs: ControlService) { }
+  constructor(private qcs: ControlService) {
+  }
 
   ngOnInit() {
     this.form = this.qcs.toFormGroup(this.questions as QuestionBase<string>[]);

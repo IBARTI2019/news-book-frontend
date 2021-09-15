@@ -16,9 +16,12 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { ComponentesModule } from 'app/componentes/componentes.module';
+import { FormatGeneratorComponent } from './format-generator/format-generator.component';
+import { MatChipsModule } from '@angular/material/chips';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 @NgModule({
-  declarations: [DynamicFormsComponent, TestComponent, DynamicFormComponent],
+  declarations: [DynamicFormsComponent, TestComponent, DynamicFormComponent, FormatGeneratorComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(DynamicFormsRouting),
@@ -31,7 +34,9 @@ import { ComponentesModule } from 'app/componentes/componentes.module';
     MatCheckboxModule,
     MatSelectModule,
     MatInputModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatChipsModule,
+    DragDropModule
   ],
   exports: [DynamicFormComponent],
   providers: [ControlService]
