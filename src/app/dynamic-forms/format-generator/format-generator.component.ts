@@ -33,7 +33,8 @@ export class FormatGeneratorComponent implements OnInit {
         this.data.push(
           {
             "code": d[0],
-            "code_display": d[1]
+            "code_display": d[1],
+            "percentage_per_row": 100
           }
         );
       })
@@ -41,8 +42,11 @@ export class FormatGeneratorComponent implements OnInit {
     });
   }
 
+  setPercent(index: number, value: number) {
+    this.template[index].percentage_per_row = value;
+  }
 
-  drop(event: CdkDragDrop<string[]>) {
+  drop(event: CdkDragDrop<TemplateData[]>) {
     this.generating_preview = true
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);

@@ -228,12 +228,11 @@ export interface OptionField {
 export interface TemplateData {
   code: string;
   code_display?: string;
-  columns?: number;
+  percentage_per_row?: number;
 }
 
 
 export interface TemplateTypeNew {
-  key: string;
   code: string;
   label?: string;
   required?: boolean;
@@ -241,4 +240,5 @@ export interface TemplateTypeNew {
   controlType?: string;
   type?: string;
   applies_security_protocol?: boolean;
+  percentage_per_row?: number;
 }

@@ -1,11 +1,11 @@
 <div>
     <form (ngSubmit)="onSubmit()" [formGroup]="form">
-
-        <div *ngFor="let question of questions" class="form-row">
-            <app-dynamic-forms [question]="question" [form]="form"></app-dynamic-forms>
+        <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="5px">
+            <ng-container *ngFor="let question of questions" class="form-row">
+                <app-dynamic-forms [question]="question" [form]="form"></app-dynamic-forms>
+            </ng-container>
         </div>
-
-        <div class="form-row" *ngIf="withSaved">
+        <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="5px" *ngIf="withSaved">
             <button type="submit" [disabled]="!form.valid">Save</button>
         </div>
     </form>
