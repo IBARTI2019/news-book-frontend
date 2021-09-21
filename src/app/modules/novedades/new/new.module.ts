@@ -24,6 +24,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatIconModule } from '@angular/material/icon';
 import { NewTemplatesModule } from '../../../new-templates/new-templates.module'
 import { SharedModule } from 'app/shared/shared.module';
+import { DynamicFormsModule } from 'app/dynamic-forms/dynamic-forms.module';
 
 
 
@@ -52,6 +53,7 @@ import { SharedModule } from 'app/shared/shared.module';
     MatIconModule,
     NewTemplatesModule,
     SharedModule,
+    DynamicFormsModule
   ]
 })
 export class NewModule { }

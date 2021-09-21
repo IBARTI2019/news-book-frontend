@@ -93,10 +93,10 @@ export interface Person {
 
 export interface TypeNew {
   id: string;
-  description: string;
-  code: string;
-  template: string;
-  is_active: string;
+  description?: string;
+  code?: string;
+  template: TemplateTypeNew[] | any;
+  is_active?: string;
   image?: string;
   info?: string;
 }
@@ -236,9 +236,9 @@ export interface TemplateTypeNew {
   code: string;
   label?: string;
   required?: boolean;
-  order?: number;
   controlType?: string;
   type?: string;
   applies_security_protocol?: boolean;
   percentage_per_row?: number;
+  value?: string;
 }

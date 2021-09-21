@@ -14,7 +14,7 @@ export class TestComponent {
   questions$: Observable<QuestionBase<any>[]>;
 
   constructor(service: QuestionService) {
-    this.questions$ = service.getQuestions();
+    this.questions$ = service.getQuestions([], true);
   }
 
 }

@@ -4,7 +4,7 @@ import { DynamicFormsComponent } from "./dynamic-forms.component";
 import { RouterModule } from '@angular/router';
 import { DynamicFormsRouting } from "./dynamic-forms.routing";
 import { TestComponent } from './test/test.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ControlService } from './services/control.service';
 import { DynamicFormComponent } from "./dymamic-form/dymamic-form.component";
 import { MatButtonModule } from '@angular/material/button';
@@ -16,14 +16,16 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { ComponentesModule } from 'app/componentes/componentes.module';
-import { FormatGeneratorComponent } from './format-generator/format-generator.component';
+import { FormatGeneratorComponent, ParamsControlDialogComponent } from './format-generator/format-generator.component';
 import { MatChipsModule } from '@angular/material/chips';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
-  declarations: [DynamicFormsComponent, TestComponent, DynamicFormComponent, FormatGeneratorComponent],
+  declarations: [DynamicFormsComponent, TestComponent, DynamicFormComponent, FormatGeneratorComponent, ParamsControlDialogComponent],
   imports: [
     CommonModule,
+    FormsModule,
     RouterModule.forChild(DynamicFormsRouting),
     ReactiveFormsModule,
     MatCardModule,
@@ -36,9 +38,11 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     MatInputModule,
     MatTooltipModule,
     MatChipsModule,
-    DragDropModule
+    DragDropModule,
+    MatDialogModule,
   ],
-  exports: [DynamicFormComponent],
+  entryComponents: [ParamsControlDialogComponent],
+  exports: [DynamicFormComponent, DynamicFormsComponent],
   providers: [ControlService]
 })
 export class DynamicFormsModule { }

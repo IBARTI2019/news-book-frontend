@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { QuestionBase, DropdownQuestion, TextboxQuestion, StaffReceivingTheGuard } from '../classes';
+import { QuestionBase, DropdownQuestion, TextboxQuestion, StaffReceivingTheGuard, Title } from '../classes';
 import { of } from 'rxjs';
 import { API } from '../../utils/api';
 import { HttpClient } from '@angular/common/http';
@@ -18,77 +18,111 @@ export class QuestionService extends API<any> {
   }
 
   // TODO: get from a remote source of question metadata
-  getQuestions() {
+  getQuestions(template: TemplateTypeNew[], test?: boolean) {
+    let questions: QuestionBase<string>[] = [];
+    if (test) {
+      questions = [
+        new StaffReceivingTheGuard({
+          key: 'staffReceivingTheGuard',
+          label: 'Personal que recibe la guardia',
+        }, this.ibartiService),
+        new DropdownQuestion({
+          key: 'brave',
+          label: 'Bravery Rating',
+          options: [
+            { key: 'solid', value: 'Solid' },
+            { key: 'great', value: 'Great' },
+            { key: 'good', value: 'Good' },
+            { key: 'unproven', value: 'Unproven' }
+          ]
+        }, null),
 
-    const questions: QuestionBase<string>[] = [
+        new TextboxQuestion({
+          key: 'firstName',
+          label: 'First name',
+          value: 'Bombasto',
+          required: true,
+        }, null),
 
-      new StaffReceivingTheGuard({
-        key: 'staffReceivingTheGuard',
-        label: 'Personal que recibe la guardia',
-        order: 3
-      }, this.ibartiService),
+        new TextboxQuestion({
+          key: 'emailAddress',
+          label: 'Email',
+          type: 'email',
+        }, null),
 
-      new DropdownQuestion({
-        key: 'brave',
-        label: 'Bravery Rating',
-        options: [
-          { key: 'solid', value: 'Solid' },
-          { key: 'great', value: 'Great' },
-          { key: 'good', value: 'Good' },
-          { key: 'unproven', value: 'Unproven' }
-        ],
-        order: 3
-      }, null),
+        new TextboxQuestion({
+          key: 'emailAddress2',
+          label: 'Email2',
+          type: 'email',
+        }, null)
+      ];
+    } else {
+      questions = this.generateControls(template);
+    }
 
-      new TextboxQuestion({
-        key: 'firstName',
-        label: 'First name',
-        value: 'Bombasto',
-        required: true,
-        order: 1
-      }, null),
-
-      new TextboxQuestion({
-        key: 'emailAddress',
-        label: 'Email',
-        type: 'email',
-        order: 4
-      }, null),
-
-      new TextboxQuestion({
-        key: 'emailAddress2',
-        label: 'Email2',
-        type: 'email',
-        order: 1
-      }, null)
-    ];
-
-    return of(questions.sort((a, b) => a.order - b.order));
+    return of(questions);
   }
 
   generatePreviewQuentions(data: TemplateTypeNew[]) {
+    debugger;
+    const questions = this.generateControls(data);
+    return of(questions);
+  }
+
+  generateControls(template: TemplateTypeNew[]): QuestionBase<string>[] {
+    debugger;
     let questions: QuestionBase<string>[] = [];
-    data.forEach(d => {
-      if (d?.code === "PLANNED_STAFF") {
-        questions.push(
-          new StaffReceivingTheGuard({
-            key: d.code,
-            label: 'Personal que recibe la guardia',
-            order: d.order
-          }, this.ibartiService)
-        )
-      }
-      if (d?.code === "PLANNED_PERSONNEL_WITH_SAFETY_PROTOCOL") {
-        questions.push(
-          new StaffReceivingTheGuard({
-            key: d.code,
-            applies_security_protocol: true,
-            label: 'Personal que recibe la guardia 2',
-            order: d.order
-          }, this.ibartiService)
-        )
+    template.forEach(d => {
+      switch (d.code) {
+        case 'TITLE':
+          questions.push(
+            new Title({
+              key: d.code,
+              code: d.code,
+              label: 'Información',
+              value: d?.value,
+              required: false,
+              form_field: false
+            }, null),
+          )
+          break;
+        case 'FREE_TEXT':
+          questions.push(
+            new TextboxQuestion({
+              key: d.code,
+              code: d.code,
+              label: 'Información',
+              value: '',
+              required: false
+            }, null),
+          )
+          break;
+        case 'PLANNED_STAFF':
+          questions.push(
+            new StaffReceivingTheGuard({
+              key: d.code,
+              code: d.code,
+              label: 'Personal que recibe la guardia',
+              required: true,
+            }, this.ibartiService)
+          )
+          break;
+        case 'PLANNED_PERSONNEL_WITH_SAFETY_PROTOCOL':
+          questions.push(
+            new StaffReceivingTheGuard({
+              key: d.code,
+              code: d.code,
+              applies_security_protocol: true,
+              label: 'Personal que recibe la guardia 2',
+              required: true
+            }, this.ibartiService)
+          )
+          break;
+        default:
+          break;
       }
     });
-    return of(questions.sort((a, b) => a.order - b.order));
+    debugger;
+    return questions;
   }
 }

@@ -10,6 +10,7 @@ export class QuestionBase<T> {
     options: { key: string, value: string }[];
     fichas?: { cod_ficha: string, identification_card?: string, name_and_surname?: string }[];
     applies_security_protocol?: boolean;
+    form_field: boolean | undefined = true;
 
     constructor(options: {
         value?: T;
@@ -23,6 +24,7 @@ export class QuestionBase<T> {
         options?: { key: string, value: string }[];
         fichas?: { cod_ficha: string, identification_card?: string, name_and_surname?: string }[];
         applies_security_protocol?: boolean;
+        form_field?: boolean;
     } = {}, public service: any) {
         this.value = options.value;
         this.key = options.key || '';
@@ -32,6 +34,7 @@ export class QuestionBase<T> {
         this.order = options.order === undefined ? 1 : options.order;
         this.controlType = options.controlType || '';
         this.type = options.type || '';
+        this.form_field = options.form_field || true;
         this.options = options.options || [];
         if (options.key === 'staffReceivingTheGuard') {
             this.service.planned_staff().subscribe((data: any) => {
@@ -43,12 +46,16 @@ export class QuestionBase<T> {
     }
 }
 
+export class Title extends QuestionBase<string> {
+    controlType = 'title'
+}
+
 export class DropdownQuestion extends QuestionBase<string> {
-    controlType = 'dropdown';
+    controlType = 'dropdown'
 }
 
 export class TextboxQuestion extends QuestionBase<string> {
-    controlType = 'textbox';
+    controlType = 'textbox'
 }
 
 export class StaffReceivingTheGuard extends QuestionBase<string> {

@@ -1,11 +1,47 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { TypeNewService } from '../../services/type-new.service';
 import { Observable } from 'rxjs';
-import { TemplateData, TemplateTypeNew } from '../../interfaces';
+import { TemplateData, TemplateTypeNew, TypeNew } from '../../interfaces';
 import { QuestionBase } from '../classes';
 import { QuestionService } from '../services/question.service';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { ControlService } from '../services/control.service';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { HttpErrorResponse } from '@angular/common/http';
+import { ToastrService } from 'ngx-toastr';
+
+@Component({
+  selector: 'app-dialog-overview-example-dialog',
+  template: `<h1 mat-dialog-title>{{data.element?.code_display}}</h1>
+<div mat-dialog-content>
+    <mat-form-field>
+      <mat-label>Porcentaje en fila</mat-label>
+      <input matInput tabindex="1" [(ngModel)]="data.element.percentage_per_row">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Valor por defecto</mat-label>
+      <input matInput tabindex="1" [(ngModel)]="data.element.value">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Etiqueta</mat-label>
+      <input matInput tabindex="1" [(ngModel)]="data.element.label">
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button [mat-dialog-close]="data" tabindex="2">Ok</button>
+  <button mat-button (click)="onNoClick()" tabindex="-1">Cancelar</button>
+</div>`
+})
+export class ParamsControlDialogComponent {
+  constructor(
+    public dialogRef: MatDialogRef<ParamsControlDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) { }
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+}
 
 @Component({
   selector: 'app-format-generator',
@@ -15,19 +51,26 @@ import { ControlService } from '../services/control.service';
 })
 export class FormatGeneratorComponent implements OnInit {
   data: TemplateData[] = [];
-  template: TemplateTypeNew[] = [];
   questions$: Observable<QuestionBase<any>[]>;
   generating_preview: boolean = false;
-  constructor(private typeNewService: TypeNewService, private service: QuestionService) {
-    this.questions$ = this.service.generatePreviewQuentions(this.template);
-  }
+  typeNews: TypeNew[] = [];
+  typeNew: TypeNew = { id: "", template: [] };
 
-  generatePreview() {
-    this.questions$ = this.service.generatePreviewQuentions(this.template);
-    this.generating_preview = false
+  constructor(private typeNewService: TypeNewService, private service: QuestionService, public dialog: MatDialog, private toastr: ToastrService) {
+    this.questions$ = this.service.generatePreviewQuentions(this.typeNew.template);
   }
 
   ngOnInit(): void {
+    this.typeNewService.list().subscribe(
+      (typeNewsResponse: TypeNew[]) => {
+        this.typeNews = [...typeNewsResponse];
+      },
+      (error: HttpErrorResponse) => {
+        this.toastr.error(
+          error.error.message || "Error obteniendo los Tipos de Novedades."
+        );
+      }
+    );
     this.typeNewService.getCodesTemplate().subscribe((data: any) => {
       data.forEach((d: string[]) => {
         this.data.push(
@@ -38,12 +81,25 @@ export class FormatGeneratorComponent implements OnInit {
           }
         );
       })
-
     });
   }
 
-  setPercent(index: number, value: number) {
-    this.template[index].percentage_per_row = value;
+  openDialog(element: TemplateTypeNew, index: number): void {
+    const dialogRef = this.dialog.open(ParamsControlDialogComponent, {
+      width: '300px',
+      data: { element, index: index }
+    });
+
+    dialogRef.afterClosed().subscribe((result: { element: TemplateTypeNew, index: number }) => {
+      if (result) {
+        this.typeNew.template[index] = result.element;
+      }
+    });
+  }
+
+  generatePreview() {
+    this.questions$ = this.service.generatePreviewQuentions(this.typeNew.template);
+    this.generating_preview = false
   }
 
   drop(event: CdkDragDrop<TemplateData[]>) {
@@ -58,5 +114,23 @@ export class FormatGeneratorComponent implements OnInit {
     }
     this.generatePreview();
   }
+
+  async selectionTypeChange(event: any) {
+    this.typeNew = await this.typeNewService.get(event.value).toPromise();
+    if (typeof this.typeNew.template !== 'object') {
+      this.typeNew.template = []
+    }
+    this.generatePreview();
+  }
+
+  saveTemplate() {
+    this.typeNewService.update_patch(this.typeNew.id, { template: this.typeNew.template }).subscribe(data => {
+      this.toastr.success("Plantilla guardada exitosamente");
+    }, (error: HttpErrorResponse) => {
+      this.toastr.error(
+        error.error.message || "Error guardando la plantilla."
+      );
+    });
+  };
 
 }
