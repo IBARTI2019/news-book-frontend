@@ -53,7 +53,9 @@ export class CreateAndEditNewComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private serviceQuestion: QuestionService,
-  ) { }
+  ) {
+    //  this.controls$ = serviceQuestion.getQuestions([], true);
+  }
 
   ngOnInit(): void {
     this.idTN = this.route.snapshot.params.idTN;
@@ -97,7 +99,6 @@ export class CreateAndEditNewComponent implements OnInit {
 
   generateControls(template: TemplateTypeNew[]) {
     this.generating = true
-    debugger;
     this.controls$ = this.serviceQuestion.generatePreviewQuentions(template);
     this.generating = false
   }

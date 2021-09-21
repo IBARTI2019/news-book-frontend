@@ -1,10 +1,8 @@
 <div [formGroup]="form" fxLayout="row" fxLayout.xs="column" fxLayoutGap="5px">
     <div *ngIf="!question.form_field" [ngSwitch]="question.controlType">
-        NOT-FORM - {{question?.form_field}}
         <h3 *ngSwitchCase="'title'">{{question.value}}</h3>
     </div>
     <mat-form-field appearance="fill" [ngSwitch]="question.controlType" *ngIf="question.form_field">
-        FORM - {{question?.form_field}}
         <mat-label [attr.for]="question.key">{{question.label}}</mat-label>
         <input matInput *ngSwitchCase="'textbox'" [formControlName]="question.key" [id]="question.key"
             [type]="question.type" />

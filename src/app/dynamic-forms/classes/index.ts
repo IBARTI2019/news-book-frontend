@@ -36,7 +36,7 @@ export class QuestionBase<T> {
         this.type = options.type || '';
         this.form_field = options.form_field || true;
         this.options = options.options || [];
-        if (options.key === 'staffReceivingTheGuard') {
+        if (options.key === 'staffReceivingTheGuard' || options.key === 'PLANNED_STAFF' || options.key === 'PLANNED_PERSONNEL_WITH_SAFETY_PROTOCOL') {
             this.service.planned_staff().subscribe((data: any) => {
                 this.fichas = data;
             })

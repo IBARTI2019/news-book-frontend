@@ -1,8 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
-import { QuestionBase } from '../classes';
-import { ControlService } from '../services/control.service';
+import { QuestionBase } from '../../dynamic-forms/classes'
+import { ControlService } from '../../dynamic-forms/services/control.service';
 
 @Component({
   selector: 'app-dymamic-form',

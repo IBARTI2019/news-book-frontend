@@ -64,13 +64,11 @@ export class QuestionService extends API<any> {
   }
 
   generatePreviewQuentions(data: TemplateTypeNew[]) {
-    debugger;
     const questions = this.generateControls(data);
     return of(questions);
   }
 
   generateControls(template: TemplateTypeNew[]): QuestionBase<string>[] {
-    debugger;
     let questions: QuestionBase<string>[] = [];
     template.forEach(d => {
       switch (d.code) {
@@ -79,7 +77,7 @@ export class QuestionService extends API<any> {
             new Title({
               key: d.code,
               code: d.code,
-              label: 'Información',
+              label: d.label || 'Información',
               value: d?.value,
               required: false,
               form_field: false
@@ -91,7 +89,7 @@ export class QuestionService extends API<any> {
             new TextboxQuestion({
               key: d.code,
               code: d.code,
-              label: 'Información',
+              label: d.label || 'Información',
               value: '',
               required: false
             }, null),
@@ -102,7 +100,7 @@ export class QuestionService extends API<any> {
             new StaffReceivingTheGuard({
               key: d.code,
               code: d.code,
-              label: 'Personal que recibe la guardia',
+              label: d.label || 'Personal que recibe la guardia',
               required: true,
             }, this.ibartiService)
           )
@@ -113,7 +111,7 @@ export class QuestionService extends API<any> {
               key: d.code,
               code: d.code,
               applies_security_protocol: true,
-              label: 'Personal que recibe la guardia 2',
+              label: d.label || 'Personal que recibe la guardia 2',
               required: true
             }, this.ibartiService)
           )
@@ -122,7 +120,6 @@ export class QuestionService extends API<any> {
           break;
       }
     });
-    debugger;
     return questions;
   }
 }

@@ -1,41 +1,24 @@
 <mat-card>
-  <app-card-header modulo="Materiales" menu="{{ update ? 'Actualizar Material' : 'Crear Material' }}"> </app-card-header>
+  <app-card-header modulo="Materiales" menu="{{ update ? 'Actualizar Material' : 'Crear Material' }}">
+  </app-card-header>
   <mat-card-content>
-    <form
-      [formGroup]="fg"
-      fxLayout="column"
-      fxLayoutGap="5px"
-      (ngSubmit)="onSubmit()"
-      #formT="ngForm"
-    >
+    <form [formGroup]="fg" fxLayout="column" fxLayoutGap="5px" (ngSubmit)="onSubmit()" #formT="ngForm">
       <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="5px">
         <mat-form-field>
           <mat-label>Codigo Material</mat-label>
-          <input
-            matInput
-            placeholder="Codigo del material"
-            formControlName="code"
-          />
+          <input matInput placeholder="Codigo del material" formControlName="code" />
         </mat-form-field>
         <mat-form-field>
           <mat-label>Serial Material</mat-label>
-          <input
-            matInput
-            placeholder="Serial del material"
-            formControlName="serial"
-          />
+          <input matInput placeholder="Serial del material" formControlName="serial" />
         </mat-form-field>
         <mat-form-field>
           <mat-label>Descripcion</mat-label>
-          <input
-            matInput
-            placeholder="Descripcion"
-            formControlName="description"
-          />
+          <input matInput placeholder="Descripcion" formControlName="description" />
         </mat-form-field>
       </div>
 
-      <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="end">
+      <div class="panel-container" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="end">
         <button mat-raised-button color="primary" type="submit">{{ update ? 'Actualizar' : 'Crear' }}</button>
       </div>
     </form>

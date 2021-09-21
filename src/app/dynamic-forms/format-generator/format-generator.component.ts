@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { TemplateData, TemplateTypeNew, TypeNew } from '../../interfaces';
 import { QuestionBase } from '../classes';
 import { QuestionService } from '../services/question.service';
-import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { CdkDragDrop, moveItemInArray, copyArrayItem, transferArrayItem } from '@angular/cdk/drag-drop';
 import { ControlService } from '../services/control.service';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -93,8 +93,13 @@ export class FormatGeneratorComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result: { element: TemplateTypeNew, index: number }) => {
       if (result) {
         this.typeNew.template[index] = result.element;
+        this.generatePreview();
       }
     });
+  }
+
+  deleteControl(element: TemplateTypeNew, index: number) {
+    this.typeNew.template.splice(index, 1);
   }
 
   generatePreview() {
@@ -107,7 +112,7 @@ export class FormatGeneratorComponent implements OnInit {
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
-      transferArrayItem(event.previousContainer.data,
+      copyArrayItem(event.previousContainer.data,
         event.container.data,
         event.previousIndex,
         event.currentIndex);

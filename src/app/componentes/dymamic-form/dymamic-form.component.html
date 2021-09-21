@@ -5,8 +5,9 @@
                 <app-dynamic-forms [question]="question" [form]="form"></app-dynamic-forms>
             </ng-container>
         </div>
-        <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="5px" *ngIf="withSaved">
-            <button type="submit" [disabled]="!form.valid">Save</button>
+
+        <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="end" fxLayoutGap="5px" *ngIf="withSaved">
+            <button mat-raised-button color="primary" type="submit" [disabled]="!form.valid">Guardar</button>
         </div>
     </form>
 

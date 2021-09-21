@@ -4,9 +4,9 @@
       <app-card-header modulo="Novedades" menu="Crear Novedad">
       </app-card-header>
       <mat-card-content>
-        <!--        <app-dymamic-form [questions]="controls$ | async">
-        </app-dymamic-form> -->
-        <app-template-one *ngIf="showOne" (tSubmit)="onSubmit($event)" [method]="update ? 'update' : 'create'"
+        <app-dymamic-form *ngIf="!generating" [questions]="controls$ | async">
+        </app-dymamic-form>
+        <!--         <app-template-one *ngIf="showOne" (tSubmit)="onSubmit($event)" [method]="update ? 'update' : 'create'"
           [name]="template.name" [operation]="template.operation"></app-template-one>
         <app-template-two *ngIf="showTwo" (tSubmit)="onSubmit($event)" [method]="update ? 'update' : 'create'"
           [name]="template.name" [operation]="template.operation"></app-template-two>
@@ -22,7 +22,7 @@
           [name]="template.name" [operation]="template.operation"></app-template-seven>
         <app-template-eight *ngIf="showEight" (tSubmit)="onSubmit($event)" [method]="update ? 'update' : 'create'"
           [name]="template.name" [operation]="template.operation"></app-template-eight>
-        <app-not-found *ngIf="showNotFound"></app-not-found>
+        <app-not-found *ngIf="showNotFound"></app-not-found> -->
       </mat-card-content>
     </mat-card>
   </div>

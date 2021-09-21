@@ -23,19 +23,21 @@ export class NewContainerComponent implements OnInit {
 
   url = "";
 
-  constructor(private router: Router, private dialog: MatDialog) {}
+  constructor(private router: Router, private dialog: MatDialog) { }
 
   ngOnInit(): void {
-    const templateNew = TemplatesNew.filter(
-      (currentTemplate) => currentTemplate.name === this.template
-    );
-    if (templateNew.length) {
-      this.url = this.idTN
-    }
+    /*     const templateNew = TemplatesNew.filter(
+          (currentTemplate) => currentTemplate.name === this.template
+        );
+        if (templateNew.length) { 
+    
+        }
+        */
+    this.url = this.idTN
   }
 
   openDialog(): void {
-    if (this.isStaff) return
+    // if (this.isStaff) return
     const dialogRef = this.dialog.open(ValidateOesvicaTokenComponent, {
       width: "400px",
       data: "",
@@ -48,15 +50,15 @@ export class NewContainerComponent implements OnInit {
   }
 
   navigate() {
-    if (this.isStaff) return
-    if (this.allowNavigate && this.url) {
-      // console.log(this.link)
-      // console.log("Router: ", this.router.routerState.snapshot);
-      this.router.navigate([
-        this.router.routerState.snapshot.url,
-        this.prevUrl,
-        this.url,
-      ]);
-    }
+    //if (this.isStaff) return
+    //if (this.allowNavigate && this.url) {
+    // console.log(this.link)
+    // console.log("Router: ", this.router.routerState.snapshot);
+    this.router.navigate([
+      this.router.routerState.snapshot.url,
+      this.prevUrl,
+      this.url,
+    ]);
+    //}
   }
 }

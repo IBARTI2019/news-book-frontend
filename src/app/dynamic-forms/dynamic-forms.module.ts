@@ -1,12 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { DynamicFormsComponent } from "./dynamic-forms.component";
 import { RouterModule } from '@angular/router';
 import { DynamicFormsRouting } from "./dynamic-forms.routing";
 import { TestComponent } from './test/test.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ControlService } from './services/control.service';
-import { DynamicFormComponent } from "./dymamic-form/dymamic-form.component";
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -22,7 +20,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
-  declarations: [DynamicFormsComponent, TestComponent, DynamicFormComponent, FormatGeneratorComponent, ParamsControlDialogComponent],
+  declarations: [TestComponent, FormatGeneratorComponent, ParamsControlDialogComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -42,7 +40,6 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatDialogModule,
   ],
   entryComponents: [ParamsControlDialogComponent],
-  exports: [DynamicFormComponent, DynamicFormsComponent],
   providers: [ControlService]
 })
 export class DynamicFormsModule { }

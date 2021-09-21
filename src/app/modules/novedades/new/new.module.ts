@@ -24,8 +24,9 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatIconModule } from '@angular/material/icon';
 import { NewTemplatesModule } from '../../../new-templates/new-templates.module'
 import { SharedModule } from 'app/shared/shared.module';
-import { DynamicFormsModule } from 'app/dynamic-forms/dynamic-forms.module';
-
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 
 @NgModule({
@@ -53,7 +54,9 @@ import { DynamicFormsModule } from 'app/dynamic-forms/dynamic-forms.module';
     MatIconModule,
     NewTemplatesModule,
     SharedModule,
-    DynamicFormsModule
+    MatTooltipModule,
+    MatChipsModule,
+    DragDropModule
   ]
 })
 export class NewModule { }
