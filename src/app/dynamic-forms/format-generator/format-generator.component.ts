@@ -27,6 +27,7 @@ import { ToastrService } from 'ngx-toastr';
       <input matInput tabindex="1" [(ngModel)]="data.element.label">
   </mat-form-field>
 </div>
+{{data | json}}
 <div mat-dialog-actions>
   <button mat-button [mat-dialog-close]="data" tabindex="2">Ok</button>
   <button mat-button (click)="onNoClick()" tabindex="-1">Cancelar</button>
@@ -50,7 +51,7 @@ export class ParamsControlDialogComponent {
   providers: [QuestionService, ControlService]
 })
 export class FormatGeneratorComponent implements OnInit {
-  data: TemplateData[] = [];
+  datos: TemplateData[] = [];
   questions$: Observable<QuestionBase<any>[]>;
   generating_preview: boolean = false;
   typeNews: TypeNew[] = [];
@@ -72,8 +73,8 @@ export class FormatGeneratorComponent implements OnInit {
       }
     );
     this.typeNewService.getCodesTemplate().subscribe((data: any) => {
-      data.forEach((d: string[]) => {
-        this.data.push(
+      data.forEach((d: string[], index: number) => {
+        this.datos.push(
           {
             "code": d[0],
             "code_display": d[1],
@@ -92,7 +93,8 @@ export class FormatGeneratorComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result: { element: TemplateTypeNew, index: number }) => {
       if (result) {
-        this.typeNew.template[index] = result.element;
+        debugger;
+        this.typeNew.template[index] = { ...result.element };
         this.generatePreview();
       }
     });
@@ -112,10 +114,8 @@ export class FormatGeneratorComponent implements OnInit {
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
-      copyArrayItem(event.previousContainer.data,
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex);
+      copyArrayItem(event.previousContainer.data, this.typeNew.template, event.previousIndex, event.currentIndex);
+      this.typeNew.template[event.currentIndex] = { ...event.previousContainer.data[event.previousIndex] }
     }
     this.generatePreview();
   }

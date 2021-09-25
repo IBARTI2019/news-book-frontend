@@ -25,6 +25,7 @@ export class QuestionService extends API<any> {
         new StaffReceivingTheGuard({
           key: 'staffReceivingTheGuard',
           label: 'Personal que recibe la guardia',
+          percentage_per_row: 100
         }, this.ibartiService),
         new DropdownQuestion({
           key: 'brave',
@@ -34,7 +35,8 @@ export class QuestionService extends API<any> {
             { key: 'great', value: 'Great' },
             { key: 'good', value: 'Good' },
             { key: 'unproven', value: 'Unproven' }
-          ]
+          ],
+          percentage_per_row: 100
         }, null),
 
         new TextboxQuestion({
@@ -42,6 +44,7 @@ export class QuestionService extends API<any> {
           label: 'First name',
           value: 'Bombasto',
           required: true,
+          percentage_per_row: 100
         }, null),
 
         new TextboxQuestion({
@@ -54,6 +57,7 @@ export class QuestionService extends API<any> {
           key: 'emailAddress2',
           label: 'Email2',
           type: 'email',
+          percentage_per_row: 100
         }, null)
       ];
     } else {
@@ -70,49 +74,53 @@ export class QuestionService extends API<any> {
 
   generateControls(template: TemplateTypeNew[]): QuestionBase<string>[] {
     let questions: QuestionBase<string>[] = [];
-    template.forEach(d => {
+    template.forEach((d, index) => {
       switch (d.code) {
         case 'TITLE':
           questions.push(
             new Title({
-              key: d.code,
+              key: `${d.code}-${index}`,
               code: d.code,
               label: d.label || 'Información',
               value: d?.value,
               required: false,
-              form_field: false
+              form_field: false,
+              percentage_per_row: Number(d.percentage_per_row) || 100,
             }, null),
           )
           break;
         case 'FREE_TEXT':
           questions.push(
             new TextboxQuestion({
-              key: d.code,
+              key: `${d.code}-${index}`,
               code: d.code,
               label: d.label || 'Información',
               value: '',
-              required: false
+              required: false,
+              percentage_per_row: Number(d.percentage_per_row) || 100,
             }, null),
           )
           break;
         case 'PLANNED_STAFF':
           questions.push(
             new StaffReceivingTheGuard({
-              key: d.code,
+              key: `${d.code}-${index}`,
               code: d.code,
               label: d.label || 'Personal que recibe la guardia',
               required: true,
+              percentage_per_row: Number(d.percentage_per_row) || 100,
             }, this.ibartiService)
           )
           break;
         case 'PLANNED_PERSONNEL_WITH_SAFETY_PROTOCOL':
           questions.push(
             new StaffReceivingTheGuard({
-              key: d.code,
+              key: `${d.code}-${index}`,
               code: d.code,
               applies_security_protocol: true,
               label: d.label || 'Personal que recibe la guardia 2',
-              required: true
+              required: true,
+              percentage_per_row: Number(d.percentage_per_row) || 100,
             }, this.ibartiService)
           )
           break;

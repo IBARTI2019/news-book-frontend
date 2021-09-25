@@ -34,6 +34,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { NewTemplatesModule } from 'app/new-templates/new-templates.module';
 import { SharedModule } from 'app/shared/shared.module';
+import { FlexLayoutModule } from '@angular/flex-layout';
 export const entryComponentes = [
   ConfirmDialogComponent,
   ValidateOesvicaTokenComponent,
@@ -90,7 +91,8 @@ export const entryComponentes = [
     NewTemplatesModule,
     SharedModule,
     MatChipsModule,
-    DragDropModule
+    DragDropModule,
+    FlexLayoutModule
   ],
   entryComponents: entryComponentes,
   providers: [ConfirmDialogService]

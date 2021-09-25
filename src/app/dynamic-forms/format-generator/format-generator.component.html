@@ -14,9 +14,9 @@
         </div>
         <div class="panel-container">
             <h2>Datos</h2>
-            <mat-chip-list aria-label="Datos" cdkDropList #todoList="cdkDropList" [cdkDropListData]="data"
+            <mat-chip-list aria-label="Datos" cdkDropList #todoList="cdkDropList" [cdkDropListData]="datos"
                 [cdkDropListConnectedTo]="[doneList]" class="example-list" (cdkDropListDropped)="drop($event)">
-                <mat-chip *ngFor="let d of data" cdkDrag>{{d?.code_display}}</mat-chip>
+                <mat-chip *ngFor="let d of datos" cdkDrag>{{d?.code_display}}</mat-chip>
             </mat-chip-list>
         </div>
         <div class="panel-container">

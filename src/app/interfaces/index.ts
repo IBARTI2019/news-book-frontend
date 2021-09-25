@@ -226,6 +226,7 @@ export interface OptionField {
 }
 
 export interface TemplateData {
+  key?: string;
   code: string;
   code_display?: string;
   percentage_per_row?: number;
@@ -233,6 +234,7 @@ export interface TemplateData {
 
 
 export interface TemplateTypeNew {
+  key: string;
   code: string;
   label?: string;
   required?: boolean;

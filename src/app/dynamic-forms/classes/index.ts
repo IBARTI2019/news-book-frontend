@@ -11,6 +11,7 @@ export class QuestionBase<T> {
     fichas?: { cod_ficha: string, identification_card?: string, name_and_surname?: string }[];
     applies_security_protocol?: boolean;
     form_field: boolean | undefined = true;
+    percentage_per_row: number;
 
     constructor(options: {
         value?: T;
@@ -25,6 +26,7 @@ export class QuestionBase<T> {
         fichas?: { cod_ficha: string, identification_card?: string, name_and_surname?: string }[];
         applies_security_protocol?: boolean;
         form_field?: boolean;
+        percentage_per_row?: number;
     } = {}, public service: any) {
         this.value = options.value;
         this.key = options.key || '';
@@ -36,6 +38,7 @@ export class QuestionBase<T> {
         this.type = options.type || '';
         this.form_field = options.form_field || true;
         this.options = options.options || [];
+        this.percentage_per_row = options.percentage_per_row || 100;
         if (options.key === 'staffReceivingTheGuard' || options.key === 'PLANNED_STAFF' || options.key === 'PLANNED_PERSONNEL_WITH_SAFETY_PROTOCOL') {
             this.service.planned_staff().subscribe((data: any) => {
                 this.fichas = data;
