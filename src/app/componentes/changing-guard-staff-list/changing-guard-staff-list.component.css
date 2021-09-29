@@ -1,0 +1,9 @@
+.item {
+  border: 2px solid black;
+  border-radius: 5px;
+  color: black;
+  font: bold;
+  word-wrap: break-word;
+  word-break: break-all;
+  padding: 10px;
+}

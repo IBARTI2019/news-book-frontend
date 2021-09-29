@@ -92,7 +92,8 @@ export const entryComponentes = [
     SharedModule,
     MatChipsModule,
     DragDropModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    MatSelectModule,
   ],
   entryComponents: entryComponentes,
   providers: [ConfirmDialogService]
