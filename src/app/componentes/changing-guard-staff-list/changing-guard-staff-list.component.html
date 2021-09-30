@@ -1,4 +1,4 @@
-<div fxFlex="100%" fxLayoutGap="100px" fxLayout="column">
+<div fxFlex="{{percentage}}" fxLayoutGap="100px" fxLayout="column">
   <div fxFlex fxLayout="row" fxLayoutAlign="space-around" style="height: 64px">
     <button mat-raised-button (click)="showTokenField = !showTokenField">
       {{ showTokenField ? "Hide Token Field" : "Show Token Field" }}
@@ -33,9 +33,9 @@
       }}
     </button>
   </div>
-  <div fxFlex="100" fxLayout="row" style="height: 50px">
-    <form fxFlex="100" [formGroup]="fGStaff">
-      <mat-form-field fxFlex="20" appearance="fill" style="background-color: #ebebd3;">
+  <div fxFlex="{{percentage}}" fxLayout="row" style="height: 50px">
+    <form fxFlex="{{percentage}}" [formGroup]="fGStaff">
+      <mat-form-field fxFlex="1 0 30%" appearance="fill" style="background-color: #ebebd3;">
         <mat-label>Personal</mat-label>
         <mat-select #staffRef formControlName="staff" multiple>
           <mat-option *ngFor="let staffItem of staffArr" [value]="staffItem">
@@ -45,11 +45,12 @@
       </mat-form-field>
     </form>
   </div>
-  <div fxFlex fxLayout="row wrap">
+  <div fxFlex fxLayout="row wrap" style="background-color: black;" fxLayoutGap="1px grid">
     <div
       fxFlex="1 1 100%"
       fxLayout="row"
       style="height: 50px"
+      fxLayoutGap="1px"
     >
       <div
         *ngIf="showTokenField"
@@ -113,7 +114,7 @@
       </div>
     </div>
     <!-- Begin to Dynamic Form -->
-    <div fxFlex="100" fxLayout="row" *ngFor="let staff of fA.controls">
+    <div fxFlex="{{percentage}}" fxLayout="row" *ngFor="let staff of fA.controls" fxLayoutGap="1px">
       <ng-container [formGroup]="staff">
         <div
           *ngIf="showTokenField"
@@ -121,7 +122,7 @@
           fxFlex="2 0 20%"
           fxLayout="row"
           style="background-color: #ebebd3"
-          class="item item-dynamic"
+          class="item"
         >
           <mat-form-field appearance="fill">
             <mat-label>Ficha</mat-label>

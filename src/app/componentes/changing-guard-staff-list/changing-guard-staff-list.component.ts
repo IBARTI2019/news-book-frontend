@@ -32,6 +32,7 @@ const HEALTH_CONDITIONS = [
   styleUrls: ["./changing-guard-staff-list.component.css"],
 })
 export class ChangingGuardStaffListComponent implements OnInit {
+  @Input() percentage: number = 100;
   @Input() showTokenField: boolean = true;
   @Input() showNameField: boolean = true;
   @Input() showProtocolField: boolean = true;
