@@ -39,7 +39,7 @@ export class QuestionBase<T> {
         this.form_field = options.form_field || true;
         this.options = options.options || [];
         this.percentage_per_row = options.percentage_per_row || 100;
-        if (options.key === 'staffReceivingTheGuard' || options.key === 'PLANNED_STAFF' || options.key === 'PLANNED_PERSONNEL_WITH_SAFETY_PROTOCOL') {
+        if (options.code === 'staffReceivingTheGuard' || options.code === 'PLANNED_STAFF' || options.code === 'PLANNED_PERSONNEL_WITH_SAFETY_PROTOCOL') {
             this.service.planned_staff().subscribe((data: any) => {
                 this.fichas = data;
             })
