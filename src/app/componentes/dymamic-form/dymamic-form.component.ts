@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
 import { QuestionBase } from '../../dynamic-forms/classes'
@@ -10,7 +10,7 @@ import { ControlService } from '../../dynamic-forms/services/control.service';
   styleUrls: ['./dymamic-form.component.css'],
   providers: [ControlService]
 })
-export class DynamicFormComponent implements OnInit {
+export class DynamicFormComponent implements OnInit, OnChanges {
 
   @Input() questions: QuestionBase<string>[] | null = [];
   @Input() withSaved: boolean = true;
@@ -20,8 +20,14 @@ export class DynamicFormComponent implements OnInit {
   constructor(private qcs: ControlService) {
   }
 
-  ngOnInit() {
+  ngOnChanges(change: SimpleChanges): void {
+    console.log('Quetions: ', change)
+    this.questions = change.questions.currentValue;
     this.form = this.qcs.toFormGroup(this.questions as QuestionBase<string>[]);
+  }
+
+  ngOnInit() {
+    console.log('Dynamic Form Component (OnInit)')
   }
 
   onSubmit() {

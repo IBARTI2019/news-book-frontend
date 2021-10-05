@@ -106,12 +106,12 @@ export class FormatGeneratorComponent implements OnInit {
   }
 
   generatePreview() {
+    this.generating_preview = true
     this.questions$ = this.service.generatePreviewQuentions(this.typeNew.template);
     this.generating_preview = false
   }
 
   drop(event: CdkDragDrop<TemplateData[]>) {
-    this.generating_preview = true
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {

@@ -79,7 +79,7 @@ export class QuestionService extends API<any> {
         case 'TITLE':
           questions.push(
             new Title({
-              key: `${d.code}-${index}`,
+              key: `${d.code}_${index}`,
               code: d.code,
               label: d.label || 'Información',
               value: d?.value,
@@ -92,7 +92,7 @@ export class QuestionService extends API<any> {
         case 'FREE_TEXT':
           questions.push(
             new TextboxQuestion({
-              key: `${d.code}-${index}`,
+              key: `${d.code}_${index}`,
               code: d.code,
               label: d.label || 'Información',
               value: '',
@@ -104,7 +104,7 @@ export class QuestionService extends API<any> {
         case 'PLANNED_STAFF':
           questions.push(
             new StaffReceivingTheGuard({
-              key: `${d.code}-${index}`,
+              key: `${d.code}_${index}`,
               code: d.code,
               label: d.label || 'Personal que recibe la guardia',
               required: true,
@@ -115,7 +115,7 @@ export class QuestionService extends API<any> {
         case 'PLANNED_PERSONNEL_WITH_SAFETY_PROTOCOL':
           questions.push(
             new StaffReceivingTheGuard({
-              key: `${d.code}-${index}`,
+              key: `${d.code}_${index}`,
               code: d.code,
               applies_security_protocol: true,
               label: d.label || 'Personal que recibe la guardia 2',
