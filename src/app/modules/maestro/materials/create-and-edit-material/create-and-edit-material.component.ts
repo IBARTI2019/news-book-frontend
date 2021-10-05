@@ -54,7 +54,6 @@ export class CreateAndEditMaterialComponent implements OnInit {
       return;
     }
     this.submitted = true;
-    console.log('Que pasa?')
     this.update ? this.updateMaterial() : this.save();
   }
 

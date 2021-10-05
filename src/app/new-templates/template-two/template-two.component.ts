@@ -166,7 +166,6 @@ export class TemplateTwoComponent implements OnInit, AfterViewChecked {
   onSubmit() {
     this.submitted = true;
     if (this.fg.invalid) {
-      console.log("Invalid");
       this.submitted = false;
       return;
     }
@@ -186,7 +185,6 @@ export class TemplateTwoComponent implements OnInit, AfterViewChecked {
   }
 
   select(vehicle: Vehicle) {
-    console.log(vehicle)
     if (!this.selectedPlates.includes(vehicle)) {
       this.selectedPlates.unshift(vehicle);
     }

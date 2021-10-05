@@ -58,7 +58,6 @@ export class CreateAndEditPersonComponent implements OnInit {
   onSubmit() {
     this.submitted = true;
     if (this.fg.invalid) {
-      console.log('Invalid?')
       this.submitted = false;
       return;
     }

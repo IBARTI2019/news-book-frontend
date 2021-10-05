@@ -1,21 +1,45 @@
 <div [formGroup]="form">
-    <div *ngIf="!question.form_field" [ngSwitch]="question.controlType">
-        <h3 *ngSwitchCase="'title'">{{question.value}}</h3>
-    </div>
-    <mat-form-field appearance="fill" [ngSwitch]="question.controlType" *ngIf="question.form_field">
-        <mat-label [attr.for]="question.key">{{question.label}}</mat-label>
-        <input matInput *ngSwitchCase="'textbox'" [formControlName]="question.key" [id]="question.key"
-            [type]="question.type" />
-        <mat-select [id]="question.key" *ngSwitchCase="'staffReceivingTheGuard'" [formControlName]="question.key"
-            multiple>
-            <mat-option *ngFor="let opt of question?.fichas" [value]="opt?.cod_ficha">
-                <p [matTooltip]="opt?.identification_card">{{opt?.cod_ficha}} {{opt?.name_and_surname | titlecase }}</p>
-            </mat-option>
-        </mat-select>
-        <mat-select [id]="question.key" *ngSwitchCase="'dropdown'" [formControlName]="question.key">
-            <mat-option *ngFor="let opt of question.options" [value]="opt.key">
-                <p [matTooltip]="opt?.info">{{opt.value | titlecase }}</p>
-            </mat-option>
-        </mat-select>
-    </mat-form-field>
+  <div *ngIf="!question.form_field" [ngSwitch]="question.controlType">
+    <h3 *ngSwitchCase="'title'">{{ question.value }}</h3>
+    <app-changing-guard-staff-list
+      [id]="question.key"
+      *ngSwitchCase="'staffReceivingTheGuard'"
+      [staffArr]="question.fichas"
+    ></app-changing-guard-staff-list>
+  </div>
+  <mat-form-field
+    appearance="fill"
+    [ngSwitch]="question.controlType"
+    *ngIf="question.form_field"
+  >
+    <mat-label [attr.for]="question.key">{{ question.label }}</mat-label>
+    <input
+      matInput
+      *ngSwitchCase="'textbox'"
+      [formControlName]="question.key"
+      [id]="question.key"
+      [type]="question.type"
+    />
+    <mat-select
+      [id]="question.key"
+      *ngSwitchCase="'staffReceivingTheGuard'"
+      [formControlName]="question.key"
+      multiple
+    >
+      <mat-option *ngFor="let opt of question?.fichas" [value]="opt?.cod_ficha">
+        <p [matTooltip]="opt?.identification_card">
+          {{ opt?.cod_ficha }} {{ opt?.name_and_surname | titlecase }}
+        </p>
+      </mat-option>
+    </mat-select>
+    <mat-select
+      [id]="question.key"
+      *ngSwitchCase="'dropdown'"
+      [formControlName]="question.key"
+    >
+      <mat-option *ngFor="let opt of question.options" [value]="opt.key">
+        <p [matTooltip]="opt?.info">{{ opt.value | titlecase }}</p>
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
 </div>

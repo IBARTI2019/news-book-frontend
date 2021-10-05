@@ -1,5 +1,11 @@
-<div fxFlex="{{percentage}}" fxLayoutGap="100px" fxLayout="column">
-  <div fxFlex fxLayout="row" fxLayoutAlign="space-around" style="height: 64px">
+<div fxFlex="{{ percentage }}" fxLayoutGap="100px" fxLayout="column">
+  <div
+    *ngIf="testing"
+    fxFlex
+    fxLayout="row"
+    fxLayoutAlign="space-around"
+    style="height: 64px"
+  >
     <button mat-raised-button (click)="showTokenField = !showTokenField">
       {{ showTokenField ? "Hide Token Field" : "Show Token Field" }}
     </button>
@@ -33,9 +39,13 @@
       }}
     </button>
   </div>
-  <div fxFlex="{{percentage}}" fxLayout="row" style="height: 50px">
-    <form fxFlex="{{percentage}}" [formGroup]="fGStaff">
-      <mat-form-field fxFlex="1 0 30%" appearance="fill" style="background-color: #ebebd3;">
+  <div fxFlex="{{ percentage }}" fxLayout="row" style="height: 50px">
+    <form fxFlex="{{ percentage }}" [formGroup]="fGStaff">
+      <mat-form-field
+        fxFlex="1 0 30%"
+        appearance="fill"
+        style="background-color: #ebebd3"
+      >
         <mat-label>Personal</mat-label>
         <mat-select #staffRef formControlName="staff" multiple>
           <mat-option *ngFor="let staffItem of staffArr" [value]="staffItem">
@@ -45,7 +55,12 @@
       </mat-form-field>
     </form>
   </div>
-  <div fxFlex fxLayout="row wrap" style="background-color: black;" fxLayoutGap="1px grid">
+  <div
+    fxFlex
+    fxLayout="row wrap"
+    style="background-color: black"
+    fxLayoutGap="1px grid"
+  >
     <div
       fxFlex="1 1 100%"
       fxLayout="row"
@@ -114,7 +129,12 @@
       </div>
     </div>
     <!-- Begin to Dynamic Form -->
-    <div fxFlex="{{percentage}}" fxLayout="row" *ngFor="let staff of fA.controls" fxLayoutGap="1px">
+    <div
+      fxFlex="{{ percentage }}"
+      fxLayout="row"
+      *ngFor="let staff of fA.controls"
+      fxLayoutGap="1px"
+    >
       <ng-container [formGroup]="staff">
         <div
           *ngIf="showTokenField"
@@ -125,14 +145,14 @@
           class="item"
         >
           <mat-form-field appearance="fill">
-            <mat-label>Ficha</mat-label>
+            <mat-label>Cod. Ficha</mat-label>
             <input
               type="text"
               matInput
-              formControlName="token"
+              formControlName="cod_ficha"
               placeholder="1234567890"
             />
-            <mat-error *ngIf="staff.controls.token.hasError('required')">
+            <mat-error *ngIf="staff.controls.cod_ficha.hasError('required')">
               Ficha es <strong>requerida</strong>
             </mat-error>
           </mat-form-field>
@@ -150,10 +170,12 @@
             <input
               type="text"
               matInput
-              formControlName="name"
+              formControlName="name_and_surname"
               placeholder="Nombre Completo"
             />
-            <mat-error *ngIf="staff.controls.name.hasError('required')">
+            <mat-error
+              *ngIf="staff.controls.name_and_surname.hasError('required')"
+            >
               El nombre es <strong>requerido</strong>
             </mat-error>
           </mat-form-field>

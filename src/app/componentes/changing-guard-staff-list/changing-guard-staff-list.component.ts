@@ -1,15 +1,19 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { FormArray, FormBuilder, FormGroup, Validators } from "@angular/forms";
 
-interface Staff {
-  id: string;
-  token: string;
-  name: string;
+export interface PlannedStaff {
+  cod_ficha: string;
+  identification_card: string;
+  name_and_surname: string;
+}
+
+export interface Staff extends PlannedStaff {
   protocol: boolean;
   health_condition: string;
   check_in: string;
   guard_status: string;
 }
+
 
 const HEALTH_CONDITIONS = [
   {
@@ -32,6 +36,7 @@ const HEALTH_CONDITIONS = [
   styleUrls: ["./changing-guard-staff-list.component.css"],
 })
 export class ChangingGuardStaffListComponent implements OnInit {
+  @Input() testing: boolean = false;
   @Input() percentage: number = 100;
   @Input() showTokenField: boolean = true;
   @Input() showNameField: boolean = true;
@@ -40,46 +45,30 @@ export class ChangingGuardStaffListComponent implements OnInit {
   @Input() showCheckInField: boolean = true;
   @Input() showGuardStatusField: boolean = true;
   @Input() staffArrSelected: Staff[] = [];
-  @Input() staffArr: Staff[] = [
+  @Input() staffArr: PlannedStaff[] = [
     {
-      id: "1",
-      token: "1234567890",
-      name: "Hemny Sibrian",
-      protocol: true,
-      health_condition: "bad",
-      check_in: "",
-      guard_status: "Esto es automático pero no se que va.",
+      cod_ficha: "1234567890",
+      name_and_surname: "Hemny Sibrian",
+      identification_card: '4354554354',
     },
     {
-      id: "2",
-      token: "0987654321",
-      name: "Alejandro Fabrega",
-      protocol: false,
-      health_condition: "good",
-      check_in: "",
-      guard_status: "Esto es automático pero no se que va.",
+      cod_ficha: "0987654321",
+      name_and_surname: "Alejandro Fabrega",
+      identification_card: '3454353454',
     },
     {
-      id: "3",
-      token: "4321567890",
-      name: "Yonathan Aviles",
-      protocol: false,
-      health_condition: "average",
-      check_in: "",
-      guard_status: "Esto es automático pero no se que va.",
+      cod_ficha: "4321567890",
+      name_and_surname: "Yonathan Aviles",
+      identification_card: '4565465465',
     },
     {
-      id: "4",
-      token: "1567890234",
-      name: "Eliezer García",
-      protocol: true,
-      health_condition: "bad",
-      check_in: "08:00",
-      guard_status: "Esto es automático pero no se que va.",
+      cod_ficha: "1567890234",
+      name_and_surname: "Eliezer García",
+      identification_card: '879767868',
     },
   ];
 
-  @Output() isValid: EventEmitter<boolean> = new EventEmitter<boolean>(false);
+  @Output() isValid: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   fA: FormArray = new FormArray([]);
   healthConditions = [...HEALTH_CONDITIONS];
@@ -90,7 +79,6 @@ export class ChangingGuardStaffListComponent implements OnInit {
   ngOnInit(): void {
     this.fA.statusChanges.subscribe((currentStatus) => {
       this.isValid.emit(currentStatus === "VALID" ? true : false);
-      console.log(currentStatus);
     });
 
     this.staffArrSelected.forEach((v) => {
@@ -102,16 +90,15 @@ export class ChangingGuardStaffListComponent implements OnInit {
     });
 
     this.fGStaff.valueChanges.subscribe((values) => {
-      console.log(this.fA.value);
       values.staff.forEach((s: Staff) => {
         const found = this.fA.value.some((v: any) => {
-          return v.id === s.id;
+          return v.cod_ficha === s.cod_ficha;
         });
         if (!found) this.addFG(s);
       });
       this.fA.value.forEach((v: any, index: number) => {
         const found = values.staff.some((s: Staff) => {
-          return v.id === s.id
+          return v.cod_ficha === s.cod_ficha;
         });
         if (!found) this.fA.removeAt(index);
       });
@@ -120,9 +107,8 @@ export class ChangingGuardStaffListComponent implements OnInit {
 
   addFG(v: Staff): void {
     const fG = this.fB.group({
-      id: [v.id || ""],
-      token: [v.token || "", this.showTokenField && Validators.required],
-      name: [v.name || "", this.showNameField && Validators.required],
+      cod_ficha: [v.cod_ficha || "", this.showTokenField && Validators.required],
+      name_and_surname: [v.name_and_surname || "", this.showNameField && Validators.required],
       protocol: [
         v.protocol || false,
         this.showProtocolField && Validators.required,

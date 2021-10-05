@@ -27,9 +27,6 @@ export class AppSidebarComponent implements OnInit, OnDestroy {
     private sessionService: SessionService,
     private userService: UserService,
   ) {
-    this.userService.user$.subscribe((user) => {
-      console.log('Behavior Subject: ', user)
-    })
     this.mobileQuery = media.matchMedia('(min-width: 768px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
     this.mobileQuery.addListener(this._mobileQueryListener);

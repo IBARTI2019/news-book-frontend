@@ -44,7 +44,6 @@ export class NewContainerComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result: boolean) => {
-      console.log("The dialog was closed");
       if (result) this.navigate();
     });
   }

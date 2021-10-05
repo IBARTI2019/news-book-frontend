@@ -24,7 +24,6 @@ export class Error401Interceptor implements HttpInterceptor {
         return throwError(err);
       }),
       map((response: any) => {
-        console.log(response)
         if (response?.body?.error)
           throw new HttpErrorResponse({ error: { error: response.body.error, message: response.body.menssage } });
         return response

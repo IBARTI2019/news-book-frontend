@@ -20,8 +20,6 @@ export class UsuarioServiceG extends API<UsuarioG> {
   }
 
   obtenerUsuarios(params: any) {
-    console.log('parametros', params);
-
     return this.http.get(`${this.URL}`, {});
   }
 }

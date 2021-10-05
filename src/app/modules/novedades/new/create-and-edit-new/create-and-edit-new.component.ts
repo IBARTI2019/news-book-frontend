@@ -137,7 +137,6 @@ export class CreateAndEditNewComponent implements OnInit {
 
   onSubmit(data: object) {
     this.currentNew = { ...data, ...this.currentNew };
-    console.log(this.currentNew);
     this.submitted = true;
     this.update ? this.updateNew(data) : this.save(data);
   }

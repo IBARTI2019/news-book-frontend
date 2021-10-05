@@ -98,7 +98,6 @@ export class CreateAndEditNotificationComponent implements OnInit {
   onSubmit() {
     this.submitted = true;
     if (this.fg.invalid) {
-      console.log("Invalid?");
       this.submitted = false;
       return;
     }
@@ -165,7 +164,6 @@ export class CreateAndEditNotificationComponent implements OnInit {
     this.settingNotificationService
       .get(this.id || "")
       .subscribe((data: NotificationSetting) => {
-        console.log("NotiData: ", data);
         this.fg.get("description")!.setValue(data.description);
         this.fg.get("type")!.setValue(data.type);
         this.fg.get("groups")!.setValue(data.groups);
@@ -199,7 +197,6 @@ export class CreateAndEditNotificationComponent implements OnInit {
 
   getGroups() {
     this.groupService.list().subscribe((response: GroupUser[]) => {
-      console.log(response);
       this.listGroups = [...response];
     });
   }
@@ -214,7 +211,6 @@ export class CreateAndEditNotificationComponent implements OnInit {
     this.settingNotificationService
       .field_options_multiple(["type", "frequency"])
       .subscribe((response: any) => {
-        console.log("options", response);
         this.types = [...response.type];
         this.fequencies = [...response.frequency];
       });
@@ -266,7 +262,6 @@ export class CreateAndEditNotificationComponent implements OnInit {
   }
 
   handleType = (event: MatRadioChange) => {
-    console.log(event.value);
   };
 
   checkFrequency(group: FormGroup) {

@@ -30,7 +30,6 @@ export class CreateAndEditComponent implements OnInit {
 
   ngOnInit() {
     this.id = this.route.snapshot.params.id;
-    console.log("Parametro id en url: ", this.route.snapshot.params.id);
     this.fg = this.fb.group(
       {
         descripcion: ['', Validators.required],
