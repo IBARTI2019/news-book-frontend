@@ -108,6 +108,7 @@ export class QuestionService extends API<any> {
               code: d.code,
               label: d.label || 'Personal que recibe la guardia',
               required: true,
+              form_field: false,
               percentage_per_row: Number(d.percentage_per_row) || 100,
             }, this.ibartiService)
           )
@@ -117,6 +118,7 @@ export class QuestionService extends API<any> {
             new StaffReceivingTheGuard({
               key: `${d.code}_${index}`,
               code: d.code,
+              form_field: false,
               applies_security_protocol: true,
               label: d.label || 'Personal que recibe la guardia 2',
               required: true,

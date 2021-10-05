@@ -1,4 +1,4 @@
-<div fxFlex="{{ percentage }}" fxLayoutGap="100px" fxLayout="column">
+<div fxFlex="{{ percentage }}" fxLayoutGap="40px" fxLayout="column">
   <div
     *ngIf="testing"
     fxFlex
@@ -49,7 +49,7 @@
         <mat-label>Personal</mat-label>
         <mat-select #staffRef formControlName="staff" multiple>
           <mat-option *ngFor="let staffItem of staffArr" [value]="staffItem">
-            {{ staffItem.name }}
+            {{ staffItem.name_and_surname }}
           </mat-option>
         </mat-select>
       </mat-form-field>
@@ -70,9 +70,9 @@
       <div
         *ngIf="showTokenField"
         fxLayoutAlign="center center"
-        fxFlex="2 0 20%"
+        fxFlex="2 0 18%"
         fxLayout="row"
-        style="background-color: #ebebd3; font-weight: bold"
+        style="background-color: #ebebd3;"
         class="item"
       >
         Ficha
@@ -80,9 +80,9 @@
       <div
         *ngIf="showNameField"
         fxLayoutAlign="center center"
-        fxFlex="3 0 30%"
+        fxFlex="3 0 25%"
         fxLayout="row"
-        style="background-color: #ebebd3; font-weight: bold"
+        style="background-color: #ebebd3;"
         class="item"
       >
         Nombre y Apellido
@@ -90,9 +90,9 @@
       <div
         *ngIf="showProtocolField"
         fxLayoutAlign="center center"
-        fxFlex="1 0 8%"
+        fxFlex="1 1 11%"
         fxLayout="row"
-        style="background-color: #ebebd3; font-weight: bold"
+        style="background-color: #ebebd3; text-overflow: ellipsis;"
         class="item"
       >
         Cumplió Protocolo
@@ -100,9 +100,9 @@
       <div
         *ngIf="showHealthConditionField"
         fxLayoutAlign="center center"
-        fxFlex="1 0 8%"
+        fxFlex="1 1 11%"
         fxLayout="row"
-        style="background-color: #ebebd3; font-weight: bold"
+        style="background-color: #ebebd3;"
         class="item"
       >
         Estado de Salud
@@ -110,9 +110,9 @@
       <div
         *ngIf="showCheckInField"
         fxLayoutAlign="center center"
-        fxFlex="1 0 9%"
+        fxFlex="1 1 11%"
         fxLayout="row"
-        style="background-color: #ebebd3; font-weight: bold"
+        style="background-color: #ebebd3;"
         class="item"
       >
         Hora de Llegada
@@ -122,7 +122,7 @@
         fxLayoutAlign="center center"
         fxFlex="1 1 13%"
         fxLayout="row"
-        style="background-color: #ebebd3; font-weight: bold"
+        style="background-color: #ebebd3;"
         class="item"
       >
         Estado de su Guardia
@@ -139,7 +139,7 @@
         <div
           *ngIf="showTokenField"
           fxLayoutAlign="center center"
-          fxFlex="2 0 20%"
+          fxFlex="2 0 18%"
           fxLayout="row"
           style="background-color: #ebebd3"
           class="item"
@@ -160,7 +160,7 @@
         <div
           *ngIf="showNameField"
           fxLayoutAlign="center center"
-          fxFlex="3 0 30%"
+          fxFlex="3 0 25%"
           fxLayout="row"
           style="background-color: #ebebd3"
           class="item"
@@ -183,13 +183,13 @@
         <div
           *ngIf="showProtocolField"
           fxLayoutAlign="center center"
-          fxFlex="1 0 8%"
+          fxFlex="1 1 11%"
           fxLayout="row"
           style="background-color: #ebebd3"
           class="item"
         >
-          <mat-slide-toggle formControlName="protocol" #protocol>{{
-            protocol.checked ? "SI" : "NO"
+          <mat-slide-toggle formControlName="protocol" #protocolST>{{
+            protocolST.checked ? "SI" : "NO"
           }}</mat-slide-toggle>
           <mat-error *ngIf="staff.controls.protocol.hasError('required')">
             Este campo es <strong>requerido</strong>
@@ -198,7 +198,7 @@
         <div
           *ngIf="showHealthConditionField"
           fxLayoutAlign="center center"
-          fxFlex="1 0 8%"
+          fxFlex="1 1 11%"
           fxLayout="column"
           style="background-color: #ebebd3"
           class="item"
@@ -223,7 +223,7 @@
         <div
           *ngIf="showCheckInField"
           fxLayoutAlign="center center"
-          fxFlex="1 0 9%"
+          fxFlex="1 1 11%"
           fxLayout="column"
           style="background-color: #ebebd3"
           class="item"
@@ -251,17 +251,7 @@
           style="background-color: #ebebd3"
           class="item"
         >
-          <mat-form-field appearance="fill">
-            <mat-label>Comentario</mat-label>
-            <textarea
-              matInput
-              formControlName="guard_status"
-              placeholder="..."
-            ></textarea>
-          </mat-form-field>
-          <mat-error *ngIf="staff.controls.guard_status.hasError('required')">
-            El estado de la guardia es <strong>requerido</strong>
-          </mat-error>
+          {{ guardStatus }}
         </div>
       </ng-container>
     </div>

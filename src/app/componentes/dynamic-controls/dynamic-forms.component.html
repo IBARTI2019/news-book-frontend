@@ -1,6 +1,8 @@
 <div [formGroup]="form">
   <div *ngIf="!question.form_field" [ngSwitch]="question.controlType">
     <h3 *ngSwitchCase="'title'">{{ question.value }}</h3>
+    {{ question.controlType }}
+    <h3 *ngSwitchCase="'staffReceivingTheGuard'">Quejesto Valeeee</h3>
     <app-changing-guard-staff-list
       [id]="question.key"
       *ngSwitchCase="'staffReceivingTheGuard'"

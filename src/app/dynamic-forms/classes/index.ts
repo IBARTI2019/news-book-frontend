@@ -36,7 +36,7 @@ export class QuestionBase<T> {
         this.order = options.order === undefined ? 1 : options.order;
         this.controlType = options.controlType || '';
         this.type = options.type || '';
-        this.form_field = options.form_field || true;
+        this.form_field = options.form_field === false ? false : true;
         this.options = options.options || [];
         this.percentage_per_row = options.percentage_per_row || 100;
         if (options.code === 'staffReceivingTheGuard' || options.code === 'PLANNED_STAFF' || options.code === 'PLANNED_PERSONNEL_WITH_SAFETY_PROTOCOL') {

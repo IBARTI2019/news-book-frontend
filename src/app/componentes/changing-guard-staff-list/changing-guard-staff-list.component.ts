@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from "@angular/core";
 import { FormArray, FormBuilder, FormGroup, Validators } from "@angular/forms";
 
 export interface PlannedStaff {
@@ -37,6 +37,7 @@ const HEALTH_CONDITIONS = [
 })
 export class ChangingGuardStaffListComponent implements OnInit {
   @Input() testing: boolean = false;
+  @Input() guardStatus: string = 'Regular';
   @Input() percentage: number = 100;
   @Input() showTokenField: boolean = true;
   @Input() showNameField: boolean = true;
@@ -114,14 +115,14 @@ export class ChangingGuardStaffListComponent implements OnInit {
         this.showProtocolField && Validators.required,
       ],
       health_condition: [
-        v.health_condition || "",
+        v.health_condition || "average",
         this.showHealthConditionField && Validators.required,
       ],
       check_in: [
         v.check_in || "",
         this.showCheckInField && Validators.required,
       ],
-      guard_status: [v.guard_status || "", Validators.required],
+      guard_status: [v.guard_status || this.guardStatus, Validators.required],
     });
     this.fA.push(fG);
   }

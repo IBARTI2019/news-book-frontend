@@ -18,6 +18,7 @@ import { FormatGeneratorComponent, ParamsControlDialogComponent } from './format
 import { MatChipsModule } from '@angular/material/chips';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatDialogModule } from '@angular/material/dialog';
+import { SharedModule } from 'app/shared/shared.module';
 
 @NgModule({
   declarations: [TestComponent, FormatGeneratorComponent, ParamsControlDialogComponent],
@@ -38,6 +39,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatChipsModule,
     DragDropModule,
     MatDialogModule,
+    SharedModule,
   ],
   entryComponents: [ParamsControlDialogComponent],
   providers: [ControlService]
