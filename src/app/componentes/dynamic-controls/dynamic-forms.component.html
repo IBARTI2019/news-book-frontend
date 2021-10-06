@@ -1,8 +1,6 @@
 <div [formGroup]="form">
   <div *ngIf="!question.form_field" [ngSwitch]="question.controlType">
     <h3 *ngSwitchCase="'title'">{{ question.value }}</h3>
-    {{ question.controlType }}
-    <h3 *ngSwitchCase="'staffReceivingTheGuard'">Quejesto Valeeee</h3>
     <app-changing-guard-staff-list
       [id]="question.key"
       *ngSwitchCase="'staffReceivingTheGuard'"
@@ -22,7 +20,7 @@
       [id]="question.key"
       [type]="question.type"
     />
-    <mat-select
+    <!-- <mat-select
       [id]="question.key"
       *ngSwitchCase="'staffReceivingTheGuard'"
       [formControlName]="question.key"
@@ -33,7 +31,7 @@
           {{ opt?.cod_ficha }} {{ opt?.name_and_surname | titlecase }}
         </p>
       </mat-option>
-    </mat-select>
+    </mat-select> -->
     <mat-select
       [id]="question.key"
       *ngSwitchCase="'dropdown'"

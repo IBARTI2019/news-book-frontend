@@ -12,7 +12,7 @@ import { ControlService } from '../../dynamic-forms/services/control.service';
 })
 export class DynamicFormComponent implements OnChanges {
 
-  @Input() questions: QuestionBase<string>[] | null = [];
+  @Input() questions: QuestionBase[] | null = [];
   @Input() withSaved: boolean = true;
   form!: FormGroup;
   payLoad = '';
@@ -22,7 +22,7 @@ export class DynamicFormComponent implements OnChanges {
 
   ngOnChanges(change: SimpleChanges): void {
     this.questions = change.questions.currentValue;
-    this.form = this.qcs.toFormGroup(this.questions as QuestionBase<string>[]);
+    this.form = this.qcs.toFormGroup(this.questions as QuestionBase[]);
   }
 
   onSubmit() {

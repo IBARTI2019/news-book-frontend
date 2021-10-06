@@ -1,23 +1,34 @@
-<div fxFlex="{{ percentage }}" fxLayoutGap="40px" fxLayout="column">
+<div fxFlex="{{ settings.percentage }}" fxLayoutGap="40px" fxLayout="column">
   <div
-    *ngIf="testing"
+    *ngIf="settings.testing"
     fxFlex
     fxLayout="row"
     fxLayoutAlign="space-around"
     style="height: 64px"
   >
-    <button mat-raised-button (click)="showTokenField = !showTokenField">
+    <button
+      mat-raised-button
+      (click)="settings.showTokenField = !settings.showTokenField"
+    >
       {{ showTokenField ? "Hide Token Field" : "Show Token Field" }}
     </button>
-    <button mat-raised-button (click)="showNameField = !showNameField">
+    <button
+      mat-raised-button
+      (click)="settings.showNameField = !settings.showNameField"
+    >
       {{ showNameField ? "Hide Name Field" : "Show Name Field" }}
     </button>
-    <button mat-raised-button (click)="showProtocolField = !showProtocolField">
+    <button
+      mat-raised-button
+      (click)="settings.showProtocolField = !settings.showProtocolField"
+    >
       {{ showProtocolField ? "Hide Protocol Field" : "Show Protocol Field" }}
     </button>
     <button
       mat-raised-button
-      (click)="showHealthConditionField = !showHealthConditionField"
+      (click)="
+        settings.showHealthConditionField = !settings.showHealthConditionField
+      "
     >
       {{
         showHealthConditionField
@@ -25,12 +36,15 @@
           : "Show Health Condition Field"
       }}
     </button>
-    <button mat-raised-button (click)="showCheckInField = !showCheckInField">
+    <button
+      mat-raised-button
+      (click)="settings.showCheckInField = !settings.showCheckInField"
+    >
       {{ showCheckInField ? "Hide Check In Field" : "Show Check In Field" }}
     </button>
     <button
       mat-raised-button
-      (click)="showGuardStatusField = !showGuardStatusField"
+      (click)="settings.showGuardStatusField = !settings.showGuardStatusField"
     >
       {{
         showGuardStatusField
@@ -39,8 +53,8 @@
       }}
     </button>
   </div>
-  <div fxFlex="{{ percentage }}" fxLayout="row" style="height: 50px">
-    <form fxFlex="{{ percentage }}" [formGroup]="fGStaff">
+  <div fxFlex="{{ settings.percentage }}" fxLayout="row" style="height: 50px">
+    <form fxFlex="{{ settings.percentage }}" [formGroup]="fGStaff">
       <mat-form-field
         fxFlex="1 0 30%"
         appearance="fill"
@@ -68,61 +82,61 @@
       fxLayoutGap="1px"
     >
       <div
-        *ngIf="showTokenField"
+        *ngIf="settings.showTokenField"
         fxLayoutAlign="center center"
         fxFlex="2 0 18%"
         fxLayout="row"
-        style="background-color: #ebebd3;"
+        style="background-color: #ebebd3"
         class="item"
       >
         Ficha
       </div>
       <div
-        *ngIf="showNameField"
+        *ngIf="settings.showNameField"
         fxLayoutAlign="center center"
         fxFlex="3 0 25%"
         fxLayout="row"
-        style="background-color: #ebebd3;"
+        style="background-color: #ebebd3"
         class="item"
       >
         Nombre y Apellido
       </div>
       <div
-        *ngIf="showProtocolField"
+        *ngIf="settings.showProtocolField"
         fxLayoutAlign="center center"
         fxFlex="1 1 11%"
         fxLayout="row"
-        style="background-color: #ebebd3; text-overflow: ellipsis;"
+        style="background-color: #ebebd3; text-overflow: ellipsis"
         class="item"
       >
         Cumplió Protocolo
       </div>
       <div
-        *ngIf="showHealthConditionField"
+        *ngIf="settings.showHealthConditionField"
         fxLayoutAlign="center center"
         fxFlex="1 1 11%"
         fxLayout="row"
-        style="background-color: #ebebd3;"
+        style="background-color: #ebebd3"
         class="item"
       >
         Estado de Salud
       </div>
       <div
-        *ngIf="showCheckInField"
+        *ngIf="settings.showCheckInField"
         fxLayoutAlign="center center"
         fxFlex="1 1 11%"
         fxLayout="row"
-        style="background-color: #ebebd3;"
+        style="background-color: #ebebd3"
         class="item"
       >
         Hora de Llegada
       </div>
       <div
-        *ngIf="showGuardStatusField"
+        *ngIf="settings.showGuardStatusField"
         fxLayoutAlign="center center"
         fxFlex="1 1 13%"
         fxLayout="row"
-        style="background-color: #ebebd3;"
+        style="background-color: #ebebd3"
         class="item"
       >
         Estado de su Guardia
@@ -130,14 +144,14 @@
     </div>
     <!-- Begin to Dynamic Form -->
     <div
-      fxFlex="{{ percentage }}"
+      fxFlex="{{ settings.percentage }}"
       fxLayout="row"
       *ngFor="let staff of fA.controls"
       fxLayoutGap="1px"
     >
       <ng-container [formGroup]="staff">
         <div
-          *ngIf="showTokenField"
+          *ngIf="settings.showTokenField"
           fxLayoutAlign="center center"
           fxFlex="2 0 18%"
           fxLayout="row"
@@ -158,7 +172,7 @@
           </mat-form-field>
         </div>
         <div
-          *ngIf="showNameField"
+          *ngIf="settings.showNameField"
           fxLayoutAlign="center center"
           fxFlex="3 0 25%"
           fxLayout="row"
@@ -181,7 +195,7 @@
           </mat-form-field>
         </div>
         <div
-          *ngIf="showProtocolField"
+          *ngIf="settings.showProtocolField"
           fxLayoutAlign="center center"
           fxFlex="1 1 11%"
           fxLayout="row"
@@ -196,7 +210,7 @@
           </mat-error>
         </div>
         <div
-          *ngIf="showHealthConditionField"
+          *ngIf="settings.showHealthConditionField"
           fxLayoutAlign="center center"
           fxFlex="1 1 11%"
           fxLayout="column"
@@ -221,7 +235,7 @@
           </mat-error>
         </div>
         <div
-          *ngIf="showCheckInField"
+          *ngIf="settings.showCheckInField"
           fxLayoutAlign="center center"
           fxFlex="1 1 11%"
           fxLayout="column"
@@ -244,14 +258,14 @@
           </mat-error>
         </div>
         <div
-          *ngIf="showGuardStatusField"
+          *ngIf="settings.showGuardStatusField"
           fxLayoutAlign="center center"
           fxFlex="1 1 13%"
           fxLayout="column"
           style="background-color: #ebebd3"
           class="item"
         >
-          {{ guardStatus }}
+          {{ settings.guardStatus }}
         </div>
       </ng-container>
     </div>

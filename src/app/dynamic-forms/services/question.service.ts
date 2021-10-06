@@ -19,7 +19,7 @@ export class QuestionService extends API<any> {
 
   // TODO: get from a remote source of question metadata
   getQuestions(template: TemplateTypeNew[], test?: boolean) {
-    let questions: QuestionBase<string>[] = [];
+    let questions: QuestionBase[] = [];
     if (test) {
       questions = [
         new StaffReceivingTheGuard({
@@ -42,7 +42,6 @@ export class QuestionService extends API<any> {
         new TextboxQuestion({
           key: 'firstName',
           label: 'First name',
-          value: 'Bombasto',
           required: true,
           percentage_per_row: 100
         }, null),
@@ -72,8 +71,8 @@ export class QuestionService extends API<any> {
     return of(questions);
   }
 
-  generateControls(template: TemplateTypeNew[]): QuestionBase<string>[] {
-    let questions: QuestionBase<string>[] = [];
+  generateControls(template: TemplateTypeNew[]): QuestionBase[] {
+    let questions: QuestionBase[] = [];
     template.forEach((d, index) => {
       switch (d.code) {
         case 'TITLE':
@@ -82,7 +81,6 @@ export class QuestionService extends API<any> {
               key: `${d.code}_${index}`,
               code: d.code,
               label: d.label || 'Información',
-              value: d?.value,
               required: false,
               form_field: false,
               percentage_per_row: Number(d.percentage_per_row) || 100,
@@ -95,7 +93,6 @@ export class QuestionService extends API<any> {
               key: `${d.code}_${index}`,
               code: d.code,
               label: d.label || 'Información',
-              value: '',
               required: false,
               percentage_per_row: Number(d.percentage_per_row) || 100,
             }, null),

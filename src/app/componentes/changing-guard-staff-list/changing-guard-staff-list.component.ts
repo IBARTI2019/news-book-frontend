@@ -1,19 +1,18 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from "@angular/core";
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
+} from "@angular/core";
 import { FormArray, FormBuilder, FormGroup, Validators } from "@angular/forms";
-
-export interface PlannedStaff {
-  cod_ficha: string;
-  identification_card: string;
-  name_and_surname: string;
-}
-
-export interface Staff extends PlannedStaff {
-  protocol: boolean;
-  health_condition: string;
-  check_in: string;
-  guard_status: string;
-}
-
+import {
+  PlannedStaff,
+  Staff,
+  StaffReceivingTheGuardSettings,
+} from "app/interfaces";
 
 const HEALTH_CONDITIONS = [
   {
@@ -36,36 +35,38 @@ const HEALTH_CONDITIONS = [
   styleUrls: ["./changing-guard-staff-list.component.css"],
 })
 export class ChangingGuardStaffListComponent implements OnInit {
-  @Input() testing: boolean = false;
-  @Input() guardStatus: string = 'Regular';
-  @Input() percentage: number = 100;
-  @Input() showTokenField: boolean = true;
-  @Input() showNameField: boolean = true;
-  @Input() showProtocolField: boolean = true;
-  @Input() showHealthConditionField: boolean = true;
-  @Input() showCheckInField: boolean = true;
-  @Input() showGuardStatusField: boolean = true;
+  @Input() settings: StaffReceivingTheGuardSettings = {
+    testing: false,
+    guardStatus: "REGULAR",
+    percentage: 100,
+    showTokenField: true,
+    showNameField: true,
+    showProtocolField: true,
+    showHealthConditionField: true,
+    showCheckInField: true,
+    showGuardStatusField: true,
+  };
   @Input() staffArrSelected: Staff[] = [];
   @Input() staffArr: PlannedStaff[] = [
     {
       cod_ficha: "1234567890",
       name_and_surname: "Hemny Sibrian",
-      identification_card: '4354554354',
+      identification_card: "4354554354",
     },
     {
       cod_ficha: "0987654321",
       name_and_surname: "Alejandro Fabrega",
-      identification_card: '3454353454',
+      identification_card: "3454353454",
     },
     {
       cod_ficha: "4321567890",
       name_and_surname: "Yonathan Aviles",
-      identification_card: '4565465465',
+      identification_card: "4565465465",
     },
     {
       cod_ficha: "1567890234",
       name_and_surname: "Eliezer García",
-      identification_card: '879767868',
+      identification_card: "879767868",
     },
   ];
 
@@ -108,21 +109,30 @@ export class ChangingGuardStaffListComponent implements OnInit {
 
   addFG(v: Staff): void {
     const fG = this.fB.group({
-      cod_ficha: [v.cod_ficha || "", this.showTokenField && Validators.required],
-      name_and_surname: [v.name_and_surname || "", this.showNameField && Validators.required],
+      cod_ficha: [
+        v.cod_ficha || "",
+        this.settings.showTokenField && Validators.required,
+      ],
+      name_and_surname: [
+        v.name_and_surname || "",
+        this.settings.showNameField && Validators.required,
+      ],
       protocol: [
         v.protocol || false,
-        this.showProtocolField && Validators.required,
+        this.settings.showProtocolField && Validators.required,
       ],
       health_condition: [
         v.health_condition || "average",
-        this.showHealthConditionField && Validators.required,
+        this.settings.showHealthConditionField && Validators.required,
       ],
       check_in: [
         v.check_in || "",
-        this.showCheckInField && Validators.required,
+        this.settings.showCheckInField && Validators.required,
       ],
-      guard_status: [v.guard_status || this.guardStatus, Validators.required],
+      guard_status: [
+        v.guard_status || this.settings.guardStatus,
+        Validators.required,
+      ],
     });
     this.fA.push(fG);
   }

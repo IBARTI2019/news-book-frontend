@@ -24,7 +24,6 @@ export interface User {
   jwt_id?: string;
   user_id?: string;
   groups?: string[];
-
 }
 
 export interface GroupUser {
@@ -217,7 +216,7 @@ export interface NotificationSetting {
   days?: string[];
   is_active: boolean;
   frequency: number;
-  groups_display?: GroupUser[]
+  groups_display?: GroupUser[];
 }
 
 export interface OptionField {
@@ -232,7 +231,6 @@ export interface TemplateData {
   percentage_per_row?: number;
 }
 
-
 export interface TemplateTypeNew {
   key: string;
   code: string;
@@ -243,4 +241,56 @@ export interface TemplateTypeNew {
   applies_security_protocol?: boolean;
   percentage_per_row?: number;
   value?: string;
+  settings?: StaffReceivingTheGuardSettings;
+}
+
+export interface PlannedStaff {
+  cod_ficha: string;
+  identification_card: string;
+  name_and_surname: string;
+}
+
+export interface Staff extends PlannedStaff {
+  protocol: boolean;
+  health_condition: string;
+  check_in: string;
+  guard_status: string;
+}
+
+export interface BaseSettings {
+  code: string;
+  code_display: string;
+  percentage_per_row: number;
+}
+
+export interface StaffReceivingTheGuardSettings {
+  testing?: boolean;
+  guardStatus?: string;
+  percentage?: number;
+  showTokenField?: boolean;
+  showNameField?: boolean;
+  showProtocolField?: boolean;
+  showHealthConditionField?: boolean;
+  showCheckInField?: boolean;
+  showGuardStatusField?: boolean;
+}
+
+export interface QuestionBaseParams {
+  key?: string;
+  code?: string;
+  label?: string;
+  required?: boolean;
+  order?: number;
+  controlType?: string;
+  type?: string;
+  options?: { key: string; value: string }[];
+  fichas?: {
+    cod_ficha: string;
+    identification_card?: string;
+    name_and_surname?: string;
+  }[];
+  applies_security_protocol?: boolean;
+  form_field?: boolean;
+  percentage_per_row?: number;
+  setting?: StaffReceivingTheGuardSettings;
 }

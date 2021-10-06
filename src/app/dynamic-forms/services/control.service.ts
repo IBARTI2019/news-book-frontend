@@ -7,7 +7,7 @@ import { QuestionBase } from '../classes';
 export class ControlService {
   constructor() { }
 
-  toFormGroup(questions: QuestionBase<string>[]) {
+  toFormGroup(questions: QuestionBase[]) {
     const group: any = {};
     questions.forEach(question => {
       group[question.key] = question.required ? new FormControl(question.value || '', Validators.required)

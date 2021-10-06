@@ -5,9 +5,8 @@ import { QuestionBase } from "app/dynamic-forms/classes";
 import { QuestionService } from "app/dynamic-forms/services/question.service";
 import { New, TemplateTypeNew, TypeNew } from "app/interfaces";
 import { NewService } from "app/services/new.service";
-import { SessionService } from 'app/services/session.service';
 import { TypeNewService } from "app/services/type-new.service";
-import { TemplateNew, TemplatesNew } from "environments/environment";
+import { TemplateNew } from "environments/environment";
 import { ToastrService } from "ngx-toastr";
 import { Observable } from "rxjs";
 
@@ -43,7 +42,7 @@ export class CreateAndEditNewComponent implements OnInit {
     created_by: "",
     employee: "",
   };
-  controls$!: Observable<QuestionBase<any>[]>;
+  controls$!: Observable<QuestionBase[]>;
   generating = true;
 
   constructor(

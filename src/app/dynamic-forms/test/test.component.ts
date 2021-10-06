@@ -11,7 +11,7 @@ import { QuestionService } from '../services/question.service';
 })
 
 export class TestComponent {
-  questions$: Observable<QuestionBase<any>[]>;
+  questions$: Observable<QuestionBase[]>;
 
   constructor(service: QuestionService) {
     this.questions$ = service.getQuestions([], true);

@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { TemplateData, TemplateTypeNew, TypeNew } from '../../interfaces';
 import { QuestionBase } from '../classes';
 import { QuestionService } from '../services/question.service';
-import { CdkDragDrop, moveItemInArray, copyArrayItem, transferArrayItem } from '@angular/cdk/drag-drop';
+import { CdkDragDrop, moveItemInArray, copyArrayItem } from '@angular/cdk/drag-drop';
 import { ControlService } from '../services/control.service';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -33,6 +33,7 @@ import { ToastrService } from 'ngx-toastr';
   <button mat-button (click)="onNoClick()" tabindex="-1">Cancelar</button>
 </div>`
 })
+
 export class ParamsControlDialogComponent {
   constructor(
     public dialogRef: MatDialogRef<ParamsControlDialogComponent>,
@@ -52,7 +53,7 @@ export class ParamsControlDialogComponent {
 })
 export class FormatGeneratorComponent implements OnInit {
   datos: TemplateData[] = [];
-  questions$: Observable<QuestionBase<any>[]>;
+  questions$: Observable<QuestionBase[]>;
   generating_preview: boolean = false;
   typeNews: TypeNew[] = [];
   typeNew: TypeNew = { id: "", template: [] };
@@ -92,8 +93,8 @@ export class FormatGeneratorComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result: { element: TemplateTypeNew, index: number }) => {
+      console.log(result)
       if (result) {
-        debugger;
         this.typeNew.template[index] = { ...result.element };
         this.generatePreview();
       }

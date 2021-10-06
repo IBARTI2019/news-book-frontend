@@ -8,7 +8,7 @@ import { QuestionBase } from '../../dynamic-forms/classes';
   styleUrls: ['./dynamic-forms.component.css'],
 })
 export class DynamicControlsComponent implements OnInit {
-  @Input() question!: QuestionBase<string>;
+  @Input() question!: QuestionBase;
   @Input() form!: FormGroup;
 
   ngOnInit() {
