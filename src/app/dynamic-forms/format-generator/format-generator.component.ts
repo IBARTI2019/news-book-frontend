@@ -12,26 +12,7 @@ import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-dialog-overview-example-dialog',
-  template: `<h1 mat-dialog-title>{{data.element?.code_display}}</h1>
-<div mat-dialog-content>
-    <mat-form-field>
-      <mat-label>Porcentaje en fila</mat-label>
-      <input matInput tabindex="1" [(ngModel)]="data.element.percentage_per_row">
-    </mat-form-field>
-    <mat-form-field>
-      <mat-label>Valor por defecto</mat-label>
-      <input matInput tabindex="1" [(ngModel)]="data.element.value">
-    </mat-form-field>
-    <mat-form-field>
-      <mat-label>Etiqueta</mat-label>
-      <input matInput tabindex="1" [(ngModel)]="data.element.label">
-  </mat-form-field>
-</div>
-{{data | json}}
-<div mat-dialog-actions>
-  <button mat-button [mat-dialog-close]="data" tabindex="2">Ok</button>
-  <button mat-button (click)="onNoClick()" tabindex="-1">Cancelar</button>
-</div>`
+  templateUrl: './modal-options.component.html'
 })
 
 export class ParamsControlDialogComponent {
