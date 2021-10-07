@@ -34,6 +34,10 @@ import {
 import { getLocalStorage } from "./utils/localStorage";
 import { PERMISSIONS } from "./constants";
 import { decryptUsingAES256 } from './utils/crypt';
+import { TestsComponent } from './tests/tests.component';
+import { ChangingGuardStaffListComponent } from './componentes/changing-guard-staff-list/changing-guard-staff-list.component'
+import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
+import { MatSelectModule } from '@angular/material/select';
 
 const getPermissionsFromLocalStorage = () => {
   const permissionsCrypt = getLocalStorage(PERMISSIONS);
@@ -52,6 +56,8 @@ const getPermissionsFromLocalStorage = () => {
     SpinnerComponent,
     AppSidebarComponent,
     LoginComponent,
+    TestsComponent,
+    ChangingGuardStaffListComponent,
   ],
   imports: [
     BrowserModule,
@@ -69,6 +75,8 @@ const getPermissionsFromLocalStorage = () => {
     ReactiveFormsModule,
     LayoutModule,
     NgxPermissionsModule.forRoot(),
+    NgxMaterialTimepickerModule,
+    MatSelectModule,
   ],
   providers: [
     // { provide: LocationStrategy,  useClass: PathLocationStrategy},

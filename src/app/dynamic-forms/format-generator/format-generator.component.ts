@@ -62,6 +62,7 @@ export class FormatGeneratorComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log("Aquí está lo chido")
     this.typeNewService.list().subscribe(
       (typeNewsResponse: TypeNew[]) => {
         this.typeNews = [...typeNewsResponse];
