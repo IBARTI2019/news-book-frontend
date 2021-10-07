@@ -19,6 +19,8 @@ import { MatChipsModule } from '@angular/material/chips';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatDialogModule } from '@angular/material/dialog';
 import { SharedModule } from 'app/shared/shared.module';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { DemoMaterialModule } from 'app/demo-material-module';
 
 @NgModule({
   declarations: [TestComponent, FormatGeneratorComponent, ParamsControlDialogComponent],
@@ -40,6 +42,7 @@ import { SharedModule } from 'app/shared/shared.module';
     DragDropModule,
     MatDialogModule,
     SharedModule,
+    MatSlideToggleModule,
   ],
   entryComponents: [ParamsControlDialogComponent],
   providers: [ControlService]

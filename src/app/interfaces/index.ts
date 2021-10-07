@@ -276,6 +276,7 @@ export interface StaffReceivingTheGuardSettings {
 }
 
 export interface QuestionBaseParams {
+  value?: string;
   key?: string;
   code?: string;
   label?: string;
@@ -292,5 +293,5 @@ export interface QuestionBaseParams {
   applies_security_protocol?: boolean;
   form_field?: boolean;
   percentage_per_row?: number;
-  setting?: StaffReceivingTheGuardSettings;
+  settings?: StaffReceivingTheGuardSettings;
 }

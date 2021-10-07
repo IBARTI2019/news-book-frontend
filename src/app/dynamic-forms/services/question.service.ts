@@ -23,11 +23,25 @@ export class QuestionService extends API<any> {
     if (test) {
       questions = [
         new StaffReceivingTheGuard({
+          value: '',
           key: 'staffReceivingTheGuard',
           label: 'Personal que recibe la guardia',
-          percentage_per_row: 100
+          percentage_per_row: 100,
+          form_field: false,
+          settings: {
+            testing: true,
+            guardStatus: "REGULAR",
+            percentage: 100,
+            showTokenField: true,
+            showNameField: true,
+            showProtocolField: true,
+            showHealthConditionField: true,
+            showCheckInField: true,
+            showGuardStatusField: true,
+          },
         }, this.ibartiService),
         new DropdownQuestion({
+          value: '',
           key: 'brave',
           label: 'Bravery Rating',
           options: [
@@ -40,6 +54,7 @@ export class QuestionService extends API<any> {
         }, null),
 
         new TextboxQuestion({
+          value: '',
           key: 'firstName',
           label: 'First name',
           required: true,
@@ -47,12 +62,14 @@ export class QuestionService extends API<any> {
         }, null),
 
         new TextboxQuestion({
+          value: '',
           key: 'emailAddress',
           label: 'Email',
           type: 'email',
         }, null),
 
         new TextboxQuestion({
+          value: '',
           key: 'emailAddress2',
           label: 'Email2',
           type: 'email',
@@ -78,6 +95,7 @@ export class QuestionService extends API<any> {
         case 'TITLE':
           questions.push(
             new Title({
+              value: d.value || '',
               key: `${d.code}_${index}`,
               code: d.code,
               label: d.label || 'Información',
@@ -90,6 +108,7 @@ export class QuestionService extends API<any> {
         case 'FREE_TEXT':
           questions.push(
             new TextboxQuestion({
+              value: d.value || '',
               key: `${d.code}_${index}`,
               code: d.code,
               label: d.label || 'Información',
@@ -101,18 +120,21 @@ export class QuestionService extends API<any> {
         case 'PLANNED_STAFF':
           questions.push(
             new StaffReceivingTheGuard({
+              value: d.value || '',
               key: `${d.code}_${index}`,
               code: d.code,
               label: d.label || 'Personal que recibe la guardia',
               required: true,
               form_field: false,
               percentage_per_row: Number(d.percentage_per_row) || 100,
+              settings: d.settings,
             }, this.ibartiService)
           )
           break;
         case 'PLANNED_PERSONNEL_WITH_SAFETY_PROTOCOL':
           questions.push(
             new StaffReceivingTheGuard({
+              value: d.value || '',
               key: `${d.code}_${index}`,
               code: d.code,
               form_field: false,
@@ -120,6 +142,7 @@ export class QuestionService extends API<any> {
               label: d.label || 'Personal que recibe la guardia 2',
               required: true,
               percentage_per_row: Number(d.percentage_per_row) || 100,
+              settings: d.settings,
             }, this.ibartiService)
           )
           break;

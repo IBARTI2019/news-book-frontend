@@ -32,6 +32,7 @@ export class QuestionBase {
     this.type = options.type || "";
     this.form_field = options.form_field === false ? false : true;
     this.options = options.options || [];
+    this.value = options.value || '';
     this.percentage_per_row = options.percentage_per_row || 100;
     if (
       options.code === "staffReceivingTheGuard" ||
@@ -75,6 +76,6 @@ export class StaffReceivingTheGuard extends QuestionBase {
 
   constructor(options: QuestionBaseParams, public service: any) {
     super(options, service)
-    this.settings = options.setting
+    this.settings = options.settings
   }
 }
