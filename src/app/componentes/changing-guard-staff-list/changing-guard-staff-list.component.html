@@ -10,19 +10,19 @@
       mat-raised-button
       (click)="settings.showTokenField = !settings.showTokenField"
     >
-      {{ showTokenField ? "Hide Token Field" : "Show Token Field" }}
+      {{ settings.showTokenField ? "Hide Token Field" : "Show Token Field" }}
     </button>
     <button
       mat-raised-button
       (click)="settings.showNameField = !settings.showNameField"
     >
-      {{ showNameField ? "Hide Name Field" : "Show Name Field" }}
+      {{ settings.showNameField ? "Hide Name Field" : "Show Name Field" }}
     </button>
     <button
       mat-raised-button
       (click)="settings.showProtocolField = !settings.showProtocolField"
     >
-      {{ showProtocolField ? "Hide Protocol Field" : "Show Protocol Field" }}
+      {{ settings.showProtocolField ? "Hide Protocol Field" : "Show Protocol Field" }}
     </button>
     <button
       mat-raised-button
@@ -31,7 +31,7 @@
       "
     >
       {{
-        showHealthConditionField
+        settings.showHealthConditionField
           ? "Hide Health Condition Field"
           : "Show Health Condition Field"
       }}
@@ -40,14 +40,14 @@
       mat-raised-button
       (click)="settings.showCheckInField = !settings.showCheckInField"
     >
-      {{ showCheckInField ? "Hide Check In Field" : "Show Check In Field" }}
+      {{ settings.showCheckInField ? "Hide Check In Field" : "Show Check In Field" }}
     </button>
     <button
       mat-raised-button
       (click)="settings.showGuardStatusField = !settings.showGuardStatusField"
     >
       {{
-        showGuardStatusField
+        settings.showGuardStatusField
           ? "Hide Guard Status Field"
           : "Show Guard Status Field"
       }}
