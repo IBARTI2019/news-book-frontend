@@ -27,7 +27,6 @@ export class DynamicFormComponent implements OnInit, OnChanges {
   ngOnChanges(change: SimpleChanges): void {
     if (change.questions) {
       this.questions = change.questions.currentValue;
-      console.log(this.questions);
       this.form = this.qcs.toFormGroup(this.questions as QuestionBase[]);
     }
   }

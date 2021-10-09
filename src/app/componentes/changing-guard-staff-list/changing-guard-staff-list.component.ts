@@ -70,9 +70,11 @@ export const CHANGING_GUARD_STAFF_LIST_DEFAULT: StaffReceivingTheGuardSettings =
   styleUrls: ["./changing-guard-staff-list.component.css"],
 })
 export class ChangingGuardStaffListComponent implements OnInit, OnChanges {
+  @Input() id: string = '';
   @Input() settings: StaffReceivingTheGuardSettings = CHANGING_GUARD_STAFF_LIST_DEFAULT;
   @Input() staffArrSelected: Staff[] = [];
   @Input() staffArr: PlannedStaff[] = STAFF_ARR_DEAFAULT;
+  @Input() fGRoot!: FormGroup;
 
   @Output() isValid: EventEmitter<boolean> = new EventEmitter<boolean>();
 
@@ -84,6 +86,10 @@ export class ChangingGuardStaffListComponent implements OnInit, OnChanges {
   constructor(private fB: FormBuilder) {}
 
   ngOnInit(): void {
+    if (this.fGRoot && this.id && this.fGRoot.get(this.id)) {
+      this.fA = this.fGRoot.get(this.id) as FormArray;
+    }
+
     this.fA.statusChanges.subscribe((currentStatus) => {
       this.isValid.emit(currentStatus === "VALID" ? true : false);
     });

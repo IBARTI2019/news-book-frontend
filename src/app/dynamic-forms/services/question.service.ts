@@ -28,6 +28,7 @@ export class QuestionService extends API<any> {
           label: 'Personal que recibe la guardia',
           percentage_per_row: 100,
           form_field: false,
+          required: true,
           settings: {
             testing: true,
             guardStatus: "REGULAR",
@@ -73,6 +74,7 @@ export class QuestionService extends API<any> {
           key: 'emailAddress2',
           label: 'Email2',
           type: 'email',
+          required: true,
           percentage_per_row: 100
         }, null)
       ];

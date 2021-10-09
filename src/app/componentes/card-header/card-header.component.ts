@@ -106,14 +106,10 @@ export class CardHeaderComponent implements OnInit, OnDestroy {
   }
 
   add() {
-    console.log(this.url_menu,this.link);
-    
     this.router.navigate([`/${this.url_menu}`, this.link]);
   }
 
   navigate(urlArray: any) {
-    console.log(urlArray);
-    
     this.router.navigate(urlArray);
   }
 

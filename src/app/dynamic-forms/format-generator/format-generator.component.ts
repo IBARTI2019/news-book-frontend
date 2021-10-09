@@ -124,7 +124,6 @@ export class FormatGeneratorComponent implements OnInit {
 
   generatePreview() {
     this.generating_preview = true;
-    console.log('Template: ', this.typeNew.template)
     this.questions$ = this.service.generatePreviewQuentions(
       this.typeNew.template
     );
