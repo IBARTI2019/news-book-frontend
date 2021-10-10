@@ -32,13 +32,9 @@ export class UsuarioComponent implements OnInit {
   }
 
   editar(id: string) {
-    console.log(id);
     //this.router.navigate(['/gestion/usuario/', id]);
-
   }
 
   eliminar(usuario: UsuarioG) {
-    console.log('Eliminar', usuario);
-
   }
 }

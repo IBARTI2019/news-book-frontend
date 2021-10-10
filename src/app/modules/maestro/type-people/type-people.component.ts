@@ -49,7 +49,6 @@ export class TypePeopleComponent implements OnInit {
   }
 
   update(id: string) {
-    console.log('Y el Id? ', id)
     this.router.navigate(["type-people", id]);
   }
 

@@ -6,8 +6,13 @@ import { NotFoundComponent } from "./shared/not-found/not-found.component";
 import { AuthGuard } from "./utils/permiso.guard";
 import { ADMIN, AUDITOR, SUPERVISOR, USER } from "./constants";
 import { NgxPermissionsGuard } from 'ngx-permissions';
+import { TestsComponent } from './tests/tests.component';
 
 export const AppRoutes: Routes = [
+  {
+    path: "test",
+    component: TestsComponent,
+  },
   {
     path: "",
     canActivate: [AuthGuard],

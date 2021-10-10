@@ -56,11 +56,10 @@ export class UserService extends API<User> {
       if (userCrypt) {
         const userDecrypt = decryptUsingAES256(userCrypt);
         if (userDecrypt) {
-          this.get(userDecrypt).subscribe((user: User) => {
-            console.log("User: ", user, userDecrypt);
+          // this.get(userDecrypt).subscribe((user: User) => {
           this.ngxPermissionService.loadPermissions(getPermissions());
           resolve(true);
-          });
+          //   });
         } else {
           resolve(false);
         }

@@ -73,6 +73,19 @@ export abstract class API<T> {
       .put<T>(this.URL + id + '/', value);
   }
 
+
+  /**
+   * Funcion que ejecuta una solicitud patch para actualizar
+   * un objeto
+   *
+   * @param id del objeto
+   * @param value objeto con las modificaciones
+   */
+  update_patch(id: string | number, value: any): Observable<T> {
+    return this.http.patch<T>(this.URL + id + '/', value);
+  }
+
+
   /**
    * Funcion que ejecuta una solicitud delete para eliminar un
    * objeto

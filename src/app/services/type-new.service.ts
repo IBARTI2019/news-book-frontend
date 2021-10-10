@@ -13,4 +13,8 @@ export class TypeNewService extends API<TypeNew> {
   ) {
     super(http);
   }
+
+  public getCodesTemplate() {
+    return this.http.get(this.URL + 'codes_template/', {});
+  }
 }

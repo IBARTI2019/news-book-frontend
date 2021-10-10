@@ -1,17 +1,8 @@
 <mat-card>
-  <app-card-header
-    modulo="Usuarios"
-    menu="{{ update ? 'Actualizar Usuario' : 'Crear Usuario' }}"
-  >
+  <app-card-header modulo="Usuarios" menu="{{ update ? 'Actualizar Usuario' : 'Crear Usuario' }}">
   </app-card-header>
   <mat-card-content>
-    <form
-      [formGroup]="fg"
-      fxLayout="column"
-      fxLayoutGap="5px"
-      (ngSubmit)="onSubmit()"
-      #formT="ngForm"
-    >
+    <form [formGroup]="fg" fxLayout="column" fxLayoutGap="5px" (ngSubmit)="onSubmit()" #formT="ngForm">
       <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="5px">
         <mat-form-field appearance="fill">
           <mat-label>Usuario</mat-label>
@@ -26,12 +17,7 @@
           <input matInput placeholder="Apellidos" formControlName="last_name" />
         </mat-form-field>
       </div>
-      <div
-        *ngIf="isOesvicaUser"
-        fxLayout="row"
-        fxLayout.xs="column"
-        fxLayoutGap="5px"
-      >
+      <div *ngIf="isOesvicaUser" fxLayout="row" fxLayout.xs="column" fxLayoutGap="5px">
         <mat-form-field appearance="fill">
           <mat-label>Ficha</mat-label>
           <input matInput formControlName="ficha" />
@@ -59,8 +45,7 @@
         <mat-form-field appearance="fill">
           <mat-label>Tipo de usuario</mat-label>
           <mat-select formControlName="type" (selectionChange)="handleType()">
-            <mat-option *ngFor="let type of listTypes" [value]="type.code"
-              >
+            <mat-option *ngFor="let type of listTypes" [value]="type.code">
               <p [matTooltip]="type.info">{{ type.type | titlecase }}</p>
             </mat-option>
           </mat-select>
@@ -68,24 +53,22 @@
         <mat-form-field appearance="fill">
           <mat-label>Asignar Libro(s)</mat-label>
           <mat-select formControlName="books" (selectionChange)="handleBooks()" multiple>
-            <mat-option *ngFor="let book of localBooks" [value]="book.name" [disabled]="disableOtherBooks && (bookSelected !== book.name)"
-              >{{ book.name | titlecase }}
+            <mat-option *ngFor="let book of localBooks" [value]="book.name"
+              [disabled]="disableOtherBooks && (bookSelected !== book.name)">{{ book.name | titlecase }}
             </mat-option>
           </mat-select>
         </mat-form-field>
         <mat-form-field appearance="fill">
           <mat-label>Grupos</mat-label>
           <mat-select formControlName="groups" multiple>
-            <mat-option *ngFor="let group of listGroups" [value]="group.id"
-              >{{ group.name | titlecase }}
+            <mat-option *ngFor="let group of listGroups" [value]="group.id">{{ group.name | titlecase }}
             </mat-option>
           </mat-select>
         </mat-form-field>
         <mat-form-field appearance="fill">
           <mat-label>Usuario de seguridad</mat-label>
           <mat-select formControlName="security_user">
-            <mat-option *ngFor="let user of listUsers" [value]="user.id"
-              >{{ user.name | titlecase }}
+            <mat-option *ngFor="let user of listUsers" [value]="user.id">{{ user.name | titlecase }}
             </mat-option>
           </mat-select>
         </mat-form-field>

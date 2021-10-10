@@ -25,7 +25,6 @@ export class ValidateOesvicaTokenComponent implements OnInit {
   }
 
   validate() {
-    console.log(this.data);
     if (this.data) {
       this.setLocalStorage('id_user', this.data)
       this.toastr.success("Verificado!");

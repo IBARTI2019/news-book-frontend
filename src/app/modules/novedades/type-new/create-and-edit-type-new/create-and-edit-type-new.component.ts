@@ -78,7 +78,6 @@ export class CreateAndEditTypeNewComponent implements OnInit {
       this.submitted = false;
       return;
     }
-    console.log("Que pasa?");
     this.update ? this.updateTypeNew() : this.save();
   }
 

@@ -1,0 +1,105 @@
+<h1 mat-dialog-title>{{ data.element?.code_display }}</h1>
+<ng-container *ngIf="!data.element?.settings">
+  <div mat-dialog-content>
+    <mat-form-field>
+      <mat-label>Porcentaje en fila</mat-label>
+      <input
+        matInput
+        tabindex="1"
+        [(ngModel)]="data.element.percentage_per_row"
+      />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Valor por defecto</mat-label>
+      <input matInput tabindex="1" [(ngModel)]="data.element.value" />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Etiqueta</mat-label>
+      <input matInput tabindex="1" [(ngModel)]="data.element.label" />
+    </mat-form-field>
+  </div>
+</ng-container>
+<ng-container *ngIf="data.element?.settings">
+  <div mat-dialog-content>
+    <mat-form-field>
+      <mat-label>Porcentaje en fila</mat-label>
+      <input
+        matInput
+        tabindex="1"
+        [(ngModel)]="data.element.settings.percentage"
+      />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Status de Guardia</mat-label>
+      <input
+        matInput
+        tabindex="1"
+        [(ngModel)]="data.element.settings.guardStatus"
+      />
+    </mat-form-field>
+    <div>
+      <p>Mostrar la columna <strong>FICHA</strong></p>
+      <mat-slide-toggle
+        [(ngModel)]="data.element.settings.showTokenField"
+        ngDefaultControl
+        >{{
+          data.element.settings.showTokenField ? "SI" : "NO"
+        }}</mat-slide-toggle
+      >
+    </div>
+    <div>
+      <p>Mostrar la columna <strong>Nombre y Apellido</strong></p>
+      <mat-slide-toggle
+        [(ngModel)]="data.element.settings.showNameField"
+        ngDefaultControl
+        >{{
+          data.element.settings.showNameField ? "SI" : "NO"
+        }}</mat-slide-toggle
+      >
+    </div>
+    <div>
+      <p>Mostrar la columna <strong>Cumplió Protocolo</strong></p>
+      <mat-slide-toggle
+        [(ngModel)]="data.element.settings.showProtocolField"
+        ngDefaultControl
+        >{{
+          data.element.settings.showProtocolField ? "SI" : "NO"
+        }}</mat-slide-toggle
+      >
+    </div>
+    <div>
+      <p>Mostrar la columna <strong>Estado de Salud</strong></p>
+      <mat-slide-toggle
+        [(ngModel)]="data.element.settings.showHealthConditionField"
+        ngDefaultControl
+        >{{
+          data.element.settings.showHealthConditionField ? "SI" : "NO"
+        }}</mat-slide-toggle
+      >
+    </div>
+    <div>
+      <p>Mostrar la columna <strong>Hora de Llegada</strong></p>
+      <mat-slide-toggle
+        [(ngModel)]="data.element.settings.showCheckInField"
+        ngDefaultControl
+        >{{
+          data.element.settings.showCheckInField ? "SI" : "NO"
+        }}</mat-slide-toggle
+      >
+    </div>
+    <div>
+      <p>Mostrar la columna <strong>Estado de su Guardia</strong></p>
+      <mat-slide-toggle
+        [(ngModel)]="data.element.settings.showGuardStatusField"
+        ngDefaultControl
+        >{{
+          data.element.settings.showGuardStatusField ? "SI" : "NO"
+        }}</mat-slide-toggle
+      >
+    </div>
+  </div>
+</ng-container>
+<div mat-dialog-actions>
+  <button mat-button [mat-dialog-close]="data" tabindex="2">Ok</button>
+  <button mat-button (click)="onNoClick()" tabindex="-1">Cancelar</button>
+</div>

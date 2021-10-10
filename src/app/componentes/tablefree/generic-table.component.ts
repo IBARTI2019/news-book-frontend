@@ -198,7 +198,6 @@ export class GenericTableComponentf implements OnInit {
       this.colStartIndex = 1;
     }
     this.refresh();
-    console.log(this.templateCollapsed);
   }
 
   /** obtiene el valor de objeto.atributo con soporte para atributos anidados */

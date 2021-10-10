@@ -121,11 +121,9 @@ export class TemplateOneComponent implements OnInit {
   onSubmit() {
     this.submitted = true;
     if (this.fg.invalid) {
-      console.log("Invalid");
       this.submitted = false;
       return;
     }
-    console.log("Valid");
     this.tSubmit.emit(this.fg.value);
     this.submitted = false;
   }

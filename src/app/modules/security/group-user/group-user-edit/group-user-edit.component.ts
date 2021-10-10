@@ -32,8 +32,6 @@ export class GroupUserEditComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log('hello word');
-
     this.id = this.route.snapshot.params.id;
     this.redirectTo = this.routeState.redirectTo || ""
     this.fg = this.fb.group(
@@ -43,8 +41,6 @@ export class GroupUserEditComponent implements OnInit {
     );
     if (this.id) {
       this.update = true;
-      console.log('holaa', this.id);
-
       this.getUser();
     }
   }
@@ -65,7 +61,6 @@ export class GroupUserEditComponent implements OnInit {
       return;
     }
     this.submitted = true;
-    console.log('Que pasa?')
     this.update ? this.updateUser() : this.save();
   }
 

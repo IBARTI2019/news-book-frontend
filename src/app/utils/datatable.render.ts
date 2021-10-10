@@ -16,7 +16,6 @@ export class DataTableRender {
       );
     });
     /* Object.keys(source).forEach((key: string) => {
-      debugger;
       const value: any = source[key];
       if (typeof value !== 'undefined' && value !== null) {
         if (typeof value === 'object') {

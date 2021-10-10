@@ -24,7 +24,6 @@ export interface User {
   jwt_id?: string;
   user_id?: string;
   groups?: string[];
-
 }
 
 export interface GroupUser {
@@ -93,10 +92,10 @@ export interface Person {
 
 export interface TypeNew {
   id: string;
-  description: string;
-  code: string;
-  template: string;
-  is_active: string;
+  description?: string;
+  code?: string;
+  template: TemplateTypeNew[] | any;
+  is_active?: string;
   image?: string;
   info?: string;
 }
@@ -217,7 +216,7 @@ export interface NotificationSetting {
   days?: string[];
   is_active: boolean;
   frequency: number;
-  groups_display?: GroupUser[]
+  groups_display?: GroupUser[];
 }
 
 export interface OptionField {

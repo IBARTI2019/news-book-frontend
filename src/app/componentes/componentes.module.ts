@@ -26,6 +26,15 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { InfoDialogComponent } from './info-dialog/info-dialog.component';
 import { InfoButtonComponent } from './info-button/info-button.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { DynamicFormComponent } from './dymamic-form/dymamic-form.component';
+import { DynamicControlsComponent } from './dynamic-controls/dynamic-forms.component';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatSelectModule } from '@angular/material/select';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { NewTemplatesModule } from 'app/new-templates/new-templates.module';
+import { SharedModule } from 'app/shared/shared.module';
+import { FlexLayoutModule } from '@angular/flex-layout';
 export const entryComponentes = [
   ConfirmDialogComponent,
   ValidateOesvicaTokenComponent,
@@ -44,6 +53,8 @@ export const entryComponentes = [
     ValidateOesvicaTokenComponent,
     InfoDialogComponent,
     InfoButtonComponent,
+    DynamicFormComponent,
+    DynamicControlsComponent,
   ],
   exports: [
     GenericTableComponent,
@@ -54,6 +65,8 @@ export const entryComponentes = [
     PermisoDirective,
     ValidateOesvicaTokenComponent,
     InfoButtonComponent,
+    DynamicFormComponent,
+    DynamicControlsComponent
   ],
   imports: [
     CommonModule,
@@ -73,6 +86,14 @@ export const entryComponentes = [
     FormsModule,
     ReactiveFormsModule,
     MatTooltipModule,
+    MatSlideToggleModule,
+    MatSelectModule,
+    NewTemplatesModule,
+    SharedModule,
+    MatChipsModule,
+    DragDropModule,
+    FlexLayoutModule,
+    MatSelectModule,
   ],
   entryComponents: entryComponentes,
   providers: [ConfirmDialogService]

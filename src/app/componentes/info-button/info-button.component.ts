@@ -15,7 +15,6 @@ export class InfoButtonComponent implements OnInit {
   ngOnInit(): void {}
 
   openDialog(event: MouseEvent): void {
-    console.log(event);
     if (!this.text) {
       this.toastr.warning("info-not-found");
       return;

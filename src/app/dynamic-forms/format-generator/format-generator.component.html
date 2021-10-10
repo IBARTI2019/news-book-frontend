@@ -1,0 +1,46 @@
+<mat-card>
+    <app-card-header modulo="Generación de Plantilla Dinámica" menu="Prueba">
+    </app-card-header>
+    <mat-card-content>
+        <div class="panel-container">
+            <mat-form-field appearance="fill">
+                <mat-label>Tipo de Novedad</mat-label>
+                <mat-select (selectionChange)="selectionTypeChange($event)">
+                    <mat-option id="type_new" *ngFor="let type of typeNews" [value]="type.id">
+                        {{type.description | titlecase }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="panel-container">
+            <h2>Datos</h2>
+            <mat-chip-list aria-label="Datos" cdkDropList #todoList="cdkDropList" [cdkDropListData]="datos"
+                [cdkDropListConnectedTo]="[doneList]" class="example-list" (cdkDropListDropped)="drop($event)">
+                <mat-chip *ngFor="let d of datos" cdkDrag>{{d?.code_display}}</mat-chip>
+            </mat-chip-list>
+        </div>
+        <div class="panel-container">
+            <h2>Configuración</h2>
+
+            <div cdkDropList #doneList="cdkDropList" [cdkDropListData]="this.typeNew.template"
+                [cdkDropListConnectedTo]="[todoList]" class="example-list example-boundary"
+                (cdkDropListDropped)="drop($event)">
+                <div *ngFor="let d of this.typeNew.template; let index = index;" class="example-custom-placeholder">
+                    <mat-chip cdkDrag cdkDragBoundary=".example-boundary">{{d?.code_display}}</mat-chip>
+                    <mat-icon (click)="openDialog(d, index)">edit</mat-icon>
+                    <mat-icon (click)="deleteControl(d, index)">delete</mat-icon>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="panel-container">
+            <button mat-raised-button color="primary" (click)="saveTemplate()">Guardar</button>
+        </div>
+        <br>
+        <div class="panel-container">
+            <h2>Vista Previa</h2>
+            <app-dymamic-form *ngIf="!generating_preview" [questions]="questions$ | async" [withSaved]="false">
+            </app-dymamic-form>
+        </div>
+    </mat-card-content>
+</mat-card>
