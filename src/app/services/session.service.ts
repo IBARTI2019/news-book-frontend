@@ -98,14 +98,14 @@ export class SessionService extends API<User> {
     // const userId = getLocalStorage(API.USUARIO)
     // const user = await this.http.get<User>(`${this.apiURL}/security/user/${userId}/`).toPromise();
     // return (user.is_superuser || false);
-    return true;
+    return false;
   }
 
   public async isStaff(): Promise<boolean> {
     // const userId = getLocalStorage(API.USUARIO)
     // const user = await this.http.get<User>(`${this.apiURL}/security/user/${userId}/`).toPromise();
     // return (user.is_staff || false);
-    return false;
+    return true;
   }
 
   /**

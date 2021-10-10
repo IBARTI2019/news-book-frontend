@@ -1,0 +1,32 @@
+<mat-card>
+    <app-card-header modulo="Libros" menu="{{ update ? 'Actualizar Libro' : 'Crear Libro' }}">
+    </app-card-header>
+    <mat-card-content>
+        <form [formGroup]="fg" fxLayout="column" fxLayoutGap="5px" (ngSubmit)="onSubmit()" #formT="ngForm">
+            <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="5px">
+                <mat-form-field>
+                    <mat-label>Código Libro</mat-label>
+                    <input matInput placeholder="Codigo del libro" formControlName="code" />
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Nombre de Libro</mat-label>
+                    <input matInput placeholder="Nombre del libro" formControlName="name" />
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Telefono 1</mat-label>
+                    <input matInput placeholder="Telefono 1" formControlName="phone1" />
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Telefono 2</mat-label>
+                    <input matInput placeholder="Telefono 2" formControlName="phone2" />
+                </mat-form-field>
+            </div>
+            <div fxFlex="50">
+                <mat-slide-toggle formControlName="is_active">Activo</mat-slide-toggle>
+            </div>
+            <div class="panel-container" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="end">
+                <button mat-raised-button color="primary" type="submit">{{ update ? 'Actualizar' : 'Crear' }}</button>
+            </div>
+        </form>
+    </mat-card-content>
+</mat-card>

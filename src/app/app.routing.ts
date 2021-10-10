@@ -188,7 +188,33 @@ export const AppRoutes: Routes = [
               import("app/modules/setting/notification/notification.module").then(
                 (m) => m.NotificationModule
               )
-          }
+          },
+          {
+            path: "dynamic-forms",
+            canLoad: [NgxPermissionsGuard],
+            data: {
+              permissions: {
+                only: [ADMIN, USER, SUPERVISOR],
+              }
+            },
+            loadChildren: () =>
+              import("app/dynamic-forms/dynamic-forms.module").then(
+                (m) => m.DynamicFormsModule
+              ),
+          },
+          {
+            path: "locations",
+            canLoad: [NgxPermissionsGuard],
+            data: {
+              permissions: {
+                only: [ADMIN, USER, SUPERVISOR],
+              }
+            },
+            loadChildren: () =>
+              import("app/modules/maestro/books/books.module").then(
+                (m) => m.BooksModule
+              ),
+          },
         ],
       },
     ],
