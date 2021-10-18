@@ -21,7 +21,7 @@ export class VehicleComponent implements OnInit {
     private router: Router,
     private dialogService: ConfirmDialogService,
     private toastr: ToastrService
-  ) {}
+  ) { }
 
   showCheck = () => true;
 
@@ -32,8 +32,10 @@ export class VehicleComponent implements OnInit {
         attribute: "Placa Vehiculo",
       },
       {
+        header: "Activo",
         dataAttribute: "is_active",
         attribute: "is_active",
+        type: "bool"
       },
       {
         attribute: "id",
@@ -61,7 +63,7 @@ export class VehicleComponent implements OnInit {
           (error: HttpErrorResponse) => {
             this.toastr.error(
               error.error.message ||
-                "Ocurrio un error al eliminar el Vehiculo."
+              "Ocurrio un error al eliminar el Vehiculo."
             );
           }
         );

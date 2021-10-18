@@ -3,8 +3,8 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { ClassificationNew, TypeNew } from "app/interfaces";
 import { TypeNewService } from "app/services/type-new.service";
-import { ClassificationNewService } from "app/services/classification-new.service";
-import { TemplateNew, TemplatesNew } from "environments/environment";
+/* import { ClassificationNewService } from "app/services/classification-new.service";
+import { TemplateNew, TemplatesNew } from "environments/environment"; */
 import { ToastrService } from "ngx-toastr";
 import { HttpErrorResponse } from "@angular/common/http";
 import { MatSelectChange } from '@angular/material/select';
@@ -18,7 +18,7 @@ export class CreateAndEditTypeNewComponent implements OnInit {
   fg: FormGroup;
   // modal variables
   submitted = false;
-  templates = TemplatesNew;
+  //templates = TemplatesNew;
   id: string = "";
   update = false;
 
@@ -31,13 +31,13 @@ export class CreateAndEditTypeNewComponent implements OnInit {
   showSeven = false;
   showEight = false;
   showNotFound = false;
-  templateUrl = "template-four";
-  template: TemplateNew = {
-    name: "",
-    id: "",
-    url: "",
-    operation: "",
-  };
+  /*   templateUrl = "template-four";
+    template: TemplateNew = {
+      name: "",
+      id: "",
+      url: "",
+      operation: "",
+    }; */
 
   constructor(
     private typeNewsService: TypeNewService,
@@ -51,16 +51,16 @@ export class CreateAndEditTypeNewComponent implements OnInit {
 
   ngOnInit() {
     this.id = this.route.snapshot.params.id;
-    this.setShowCorrespondent();
-    this.template = this.templates.filter(
-      (currentT) => currentT.url === this.templateUrl
-    )[0];
+    /*     this.setShowCorrespondent();
+        this.template = this.templates.filter(
+          (currentT) => currentT.url === this.templateUrl
+        )[0]; */
     this.fg = this.fb.group(
       {
         description: ["", Validators.required],
         info: ["", Validators.required],
         code: ["", Validators.required],
-        template: ["Plantilla por Defecto", Validators.required],
+        //template: ["Plantilla por Defecto", Validators.required],
         is_active: [true, Validators.required],
       },
       {}
@@ -108,13 +108,13 @@ export class CreateAndEditTypeNewComponent implements OnInit {
       this.fg.get("description")!.setValue(data.description);
       this.fg.get("info")!.setValue(data.info);
       this.fg.get("code")!.setValue(data.code);
-      this.fg.get("template")!.setValue(data.template);
-      this.fg.get("is_active")!.setValue(data.is_active);
-      this.template = this.templates.filter(
-        (currentT) => currentT.name === data.template
-      )[0];
-      this.templateUrl = this.template.url;
-      this.setShowCorrespondent();
+      /*       this.fg.get("template")!.setValue(data.template);
+            this.fg.get("is_active")!.setValue(data.is_active);
+            this.template = this.templates.filter(
+              (currentT) => currentT.name === data.template
+            )[0];
+            this.templateUrl = this.template.url; 
+            this.setShowCorrespondent();*/
     });
   }
 
@@ -133,52 +133,52 @@ export class CreateAndEditTypeNewComponent implements OnInit {
       }
     );
   }
-
-  setShowCorrespondent() {
-    switch (this.templateUrl) {
-      case "template-one":
-        this.showOne = true;
-        break;
-      case "template-two":
-        this.showTwo = true;
-        break;
-      case "template-three":
-        this.showThree = true;
-        break;
-      case "template-four":
-        this.showFour = true;
-        break;
-      case "template-five":
-        this.showFive = true;
-        break;
-      case "template-six":
-        this.showSix = true;
-        break;
-      case "template-seven":
-        this.showSeven = true;
-        break;
-      case "template-eight":
-        this.showEight = true;
-        break;
-      default:
-        this.showNotFound = true;
+  /* 
+    setShowCorrespondent() {
+      switch (this.templateUrl) {
+        case "template-one":
+          this.showOne = true;
+          break;
+        case "template-two":
+          this.showTwo = true;
+          break;
+        case "template-three":
+          this.showThree = true;
+          break;
+        case "template-four":
+          this.showFour = true;
+          break;
+        case "template-five":
+          this.showFive = true;
+          break;
+        case "template-six":
+          this.showSix = true;
+          break;
+        case "template-seven":
+          this.showSeven = true;
+          break;
+        case "template-eight":
+          this.showEight = true;
+          break;
+        default:
+          this.showNotFound = true;
+      }
     }
-  }
-
-  selectionTemplateChange(event: MatSelectChange) {
-    this.showOne = false;
-    this.showTwo = false;
-    this.showThree = false;
-    this.showFour = false;
-    this.showFive = false;
-    this.showSix = false;
-    this.showSeven = false;
-    this.showEight = false;
-    this.showNotFound = false;
-    this.template = this.templates.filter(
-      (currentT) => currentT.name === event.value
-    )[0];
-    this.templateUrl = this.template.url;
-    this.setShowCorrespondent();
-  }
+  
+    selectionTemplateChange(event: MatSelectChange) {
+      this.showOne = false;
+      this.showTwo = false;
+      this.showThree = false;
+      this.showFour = false;
+      this.showFive = false;
+      this.showSix = false;
+      this.showSeven = false;
+      this.showEight = false;
+      this.showNotFound = false;
+      this.template = this.templates.filter(
+        (currentT) => currentT.name === event.value
+      )[0];
+      this.templateUrl = this.template.url;
+      this.setShowCorrespondent();
+    } */
 }

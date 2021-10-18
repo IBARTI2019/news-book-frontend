@@ -21,7 +21,7 @@ export class TypePeopleComponent implements OnInit {
     private router: Router,
     private dialogService: ConfirmDialogService,
     private toastr: ToastrService
-  ) {}
+  ) { }
 
   showCheck = () => true;
 
@@ -38,6 +38,8 @@ export class TypePeopleComponent implements OnInit {
       {
         dataAttribute: "is_active",
         attribute: "Status",
+        header: "Activo",
+        type: "bool",
       },
 
       {
@@ -66,7 +68,7 @@ export class TypePeopleComponent implements OnInit {
           (error: HttpErrorResponse) => {
             this.toastr.error(
               error.error.message ||
-                "Ocurrio un error al intentar eliminar el Tipo de Persona."
+              "Ocurrio un error al intentar eliminar el Tipo de Persona."
             );
           }
         );

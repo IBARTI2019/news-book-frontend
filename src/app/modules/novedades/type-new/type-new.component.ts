@@ -21,7 +21,7 @@ export class TypeNewComponent implements OnInit {
     private router: Router,
     private dialogService: ConfirmDialogService,
     private toastr: ToastrService,
-  ) {}
+  ) { }
 
   showCheck = () => true;
 
@@ -30,6 +30,10 @@ export class TypeNewComponent implements OnInit {
       {
         header: "Descripcion",
         attribute: "description",
+      },
+      {
+        header: "Información",
+        attribute: "info",
       },
       {
         header: "Activo",

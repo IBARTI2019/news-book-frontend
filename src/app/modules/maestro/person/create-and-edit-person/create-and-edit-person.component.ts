@@ -44,7 +44,7 @@ export class CreateAndEditPersonComponent implements OnInit {
         address: ["", Validators.required],
         phone: ["", Validators.required],
         mobile: ["", Validators.required],
-        // type_person: ["", Validators.required],
+        type_person: ["", Validators.required],
         is_active: [true, Validators.required],
       },
       {}

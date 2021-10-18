@@ -16,7 +16,7 @@ export interface User {
   photo?: string;
   books?: string[];
   is_staff?: boolean;
-  type?: number;
+  type_user?: string;
   oesvica_user?: boolean;
   is_active?: boolean;
   info?: string;
@@ -24,6 +24,7 @@ export interface User {
   jwt_id?: string;
   user_id?: string;
   groups?: string[];
+  identification_number?: string;
 }
 
 export interface GroupUser {
@@ -87,6 +88,7 @@ export interface Person {
   phone: string;
   mobile: string;
   type_person?: string;
+  type_person_display?: TypePeople;
   is_active?: string;
 }
 

@@ -21,7 +21,7 @@ export class MaterialsComponent implements OnInit {
     private router: Router,
     private dialogService: ConfirmDialogService,
     private toastr: ToastrService
-  ) {}
+  ) { }
 
   showCheck = () => true;
 
@@ -37,11 +37,12 @@ export class MaterialsComponent implements OnInit {
       },
       {
         dataAttribute: "description",
-        attribute: "Descripcion",
+        attribute: "Descripción",
       },
       {
         dataAttribute: "is_active",
-        attribute: "Status",
+        attribute: "Activo",
+        type: "bool"
       },
       {
         attribute: "id",
@@ -70,7 +71,7 @@ export class MaterialsComponent implements OnInit {
           (error: HttpErrorResponse) => {
             this.toastr.error(
               error.error.mesaage ||
-                "No se logro eliminar el Material"
+              "No se logro eliminar el Material"
             );
           }
         );

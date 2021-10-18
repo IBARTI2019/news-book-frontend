@@ -1,40 +1,19 @@
 <mat-card>
-  <app-card-header
-    modulo="Novedades"
-    menu="{{ update ? 'Actualizar Tipo de Novedad' : 'Crear Tipo de Novedad' }}"
-  >
+  <app-card-header modulo="Novedades" menu="{{ update ? 'Actualizar Tipo de Novedad' : 'Crear Tipo de Novedad' }}">
   </app-card-header>
   <mat-card-content>
-    <form
-      [formGroup]="fg"
-      fxLayout="column"
-      fxLayoutGap="5px"
-      (ngSubmit)="onSubmit()"
-      #formT="ngForm"
-    >
+    <form [formGroup]="fg" fxLayout="column" fxLayoutGap="5px" (ngSubmit)="onSubmit()" #formT="ngForm">
       <div fxLayout="column" fxLayout.xs="column" fxLayoutGap="5px">
         <mat-form-field>
-          <input
-            matInput
-            placeholder="Codigo"
-            formControlName="code"
-          />
+          <input matInput placeholder="Codigo" formControlName="code" />
         </mat-form-field>
         <mat-form-field>
-          <input
-            matInput
-            placeholder="Descripcion"
-            formControlName="description"
-          />
+          <input matInput placeholder="Descripcion" formControlName="description" />
         </mat-form-field>
         <mat-form-field>
-          <textarea
-            matInput
-            placeholder="Informacion..."
-            formControlName="info"
-          ></textarea>
+          <textarea matInput placeholder="Informacion..." formControlName="info"></textarea>
         </mat-form-field>
-        <mat-form-field>
+        <!--         <mat-form-field>
           <mat-select formControlName="template" (selectionChange)="selectionTemplateChange($event)" placeholder="Plantilla">
             <mat-option
               *ngFor="let template of templates"
@@ -43,7 +22,7 @@
               {{ template.name }}
             </mat-option>
           </mat-select>
-        </mat-form-field>
+        </mat-form-field> -->
       </div>
 
       <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="5px">
@@ -52,18 +31,14 @@
         </div>
       </div>
       <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="end">
-        <button
-          mat-raised-button
-          color="primary"
-          type='submit'
-        >
+        <button mat-raised-button color="primary" type='submit'>
           {{ update ? "Actualizar" : "Crear" }}
         </button>
       </div>
     </form>
   </mat-card-content>
 </mat-card>
-<div fxLayout="row wrap">
+<!-- <div fxLayout="row wrap">
   <div fxFlex.gt-xs="100" fxFlex="100">
     <mat-card>
       <mat-card-content>
@@ -121,4 +96,4 @@
       </mat-card-content>
     </mat-card>
   </div>
-</div>
+</div> -->

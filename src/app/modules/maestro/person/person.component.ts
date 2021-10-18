@@ -21,7 +21,7 @@ export class PersonComponent implements OnInit {
     private router: Router,
     private dialogService: ConfirmDialogService,
     private toastr: ToastrService
-  ) {}
+  ) { }
 
   showCheck = () => true
 
@@ -44,7 +44,7 @@ export class PersonComponent implements OnInit {
         attribute: "Cedula",
       },
       {
-        dataAttribute: "addres",
+        dataAttribute: "address",
         attribute: "Direccion",
       },
       {
@@ -56,12 +56,14 @@ export class PersonComponent implements OnInit {
         attribute: "Celular",
       },
       {
-        dataAttribute: "type_person.description",
+        dataAttribute: "type_person_display.description",
         attribute: "Tipo de Persona",
       },
       {
+        header: "Activo",
         dataAttribute: "is_active",
         attribute: "is_active",
+        type: "bool"
       },
       {
         attribute: "id",
@@ -89,7 +91,7 @@ export class PersonComponent implements OnInit {
           (error: HttpErrorResponse) => {
             this.toastr.error(
               error.error.message ||
-                "Ocurrio un error al intentar eliminar los datos de la Persona"
+              "Ocurrio un error al intentar eliminar los datos de la Persona"
             );
           }
         );

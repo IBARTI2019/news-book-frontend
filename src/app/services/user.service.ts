@@ -17,11 +17,11 @@ export class UserService extends API<User> {
   protected URL = `${this.URL_API}/security/user/`;
   user$ = new BehaviorSubject<{
     exist: boolean;
-    type: number;
+    type_user: string;
     oesvica_user: boolean;
   }>({
     exist: false,
-    type: 0,
+    type_user: "",
     oesvica_user: false,
   });
   constructor(
@@ -40,7 +40,7 @@ export class UserService extends API<User> {
         map((res: User) => {
           this.user$.next({
             exist: true,
-            type: res.type || 0,
+            type_user: res.type_user || "",
             oesvica_user: res.oesvica_user || true,
           });
           setLocalStorage(ID_CRYPT, encryptUsingAES256(res.id || ""));

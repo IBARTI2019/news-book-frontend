@@ -77,7 +77,7 @@ export class SessionService extends API<User> {
           setLocalStorage(PERMISSIONS, encryptUsingAES256(JSON.stringify(getPermissions())))
           this.userService.user$.next({
             exist: true,
-            type: 1,
+            type_user: "",
             oesvica_user: true,
           })
           return res;

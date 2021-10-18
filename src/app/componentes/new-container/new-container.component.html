@@ -1,24 +1,12 @@
 <mat-card class="example-card">
-  <img
-    mat-card-image
-    src="{{ srcNew }}"
-    alt="{{ altNew }}"
-    (click)="openDialog()"
-    width="360"
-    height="280"
-  />
+  <img mat-card-image src="{{ srcNew }}" alt="{{ altNew }}" (click)="openDialog()" width="360" height="280" />
   <mat-card-content>
     <p>
       {{ description }}
     </p>
   </mat-card-content>
   <mat-card-actions style="display: grid">
-    <button
-      [disabled]="!isSuperUser && isStaff"
-      mat-raised-button
-      (click)="openDialog()"
-      color="primary"
-    >
+    <button mat-raised-button (click)="openDialog()" color="primary">
       Crear
     </button>
   </mat-card-actions>

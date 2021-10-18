@@ -24,13 +24,17 @@
         </mat-form-field>
         <mat-form-field appearance="fill">
           <mat-label>Cédula de Identidad</mat-label>
-          <input matInput formControlName="ci" />
+          <input matInput formControlName="identification_number" />
         </mat-form-field>
       </div>
       <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="5px">
         <mat-form-field appearance="fill">
-          <mat-label>Contraseña</mat-label>
-          <input matInput placeholder="Contraseña" formControlName="password" />
+          <mat-label>Tipo de usuario</mat-label>
+          <mat-select formControlName="type_user" (selectionChange)="handleType()">
+            <mat-option *ngFor="let type of listTypes" [value]="type.type">
+              <p [matTooltip]="type.info">{{ type.type | titlecase }}</p>
+            </mat-option>
+          </mat-select>
         </mat-form-field>
         <mat-form-field appearance="fill">
           <mat-label>Correo</mat-label>
@@ -42,14 +46,6 @@
         </mat-form-field>
       </div>
       <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="5px">
-        <mat-form-field appearance="fill">
-          <mat-label>Tipo de usuario</mat-label>
-          <mat-select formControlName="type" (selectionChange)="handleType()">
-            <mat-option *ngFor="let type of listTypes" [value]="type.code">
-              <p [matTooltip]="type.info">{{ type.type | titlecase }}</p>
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
         <mat-form-field appearance="fill">
           <mat-label>Asignar Libro(s)</mat-label>
           <mat-select formControlName="books" (selectionChange)="handleBooks()" multiple>
@@ -72,16 +68,27 @@
             </mat-option>
           </mat-select>
         </mat-form-field>
-        <div fxFlex="15">
-          <mat-checkbox formControlName="is_active">Activo</mat-checkbox>
-        </div>
       </div>
       <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="5px">
         <mat-form-field appearance="fill">
           <mat-label>Dirección</mat-label>
           <input matInput placeholder="Dirección" formControlName="address" />
         </mat-form-field>
+        <div fxFlex="15">
+          <mat-checkbox formControlName="is_active">Activo</mat-checkbox>
+        </div>
       </div>
+      <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="5px">
+        <mat-form-field appearance="fill">
+          <mat-label>Contraseña</mat-label>
+          <input matInput placeholder="Contraseña" formControlName="password" />
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Repita Contraseña</mat-label>
+          <input matInput placeholder="Repita Contraseña" formControlName="password2" />
+        </mat-form-field>
+      </div>
+
       <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="end">
         <button mat-raised-button color="primary" type="submit">
           {{ update ? "Actualizar" : "Crear" }}

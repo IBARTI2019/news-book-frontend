@@ -2,13 +2,14 @@ import { HttpErrorResponse } from "@angular/common/http";
 import { AfterViewChecked, ChangeDetectorRef, Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
-import { GroupUser, User } from "../../../../interfaces";
+import { Book, GroupUser, User } from "../../../../interfaces";
 import { ToastrService } from "ngx-toastr";
 
 import { UserService } from '../../../../services/user.service';
 import { UserGroupService } from '../../../../services/user-group.service';
 import { forkJoin } from 'rxjs';
 import { USER_TYPES } from 'app/constants';
+import { BooksService } from "app/services/books.service";
 
 @Component({
   selector: 'app-user-edit',
@@ -29,23 +30,7 @@ export class UserEditComponent implements OnInit, AfterViewChecked {
   multipleLocalBooks = true
   disableOtherBooks = false
   bookSelected = ''
-  localBooks = [
-    {
-      name: 'Libro 1',
-    },
-    {
-      name: 'Libro 2',
-    },
-    {
-      name: 'Libro 3',
-    },
-    {
-      name: 'Libro 4',
-    },
-    {
-      name: 'Libro 5',
-    }
-  ]
+  localBooks: Book[] = []
   constructor(
     private userService: UserService,
     private groupService: UserGroupService,
@@ -53,7 +38,8 @@ export class UserEditComponent implements OnInit, AfterViewChecked {
     private toastr: ToastrService,
     private router: Router,
     private route: ActivatedRoute,
-    private chDRef: ChangeDetectorRef
+    private chDRef: ChangeDetectorRef,
+    private booksService: BooksService
   ) {
     this.fg = this.fb.group({});
     this.routeState = history.state
@@ -63,23 +49,27 @@ export class UserEditComponent implements OnInit, AfterViewChecked {
     this.id = this.route.snapshot.params.id || "";
     this.redirectTo = this.routeState.redirectTo || ""
     this.isOesvicaUser = this.userService.user$.getValue().oesvica_user
+    this.booksService.list().subscribe((books: Book[]) => {
+      this.localBooks = books;
+    });
     this.fg = this.fb.group(
       {
         ficha: ["", this.isOesvicaUser ? Validators.required : Validators.nullValidator],
-        ci: ["", this.isOesvicaUser ? [Validators.required, Validators.pattern('^[0-9]+$')] : Validators.nullValidator],
+        identification_number: ["", this.isOesvicaUser ? [Validators.required, Validators.pattern('^[0-9]+$')] : Validators.nullValidator],
         code: ["", Validators.required],
-        password: ["", Validators.required],
+        password: ["", this.id ? Validators.nullValidator : Validators.required],
+        password2: [""],
         name: ["", Validators.required],
         last_name: ["", Validators.required],
         address: ["", Validators.required],
         email: ["", Validators.required],
         phone: ["", Validators.required],
-        type: [0, Validators.required],
+        type_user: [0, Validators.required],
         groups: [[]],
         books: [[]],
         security_user: ["", Validators.required],
         is_staff: [false],
-        is_active: [true, Validators.required],
+        is_active: [true, Validators.required]
       }
     );
     if (this.id) {
@@ -89,7 +79,7 @@ export class UserEditComponent implements OnInit, AfterViewChecked {
     this.getGroupsAndUsers();
   }
 
-  ngAfterViewChecked(): void {    
+  ngAfterViewChecked(): void {
     // if (this.fg.value.type !== 3) {
     //   this.multipleLocalBooks = true
     //   if (typeof this.fg.get("books")!.value === 'string') this.fg.get("books")!.setValue([])
@@ -106,14 +96,16 @@ export class UserEditComponent implements OnInit, AfterViewChecked {
       (data: User) => {
         const security: any = data.security_user
         this.fg.get("ficha")!.setValue(data.ficha || 'field no exist')
-        this.fg.get("ci")!.setValue(data.ci || '0000000')
+        this.fg.get("identification_number")!.setValue(data.identification_number || '0000000')
         this.fg.get("code")!.setValue(data.code);
         this.fg.get("password")!.setValue(data.password);
         this.fg.get("email")!.setValue(data.email);
         this.fg.get("name")!.setValue(data.name);
         this.fg.get("last_name")!.setValue(data.last_name);
-        this.fg.get("security_user")!.setValue(security.id || null)
-        this.fg.get("type")!.setValue(data.type || 0)
+        if (security) {
+          this.fg.get("security_user")!.setValue(security.id || null);
+        }
+        this.fg.get("type_user")!.setValue(data.type_user || "")
         this.fg.get("books")!.setValue(data.books || [])
         this.fg.get("address")!.setValue(data.address);
         this.fg.get("phone")!.setValue(data.phone);
@@ -143,7 +135,11 @@ export class UserEditComponent implements OnInit, AfterViewChecked {
   }
 
   save() {
-    this.userService.add({...this.fg.value, oesvica_user: this.isOesvicaUser}).subscribe(
+    if ((this.fg.value.password != this.fg.value.password2) && this.fg.value.password) {
+      this.toastr.error("Las contraseñas no coinciden");
+      return;
+    }
+    this.userService.add({ ...this.fg.value, oesvica_user: this.isOesvicaUser }).subscribe(
       (data) => {
         this.toastr.success("Datos del Usuario creado con éxito");
         this.submitted = false;
@@ -158,6 +154,10 @@ export class UserEditComponent implements OnInit, AfterViewChecked {
   }
 
   updateUser() {
+    if ((this.fg.value.password != this.fg.value.password2) && this.fg.value.password) {
+      this.toastr.error("Las contraseñas no coinciden");
+      return;
+    }
     this.userService.update(this.id, this.fg.value).subscribe(
       (data) => {
         this.toastr.success("Datos Usuario actualizado");
@@ -180,7 +180,7 @@ export class UserEditComponent implements OnInit, AfterViewChecked {
   }
 
   handleBooks() {
-    if (this.fg.get("type")!.value === 3) {
+    if (this.fg.get("type_user")!.value === 3) {
       if (this.fg.get("books")!.value.length === 1) {
         this.bookSelected = this.fg.get("books")!.value[0]
         this.disableOtherBooks = true
