@@ -86,7 +86,7 @@ export class QuestionService extends API<any> {
   }
 
   generatePreviewQuentions(data: TemplateTypeNew[]) {
-    const questions = this.generateControls(data);
+    const questions = this.generateControls(data || []);
     return of(questions);
   }
 
@@ -128,21 +128,6 @@ export class QuestionService extends API<any> {
               label: d.label || 'Personal que recibe la guardia',
               required: true,
               form_field: false,
-              percentage_per_row: Number(d.percentage_per_row) || 100,
-              settings: d.settings,
-            }, this.ibartiService)
-          )
-          break;
-        case 'PLANNED_PERSONNEL_WITH_SAFETY_PROTOCOL':
-          questions.push(
-            new StaffReceivingTheGuard({
-              value: d.value || '',
-              key: `${d.code}_${index}`,
-              code: d.code,
-              form_field: false,
-              applies_security_protocol: true,
-              label: d.label || 'Personal que recibe la guardia 2',
-              required: true,
               percentage_per_row: Number(d.percentage_per_row) || 100,
               settings: d.settings,
             }, this.ibartiService)

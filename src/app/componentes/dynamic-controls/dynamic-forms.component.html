@@ -1,27 +1,14 @@
 <div [formGroup]="form">
   <div *ngIf="!question.form_field" [ngSwitch]="question.controlType">
-    <h3 *ngSwitchCase="'title'">{{ question.value }}</h3>
-    <app-changing-guard-staff-list
-      [id]="question.key"
-      *ngSwitchCase="'staffReceivingTheGuard'"
-      [staffArr]="question.fichas"
-      [settings]="question.settings"
-      [fGRoot]="form"
-    ></app-changing-guard-staff-list>
+    <h3 *ngSwitchCase="'title'">{{ question.value || question.title }}</h3>
+    <app-changing-guard-staff-list [id]="question.key" *ngSwitchCase="'staffReceivingTheGuard'" [readOnly]="readOnly"
+      [staffArr]="question.fichas" [settings]="question.settings" [fGRoot]="form" [staffArrSelected]="question.value">
+    </app-changing-guard-staff-list>
   </div>
-  <mat-form-field
-    appearance="fill"
-    [ngSwitch]="question.controlType"
-    *ngIf="question.form_field"
-  >
+  <mat-form-field appearance="fill" [ngSwitch]="question.controlType" *ngIf="question.form_field">
     <mat-label [attr.for]="question.key">{{ question.label }}</mat-label>
-    <input
-      matInput
-      *ngSwitchCase="'textbox'"
-      [formControlName]="question.key"
-      [id]="question.key"
-      [type]="question.type"
-    />
+    <input matInput *ngSwitchCase="'textbox'" [formControlName]="question.key" [id]="question.key"
+      [type]="question.type" [readonly]="readOnly" />
     <!-- <mat-select
       [id]="question.key"
       *ngSwitchCase="'staffReceivingTheGuard'"
@@ -34,11 +21,7 @@
         </p>
       </mat-option>
     </mat-select> -->
-    <mat-select
-      [id]="question.key"
-      *ngSwitchCase="'dropdown'"
-      [formControlName]="question.key"
-    >
+    <mat-select [id]="question.key" *ngSwitchCase="'dropdown'" [formControlName]="question.key" [readonly]="readOnly">
       <mat-option *ngFor="let opt of question.options" [value]="opt.key">
         <p [matTooltip]="opt?.info">{{ opt.value | titlecase }}</p>
       </mat-option>

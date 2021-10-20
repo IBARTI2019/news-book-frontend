@@ -10,6 +10,7 @@ import { QuestionBase } from '../../dynamic-forms/classes';
 export class DynamicControlsComponent implements OnInit {
   @Input() question!: QuestionBase;
   @Input() form!: FormGroup;
+  @Input() readOnly: boolean = false;
 
   ngOnInit() {
   }

@@ -5,12 +5,12 @@ import { QuestionBase } from "../classes";
 
 @Injectable()
 export class ControlService {
-  constructor() {}
+  constructor() { }
 
   toFormGroup(questions: QuestionBase[]) {
     const group: any = {};
     questions.forEach((question) => {
-      switch (question.key) {
+      switch (question.controlType) {
         case "staffReceivingTheGuard":
           group[question.key] = question.required
             ? new FormArray([], Validators.required)

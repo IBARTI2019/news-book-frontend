@@ -39,7 +39,6 @@ export class CreateAndEditNewComponent implements OnInit {
   idTN = "";
   currentNew: New = {
     id: "",
-    created_by: "",
     employee: "",
   };
   controls$!: Observable<QuestionBase[]>;
@@ -73,6 +72,7 @@ export class CreateAndEditNewComponent implements OnInit {
                 } 
         this.setShowCorrespondent();
         */
+        this.currentNew.template = typeNew.template;
         this.generateControls(typeNew.template !== 'object' ? typeNew.template : [])
       },
       (error: HttpErrorResponse) => {
@@ -140,7 +140,8 @@ export class CreateAndEditNewComponent implements OnInit {
     this.update ? this.updateNew(data) : this.save(data);
   }
 
-  save(data: object) {
+  save(data: any) {
+    this.currentNew.info = data;
     this.newService.add(this.currentNew).subscribe(
       (data) => {
         this.toastr.success("Novedad creada con éxito.");

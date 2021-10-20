@@ -2,38 +2,21 @@
   <form (ngSubmit)="onSubmit()" [formGroup]="form">
     <div fxLayout="row wrap" fxLayout.xs="column">
       <ng-container *ngFor="let question of questions">
-        <div
-          fxLayout="column"
-          [fxFlex]="
+        <div fxLayout="column" [fxFlex]="
             question.percentage_per_row ? question.percentage_per_row : 100
-          "
-        >
-          <app-dynamic-forms
-            [question]="question"
-            [form]="form"
-          ></app-dynamic-forms>
+          ">
+          <app-dynamic-forms [question]="question" [form]="form" [readOnly]="readOnly"></app-dynamic-forms>
         </div>
       </ng-container>
     </div>
-    <div
-      fxLayout="row"
-      fxLayout.xs="column"
-      fxLayoutAlign="end"
-      fxLayoutGap="5"
-      *ngIf="withSaved"
-    >
-      <button
-        mat-raised-button
-        color="primary"
-        type="submit"
-        [disabled]="!form.valid"
-      >
+    <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="end" fxLayoutGap="5" *ngIf="withSaved && !readOnly">
+      <button mat-raised-button color="primary" type="submit" [disabled]="!form.valid">
         Guardar
       </button>
     </div>
   </form>
 
-  <div *ngIf="payLoad && withSaved">
+  <div *ngIf="payLoad && withSaved && !readOnly">
     <p>
       <strong>Saved the following values</strong>
     </p>

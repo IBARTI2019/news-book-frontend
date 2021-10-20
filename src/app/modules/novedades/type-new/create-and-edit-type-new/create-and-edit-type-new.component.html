@@ -2,7 +2,22 @@
   <app-card-header modulo="Novedades" menu="{{ update ? 'Actualizar Tipo de Novedad' : 'Crear Tipo de Novedad' }}">
   </app-card-header>
   <mat-card-content>
+    <mat-form-field>
+      <div>
+        <mat-toolbar>
+          <input matInput [value]="selectedFileName ? selectedFileName : 'Selecciona la imagen'"
+            (click)="file.click()" />
+        </mat-toolbar>
+        <input #file style="display: none;" multiple="true" type="file" accept='image/*'
+          (change)="selectFiles($event)" />
+      </div>
+    </mat-form-field>
+
     <form [formGroup]="fg" fxLayout="column" fxLayoutGap="5px" (ngSubmit)="onSubmit()" #formT="ngForm">
+      <div fxLayout="column" fxLayout.xs="column" fxLayoutGap="5px" align="center">
+        <img mat-card-image [src]="preview" class="preview" *ngIf="preview" width="360" height="280">
+      </div>
+
       <div fxLayout="column" fxLayout.xs="column" fxLayoutGap="5px">
         <mat-form-field>
           <input matInput placeholder="Codigo" formControlName="code" />

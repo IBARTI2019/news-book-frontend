@@ -24,7 +24,7 @@ export class NewComponent implements OnInit {
     private router: Router,
     private dialogService: ConfirmDialogService,
     private toastr: ToastrService
-  ) {}
+  ) { }
 
   showCheck = () => true;
 
@@ -38,7 +38,7 @@ export class NewComponent implements OnInit {
         attribute: "employee",
         header: "Empleado",
       },
-      
+
       {
         attribute: "id",
         header: "Opciones",
@@ -47,8 +47,8 @@ export class NewComponent implements OnInit {
     ];
   }
 
-  update(id: string) {
-    this.router.navigate(["new", id]);
+  view(id: string) {
+    this.router.navigate(["new/view", id]);
   }
 
   delete(localNew: New) {

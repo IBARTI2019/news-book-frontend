@@ -1,7 +1,7 @@
 import { QuestionBaseParams, StaffReceivingTheGuardSettings } from "app/interfaces";
 
 export class QuestionBase {
-  value?: string;
+  value?: any;
   code?: string;
   key: string;
   label: string;
@@ -45,6 +45,14 @@ export class QuestionBase {
     } else {
       this.fichas = options.fichas || [];
     }
+  }
+
+  public setValue(value: any): void {
+    this.value = value;
+  }
+
+  public getKey(): string {
+    return this.key;
   }
 }
 

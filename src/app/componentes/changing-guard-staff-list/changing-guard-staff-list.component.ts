@@ -71,10 +71,12 @@ export const CHANGING_GUARD_STAFF_LIST_DEFAULT: StaffReceivingTheGuardSettings =
 })
 export class ChangingGuardStaffListComponent implements OnInit, OnChanges {
   @Input() id: string = '';
+  @Input() value: any = null;
   @Input() settings: StaffReceivingTheGuardSettings = CHANGING_GUARD_STAFF_LIST_DEFAULT;
   @Input() staffArrSelected: Staff[] = [];
   @Input() staffArr: PlannedStaff[] = STAFF_ARR_DEAFAULT;
   @Input() fGRoot!: FormGroup;
+  @Input() readOnly: boolean = false;
 
   @Output() isValid: EventEmitter<boolean> = new EventEmitter<boolean>();
 
@@ -83,7 +85,7 @@ export class ChangingGuardStaffListComponent implements OnInit, OnChanges {
   fGStaff = new FormGroup({});
   defaultValues = { ...CHANGING_GUARD_STAFF_LIST_DEFAULT }
 
-  constructor(private fB: FormBuilder) {}
+  constructor(private fB: FormBuilder) { }
 
   ngOnInit(): void {
     if (this.fGRoot && this.id && this.fGRoot.get(this.id)) {
@@ -104,9 +106,12 @@ export class ChangingGuardStaffListComponent implements OnInit, OnChanges {
 
     this.fGStaff.valueChanges.subscribe((values) => {
       values.staff.forEach((s: Staff) => {
-        const found = this.fA.value.some((v: any) => {
-          return v.cod_ficha === s.cod_ficha;
-        });
+        let found = null;
+        if (this.fA.value) {
+          found = this.fA.value.some((v: any) => {
+            return v.cod_ficha === s.cod_ficha;
+          });
+        }
         if (!found) this.addFG(s);
       });
       this.fA.value.forEach((v: any, index: number) => {

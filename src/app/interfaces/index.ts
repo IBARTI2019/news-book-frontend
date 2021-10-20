@@ -117,9 +117,10 @@ export interface New {
   vehicles?: string[];
   employee: string;
   message?: string;
-  info?: string;
+  info?: any;
   type_news?: string;
-  created_by: string;
+  created_by?: string;
+  template?: TemplateTypeNew[] | any;
 }
 
 export interface TemplateOne {

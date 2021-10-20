@@ -1,8 +1,10 @@
 import {
   Component,
+  EventEmitter,
   Input,
   OnChanges,
   OnInit,
+  Output,
   SimpleChanges,
 } from "@angular/core";
 import { FormGroup } from "@angular/forms";
@@ -19,14 +21,23 @@ import { ControlService } from "../../dynamic-forms/services/control.service";
 export class DynamicFormComponent implements OnInit, OnChanges {
   @Input() questions: QuestionBase[] | null = [];
   @Input() withSaved: boolean = true;
+  @Input() readOnly: boolean = false;
+  @Input() info: any = null;
+  @Output()
+  onSaveChange = new EventEmitter();
   form!: FormGroup;
   payLoad = "";
-
-  constructor(private qcs: ControlService) {}
+  submitted = false;
+  constructor(private qcs: ControlService) { }
 
   ngOnChanges(change: SimpleChanges): void {
     if (change.questions) {
       this.questions = change.questions.currentValue;
+      if (this.info) {
+        this.questions?.forEach((q: QuestionBase) => {
+          q.setValue(this.info[q.getKey()]);
+        })
+      }
       this.form = this.qcs.toFormGroup(this.questions as QuestionBase[]);
     }
   }
@@ -35,6 +46,8 @@ export class DynamicFormComponent implements OnInit, OnChanges {
   }
 
   onSubmit() {
-    this.payLoad = JSON.stringify(this.form.getRawValue());
+    this.payLoad = this.form.getRawValue();
+    this.onSaveChange.emit(this.payLoad);
   }
+
 }

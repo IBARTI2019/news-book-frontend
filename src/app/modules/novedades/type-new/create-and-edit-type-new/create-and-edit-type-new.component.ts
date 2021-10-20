@@ -22,22 +22,28 @@ export class CreateAndEditTypeNewComponent implements OnInit {
   id: string = "";
   update = false;
 
-  showOne = false;
-  showTwo = false;
-  showThree = false;
-  showFour = false;
-  showFive = false;
-  showSix = false;
-  showSeven = false;
-  showEight = false;
-  showNotFound = false;
-  /*   templateUrl = "template-four";
-    template: TemplateNew = {
-      name: "",
-      id: "",
-      url: "",
-      operation: "",
-    }; */
+  /* 
+   showOne = false;
+   showTwo = false;
+   showThree = false;
+   showFour = false;
+   showFive = false;
+   showSix = false;
+   showSeven = false;
+   showEight = false;
+   showNotFound = false;
+    templateUrl = "template-four";
+     template: TemplateNew = {
+       name: "",
+       id: "",
+       url: "",
+       operation: "",
+     }; */
+
+  selectedFile?: any;
+  selectedFileName: string = "";
+  preview: string = "";
+
 
   constructor(
     private typeNewsService: TypeNewService,
@@ -88,6 +94,13 @@ export class CreateAndEditTypeNewComponent implements OnInit {
   }
 
   save() {
+    const formData: any = new FormData();
+    let values = this.fg.value
+    for (const key in values) {
+      formData.append(key, values[key]);
+    }
+    const img = this.selectedFile;
+    formData.append('image', img);
     this.typeNewsService.add(this.fg.value).subscribe(
       (data) => {
         this.toastr.success("Tipo de Novedad creado con éxito");
@@ -103,11 +116,32 @@ export class CreateAndEditTypeNewComponent implements OnInit {
     );
   }
 
+  selectFiles(event: any): void {
+    this.selectedFileName = ""
+    this.selectedFile = event.target.files[0];
+
+    this.preview = "";
+    if (this.selectedFile) {
+      const reader = new FileReader();
+
+      reader.onload = (e: any) => {
+        console.log(e.target.result);
+        this.preview = e.target.result;
+      };
+
+      reader.readAsDataURL(this.selectedFile);
+
+      this.selectedFileName = this.selectedFile.name;
+    }
+  }
+
   getTypeNew() {
     this.typeNewsService.get(this.id).subscribe((data: TypeNew) => {
       this.fg.get("description")!.setValue(data.description);
       this.fg.get("info")!.setValue(data.info);
       this.fg.get("code")!.setValue(data.code);
+      if (data.image)
+        this.preview = data.image;
       /*       this.fg.get("template")!.setValue(data.template);
             this.fg.get("is_active")!.setValue(data.is_active);
             this.template = this.templates.filter(
@@ -119,7 +153,16 @@ export class CreateAndEditTypeNewComponent implements OnInit {
   }
 
   updateTypeNew() {
-    this.typeNewsService.update(this.id, this.fg.value).subscribe(
+    const formData: any = new FormData();
+    let values = this.fg.value
+    for (const key in values) {
+      formData.append(key, values[key]);
+    }
+    if (this.selectedFile) {
+      const img = this.selectedFile;
+      formData.append('image', img);
+    }
+    this.typeNewsService.update(this.id, formData).subscribe(
       (data) => {
         this.toastr.success("Tipo de Novedad actualizado");
         this.submitted = false;

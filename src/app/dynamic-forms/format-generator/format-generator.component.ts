@@ -88,19 +88,19 @@ export class FormatGeneratorComponent implements OnInit {
           element.code !== "PLANNED_STAFF"
             ? element
             : {
-                ...element,
-                settings: element.settings || {
-                  testing: false,
-                  guardStatus: "REGULAR",
-                  percentage: 100,
-                  showTokenField: true,
-                  showNameField: true,
-                  showProtocolField: true,
-                  showHealthConditionField: true,
-                  showCheckInField: true,
-                  showGuardStatusField: true,
-                },
+              ...element,
+              settings: element.settings || {
+                testing: false,
+                guardStatus: "REGULAR",
+                percentage: 100,
+                showTokenField: true,
+                showNameField: true,
+                showProtocolField: true,
+                showHealthConditionField: true,
+                showCheckInField: true,
+                showGuardStatusField: true,
               },
+            },
         index: index,
       },
     });

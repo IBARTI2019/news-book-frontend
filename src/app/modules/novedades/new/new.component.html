@@ -7,11 +7,8 @@
                 <div class="d-flex flex-wrap">
                     <ng-template #templateOpciones let-column="column" let-item="item" let-i="i">
                         <div class="button-row">
-                            <button mat-icon-button appPermiso metodo="PUT" (click)="update(item.type_news)">
-                                <mat-icon>edit</mat-icon>
-                            </button>
-                            <button mat-icon-button appPermiso metodo="DELETE" (click)="delete(item)">
-                                <mat-icon>delete</mat-icon>
+                            <button mat-icon-button appPermiso metodo="PUT" (click)="view(item.id)">
+                                <mat-icon>pageview</mat-icon>
                             </button>
                         </div>
                     </ng-template>

@@ -5,6 +5,7 @@ import { NgxPermissionsGuard } from 'ngx-permissions';
 import { CreateAndEditNewComponent } from "./create-and-edit-new/create-and-edit-new.component";
 import { NewComponent } from "./new.component";
 import { SelectNewComponent } from './select-new/select-new.component';
+import { ViewNewComponent } from "./view-new/view-new.component";
 
 export const NewRouting: Routes = [
   {
@@ -74,6 +75,25 @@ export const NewRouting: Routes = [
           },
         },
         component: CreateAndEditNewComponent,
+      },
+      {
+        path: "view/:id",
+        canActivate: [NgxPermissionsGuard],
+        data: {
+          permissions: {
+            only: [ADMIN, USER, SUPERVISOR, AUDITOR],
+            redirectTo: '/new/view'
+          },
+          breadcrumbAnt: {
+            label: "Novedades",
+            url: "new",
+            params: [],
+          },
+          breadcrumb: {
+            label: "Ver Novedad",
+          },
+        },
+        component: ViewNewComponent,
       },
     ],
   },

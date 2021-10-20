@@ -19,6 +19,8 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { ComponentesModule } from '../../../componentes/componentes.module';
 import { NewTemplatesModule } from 'app/new-templates/new-templates.module';
 import { SharedModule } from 'app/shared/shared.module';
+import { MatListModule } from '@angular/material/list';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 @NgModule({
   declarations: [
@@ -44,6 +46,8 @@ import { SharedModule } from 'app/shared/shared.module';
     NewTemplatesModule,
     MatIconModule,
     SharedModule,
+    MatListModule,
+    MatToolbarModule
   ]
 })
 export class TypeNewModule { }

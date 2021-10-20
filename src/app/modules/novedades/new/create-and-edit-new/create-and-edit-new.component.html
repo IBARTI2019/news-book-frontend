@@ -4,7 +4,7 @@
       <app-card-header modulo="Novedades" menu="Crear Novedad">
       </app-card-header>
       <mat-card-content>
-        <app-dymamic-form *ngIf="!generating" [questions]="controls$ | async">
+        <app-dymamic-form *ngIf="!generating" [questions]="controls$ | async" (onSaveChange)="save($event)">
         </app-dymamic-form>
         <!--         <app-template-one *ngIf="showOne" (tSubmit)="onSubmit($event)" [method]="update ? 'update' : 'create'"
           [name]="template.name" [operation]="template.operation"></app-template-one>

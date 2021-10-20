@@ -27,10 +27,11 @@ import { SharedModule } from 'app/shared/shared.module';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { ViewNewComponent } from './view-new/view-new.component';
 
 
 @NgModule({
-  declarations: [NewComponent, CreateAndEditNewComponent, SelectNewComponent],
+  declarations: [NewComponent, CreateAndEditNewComponent, SelectNewComponent, ViewNewComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(NewRouting),
