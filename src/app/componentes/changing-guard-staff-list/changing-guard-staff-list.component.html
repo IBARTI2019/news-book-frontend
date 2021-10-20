@@ -32,7 +32,7 @@
   </div>
   <div fxFlex="{{ settings.percentage }}" fxLayout="row" style="height: 50px">
     <form fxFlex="{{ settings.percentage }}" [formGroup]="fGStaff">
-      <mat-form-field fxFlex="1 0 30%" appearance="fill" style="background-color: #ebebd3" *ngIf="!readOnly">
+      <mat-form-field fxFlex="1 0 30%" appearance="fill" style="background-color: #ffffff;" *ngIf="!readOnly">
         <mat-label>Personal</mat-label>
         <mat-select #staffRef formControlName="staff" multiple>
           <mat-option *ngFor="let staffItem of staffArr" [value]="staffItem">
@@ -42,30 +42,30 @@
       </mat-form-field>
     </form>
   </div>
-  <div fxFlex fxLayout="row wrap" style="background-color: black" fxLayoutGap="1px grid">
+  <div fxFlex fxLayout="row wrap" style="background-color: black;" fxLayoutGap="1px grid">
     <div fxFlex="1 1 100%" fxLayout="row" style="height: 50px" fxLayoutGap="1px">
       <div *ngIf="settings.showTokenField" fxLayoutAlign="center center" fxFlex="2 0 18%" fxLayout="row"
-        style="background-color: #ebebd3" class="item">
+        class="item mat-toolbar mat-primary">
         Ficha
       </div>
       <div *ngIf="settings.showNameField" fxLayoutAlign="center center" fxFlex="3 0 25%" fxLayout="row"
-        style="background-color: #ebebd3" class="item">
+        class="item mat-toolbar mat-primary">
         Nombre y Apellido
       </div>
       <div *ngIf="settings.showProtocolField" fxLayoutAlign="center center" fxFlex="1 1 11%" fxLayout="row"
-        style="background-color: #ebebd3; text-overflow: ellipsis" class="item">
+        style="text-overflow: ellipsis" class="item mat-toolbar mat-primary">
         Cumplió Protocolo
       </div>
       <div *ngIf="settings.showHealthConditionField" fxLayoutAlign="center center" fxFlex="1 1 11%" fxLayout="row"
-        style="background-color: #ebebd3" class="item">
+        class="item mat-toolbar mat-primary">
         Estado de Salud
       </div>
       <div *ngIf="settings.showCheckInField" fxLayoutAlign="center center" fxFlex="1 1 11%" fxLayout="row"
-        style="background-color: #ebebd3" class="item">
+        class="item mat-toolbar mat-primary">
         Hora de Llegada
       </div>
       <div *ngIf="settings.showGuardStatusField" fxLayoutAlign="center center" fxFlex="1 1 13%" fxLayout="row"
-        style="background-color: #ebebd3" class="item">
+        class="item mat-toolbar mat-primary">
         Estado de su Guardia
       </div>
     </div>
@@ -73,28 +73,28 @@
     <div fxFlex="{{ settings.percentage }}" fxLayout="row" *ngFor="let staff of fA.controls" fxLayoutGap="1px">
       <ng-container [formGroup]="staff">
         <div *ngIf="settings.showTokenField" fxLayoutAlign="center center" fxFlex="2 0 18%" fxLayout="row"
-          style="background-color: #ebebd3" class="item">
+          style="background-color: #ffffff" class="item">
           <mat-form-field appearance="fill">
             <mat-label>Cod. Ficha</mat-label>
-            <input type="text" matInput formControlName="cod_ficha" placeholder="1234567890" [readonly]="readOnly" />
+            <input type="text" matInput formControlName="cod_ficha" placeholder="1234567890" [readonly]="true" />
             <mat-error *ngIf="staff.controls.cod_ficha.hasError('required')">
               Ficha es <strong>requerida</strong>
             </mat-error>
           </mat-form-field>
         </div>
         <div *ngIf="settings.showNameField" fxLayoutAlign="center center" fxFlex="3 0 25%" fxLayout="row"
-          style="background-color: #ebebd3" class="item">
+          style="background-color: #ffffff" class="item">
           <mat-form-field appearance="fill">
             <mat-label>Nombre y Apellido</mat-label>
             <input type="text" matInput formControlName="name_and_surname" placeholder="Nombre Completo"
-              [readonly]="readOnly" />
+              [readonly]="true" />
             <mat-error *ngIf="staff.controls.name_and_surname.hasError('required')">
               El nombre es <strong>requerido</strong>
             </mat-error>
           </mat-form-field>
         </div>
         <div *ngIf="settings.showProtocolField" fxLayoutAlign="center center" fxFlex="1 1 11%" fxLayout="row"
-          style="background-color: #ebebd3" class="item">
+          style="background-color: #ffffff" class="item">
           <mat-slide-toggle formControlName="protocol" #protocolST [disabled]="readOnly">{{
             protocolST.checked ? "SI" : "NO"
             }}</mat-slide-toggle>
@@ -103,7 +103,7 @@
           </mat-error>
         </div>
         <div *ngIf="settings.showHealthConditionField" fxLayoutAlign="center center" fxFlex="1 1 11%" fxLayout="column"
-          style="background-color: #ebebd3" class="item">
+          style="background-color: #ffffff" class="item">
           <mat-radio-group style="margin: 15px 0" formControlName="health_condition" [disabled]="readOnly">
             <mat-radio-button *ngFor="let hC of healthConditions" style="margin: 5px" [value]="hC.id">{{ hC.text }}
             </mat-radio-button>
@@ -113,7 +113,7 @@
           </mat-error>
         </div>
         <div *ngIf="settings.showCheckInField" fxLayoutAlign="center center" fxFlex="1 1 11%" fxLayout="column"
-          style="background-color: #ebebd3" class="item">
+          style="background-color: #ffffff" class="item">
           <ngx-timepicker-field #start [format]="24" [defaultTime]="'00:00'" [toggleIcon]="icon_start"
             formControlName="check_in" [disabled]="readOnly">
           </ngx-timepicker-field>
@@ -125,7 +125,7 @@
           </mat-error>
         </div>
         <div *ngIf="settings.showGuardStatusField" fxLayoutAlign="center center" fxFlex="1 1 13%" fxLayout="column"
-          style="background-color: #ebebd3" class="item">
+          style="background-color: #ffffff" class="item">
           {{ settings.guardStatus }}
         </div>
       </ng-container>

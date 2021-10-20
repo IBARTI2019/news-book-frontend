@@ -1,8 +1,10 @@
 <div [formGroup]="form">
   <div *ngIf="!question.form_field" [ngSwitch]="question.controlType">
-    <h3 *ngSwitchCase="'title'">{{ question.value || question.title }}</h3>
+    <br *ngSwitchCase="'title'">
+    <h2 *ngSwitchCase="'title'">{{ question.value || question.title }}</h2>
     <app-changing-guard-staff-list [id]="question.key" *ngSwitchCase="'staffReceivingTheGuard'" [readOnly]="readOnly"
-      [staffArr]="question.fichas" [settings]="question.settings" [fGRoot]="form" [staffArrSelected]="question.value">
+      [staffArr]="question.fichas" [settings]="question.settings" [fGRoot]="form"
+      [staffArrSelected]="question.value || []">
     </app-changing-guard-staff-list>
   </div>
   <mat-form-field appearance="fill" [ngSwitch]="question.controlType" *ngIf="question.form_field">
