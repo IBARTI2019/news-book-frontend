@@ -72,9 +72,10 @@ export class SessionService extends API<User> {
       })
       .pipe(
         map((res: VerifyCodeResponse) => {
-          setLocalStorage(ID_CRYPT, encryptUsingAES256(res.jwt_id || ""))
-          setLocalStorage(API.TOKEN, res.token)
-          setLocalStorage(PERMISSIONS, encryptUsingAES256(JSON.stringify(getPermissions())))
+          setLocalStorage(ID_CRYPT, encryptUsingAES256(res.jwt_id || ""));
+          setLocalStorage(API.TOKEN, res.token);
+          setLocalStorage(API.TYPE_USER, res.type_user);
+          setLocalStorage(PERMISSIONS, encryptUsingAES256(JSON.stringify(getPermissions())));
           this.userService.user$.next({
             exist: true,
             type_user: "",

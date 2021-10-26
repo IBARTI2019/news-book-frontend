@@ -17,6 +17,8 @@ export abstract class API<T> {
   static MENU_ACTUAL = 'menu'
   static REFRESH_TOKEN = 'refresh_token';
   static JWT = 'jwt_id';
+  static TYPE_USER = 'type_user';
+  static BOOK = 'book';
   protected URL_API: string = env.API;
   protected abstract URL: string;
 

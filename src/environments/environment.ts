@@ -7,7 +7,7 @@ export const environment = {
   production: false,
   API: 'http://194.163.161.64:8000/api',
   // API: 'http://66.23.233.252:9999/api',
-  //API: 'http://127.0.0.1:8000/api',
+  //API: 'http://localhost:8000/api',
   //API: 'http://oesvica.ddns.net:5005',
   //API: 'http://161.97.112.156:5002',
   cryptPass: 'SoyElMasCapo(PeroEnDisminutivo)$k&'

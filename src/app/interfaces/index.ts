@@ -49,6 +49,7 @@ export interface VerifyCodeResponse {
   logIn: boolean;
   token: string;
   jwt_id: string;
+  type_user?: string;
 }
 
 export interface Warehouse {

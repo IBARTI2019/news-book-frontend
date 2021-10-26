@@ -19,6 +19,7 @@ import { MatInputModule } from '@angular/material/input';
 import { GroupUserComponent } from './group-user/group-user.component';
 import { GroupUserEditComponent } from './group-user/group-user-edit/group-user-edit.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 
 
@@ -46,6 +47,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatSelectModule,
     MatInputModule,
     MatTooltipModule,
+    MatToolbarModule
   ]
 })
 export class SecurityModule { }
