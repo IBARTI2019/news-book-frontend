@@ -3,7 +3,10 @@ import { SessionService } from "app/services/session.service";
 import { Router } from "@angular/router";
 import { ToastrService } from "ngx-toastr";
 import { HttpErrorResponse } from "@angular/common/http";
-import { SigninData, VerifyCodeResponse } from "app/interfaces";
+import { Book, SigninData, VerifyCodeResponse } from "app/interfaces";
+import { API } from "app/utils/api";
+import { setLocalStorage } from "app/utils/localStorage";
+
 @Component({
   selector: "app-login",
   templateUrl: "./login.component.html",
@@ -14,13 +17,15 @@ export class LoginComponent implements OnInit {
     code: "",
     user: "",
     password: "",
-    security_code: ""
+    security_code: "",
+    book: ""
   };
   sendingCode = false;
   sendCodeSucces = false;
   verifyCodeSubmit = false;
   showVerifyCode = false;
   hide = false;
+  books: Book[] = [];
   constructor(
     private router: Router,
     private toastrService: ToastrService,
@@ -37,6 +42,10 @@ export class LoginComponent implements OnInit {
     if (!this.showVerifyCode) {
       this.sendCode();
     } else {
+      if (this.books.length > 0 && !this.signinData.book) {
+        this.toastrService.error('Debe seleccionar un libro');
+        return;
+      }
       this.verifyCode();
     }
   }
@@ -44,7 +53,8 @@ export class LoginComponent implements OnInit {
   sendCode(): void {
     this.sendingCode = true;
     this.sessionService.sendCode(this.signinData).subscribe(
-      () => {
+      (data: { locations: Book[] }) => {
+        this.books = data.locations;
         this.sendingCode = false;
         this.showVerifyCode = true;
         this.sendCodeSucces = true;
@@ -66,6 +76,7 @@ export class LoginComponent implements OnInit {
     this.verifyCodeSubmit = true;
     this.sessionService.verifyCode(this.signinData).subscribe(
       async (data: VerifyCodeResponse) => {
+        setLocalStorage(API.BOOK, this.signinData.book);
         this.verifyCodeSubmit = true;
         this.toastrService.success("El codigo ha sido verificado con exito.");
         const isSuperUser = await this.sessionService.isSuperUser()

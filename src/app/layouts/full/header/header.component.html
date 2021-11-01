@@ -2,10 +2,13 @@
 <!-- Profile - style you can find in header.scss -->
 <!-- ============================================================== -->
 <!-- <a href="https://wrappixel.com/templates/materialpro-angular-dashboard/" class=" m-r-20 hidden-sm-up" mat-raised-button color="warn">Upgrade To Pro</a>-->
-<button [matMenuTriggerFor]="books" mat-icon-button class="m-r-5">
-    <img src="assets/images/IbartiSoftware-logo.png" width="100" alt="user" class="profile-pic">
+<span class="m-r-10" *ngIf="select_book">
+    {{ select_book.name }}
+</span>
+<button [matMenuTriggerFor]="_books" mat-icon-button class="m-r-10" *ngIf="books.length > 0">
+    <img src=" assets/images/book-icon.png" width="100" alt="books" class="profile-pic">
 </button>
-<button [matMenuTriggerFor]="profile" mat-icon-button class="m-r-5">
+<button [matMenuTriggerFor]="profile" mat-icon-button class="m-r-10">
     <img src="assets/images/IbartiSoftware-logo.png" width="100" alt="user" class="profile-pic">
 </button>
 <mat-menu #profile="matMenu" class="mymegamenu">
@@ -22,8 +25,9 @@
         <mat-icon>exit_to_app</mat-icon> Sign Out
     </button>
 </mat-menu>
-<mat-menu #books="matMenu" class="mymegamenu">
-    <button mat-menu-item *ngFor="let book of books">
+<mat-menu #_books="matMenu" class="mymegamenu">
+    <button mat-menu-item *ngFor="let book of books" (click)="setBook(book)">
+        <mat-icon *ngIf="select_book.id === book.id">send</mat-icon>
         {{book.name}}
     </button>
 </mat-menu>

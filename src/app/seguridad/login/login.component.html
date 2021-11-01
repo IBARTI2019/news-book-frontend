@@ -1,25 +1,34 @@
 <div fxLayout="row wrap" fxLayoutAlign="center center">
     <mat-card>
         <mat-card-header>
-            <mat-card-title class="title" >Ingreso al Sistema</mat-card-title>
+            <mat-card-title class="title">Ingreso al Sistema</mat-card-title>
         </mat-card-header>
         <mat-card-content>
-            <form (ngSubmit)="handleSubmit()" #login>
+            <form (ngSubmit)="handleSubmit()" #login="ngForm">
 
                 <mat-form-field [hidden]="sendCodeSucces">
                     <mat-label>Usuario</mat-label>
                     <input matInput required placeholder="Por favor ingrese su usuario" [(ngModel)]="signinData.code"
-                        [ngModelOptions]="{standalone: true}">
+                        [ngModelOptions]="{standalone: true}" [disabled]="sendCodeSucces">
                     <mat-icon matSuffix>account_circle</mat-icon>
                 </mat-form-field>
                 <mat-form-field *ngIf="!sendCodeSucces">
                     <mat-label>Contraseña</mat-label>
-                    <input matInput required placeholder="Por favor ingrese su contraseña" [type]="hide ? 'password' : 'text'" [(ngModel)]="signinData.password"
+                    <input matInput required placeholder="Por favor ingrese su contraseña"
+                        [type]="hide ? 'password' : 'text'" [(ngModel)]="signinData.password"
                         [ngModelOptions]="{standalone: true}">
                     <span mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide code'"
                         [attr.aria-pressed]="hide">
                         <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                     </span>
+                </mat-form-field>
+                <mat-form-field *ngIf="sendCodeSucces && books.length > 0">
+                    <mat-label>Libro</mat-label>
+                    <mat-select required [(ngModel)]="signinData.book" [ngModelOptions]="{standalone: true}">
+                        <mat-option *ngFor="let _book of books" [value]="_book.id">
+                            {{ _book.name }}
+                        </mat-option>
+                    </mat-select>
                 </mat-form-field>
                 <mat-form-field *ngIf="sendCodeSucces">
                     <mat-label>Codigo</mat-label>
@@ -32,7 +41,9 @@
                 </mat-form-field>
 
                 <button mat-raised-button color="primary" class="btn-block" type="submit"
-                    [disabled]="sendingCode || verifyCodeSubmit">{{ showVerifyCode ? 'Verificar' : 'Enviar Codigo' }}</button>
+                    [disabled]="sendingCode || verifyCodeSubmit || login.invalid">{{ showVerifyCode ? 'Verificar' :
+                    'Enviar Codigo'
+                    }}</button>
             </form>
         </mat-card-content>
     </mat-card>

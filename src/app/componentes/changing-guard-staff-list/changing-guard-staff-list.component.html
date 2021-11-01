@@ -36,7 +36,7 @@
         <mat-label>Personal</mat-label>
         <mat-select #staffRef formControlName="staff" multiple>
           <mat-option *ngFor="let staffItem of staffArr" [value]="staffItem">
-            {{ staffItem.name_and_surname }}
+            {{staffItem.cod_ficha}} - {{ staffItem.name_and_surname }}
           </mat-option>
         </mat-select>
       </mat-form-field>

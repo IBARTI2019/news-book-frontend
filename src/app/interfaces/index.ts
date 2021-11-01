@@ -14,7 +14,7 @@ export interface User {
   security_code?: string;
   security_user?: string;
   photo?: string;
-  books?: string[];
+  locations?: Book[];
   is_staff?: boolean;
   type_user?: string;
   oesvica_user?: boolean;
@@ -25,6 +25,7 @@ export interface User {
   user_id?: string;
   groups?: string[];
   identification_number?: string;
+  token?: string;
 }
 
 export interface GroupUser {
@@ -37,6 +38,7 @@ export interface SigninData {
   user?: string;
   password?: string;
   security_code?: string;
+  book?: string;
 }
 
 export interface APIMessage {

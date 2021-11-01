@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { QuestionBase, DropdownQuestion, TextboxQuestion, StaffReceivingTheGuard, Title } from '../classes';
+import { QuestionBase, DropdownQuestion, TextboxQuestion, StaffReceivingTheGuard, Title, StaffOesvica } from '../classes';
 import { of } from 'rxjs';
 import { API } from '../../utils/api';
 import { HttpClient } from '@angular/common/http';
@@ -126,6 +126,20 @@ export class QuestionService extends API<any> {
               key: `${d.code}_${index}`,
               code: d.code,
               label: d.label || 'Personal que recibe la guardia',
+              required: true,
+              form_field: false,
+              percentage_per_row: Number(d.percentage_per_row) || 100,
+              settings: d.settings,
+            }, this.ibartiService)
+          )
+          break;
+        case 'OESVICA_STAFF':
+          questions.push(
+            new StaffOesvica({
+              value: d.value || '',
+              key: `${d.code}_${index}`,
+              code: d.code,
+              label: d.label || 'Personal Oesvica',
               required: true,
               form_field: false,
               percentage_per_row: Number(d.percentage_per_row) || 100,

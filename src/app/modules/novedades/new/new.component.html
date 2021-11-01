@@ -12,8 +12,13 @@
                             </button>
                         </div>
                     </ng-template>
+                    <ng-template #templateInfo let-column="column" let-item="item" let-i="i">
+                        <div>
+                            <span>{{item.info | json}}</span>
+                        </div>
+                    </ng-template>
                     <app-generic-table fxFlex="100" [columns]="columns" [showFilter]="true" [service]="newService"
-                        [btnRefresh]="true" [templates]="{opciones: templateOpciones}" #table>
+                        [btnRefresh]="true" [templates]="{opciones: templateOpciones, info: templateInfo}" #table>
                     </app-generic-table>
                 </div>
             </mat-card-content>

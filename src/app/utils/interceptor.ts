@@ -3,6 +3,7 @@ import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { API } from './api';
+import { getLocalStorage } from './localStorage';
 
 @Injectable()
 export class Error401Interceptor implements HttpInterceptor {
@@ -12,8 +13,10 @@ export class Error401Interceptor implements HttpInterceptor {
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     let token = localStorage.getItem(API.TOKEN);
     if (token) token = token.replace(/"/g, "");
+
+    let id_book = getLocalStorage(API.BOOK);
     const req1 = request.clone({
-      headers: request.headers.set('Authorization', `Bearer ${token}`),
+      headers: request.headers.set('Authorization', `Bearer ${token}`).set('location', id_book),
     });
     return next.handle(req1).pipe(
       catchError(err => {

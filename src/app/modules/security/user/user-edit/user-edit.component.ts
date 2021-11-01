@@ -54,7 +54,7 @@ export class UserEditComponent implements OnInit, AfterViewChecked {
     });
     this.fg = this.fb.group(
       {
-        ficha: ["", this.isOesvicaUser ? Validators.required : Validators.nullValidator],
+        ficha: [null, this.isOesvicaUser ? Validators.required : Validators.nullValidator],
         identification_number: ["", this.isOesvicaUser ? [Validators.required, Validators.pattern('^[0-9]+$')] : Validators.nullValidator],
         code: ["", Validators.required],
         password: ["", this.id ? Validators.nullValidator : Validators.required],
@@ -66,7 +66,7 @@ export class UserEditComponent implements OnInit, AfterViewChecked {
         phone: ["", Validators.required],
         type_user: [0, Validators.required],
         groups: [[]],
-        books: [[]],
+        locations: [[]], // <- books
         security_user: ["", Validators.required],
         is_staff: [false],
         is_active: [true, Validators.required]
@@ -106,7 +106,7 @@ export class UserEditComponent implements OnInit, AfterViewChecked {
           this.fg.get("security_user")!.setValue(security.id || null);
         }
         this.fg.get("type_user")!.setValue(data.type_user || "")
-        this.fg.get("books")!.setValue(data.books || [])
+        this.fg.get("locations")!.setValue(data.locations?.map((l) => l.id) || [])
         this.fg.get("address")!.setValue(data.address);
         this.fg.get("phone")!.setValue(data.phone);
         this.fg.get("groups")!.setValue(data.groups);
@@ -175,14 +175,14 @@ export class UserEditComponent implements OnInit, AfterViewChecked {
   }
 
   handleType() {
-    this.fg.get("books")!.setValue([])
+    this.fg.get("locations")!.setValue([])
     this.disableOtherBooks = false
   }
 
   handleBooks() {
     if (this.fg.get("type_user")!.value === 3) {
-      if (this.fg.get("books")!.value.length === 1) {
-        this.bookSelected = this.fg.get("books")!.value[0]
+      if (this.fg.get("locations")!.value.length === 1) {
+        this.bookSelected = this.fg.get("locations")!.value[0]
         this.disableOtherBooks = true
       } else {
         this.disableOtherBooks = false

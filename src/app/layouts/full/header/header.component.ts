@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
-import { Router } from "@angular/router";
-import { Book } from "app/interfaces";
-import { BooksService } from "../../../services/books.service";
+import { Book, User } from "app/interfaces";
+import { API } from "app/utils/api";
+import { getLocalStorage, setLocalStorage } from "app/utils/localStorage";
 import { SessionService } from '../../../services/session.service';
 
 @Component({
@@ -10,16 +10,26 @@ import { SessionService } from '../../../services/session.service';
   styleUrls: [],
 })
 export class AppHeaderComponent implements OnInit {
+  user!: User;
   books: Book[] = [];
-  constructor(private router: Router, private sessionService: SessionService, private booksService: BooksService) { }
-  ngOnInit(): void {
-    this.booksService.list((books: Book[]) => {
-      this.books = books;
-    })
+  select_book!: Book;
+  constructor(private sessionService: SessionService) { }
+  ngOnInit() {
+    let id_book = getLocalStorage(API.BOOK);
+    this.sessionService.current().subscribe(user => {
+      this.user = user;
+      this.books = this.user.locations || [];
+      this.select_book = this.books.find(b => b.id == id_book) as Book;
+    });
   }
 
 
   logout() {
     this.sessionService.logout();
+  }
+
+  setBook(book: Book) {
+    this.select_book = book;
+    setLocalStorage(API.BOOK, book.id);
   }
 }

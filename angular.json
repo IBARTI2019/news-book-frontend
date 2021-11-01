@@ -20,7 +20,8 @@
               "jwt-decode",
               "lodash",
               "file-saver",
-              "xlsx"
+              "xlsx",
+              "cripto-js"
             ],
             "outputPath": "dist",
             "index": "src/index.html",

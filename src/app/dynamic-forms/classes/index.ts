@@ -42,6 +42,10 @@ export class QuestionBase {
       this.service.planned_staff().subscribe((data: any) => {
         this.fichas = data;
       });
+    } else if (options.code === "OESVICA_STAFF") {
+      this.service.oesvica_staff().subscribe((data: any) => {
+        this.fichas = data;
+      });
     } else {
       this.fichas = options.fichas || [];
     }
@@ -69,6 +73,26 @@ export class TextboxQuestion extends QuestionBase {
 }
 
 export class StaffReceivingTheGuard extends QuestionBase {
+  controlType = "staffReceivingTheGuard";
+  settings?: StaffReceivingTheGuardSettings = {
+    testing: false,
+    guardStatus: "REGULAR",
+    percentage: 100,
+    showTokenField: true,
+    showNameField: true,
+    showProtocolField: true,
+    showHealthConditionField: true,
+    showCheckInField: true,
+    showGuardStatusField: true,
+  };
+
+  constructor(options: QuestionBaseParams, public service: any) {
+    super(options, service)
+    this.settings = options.settings
+  }
+}
+
+export class StaffOesvica extends QuestionBase {
   controlType = "staffReceivingTheGuard";
   settings?: StaffReceivingTheGuardSettings = {
     testing: false,

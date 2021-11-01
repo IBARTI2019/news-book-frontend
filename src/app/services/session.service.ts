@@ -22,7 +22,7 @@ import { UserService } from './user.service';
 export class SessionService extends API<User> {
   protected URL = `${this.URL_API}/security`;
   private apiURL = `${environment.API}`;
-  private $user!: BehaviorSubject<User>;
+  private $user!: Observable<User>;
 
   constructor(protected http: HttpClient, private router: Router, private userService: UserService) {
     super(http);
@@ -46,7 +46,7 @@ export class SessionService extends API<User> {
    * @memberof SessionService
    */
 
-  sendCode(signinData: SigninData): Observable<void> {
+  sendCode(signinData: SigninData): Observable<any> {
     return this.http
       .post<void>(`${this.apiURL}/security/valid/request_security_code/`, {
         ...signinData,
@@ -71,11 +71,12 @@ export class SessionService extends API<User> {
         ...signinData,
       })
       .pipe(
-        map((res: VerifyCodeResponse) => {
+        map((res: any) => {
           setLocalStorage(ID_CRYPT, encryptUsingAES256(res.jwt_id || ""));
           setLocalStorage(API.TOKEN, res.token);
           setLocalStorage(API.TYPE_USER, res.type_user);
           setLocalStorage(PERMISSIONS, encryptUsingAES256(JSON.stringify(getPermissions())));
+          this.current().subscribe();
           this.userService.user$.next({
             exist: true,
             type_user: "",
@@ -85,6 +86,21 @@ export class SessionService extends API<User> {
         }),
         catchError((error: HttpErrorResponse) => this.handleError(error))
       );
+  }
+
+
+  public current(): Observable<User> {
+    if (localStorage.getItem(API.TOKEN)) {
+      if (this.$user) {
+        return this.$user;
+      }
+      this.$user = this.http.get(`${this.URL}/user/current/`) as Observable<User>;
+    }
+    if (this.$user) {
+      return this.$user;
+    } else {
+      return new Observable();
+    }
   }
 
   public logout() {

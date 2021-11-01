@@ -31,14 +31,27 @@ export class NewComponent implements OnInit {
   ngOnInit() {
     this.columns = [
       {
-        header: "Mensaje",
-        attribute: "message",
+        header: "#",
+        attribute: "number",
+      },
+      {
+        header: "Tipo",
+        attribute: "type_news_display.description",
       },
       {
         attribute: "employee",
         header: "Empleado",
       },
-
+      {
+        attribute: "created",
+        header: "Fecha de creación",
+        type: "date"
+      },
+      {
+        attribute: "info",
+        header: "Data",
+        template: 'info'
+      },
       {
         attribute: "id",
         header: "Opciones",

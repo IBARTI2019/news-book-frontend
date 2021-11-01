@@ -61,22 +61,13 @@
         <mat-nav-list dense>
           <a mat-list-item [routerLink]="['locations']">
             <span>
-              <mat-icon aria-hidden="false" aria-label="Assignment">assignment</mat-icon>
+              <mat-icon aria-hidden="false" aria-label="Books">book</mat-icon>
               Libros
             </span>
             <span fxFlex></span>
           </a>
         </mat-nav-list>
       </ng-template>
-      <!-- <mat-nav-list dense>
-                <a mat-list-item [routerLink]="['classify-news/', 'maestro']">
-                    <span>
-                        <mat-icon aria-hidden="false" aria-label="Example home icon">add_shopping_cart</mat-icon>
-                        Novedades
-                    </span>
-                    <span fxFlex></span>
-                </a>
-            </mat-nav-list> -->
       <ng-template [ngxPermissionsOnly]="['ADMIN']">
         <mat-nav-list dense>
           <a mat-list-item [routerLink]="['vehicle']">
@@ -126,7 +117,7 @@
   <ng-template [ngxPermissionsOnly]="['ADMIN', 'AUDITOR', 'SUPERVISOR', 'USER']">
     <mat-expansion-panel [class.mat-elevation-z0]="true" dense>
       <mat-expansion-panel-header>
-        <mat-icon aria-hidden="false" aria-label="News">book</mat-icon>
+        <mat-icon aria-hidden="false" aria-label="News">fiber_new</mat-icon>
         Novedades
       </mat-expansion-panel-header>
       <ng-template [ngxPermissionsOnly]="['ADMIN']">
@@ -141,8 +132,19 @@
         </mat-nav-list>
       </ng-template>
       <ng-template [ngxPermissionsOnly]="['ADMIN', 'AUDITOR', 'SUPERVISOR', 'USER']">
+        <ng-template [ngxPermissionsOnly]="['ADMIN', 'SUPERVISOR', 'USER']">
+          <mat-nav-list dense>
+            <a mat-list-item [routerLink]="['new']">
+              <span>
+                <mat-icon aria-hidden="false" aria-label="News">folder_special</mat-icon>
+                Reportar Novedad
+              </span>
+              <span fxFlex></span>
+            </a>
+          </mat-nav-list>
+        </ng-template>
         <mat-nav-list dense>
-          <a mat-list-item [routerLink]="['new']">
+          <a mat-list-item [routerLink]="['new/view']">
             <span>
               <mat-icon aria-hidden="false" aria-label="News">folder_special</mat-icon>
               Novedades
@@ -206,14 +208,14 @@
   <ng-template [ngxPermissionsOnly]="['ADMIN']">
     <mat-expansion-panel [class.mat-elevation-z0]="true" dense>
       <mat-expansion-panel-header>
-        <mat-icon aria-hidden="false" aria-label="News">settings</mat-icon>
+        <mat-icon aria-hidden="false" aria-label="Formats">assignment</mat-icon>
         Generación de Formatos
       </mat-expansion-panel-header>
       <ng-template [ngxPermissionsOnly]="['ADMIN']">
         <mat-nav-list dense>
           <a mat-list-item [routerLink]="['dynamic-forms']">
             <span>
-              <mat-icon aria-hidden="false" aria-label="Dynamic Forms">notification_important</mat-icon>
+              <mat-icon aria-hidden="false" aria-label="Test Dynamic Forms">bug_report</mat-icon>
               Test
             </span>
             <span fxFlex></span>
@@ -222,7 +224,7 @@
         <mat-nav-list dense>
           <a mat-list-item [routerLink]="['dynamic-forms/generator']">
             <span>
-              <mat-icon aria-hidden="false" aria-label="Dynamic Forms">notification_important</mat-icon>
+              <mat-icon aria-hidden="false" aria-label="Dynamic Forms">perm_data_setting</mat-icon>
               Generador
             </span>
             <span fxFlex></span>
