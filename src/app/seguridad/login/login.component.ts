@@ -79,13 +79,13 @@ export class LoginComponent implements OnInit {
         setLocalStorage(API.BOOK, this.signinData.book);
         this.verifyCodeSubmit = true;
         this.toastrService.success("El codigo ha sido verificado con exito.");
-        const isSuperUser = await this.sessionService.isSuperUser()
-        if (isSuperUser) {
-          this.router.navigateByUrl("/new");
-        } else {
-          const isStaff = await this.sessionService.isStaff()
-          this.router.navigateByUrl(isStaff ? "/new/view" : "/new");
-        }
+        //const isSuperUser = await this.sessionService.isSuperUser()
+        //if (isSuperUser) {
+        this.router.navigateByUrl("/new");
+        /*         } else {
+                  const isStaff = await this.sessionService.isStaff()
+                  this.router.navigateByUrl(isStaff ? "/new/view" : "/new");
+                } */
       },
       (error: HttpErrorResponse) => {
         console.error(error.error.error);

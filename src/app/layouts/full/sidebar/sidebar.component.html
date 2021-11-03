@@ -68,6 +68,17 @@
           </a>
         </mat-nav-list>
       </ng-template>
+      <ng-template [ngxPermissionsOnly]="['ADMIN', 'USER']">
+        <mat-nav-list dense>
+          <a mat-list-item [routerLink]="['points']">
+            <span>
+              <mat-icon aria-hidden="false" aria-label="Puntos">book</mat-icon>
+              Puntos
+            </span>
+            <span fxFlex></span>
+          </a>
+        </mat-nav-list>
+      </ng-template>
       <ng-template [ngxPermissionsOnly]="['ADMIN']">
         <mat-nav-list dense>
           <a mat-list-item [routerLink]="['vehicle']">

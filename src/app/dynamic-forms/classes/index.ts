@@ -72,6 +72,15 @@ export class TextboxQuestion extends QuestionBase {
   controlType = "textbox";
 }
 
+export class SystemDate extends QuestionBase {
+  controlType = "date";
+}
+
+export class Hour extends QuestionBase {
+  controlType = "hour";
+}
+
+
 export class StaffReceivingTheGuard extends QuestionBase {
   controlType = "staffReceivingTheGuard";
   settings?: StaffReceivingTheGuardSettings = {

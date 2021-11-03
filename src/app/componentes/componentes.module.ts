@@ -27,7 +27,7 @@ import { InfoDialogComponent } from './info-dialog/info-dialog.component';
 import { InfoButtonComponent } from './info-button/info-button.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { DynamicFormComponent } from './dymamic-form/dymamic-form.component';
-import { DynamicControlsComponent } from './dynamic-controls/dynamic-forms.component';
+import { DynamicControlsComponent } from './dynamic-controls/dynamic-controls.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatSelectModule } from '@angular/material/select';
@@ -35,6 +35,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { NewTemplatesModule } from 'app/new-templates/new-templates.module';
 import { SharedModule } from 'app/shared/shared.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 export const entryComponentes = [
   ConfirmDialogComponent,
   ValidateOesvicaTokenComponent,
@@ -94,6 +95,7 @@ export const entryComponentes = [
     DragDropModule,
     FlexLayoutModule,
     MatSelectModule,
+    MatDatepickerModule
   ],
   entryComponents: entryComponentes,
   providers: [ConfirmDialogService]

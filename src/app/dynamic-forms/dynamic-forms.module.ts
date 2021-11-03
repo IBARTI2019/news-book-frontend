@@ -20,7 +20,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatDialogModule } from '@angular/material/dialog';
 import { SharedModule } from 'app/shared/shared.module';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { DemoMaterialModule } from 'app/demo-material-module';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 
 @NgModule({
   declarations: [TestComponent, FormatGeneratorComponent, ParamsControlDialogComponent],
@@ -43,6 +43,7 @@ import { DemoMaterialModule } from 'app/demo-material-module';
     MatDialogModule,
     SharedModule,
     MatSlideToggleModule,
+    MatDatepickerModule
   ],
   entryComponents: [ParamsControlDialogComponent],
   providers: [ControlService]

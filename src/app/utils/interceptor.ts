@@ -16,8 +16,9 @@ export class Error401Interceptor implements HttpInterceptor {
 
     let id_book = getLocalStorage(API.BOOK);
     const req1 = request.clone({
-      headers: request.headers.set('Authorization', `Bearer ${token}`).set('location', id_book),
+      headers: request.headers.set('Authorization', `Bearer ${token}`).set('location', `${id_book}`),
     });
+
     return next.handle(req1).pipe(
       catchError(err => {
         // Ignorar token refresh si is_active es 0F

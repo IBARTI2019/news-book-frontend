@@ -55,7 +55,7 @@ const getPermissionsFromLocalStorage = () => {
     SpinnerComponent,
     AppSidebarComponent,
     LoginComponent,
-    TestsComponent,
+    TestsComponent
   ],
   imports: [
     BrowserModule,
@@ -99,4 +99,4 @@ const getPermissionsFromLocalStorage = () => {
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

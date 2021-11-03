@@ -11,6 +11,16 @@
     <mat-label [attr.for]="question.key">{{ question.label }}</mat-label>
     <input matInput *ngSwitchCase="'textbox'" [formControlName]="question.key" [id]="question.key"
       [type]="question.type" [readonly]="readOnly" />
+    <input matInput *ngSwitchCase="'date'" [formControlName]="question.key" [id]="question.key" [type]="question.type"
+      [matDatepicker]="picker" [readonly]="readOnly">
+    <mat-datepicker-toggle *ngSwitchCase="'date'" matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker *ngSwitchCase="'date'" #picker></mat-datepicker>
+    <ngx-timepicker-field #hour [format]="24" *ngSwitchCase="'hour'" [defaultTime]="'06:00'" [toggleIcon]="hour"
+      [formControlName]="question.key" [id]="question.key" [type]="question.type" [readonly]="readOnly">
+    </ngx-timepicker-field>
+    <ng-template #hour *ngSwitchCase="'hour'">
+      <mat-icon aria-hidden=" false" aria-label="Horario">schedule</mat-icon>
+    </ng-template>
     <!-- <mat-select
       [id]="question.key"
       *ngSwitchCase="'staffReceivingTheGuard'"

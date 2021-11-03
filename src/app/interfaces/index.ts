@@ -310,3 +310,11 @@ export interface Book {
   phone2?: string;
   is_active?: boolean;
 }
+
+export interface Point {
+  id?: string;
+  code?: string;
+  name?: string;
+  is_active?: boolean;
+}
+

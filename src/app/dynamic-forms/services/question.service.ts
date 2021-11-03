@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { QuestionBase, DropdownQuestion, TextboxQuestion, StaffReceivingTheGuard, Title, StaffOesvica } from '../classes';
+import { QuestionBase, DropdownQuestion, TextboxQuestion, StaffReceivingTheGuard, Title, StaffOesvica, SystemDate, Hour } from '../classes';
 import { of } from 'rxjs';
 import { API } from '../../utils/api';
 import { HttpClient } from '@angular/common/http';
@@ -94,6 +94,34 @@ export class QuestionService extends API<any> {
     let questions: QuestionBase[] = [];
     template.forEach((d, index) => {
       switch (d.code) {
+        case 'HOUR':
+          questions.push(
+            new Hour({
+              value: d.value || '',
+              key: `${d.code}_${index}`,
+              code: d.code,
+              type: "hour",
+              label: d.label || 'Información',
+              required: d.required,
+              form_field: true,
+              percentage_per_row: Number(d.percentage_per_row) || 100,
+            }, null),
+          )
+          break;
+        case 'DATE':
+          questions.push(
+            new SystemDate({
+              value: d.value || '',
+              key: `${d.code}_${index}`,
+              code: d.code,
+              type: "date",
+              label: d.label || 'Información',
+              required: d.required,
+              form_field: true,
+              percentage_per_row: Number(d.percentage_per_row) || 100,
+            }, null),
+          )
+          break;
         case 'TITLE':
           questions.push(
             new Title({

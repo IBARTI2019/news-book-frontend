@@ -220,6 +220,19 @@ export const AppRoutes: Routes = [
                 (m) => m.BooksModule
               ),
           },
+          {
+            path: "points",
+            canLoad: [NgxPermissionsGuard],
+            data: {
+              permissions: {
+                only: [ADMIN, USER, SUPERVISOR],
+              }
+            },
+            loadChildren: () =>
+              import("app/modules/maestro/points/points.module").then(
+                (m) => m.PointsModule
+              ),
+          },
         ],
       },
     ],

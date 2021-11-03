@@ -21,7 +21,7 @@
               "lodash",
               "file-saver",
               "xlsx",
-              "cripto-js"
+              "crypto-js"
             ],
             "outputPath": "dist",
             "index": "src/index.html",
