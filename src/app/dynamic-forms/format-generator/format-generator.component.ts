@@ -120,6 +120,7 @@ export class FormatGeneratorComponent implements OnInit {
 
   deleteControl(element: TemplateTypeNew, index: number) {
     this.typeNew.template.splice(index, 1);
+    this.generatePreview();
   }
 
   generatePreview() {

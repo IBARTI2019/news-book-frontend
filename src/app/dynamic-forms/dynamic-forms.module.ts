@@ -21,6 +21,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { SharedModule } from 'app/shared/shared.module';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 
 @NgModule({
   declarations: [TestComponent, FormatGeneratorComponent, ParamsControlDialogComponent],
@@ -43,7 +44,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
     MatDialogModule,
     SharedModule,
     MatSlideToggleModule,
-    MatDatepickerModule
+    MatDatepickerModule,
+    NgxMaterialTimepickerModule
   ],
   entryComponents: [ParamsControlDialogComponent],
   providers: [ControlService]

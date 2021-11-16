@@ -36,6 +36,8 @@ import { NewTemplatesModule } from 'app/new-templates/new-templates.module';
 import { SharedModule } from 'app/shared/shared.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
+
 export const entryComponentes = [
   ConfirmDialogComponent,
   ValidateOesvicaTokenComponent,
@@ -95,7 +97,8 @@ export const entryComponentes = [
     DragDropModule,
     FlexLayoutModule,
     MatSelectModule,
-    MatDatepickerModule
+    MatDatepickerModule,
+    NgxMaterialTimepickerModule
   ],
   entryComponents: entryComponentes,
   providers: [ConfirmDialogService]

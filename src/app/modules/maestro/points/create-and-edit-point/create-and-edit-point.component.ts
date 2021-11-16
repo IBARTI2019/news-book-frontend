@@ -68,7 +68,7 @@ export class CreateAndEditPointComponent implements OnInit {
         this.toastr.success("Libro creado con éxito");
         this.submitted = false;
         this.fg.reset();
-        this.router.navigate([this.redirectTo || "locations"]);
+        this.router.navigate([this.redirectTo || "points"]);
       },
       (error: HttpErrorResponse) => {
         this.submitted = false;

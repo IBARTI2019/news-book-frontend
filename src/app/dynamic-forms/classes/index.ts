@@ -42,6 +42,14 @@ export class QuestionBase {
       this.service.planned_staff().subscribe((data: any) => {
         this.fichas = data;
       });
+    } else if (options.code === "POINT") {
+      this.service.list({ not_paginator: true }).subscribe((data: any) => {
+        this.options = data;
+      });
+    } else if (options.code === "SUB_LINE") {
+      this.service.sub_line_scope().subscribe((data: any) => {
+        this.options = data;
+      });
     } else if (options.code === "OESVICA_STAFF") {
       this.service.oesvica_staff().subscribe((data: any) => {
         this.fichas = data;
@@ -76,10 +84,21 @@ export class SystemDate extends QuestionBase {
   controlType = "date";
 }
 
-export class Hour extends QuestionBase {
+export class SystemHour extends QuestionBase {
   controlType = "hour";
 }
 
+export class BookScope extends QuestionBase {
+  controlType = "scope";
+}
+
+export class Point extends QuestionBase {
+  controlType = "point";
+}
+
+export class Amount extends QuestionBase {
+  controlType = "amount";
+}
 
 export class StaffReceivingTheGuard extends QuestionBase {
   controlType = "staffReceivingTheGuard";

@@ -6,36 +6,38 @@
       [staffArr]="question.fichas" [settings]="question.settings" [fGRoot]="form"
       [staffArrSelected]="question.value || []">
     </app-changing-guard-staff-list>
+    <ngx-timepicker-field #hour [format]="24" *ngSwitchCase="'hour'" [defaultTime]="'06:00'"
+      [formControlName]="question.key" [id]="question.key" [readonly]="readOnly">
+    </ngx-timepicker-field>
+    <!-- <ng-template #hour *ngSwitchCase="'hour'">
+      <mat-icon aria-hidden=" false" aria-label="Horario">schedule</mat-icon>
+    </ng-template> -->
+
   </div>
   <mat-form-field appearance="fill" [ngSwitch]="question.controlType" *ngIf="question.form_field">
     <mat-label [attr.for]="question.key">{{ question.label }}</mat-label>
     <input matInput *ngSwitchCase="'textbox'" [formControlName]="question.key" [id]="question.key"
       [type]="question.type" [readonly]="readOnly" />
+    <input matInput *ngSwitchCase="'amount'" [formControlName]="question.key" [id]="question.key" type="number"
+      [readonly]="readOnly" />
     <input matInput *ngSwitchCase="'date'" [formControlName]="question.key" [id]="question.key" [type]="question.type"
       [matDatepicker]="picker" [readonly]="readOnly">
     <mat-datepicker-toggle *ngSwitchCase="'date'" matSuffix [for]="picker"></mat-datepicker-toggle>
     <mat-datepicker *ngSwitchCase="'date'" #picker></mat-datepicker>
-    <ngx-timepicker-field #hour [format]="24" *ngSwitchCase="'hour'" [defaultTime]="'06:00'" [toggleIcon]="hour"
-      [formControlName]="question.key" [id]="question.key" [type]="question.type" [readonly]="readOnly">
-    </ngx-timepicker-field>
-    <ng-template #hour *ngSwitchCase="'hour'">
-      <mat-icon aria-hidden=" false" aria-label="Horario">schedule</mat-icon>
-    </ng-template>
-    <!-- <mat-select
-      [id]="question.key"
-      *ngSwitchCase="'staffReceivingTheGuard'"
-      [formControlName]="question.key"
-      multiple
-    >
-      <mat-option *ngFor="let opt of question?.fichas" [value]="opt?.cod_ficha">
-        <p [matTooltip]="opt?.identification_card">
-          {{ opt?.cod_ficha }} {{ opt?.name_and_surname | titlecase }}
+    <mat-select [id]="question.key" *ngSwitchCase="'scope'" [formControlName]="question.key" multiple>
+      <mat-option *ngFor="let opt of question?.options" [value]="opt?.item">
+        <p [matTooltip]="opt?.descripcion"> {{ opt?.descripcion | titlecase }}
         </p>
       </mat-option>
-    </mat-select> -->
+    </mat-select>
     <mat-select [id]="question.key" *ngSwitchCase="'dropdown'" [formControlName]="question.key" [readonly]="readOnly">
       <mat-option *ngFor="let opt of question.options" [value]="opt.key">
         <p [matTooltip]="opt?.info">{{ opt.value | titlecase }}</p>
+      </mat-option>
+    </mat-select>
+    <mat-select [id]="question.key" *ngSwitchCase="'point'" [formControlName]="question.key" [readonly]="readOnly">
+      <mat-option *ngFor="let opt of question.options" [value]="opt.id">
+        <p [matTooltip]="opt?.code">{{ opt.name | titlecase }}</p>
       </mat-option>
     </mat-select>
   </mat-form-field>

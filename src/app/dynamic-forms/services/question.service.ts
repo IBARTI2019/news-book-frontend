@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
-import { QuestionBase, DropdownQuestion, TextboxQuestion, StaffReceivingTheGuard, Title, StaffOesvica, SystemDate, Hour } from '../classes';
+import { QuestionBase, DropdownQuestion, TextboxQuestion, StaffReceivingTheGuard, Title, StaffOesvica, SystemDate, SystemHour, BookScope, Amount, Point } from '../classes';
 import { of } from 'rxjs';
 import { API } from '../../utils/api';
 import { HttpClient } from '@angular/common/http';
 import { IbartiService } from 'app/services/ibarti.service';
 import { TemplateTypeNew } from '../../interfaces';
+import { PointsService } from 'app/services/points.service';
 
 @Injectable()
 export class QuestionService extends API<any> {
@@ -12,7 +13,8 @@ export class QuestionService extends API<any> {
   protected URL = `${this.URL_API}/core/template_data/`;
   constructor(
     protected http: HttpClient,
-    public ibartiService: IbartiService
+    public ibartiService: IbartiService,
+    public pointsService: PointsService
   ) {
     super(http);
   }
@@ -96,14 +98,14 @@ export class QuestionService extends API<any> {
       switch (d.code) {
         case 'HOUR':
           questions.push(
-            new Hour({
+            new SystemHour({
               value: d.value || '',
               key: `${d.code}_${index}`,
               code: d.code,
               type: "hour",
-              label: d.label || 'Información',
+              label: d.label || 'Hora',
               required: d.required,
-              form_field: true,
+              form_field: false,
               percentage_per_row: Number(d.percentage_per_row) || 100,
             }, null),
           )
@@ -142,7 +144,7 @@ export class QuestionService extends API<any> {
               key: `${d.code}_${index}`,
               code: d.code,
               label: d.label || 'Información',
-              required: false,
+              required: d.required,
               percentage_per_row: Number(d.percentage_per_row) || 100,
             }, null),
           )
@@ -154,7 +156,7 @@ export class QuestionService extends API<any> {
               key: `${d.code}_${index}`,
               code: d.code,
               label: d.label || 'Personal que recibe la guardia',
-              required: true,
+              required: d.required,
               form_field: false,
               percentage_per_row: Number(d.percentage_per_row) || 100,
               settings: d.settings,
@@ -168,7 +170,7 @@ export class QuestionService extends API<any> {
               key: `${d.code}_${index}`,
               code: d.code,
               label: d.label || 'Personal Oesvica',
-              required: true,
+              required: d.required,
               form_field: false,
               percentage_per_row: Number(d.percentage_per_row) || 100,
               settings: d.settings,
@@ -176,6 +178,44 @@ export class QuestionService extends API<any> {
           )
           break;
         default:
+          break;
+        case 'SUB_LINE':
+          questions.push(
+            new BookScope({
+              value: d.value || '',
+              key: `${d.code}_${index}`,
+              code: d.code,
+              label: d.label || 'Alcance',
+              required: d.required,
+              form_field: true,
+              percentage_per_row: Number(d.percentage_per_row) || 100
+            }, this.ibartiService)
+          )
+          break;
+        case 'POINT':
+          questions.push(
+            new Point({
+              value: d.value || '',
+              key: `${d.code}_${index}`,
+              code: d.code,
+              label: d.label || 'Puntos',
+              required: d.required,
+              form_field: true,
+              percentage_per_row: Number(d.percentage_per_row) || 100
+            }, this.pointsService)
+          )
+          break;
+        case 'AMOUNT':
+          questions.push(
+            new Amount({
+              value: d.value || '',
+              key: `${d.code}_${index}`,
+              code: d.code,
+              label: d.label || 'Cantidad',
+              required: d.required,
+              percentage_per_row: Number(d.percentage_per_row) || 100,
+            }, null),
+          )
           break;
       }
     });
