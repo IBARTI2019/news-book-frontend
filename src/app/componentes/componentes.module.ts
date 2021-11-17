@@ -32,7 +32,6 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { NewTemplatesModule } from 'app/new-templates/new-templates.module';
 import { SharedModule } from 'app/shared/shared.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -91,7 +90,6 @@ export const entryComponentes = [
     MatTooltipModule,
     MatSlideToggleModule,
     MatSelectModule,
-    NewTemplatesModule,
     SharedModule,
     MatChipsModule,
     DragDropModule,

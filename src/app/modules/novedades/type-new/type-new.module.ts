@@ -17,7 +17,6 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { ComponentesModule } from '../../../componentes/componentes.module';
-import { NewTemplatesModule } from 'app/new-templates/new-templates.module';
 import { SharedModule } from 'app/shared/shared.module';
 import { MatListModule } from '@angular/material/list';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -43,7 +42,6 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     MatDialogModule,
     MatCheckboxModule,
     MatSelectModule,
-    NewTemplatesModule,
     MatIconModule,
     SharedModule,
     MatListModule,

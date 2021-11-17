@@ -1,7 +1,6 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { Router } from "@angular/router";
-import { TemplatesNew } from "environments/environment";
 import { ValidateOesvicaTokenComponent } from "../validate-oesvica-token/validate-oesvica-token.component";
 
 @Component({

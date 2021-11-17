@@ -22,7 +22,6 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSelectModule } from '@angular/material/select';
 import { MatIconModule } from '@angular/material/icon';
-import { NewTemplatesModule } from '../../../new-templates/new-templates.module'
 import { SharedModule } from 'app/shared/shared.module';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatChipsModule } from '@angular/material/chips';
@@ -53,7 +52,6 @@ import { ViewNewComponent } from './view-new/view-new.component';
     MatCheckboxModule,
     MatSelectModule,
     MatIconModule,
-    NewTemplatesModule,
     SharedModule,
     MatTooltipModule,
     MatChipsModule,
