@@ -263,6 +263,15 @@ export interface Staff extends PlannedStaff {
   guard_status: string;
 }
 
+export interface Scope {
+  code?: string;
+  description?: string;
+  amount?: number;
+  name?: string;
+  health_condition?: string;
+  observation?: string;
+}
+
 export interface BaseSettings {
   code: string;
   code_display: string;
@@ -279,6 +288,15 @@ export interface StaffReceivingTheGuardSettings {
   showHealthConditionField?: boolean;
   showCheckInField?: boolean;
   showGuardStatusField?: boolean;
+}
+
+export interface ScopeSettings {
+  percentage?: number;
+  showTokenField?: boolean;
+  showNameField?: boolean;
+  showAmountField?: boolean;
+  showHealthConditionField?: boolean;
+  showObservationField?: boolean;
 }
 
 export interface QuestionBaseParams {

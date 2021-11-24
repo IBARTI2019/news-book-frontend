@@ -11,6 +11,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { LayoutModule } from '@angular/cdk/layout';
 import { DemoMaterialModule } from 'app/demo-material-module';
+import { ScopeComponent } from 'app/componentes/scope/scope.component';
 
 
 @NgModule({
@@ -20,13 +21,15 @@ import { DemoMaterialModule } from 'app/demo-material-module';
     AccordionDirective,
     NotFoundComponent,
     ChangingGuardStaffListComponent,
+    ScopeComponent
   ],
   exports: [
     AccordionAnchorDirective,
     AccordionLinkDirective,
     AccordionDirective,
     NotFoundComponent,
-    ChangingGuardStaffListComponent
+    ChangingGuardStaffListComponent,
+    ScopeComponent
   ],
   imports: [
     CommonModule,

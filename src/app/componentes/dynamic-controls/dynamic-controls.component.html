@@ -9,6 +9,9 @@
     <ngx-timepicker-field #hour [format]="24" *ngSwitchCase="'hour'" [defaultTime]="'06:00'"
       [formControlName]="question.key" [id]="question.key" [readonly]="readOnly">
     </ngx-timepicker-field>
+    <app-scope [id]="question.key" *ngSwitchCase="'scope'" [readOnly]="readOnly" [fGRoot]="form"
+      [scopeArrSelected]="question.value || []" [scopeArr]="question.options" [settings]="question.settings">
+    </app-scope>
     <!-- <ng-template #hour *ngSwitchCase="'hour'">
       <mat-icon aria-hidden=" false" aria-label="Horario">schedule</mat-icon>
     </ng-template> -->
@@ -22,12 +25,6 @@
       [readonly]="readOnly" />
     <input matInput *ngSwitchCase="'date'" [formControlName]="question.key" [id]="question.key" [type]="question.type"
       [readonly]="readOnly">
-    <mat-select [id]="question.key" *ngSwitchCase="'scope'" [formControlName]="question.key" multiple>
-      <mat-option *ngFor="let opt of question?.options" [value]="opt?.item">
-        <p [matTooltip]="opt?.descripcion"> {{ opt?.descripcion | titlecase }}
-        </p>
-      </mat-option>
-    </mat-select>
     <mat-select [id]="question.key" *ngSwitchCase="'dropdown'" [formControlName]="question.key" [readonly]="readOnly">
       <mat-option *ngFor="let opt of question.options" [value]="opt.key">
         <p [matTooltip]="opt?.info">{{ opt.value | titlecase }}</p>

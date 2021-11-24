@@ -40,18 +40,18 @@ export class NewComponent implements OnInit {
       },
       {
         attribute: "employee",
-        header: "Empleado",
+        header: "Registrado Por",
       },
       {
         attribute: "created",
         header: "Fecha de creación",
         type: "date"
       },
-      {
-        attribute: "info",
-        header: "Data",
-        template: 'info'
-      },
+      /*       {
+              attribute: "info",
+              header: "Data",
+              template: 'info'
+            }, */
       {
         attribute: "id",
         header: "Opciones",

@@ -187,8 +187,9 @@ export class QuestionService extends API<any> {
               code: d.code,
               label: d.label || 'Alcance',
               required: d.required,
-              form_field: true,
-              percentage_per_row: Number(d.percentage_per_row) || 100
+              form_field: false,
+              percentage_per_row: Number(d.percentage_per_row) || 100,
+              settings: d.settings,
             }, this.ibartiService)
           )
           break;

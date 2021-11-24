@@ -8,6 +8,7 @@ import {
   SimpleChanges,
 } from "@angular/core";
 import { FormGroup } from "@angular/forms";
+import { New } from "app/interfaces";
 
 import { QuestionBase } from "../../dynamic-forms/classes";
 import { ControlService } from "../../dynamic-forms/services/control.service";
@@ -20,6 +21,7 @@ import { ControlService } from "../../dynamic-forms/services/control.service";
 })
 export class DynamicFormComponent implements OnInit, OnChanges {
   @Input() questions: QuestionBase[] | null = [];
+  @Input() new!: New;
   @Input() withSaved: boolean = true;
   @Input() readOnly: boolean = false;
   @Input() info: any = null;

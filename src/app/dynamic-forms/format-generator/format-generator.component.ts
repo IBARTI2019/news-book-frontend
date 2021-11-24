@@ -82,11 +82,21 @@ export class FormatGeneratorComponent implements OnInit {
 
   openDialog(element: TemplateTypeNew, index: number): void {
     const dialogRef = this.dialog.open(ParamsControlDialogComponent, {
-      width: element.code !== "PLANNED_STAFF" ? "300px" : "500px",
+      width: element.code !== "PLANNED_STAFF" && element.code !== "OESVICA_STAFF" && element.code !== "SUB_LINE" ? "300px" : "500px",
       data: {
         element:
-          element.code !== "PLANNED_STAFF"
-            ? element
+          element.code !== "PLANNED_STAFF" && element.code !== "OESVICA_STAFF"
+            ? (element.code !== 'SUB_LINE' ? element : {
+              ...element,
+              settings: element.settings || {
+                percentage: 100,
+                showTokenField: true,
+                showNameField: true,
+                showAmountField: true,
+                showHealthConditionField: true,
+                showObservationField: true
+              }
+            })
             : {
               ...element,
               settings: element.settings || {

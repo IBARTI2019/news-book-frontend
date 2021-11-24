@@ -19,10 +19,10 @@ const HEALTH_CONDITIONS = [
     id: "good",
     text: "Buena",
   },
-  {
-    id: "average",
-    text: "Regular",
-  },
+  /*   {
+      id: "average",
+      text: "Regular",
+    }, */
   {
     id: "bad",
     text: "Mala",

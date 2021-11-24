@@ -36,6 +36,7 @@ import { SharedModule } from 'app/shared/shared.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
+import { ScopeComponent } from './scope/scope.component';
 
 export const entryComponentes = [
   ConfirmDialogComponent,
@@ -56,7 +57,7 @@ export const entryComponentes = [
     InfoDialogComponent,
     InfoButtonComponent,
     DynamicFormComponent,
-    DynamicControlsComponent,
+    DynamicControlsComponent
   ],
   exports: [
     GenericTableComponent,
@@ -68,7 +69,7 @@ export const entryComponentes = [
     ValidateOesvicaTokenComponent,
     InfoButtonComponent,
     DynamicFormComponent,
-    DynamicControlsComponent
+    DynamicControlsComponent,
   ],
   imports: [
     CommonModule,

@@ -1,4 +1,4 @@
-import { QuestionBaseParams, StaffReceivingTheGuardSettings } from "app/interfaces";
+import { QuestionBaseParams, ScopeSettings, StaffReceivingTheGuardSettings } from "app/interfaces";
 
 export class QuestionBase {
   value?: any;
@@ -90,6 +90,19 @@ export class SystemHour extends QuestionBase {
 
 export class BookScope extends QuestionBase {
   controlType = "scope";
+  settings?: ScopeSettings = {
+    percentage: 100,
+    showTokenField: true,
+    showNameField: true,
+    showHealthConditionField: true,
+    showAmountField: true,
+    showObservationField: true
+  };
+
+  constructor(options: QuestionBaseParams, public service: any) {
+    super(options, service)
+    this.settings = options.settings
+  }
 }
 
 export class Point extends QuestionBase {

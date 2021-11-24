@@ -1,3 +1,4 @@
+{{data | json}}
 <h1 mat-dialog-title>{{ data.element?.code_display }}</h1>
 <ng-container *ngIf="!data.element?.settings">
   <div mat-dialog-content>
@@ -27,41 +28,71 @@
       <mat-label>Porcentaje en fila</mat-label>
       <input matInput tabindex="1" [(ngModel)]="data.element.settings.percentage" />
     </mat-form-field>
-    <mat-form-field>
+    <mat-form-field *ngIf="data.element.code !== 'SUB_LINE'">
       <mat-label>Status de Guardia</mat-label>
       <input matInput tabindex="1" [(ngModel)]="data.element.settings.guardStatus" />
     </mat-form-field>
-    <div>
+    <div *ngIf="data.element.code !== 'SUB_LINE'">
       <p>Mostrar la columna <strong>FICHA</strong></p>
       <mat-slide-toggle [(ngModel)]="data.element.settings.showTokenField" ngDefaultControl>{{
         data.element.settings.showTokenField ? "SI" : "NO"
         }}</mat-slide-toggle>
     </div>
-    <div>
+    <div *ngIf="data.element.code === 'SUB_LINE'">
+      <p>Mostrar la columna <strong>Código</strong></p>
+      <mat-slide-toggle [(ngModel)]="data.element.settings.showTokenField" ngDefaultControl>{{
+        data.element.settings.showTokenField ? "SI" : "NO"
+        }}</mat-slide-toggle>
+    </div>
+    <div *ngIf="data.element.code !== 'SUB_LINE'">
       <p>Mostrar la columna <strong>Nombre y Apellido</strong></p>
       <mat-slide-toggle [(ngModel)]="data.element.settings.showNameField" ngDefaultControl>{{
         data.element.settings.showNameField ? "SI" : "NO"
         }}</mat-slide-toggle>
     </div>
-    <div>
+    <div *ngIf="data.element.code === 'SUB_LINE'">
+      <p>Mostrar la columna <strong>Nombre</strong></p>
+      <mat-slide-toggle [(ngModel)]="data.element.settings.showNameField" ngDefaultControl>{{
+        data.element.settings.showNameField ? "SI" : "NO"
+        }}</mat-slide-toggle>
+    </div>
+    <div *ngIf="data.element.code === 'SUB_LINE'">
+      <p>Mostrar la columna <strong>Cantidad</strong></p>
+      <mat-slide-toggle [(ngModel)]="data.element.settings.showAmountField" ngDefaultControl>{{
+        data.element.settings.showAmountField ? "SI" : "NO"
+        }}</mat-slide-toggle>
+    </div>
+    <div *ngIf="data.element.code === 'SUB_LINE'">
+      <p>Mostrar la columna <strong>Estado</strong></p>
+      <mat-slide-toggle [(ngModel)]="data.element.settings.showHealthConditionField" ngDefaultControl>{{
+        data.element.settings.showHealthConditionField ? "SI" : "NO"
+        }}</mat-slide-toggle>
+    </div>
+    <div *ngIf="data.element.code === 'SUB_LINE'">
+      <p>Mostrar la columna <strong>Observación</strong></p>
+      <mat-slide-toggle [(ngModel)]="data.element.settings.showObservationField" ngDefaultControl>{{
+        data.element.settings.showObservationField ? "SI" : "NO"
+        }}</mat-slide-toggle>
+    </div>
+    <div *ngIf="data.element.code !== 'SUB_LINE'">
       <p>Mostrar la columna <strong>Cumplió Protocolo</strong></p>
       <mat-slide-toggle [(ngModel)]="data.element.settings.showProtocolField" ngDefaultControl>{{
         data.element.settings.showProtocolField ? "SI" : "NO"
         }}</mat-slide-toggle>
     </div>
-    <div>
+    <div *ngIf="data.element.code !== 'SUB_LINE'">
       <p>Mostrar la columna <strong>Estado de Salud</strong></p>
       <mat-slide-toggle [(ngModel)]="data.element.settings.showHealthConditionField" ngDefaultControl>{{
         data.element.settings.showHealthConditionField ? "SI" : "NO"
         }}</mat-slide-toggle>
     </div>
-    <div>
+    <div *ngIf="data.element.code !== 'SUB_LINE'">
       <p>Mostrar la columna <strong>Hora de Llegada</strong></p>
       <mat-slide-toggle [(ngModel)]="data.element.settings.showCheckInField" ngDefaultControl>{{
         data.element.settings.showCheckInField ? "SI" : "NO"
         }}</mat-slide-toggle>
     </div>
-    <div>
+    <div *ngIf="data.element.code !== 'SUB_LINE'">
       <p>Mostrar la columna <strong>Estado de su Guardia</strong></p>
       <mat-slide-toggle [(ngModel)]="data.element.settings.showGuardStatusField" ngDefaultControl>{{
         data.element.settings.showGuardStatusField ? "SI" : "NO"
