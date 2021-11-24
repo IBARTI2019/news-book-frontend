@@ -22,6 +22,7 @@ import { ControlService } from "../../dynamic-forms/services/control.service";
 export class DynamicFormComponent implements OnInit, OnChanges {
   @Input() questions: QuestionBase[] | null = [];
   @Input() new!: New;
+  @Input() client!: any;
   @Input() withSaved: boolean = true;
   @Input() readOnly: boolean = false;
   @Input() info: any = null;

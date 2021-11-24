@@ -7,6 +7,7 @@ import { NewService } from '../../../../services/new.service';
 import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
+import { IbartiService } from 'app/services/ibarti.service';
 
 @Component({
   selector: 'app-view-new',
@@ -20,15 +21,20 @@ export class ViewNewComponent implements OnInit {
   controls$!: Observable<QuestionBase[]>;
   generating = true;
   _new: New = { id: "", employee: "" };
+  client: any;
   constructor(private newService: NewService,
     private toastr: ToastrService,
     private route: ActivatedRoute,
     private serviceQuestion: QuestionService,
+    private ibartiService: IbartiService
   ) {
   }
 
   ngOnInit(): void {
     this.id = this.route.snapshot.params.id;
+    this.ibartiService.location_current().subscribe((client) => {
+      this.client = client;
+    });
     this.newService.get(this.id).subscribe(
       (_new: New) => {
         this._new = _new;

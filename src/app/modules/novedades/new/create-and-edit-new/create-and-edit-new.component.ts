@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { QuestionBase } from "app/dynamic-forms/classes";
 import { QuestionService } from "app/dynamic-forms/services/question.service";
 import { New, TemplateTypeNew, TypeNew } from "app/interfaces";
+import { IbartiService } from "app/services/ibarti.service";
 import { NewService } from "app/services/new.service";
 import { TypeNewService } from "app/services/type-new.service";
 import { TemplateNew } from "environments/environment";
@@ -43,7 +44,7 @@ export class CreateAndEditNewComponent implements OnInit {
   };
   controls$!: Observable<QuestionBase[]>;
   generating = true;
-
+  client: any;
   constructor(
     private newService: NewService,
     private typeNewService: TypeNewService,
@@ -51,11 +52,15 @@ export class CreateAndEditNewComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private serviceQuestion: QuestionService,
+    private ibartiService: IbartiService,
   ) {
     //  this.controls$ = serviceQuestion.getQuestions([], true);
   }
 
   ngOnInit(): void {
+    this.ibartiService.location_current().subscribe((client) => {
+      this.client = client;
+    });
     this.idTN = this.route.snapshot.params.idTN;
     this.currentNew.employee = this.currentNew.employee = this.getLocalStorage('id_user')
     this.currentNew.type_news = this.idTN;

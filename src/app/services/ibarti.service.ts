@@ -24,4 +24,9 @@ export class IbartiService extends API<any> {
     public sub_line_scope() {
         return this.http.get(this.URL + 'sub_line_scope/', {});
     }
+
+    public location_current() {
+        return this.http.get(this.URL + 'location_current/', {});
+    }
+
 }

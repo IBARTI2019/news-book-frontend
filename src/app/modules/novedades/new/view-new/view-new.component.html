@@ -4,6 +4,7 @@
             <app-card-header modulo="Novedades" menu="Ver Novedad">
             </app-card-header>
             <mat-card-content>
+                <app-new-header [client]="client" [new]="_new"></app-new-header>
                 <app-dymamic-form *ngIf="!generating" [questions]="controls$ | async" [readOnly]="true"
                     [info]="_new.info" [new]="_new">
                 </app-dymamic-form>

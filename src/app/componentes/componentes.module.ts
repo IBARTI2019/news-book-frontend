@@ -37,6 +37,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { ScopeComponent } from './scope/scope.component';
+import { NewHeaderComponent } from './new-header/new-header.component';
 
 export const entryComponentes = [
   ConfirmDialogComponent,
@@ -57,7 +58,8 @@ export const entryComponentes = [
     InfoDialogComponent,
     InfoButtonComponent,
     DynamicFormComponent,
-    DynamicControlsComponent
+    DynamicControlsComponent,
+    NewHeaderComponent
   ],
   exports: [
     GenericTableComponent,
@@ -70,6 +72,7 @@ export const entryComponentes = [
     InfoButtonComponent,
     DynamicFormComponent,
     DynamicControlsComponent,
+    NewHeaderComponent
   ],
   imports: [
     CommonModule,
