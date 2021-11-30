@@ -27,6 +27,7 @@ const SCOPE_ARR_DEAFAULT: Scope[] = [
 
 export const SCOPE_LIST_DEFAULT: ScopeSettings = {
   percentage: 100,
+  showItemField: true,
   showTokenField: true,
   showNameField: true,
   showHealthConditionField: true,
@@ -54,7 +55,7 @@ export class ScopeComponent implements OnInit, OnChanges {
   healthConditions = [...HEALTH_CONDITIONS];
   fGscope = new FormGroup({});
   defaultValues = { ...SCOPE_LIST_DEFAULT }
-  scopeCurrent: any;
+  scopeCurrent: any = { amount: 1 };
   constructor(private fB: FormBuilder) { }
 
   ngOnInit(): void {
@@ -93,6 +94,10 @@ export class ScopeComponent implements OnInit, OnChanges {
 
   addFG(v: Scope): void {
     const fG = this.fB.group({
+      item: [
+        v.item || "",
+        this.settings.showItemField && Validators.required,
+      ],
       code: [
         v.code || "",
         this.settings.showTokenField && Validators.required,

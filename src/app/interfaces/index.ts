@@ -247,7 +247,7 @@ export interface TemplateTypeNew {
   applies_security_protocol?: boolean;
   percentage_per_row?: number;
   value?: string;
-  settings?: StaffReceivingTheGuardSettings;
+  settings?: StaffReceivingTheGuardSettings | ScopeSettings;
 }
 
 export interface PlannedStaff {
@@ -264,6 +264,7 @@ export interface Staff extends PlannedStaff {
 }
 
 export interface Scope {
+  item?: string;
   code?: string;
   description?: string;
   amount?: number;
@@ -292,6 +293,7 @@ export interface StaffReceivingTheGuardSettings {
 
 export interface ScopeSettings {
   percentage?: number;
+  showItemField?: boolean;
   showTokenField?: boolean;
   showNameField?: boolean;
   showAmountField?: boolean;

@@ -13,7 +13,8 @@
                 </mat-form-field>
                 <mat-form-field fxFlex="1 0 30%" appearance="fill" *ngIf="!readOnly">
                     <mat-label>Cantidad</mat-label>
-                    <input type="number" matInput placeholder="Cantidad" value="1" />
+                    <input type="number" matInput placeholder="Cantidad" [(ngModel)]="scopeCurrent.amount"
+                        [ngModelOptions]="{standalone: true}" />
                 </mat-form-field>
                 <button mat-raised-button fxFlex="1 0 10%" style="height: 50px" (click)="addSubLine()"
                     *ngIf="!readOnly">
@@ -24,7 +25,11 @@
     </div>
     <div fxFlex fxLayout="row wrap" style="background-color: black;" fxLayoutGap="1px grid">
         <div fxFlex="1 1 100%" fxLayout="row" style="height: 50px" fxLayoutGap="1px">
-            <div *ngIf="settings.showTokenField" fxLayoutAlign="center center" fxFlex="2 0 20%" fxLayout="row"
+            <div *ngIf="settings.showItemField" fxLayoutAlign="center center" fxFlex="1 0 15%" fxLayout="row"
+                class="item mat-toolbar mat-primary">
+                Serial
+            </div>
+            <div *ngIf="settings.showTokenField" fxLayoutAlign="center center" fxFlex="2 0 15%" fxLayout="row"
                 class="item mat-toolbar mat-primary">
                 Código
             </div>
@@ -34,13 +39,13 @@
             </div>
             <div *ngIf="settings.showAmountField" fxLayoutAlign="center center" fxFlex="1 1 10%" fxLayout="row"
                 style="text-overflow: ellipsis" class="item mat-toolbar mat-primary">
-                Cantidad
+                Cant.
             </div>
-            <div *ngIf="settings.showHealthConditionField" fxLayoutAlign="center center" fxFlex="1 1 15%" fxLayout="row"
+            <div *ngIf="settings.showHealthConditionField" fxLayoutAlign="center center" fxFlex="1 1 10%" fxLayout="row"
                 class="item mat-toolbar mat-primary">
                 Estado
             </div>
-            <div *ngIf="settings.showObservationField" fxLayoutAlign="center center" fxFlex="1 1 25%" fxLayout="row"
+            <div *ngIf="settings.showObservationField" fxLayoutAlign="center center" fxFlex="1 1 20%" fxLayout="row"
                 class="item mat-toolbar mat-primary">
                 Observación
             </div>
@@ -52,13 +57,23 @@
         <div fxFlex="{{ settings.percentage }}" fxLayout="row" *ngFor="let scope of fScope.controls; index as i;"
             fxLayoutGap="1px">
             <ng-container [formGroup]="scope">
-                <div *ngIf="settings.showTokenField" fxLayoutAlign="center center" fxFlex="2 0 20%" fxLayout="row"
+                <div *ngIf="settings.showItemField" fxLayoutAlign="center center" fxFlex="1 0 15%" fxLayout="row"
+                    style="background-color: #ffffff" class="item">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Serial</mat-label>
+                        <input type="text" matInput formControlName="item" placeholder="1234567890" />
+                        <mat-error *ngIf="scope.controls.item.hasError('required')">
+                            Serial es <strong>requerido</strong>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div *ngIf="settings.showTokenField" fxLayoutAlign="center center" fxFlex="2 0 15%" fxLayout="row"
                     style="background-color: #ffffff" class="item">
                     <mat-form-field appearance="fill">
                         <mat-label>Cod.</mat-label>
                         <input type="text" matInput formControlName="code" placeholder="1234567890" [readonly]="true" />
                         <mat-error *ngIf="scope.controls.code.hasError('required')">
-                            Código es <strong>requerida</strong>
+                            Código es <strong>requerido</strong>
                         </mat-error>
                     </mat-form-field>
                 </div>
@@ -80,7 +95,7 @@
                         Este campo es <strong>requerido</strong>
                     </mat-error>
                 </div>
-                <div *ngIf="settings.showHealthConditionField" fxLayoutAlign="center center" fxFlex="1 1 15%"
+                <div *ngIf="settings.showHealthConditionField" fxLayoutAlign="center center" fxFlex="1 1 10%"
                     fxLayout="column" style="background-color: #ffffff" class="item">
                     <mat-radio-group style="margin: 15px 0" formControlName="health_condition">
                         <mat-radio-button *ngFor="let hC of healthConditions" style="margin: 5px" [value]="hC.id">
@@ -91,7 +106,7 @@
                         El estado de salud es <strong>requerido</strong>
                     </mat-error>
                 </div>
-                <div *ngIf="settings.showObservationField" fxLayoutAlign="center center" fxFlex="1 1 25%"
+                <div *ngIf="settings.showObservationField" fxLayoutAlign="center center" fxFlex="1 1 20%"
                     fxLayout="column" style="background-color: #ffffff" class="item">
                     <mat-form-field>
                         <textarea matInput cdkAutosizeMinRows="3" placeholder="Observación"

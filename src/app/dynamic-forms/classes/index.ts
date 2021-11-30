@@ -92,6 +92,7 @@ export class BookScope extends QuestionBase {
   controlType = "scope";
   settings?: ScopeSettings = {
     percentage: 100,
+    showItemField: true,
     showTokenField: true,
     showNameField: true,
     showHealthConditionField: true,

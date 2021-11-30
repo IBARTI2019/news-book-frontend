@@ -1,4 +1,3 @@
-{{data | json}}
 <h1 mat-dialog-title>{{ data.element?.code_display }}</h1>
 <ng-container *ngIf="!data.element?.settings">
   <div mat-dialog-content>
@@ -42,6 +41,12 @@
       <p>Mostrar la columna <strong>Código</strong></p>
       <mat-slide-toggle [(ngModel)]="data.element.settings.showTokenField" ngDefaultControl>{{
         data.element.settings.showTokenField ? "SI" : "NO"
+        }}</mat-slide-toggle>
+    </div>
+    <div *ngIf="data.element.code === 'SUB_LINE'">
+      <p>Mostrar la columna <strong>Serial</strong></p>
+      <mat-slide-toggle [(ngModel)]="data.element.settings.showItemField" ngDefaultControl>{{
+        data.element.settings.showItemField ? "SI" : "NO"
         }}</mat-slide-toggle>
     </div>
     <div *ngIf="data.element.code !== 'SUB_LINE'">

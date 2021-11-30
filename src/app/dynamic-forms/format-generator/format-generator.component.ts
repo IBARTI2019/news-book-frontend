@@ -90,6 +90,7 @@ export class FormatGeneratorComponent implements OnInit {
               ...element,
               settings: element.settings || {
                 percentage: 100,
+                showItemField: true,
                 showTokenField: true,
                 showNameField: true,
                 showAmountField: true,
