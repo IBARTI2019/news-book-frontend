@@ -15,12 +15,19 @@
     <!-- <ng-template #hour *ngSwitchCase="'hour'">
       <mat-icon aria-hidden=" false" aria-label="Horario">schedule</mat-icon>
     </ng-template> -->
-
+    <mat-radio-group *ngSwitchCase="'selection'" [formControlName]="question.key" [readonly]="readOnly">
+      <mat-radio-button *ngFor="let opt of question.options" style="margin: 5px" [value]="opt.key">{{ opt.value |
+        titlecase }}
+      </mat-radio-button>
+    </mat-radio-group>
   </div>
   <mat-form-field appearance="fill" [ngSwitch]="question.controlType" *ngIf="question.form_field">
     <mat-label [attr.for]="question.key">{{ question.label }}</mat-label>
+    <textarea matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1"
+      cdkAutosizeMaxRows="10" *ngSwitchCase="'freetext'" [formControlName]="question.key" [id]="question.key"
+      [type]="question.type" [readonly]="readOnly"></textarea>
     <input matInput *ngSwitchCase="'textbox'" [formControlName]="question.key" [id]="question.key"
-      [type]="question.type" [readonly]="readOnly" />
+      [type]="question.type" [readonly]="readOnly" [maxlength]="question.maximum_characters" />
     <input matInput *ngSwitchCase="'amount'" [formControlName]="question.key" [id]="question.key" type="number"
       [readonly]="readOnly" />
     <input matInput *ngSwitchCase="'date'" [formControlName]="question.key" [id]="question.key" [type]="question.type"

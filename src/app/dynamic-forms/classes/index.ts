@@ -18,6 +18,7 @@ export class QuestionBase {
   applies_security_protocol?: boolean;
   form_field: boolean | undefined = true;
   percentage_per_row: number;
+  maximum_characters: number;
 
   constructor(
     options: QuestionBaseParams = {},
@@ -34,6 +35,7 @@ export class QuestionBase {
     this.options = options.options || [];
     this.value = options.value || '';
     this.percentage_per_row = options.percentage_per_row || 100;
+    this.maximum_characters = options.maximum_characters || 255;
     if (
       options.code === "staffReceivingTheGuard" ||
       options.code === "PLANNED_STAFF" ||
@@ -53,6 +55,20 @@ export class QuestionBase {
     } else if (options.code === "OESVICA_STAFF") {
       this.service.oesvica_staff().subscribe((data: any) => {
         this.fichas = data;
+      });
+    } else if (options.code === "FORMER_GUARD") {
+      this.service.former_guard().subscribe((data: any) => {
+        this.fichas = [];
+        Object.keys(data).forEach((key: string) => {
+          if (key === 'OESVICA_STAFF_0' || key === 'PLANNED_STAFF_0') {
+            data[key].forEach((value: any) => {
+              if (!this.fichas!.find((f) => f.cod_ficha === value.cod_ficha)) {
+                this.fichas?.push(value);
+              }
+            })
+          }
+        });
+        this.fichas = data['OESVICA_STAFF_0'];
       });
     } else {
       this.fichas = options.fichas || [];
@@ -76,8 +92,16 @@ export class DropdownQuestion extends QuestionBase {
   controlType = "dropdown";
 }
 
+export class SelectionQuestion extends QuestionBase {
+  controlType = "selection";
+}
+
 export class TextboxQuestion extends QuestionBase {
   controlType = "textbox";
+}
+
+export class FreeText extends QuestionBase {
+  controlType = "freetext";
 }
 
 export class SystemDate extends QuestionBase {
@@ -102,7 +126,7 @@ export class BookScope extends QuestionBase {
 
   constructor(options: QuestionBaseParams, public service: any) {
     super(options, service)
-    this.settings = options.settings
+    options.settings = this.settings;
   }
 }
 
@@ -125,12 +149,35 @@ export class StaffReceivingTheGuard extends QuestionBase {
     showProtocolField: true,
     showHealthConditionField: true,
     showCheckInField: true,
+    showCheckOutField: false,
     showGuardStatusField: true,
   };
 
   constructor(options: QuestionBaseParams, public service: any) {
     super(options, service)
-    this.settings = options.settings
+    options.settings = this.settings;
+  }
+}
+
+
+export class formerGuard extends QuestionBase {
+  controlType = "staffReceivingTheGuard";
+  settings?: StaffReceivingTheGuardSettings = {
+    testing: false,
+    guardStatus: "REGULAR",
+    percentage: 100,
+    showTokenField: true,
+    showNameField: true,
+    showProtocolField: true,
+    showHealthConditionField: true,
+    showCheckInField: false,
+    showCheckOutField: true,
+    showGuardStatusField: false
+  };
+
+  constructor(options: QuestionBaseParams, public service: any) {
+    super(options, service)
+    options.settings = this.settings;
   }
 }
 
@@ -145,11 +192,12 @@ export class StaffOesvica extends QuestionBase {
     showProtocolField: true,
     showHealthConditionField: true,
     showCheckInField: true,
+    showCheckOutField: false,
     showGuardStatusField: true,
   };
 
   constructor(options: QuestionBaseParams, public service: any) {
     super(options, service)
-    this.settings = options.settings
+    options.settings = this.settings;
   }
 }

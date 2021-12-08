@@ -68,6 +68,10 @@
         class="item mat-toolbar mat-primary">
         Estado de su Guardia
       </div>
+      <div *ngIf="settings.showCheckOutField" fxLayoutAlign="center center" fxFlex="1 1 11%" fxLayout="row"
+        class="item mat-toolbar mat-primary">
+        Hora de Salida
+      </div>
     </div>
     <!-- Begin to Dynamic Form -->
     <div fxFlex="{{ settings.percentage }}" fxLayout="row" *ngFor="let staff of fA.controls" fxLayoutGap="1px">
@@ -127,6 +131,18 @@
         <div *ngIf="settings.showGuardStatusField" fxLayoutAlign="center center" fxFlex="1 1 13%" fxLayout="column"
           style="background-color: #ffffff" class="item">
           {{ settings.guardStatus }}
+        </div>
+        <div *ngIf="settings.showCheckOutField" fxLayoutAlign="center center" fxFlex="1 1 11%" fxLayout="column"
+          style="background-color: #ffffff" class="item">
+          <ngx-timepicker-field #end [format]="24" [defaultTime]="'00:00'" [toggleIcon]="icon_end"
+            formControlName="check_out" [disabled]="readOnly">
+          </ngx-timepicker-field>
+          <ng-template #icon_end>
+            <mat-icon aria-hidden="false">schedule</mat-icon>
+          </ng-template>
+          <mat-error *ngIf="staff.controls.check_out.hasError('required')">
+            La hora de salida es <strong>requerida</strong>
+          </mat-error>
         </div>
       </ng-container>
     </div>

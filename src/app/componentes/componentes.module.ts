@@ -36,8 +36,8 @@ import { SharedModule } from 'app/shared/shared.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
-import { ScopeComponent } from './scope/scope.component';
 import { NewHeaderComponent } from './new-header/new-header.component';
+import { DemoMaterialModule } from 'app/demo-material-module';
 
 export const entryComponentes = [
   ConfirmDialogComponent,
@@ -100,7 +100,8 @@ export const entryComponentes = [
     FlexLayoutModule,
     MatSelectModule,
     MatDatepickerModule,
-    NgxMaterialTimepickerModule
+    NgxMaterialTimepickerModule,
+    DemoMaterialModule
   ],
   entryComponents: entryComponentes,
   providers: [ConfirmDialogService]

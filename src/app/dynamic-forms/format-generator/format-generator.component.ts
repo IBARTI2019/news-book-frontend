@@ -27,6 +27,16 @@ export class ParamsControlDialogComponent {
     public dialogRef: MatDialogRef<ParamsControlDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
+    if (this.data.element.code === 'SELECTION' && !this.data.element.options) {
+      this.data.element.options = [];
+    }
+  }
+
+  selection_current: string = "";
+
+  addSelection() {
+    this.data.element.options.push({ key: this.selection_current, value: this.selection_current });
+    this.selection_current = "";
   }
 
   onNoClick(): void {
@@ -75,43 +85,70 @@ export class FormatGeneratorComponent implements OnInit {
           code: d[0],
           code_display: d[1],
           percentage_per_row: 100,
+          maximum_characters: 255
         });
       });
     });
   }
 
   openDialog(element: TemplateTypeNew, index: number): void {
+    let _element = {};
+    if (element.code === "PLANNED_STAFF" || element.code === "OESVICA_STAFF" || element.code === "FORMER_GUARD") {
+      if (element.code === 'FORMER_GUARD') {
+        _element = {
+          ...element,
+          settings: element.settings || {
+            testing: false,
+            guardStatus: "REGULAR",
+            percentage: 100,
+            showTokenField: true,
+            showNameField: true,
+            showProtocolField: true,
+            showHealthConditionField: true,
+            showCheckInField: false,
+            showCheckOutField: true,
+            showGuardStatusField: false,
+          },
+        }
+      } else {
+        _element = {
+          ...element,
+          settings: element.settings || {
+            testing: false,
+            guardStatus: "REGULAR",
+            percentage: 100,
+            showTokenField: true,
+            showNameField: true,
+            showProtocolField: true,
+            showHealthConditionField: true,
+            showCheckInField: true,
+            showCheckOutField: false,
+            showGuardStatusField: true,
+          },
+        }
+      }
+    } else {
+      if (element.code === 'SUB_LINE') {
+        _element = {
+          ...element,
+          settings: element.settings || {
+            percentage: 100,
+            showItemField: true,
+            showTokenField: true,
+            showNameField: true,
+            showAmountField: true,
+            showHealthConditionField: true,
+            showObservationField: true
+          }
+        }
+      } else {
+        _element = element
+      }
+    }
     const dialogRef = this.dialog.open(ParamsControlDialogComponent, {
-      width: element.code !== "PLANNED_STAFF" && element.code !== "OESVICA_STAFF" && element.code !== "SUB_LINE" ? "300px" : "500px",
+      width: element.code !== "PLANNED_STAFF" && element.code !== "OESVICA_STAFF" && element.code !== "SUB_LINE" && element.code !== "FORMER_GUARD" ? "300px" : "500px",
       data: {
-        element:
-          element.code !== "PLANNED_STAFF" && element.code !== "OESVICA_STAFF"
-            ? (element.code !== 'SUB_LINE' ? element : {
-              ...element,
-              settings: element.settings || {
-                percentage: 100,
-                showItemField: true,
-                showTokenField: true,
-                showNameField: true,
-                showAmountField: true,
-                showHealthConditionField: true,
-                showObservationField: true
-              }
-            })
-            : {
-              ...element,
-              settings: element.settings || {
-                testing: false,
-                guardStatus: "REGULAR",
-                percentage: 100,
-                showTokenField: true,
-                showNameField: true,
-                showProtocolField: true,
-                showHealthConditionField: true,
-                showCheckInField: true,
-                showGuardStatusField: true,
-              },
-            },
+        element: _element,
         index: index,
       },
     });

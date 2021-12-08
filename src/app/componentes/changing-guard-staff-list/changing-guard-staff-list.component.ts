@@ -165,6 +165,10 @@ export class ChangingGuardStaffListComponent implements OnInit, OnChanges {
         v.guard_status || this.settings.guardStatus,
         Validators.required,
       ],
+      check_out: [
+        v.check_out || "",
+        this.settings.showCheckOutField && Validators.required,
+      ],
     });
     this.fA.push(fG);
   }

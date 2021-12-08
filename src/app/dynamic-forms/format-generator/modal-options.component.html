@@ -9,10 +9,29 @@
       <mat-label>Valor por defecto</mat-label>
       <input matInput tabindex="1" [(ngModel)]="data.element.value" />
     </mat-form-field>
-    <mat-form-field>
+    <mat-form-field *ngIf="data.element?.code != 'TITLE'">
       <mat-label>Etiqueta</mat-label>
       <input matInput tabindex="1" [(ngModel)]="data.element.label" />
     </mat-form-field>
+    <mat-form-field *ngIf="data.element?.code === 'TEXTBOX'">
+      <mat-label>Máximo de Caracteres</mat-label>
+      <input matInput tabindex="1" type="number" [(ngModel)]="data.element.maximum_characters" />
+    </mat-form-field>
+    <div *ngIf="data.element?.code === 'SELECTION'" fxFlex fxLayout="row wrap">
+      <mat-form-field>
+        <mat-label>Opciones</mat-label>
+        <input matInput tabindex="1" [(ngModel)]="selection_current" />
+      </mat-form-field>
+      <button mat-raised-button style="height: 50px" (click)="addSelection()">
+        Agregar
+      </button>
+      <br>
+      <mat-list role="list" fxFlex="100">
+        <mat-list-item role="listitem" *ngFor="let opt of data.element.options">{{opt.value}}
+          <mat-icon (click)="removeSubLine(opt.key)">delete_sweep</mat-icon><br>
+        </mat-list-item>
+      </mat-list>
+    </div>
     <div *ngIf="data.element?.code != 'TITLE'">
       <p>Requerido</p>
       <mat-slide-toggle [(ngModel)]="data.element.required" ngDefaultControl>{{
@@ -95,6 +114,12 @@
       <p>Mostrar la columna <strong>Hora de Llegada</strong></p>
       <mat-slide-toggle [(ngModel)]="data.element.settings.showCheckInField" ngDefaultControl>{{
         data.element.settings.showCheckInField ? "SI" : "NO"
+        }}</mat-slide-toggle>
+    </div>
+    <div *ngIf="data.element.code !== 'SUB_LINE'">
+      <p>Mostrar la columna <strong>Hora de Salida</strong></p>
+      <mat-slide-toggle [(ngModel)]="data.element.settings.showCheckOutField" ngDefaultControl>{{
+        data.element.settings.showCheckOutField ? "SI" : "NO"
         }}</mat-slide-toggle>
     </div>
     <div *ngIf="data.element.code !== 'SUB_LINE'">

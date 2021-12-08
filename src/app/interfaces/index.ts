@@ -101,7 +101,9 @@ export interface TypeNew {
   code?: string;
   template: TemplateTypeNew[] | any;
   is_active?: string;
+  is_changing_of_the_guard?: boolean;
   image?: string;
+  image_display?: string;
   info?: string;
 }
 
@@ -235,6 +237,7 @@ export interface TemplateData {
   code: string;
   code_display?: string;
   percentage_per_row?: number;
+  maximum_characters?: number;
 }
 
 export interface TemplateTypeNew {
@@ -247,6 +250,8 @@ export interface TemplateTypeNew {
   applies_security_protocol?: boolean;
   percentage_per_row?: number;
   value?: string;
+  maximum_characters?: number;
+  options?: { key: string; value: string }[];
   settings?: StaffReceivingTheGuardSettings | ScopeSettings;
 }
 
@@ -260,6 +265,7 @@ export interface Staff extends PlannedStaff {
   protocol: boolean;
   health_condition: string;
   check_in: string;
+  check_out: string;
   guard_status: string;
 }
 
@@ -288,6 +294,7 @@ export interface StaffReceivingTheGuardSettings {
   showProtocolField?: boolean;
   showHealthConditionField?: boolean;
   showCheckInField?: boolean;
+  showCheckOutField?: boolean;
   showGuardStatusField?: boolean;
 }
 
@@ -319,6 +326,7 @@ export interface QuestionBaseParams {
   applies_security_protocol?: boolean;
   form_field?: boolean;
   percentage_per_row?: number;
+  maximum_characters?: number;
   settings?: StaffReceivingTheGuardSettings;
 }
 

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { QuestionBase, DropdownQuestion, TextboxQuestion, StaffReceivingTheGuard, Title, StaffOesvica, SystemDate, SystemHour, BookScope, Amount, Point } from '../classes';
+import { QuestionBase, DropdownQuestion, TextboxQuestion, StaffReceivingTheGuard, Title, StaffOesvica, SystemDate, SystemHour, BookScope, Amount, Point, formerGuard, FreeText, SelectionQuestion } from '../classes';
 import { of } from 'rxjs';
 import { API } from '../../utils/api';
 import { HttpClient } from '@angular/common/http';
@@ -56,7 +56,7 @@ export class QuestionService extends API<any> {
           percentage_per_row: 100
         }, null),
 
-        new TextboxQuestion({
+        new FreeText({
           value: '',
           key: 'firstName',
           label: 'First name',
@@ -64,14 +64,14 @@ export class QuestionService extends API<any> {
           percentage_per_row: 100
         }, null),
 
-        new TextboxQuestion({
+        new FreeText({
           value: '',
           key: 'emailAddress',
           label: 'Email',
           type: 'email',
         }, null),
 
-        new TextboxQuestion({
+        new FreeText({
           value: '',
           key: 'emailAddress2',
           label: 'Email2',
@@ -96,6 +96,34 @@ export class QuestionService extends API<any> {
     let questions: QuestionBase[] = [];
     template.forEach((d, index) => {
       switch (d.code) {
+        case 'SELECTION':
+          questions.push(
+            new SelectionQuestion({
+              value: d.value || '',
+              key: `${d.code}_${index}`,
+              code: d.code,
+              label: d.label || 'Seleccionar',
+              required: d.required,
+              options: d.options,
+              percentage_per_row: Number(d.percentage_per_row) || 100,
+              form_field: false
+            }, null),
+          )
+          break;
+        case 'TEXTBOX':
+          questions.push(
+            new TextboxQuestion({
+              value: d.value || '',
+              key: `${d.code}_${index}`,
+              code: d.code,
+              label: d.label || 'Información',
+              required: d.required,
+              maximum_characters: Number(d.maximum_characters) || 255,
+              percentage_per_row: Number(d.percentage_per_row) || 100,
+              form_field: true
+            }, null),
+          )
+          break;
         case 'HOUR':
           questions.push(
             new SystemHour({
@@ -139,7 +167,7 @@ export class QuestionService extends API<any> {
           break;
         case 'FREE_TEXT':
           questions.push(
-            new TextboxQuestion({
+            new FreeText({
               value: d.value || '',
               key: `${d.code}_${index}`,
               code: d.code,
@@ -177,7 +205,19 @@ export class QuestionService extends API<any> {
             }, this.ibartiService)
           )
           break;
-        default:
+        case 'FORMER_GUARD':
+          questions.push(
+            new formerGuard({
+              value: d.value || '',
+              key: `${d.code}_${index}`,
+              code: d.code,
+              label: d.label || 'Personal de la Guardia Anterior',
+              required: d.required,
+              form_field: false,
+              percentage_per_row: Number(d.percentage_per_row) || 100,
+              settings: d.settings,
+            }, this.ibartiService)
+          )
           break;
         case 'SUB_LINE':
           questions.push(
@@ -217,6 +257,8 @@ export class QuestionService extends API<any> {
               percentage_per_row: Number(d.percentage_per_row) || 100,
             }, null),
           )
+          break;
+        default:
           break;
       }
     });

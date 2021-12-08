@@ -29,4 +29,9 @@ export class IbartiService extends API<any> {
         return this.http.get(this.URL + 'location_current/', {});
     }
 
+    // Personal de la guardia anterior
+    public former_guard() {
+        return this.http.get(this.URL + 'former_guard/', {});
+    }
+
 }
