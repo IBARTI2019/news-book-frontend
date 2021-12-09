@@ -62,6 +62,7 @@ export const CHANGING_GUARD_STAFF_LIST_DEFAULT: StaffReceivingTheGuardSettings =
   showHealthConditionField: true,
   showCheckInField: true,
   showGuardStatusField: true,
+  showCheckOutField: false
 };
 
 @Component({

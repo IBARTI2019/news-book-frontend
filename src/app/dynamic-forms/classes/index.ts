@@ -126,7 +126,8 @@ export class BookScope extends QuestionBase {
 
   constructor(options: QuestionBaseParams, public service: any) {
     super(options, service)
-    options.settings = this.settings;
+    if (options.settings)
+      this.settings = options.settings;
   }
 }
 
@@ -155,7 +156,8 @@ export class StaffReceivingTheGuard extends QuestionBase {
 
   constructor(options: QuestionBaseParams, public service: any) {
     super(options, service)
-    options.settings = this.settings;
+    if (options.settings)
+      this.settings = options.settings;
   }
 }
 
@@ -177,7 +179,8 @@ export class formerGuard extends QuestionBase {
 
   constructor(options: QuestionBaseParams, public service: any) {
     super(options, service)
-    options.settings = this.settings;
+    if (options.settings)
+      this.settings = options.settings;
   }
 }
 
@@ -198,6 +201,7 @@ export class StaffOesvica extends QuestionBase {
 
   constructor(options: QuestionBaseParams, public service: any) {
     super(options, service)
-    options.settings = this.settings;
+    if (options.settings)
+      this.settings = options.settings;
   }
 }

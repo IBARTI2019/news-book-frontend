@@ -15,6 +15,7 @@
     <!-- <ng-template #hour *ngSwitchCase="'hour'">
       <mat-icon aria-hidden=" false" aria-label="Horario">schedule</mat-icon>
     </ng-template> -->
+    <mat-label [attr.for]="question.key" *ngSwitchCase="'selection'">{{ question.label }}</mat-label><br>
     <mat-radio-group *ngSwitchCase="'selection'" [formControlName]="question.key" [readonly]="readOnly">
       <mat-radio-button *ngFor="let opt of question.options" style="margin: 5px" [value]="opt.key">{{ opt.value |
         titlecase }}
