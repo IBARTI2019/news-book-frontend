@@ -28,7 +28,7 @@
       <br>
       <mat-list role="list" fxFlex="100">
         <mat-list-item role="listitem" *ngFor="let opt of data.element.options">{{opt.value}}
-          <mat-icon (click)="removeSubLine(opt.key)">delete_sweep</mat-icon><br>
+          <mat-icon (click)="removeOption(opt.key)">delete_sweep</mat-icon><br>
         </mat-list-item>
       </mat-list>
     </div>

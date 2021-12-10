@@ -38,7 +38,11 @@ export class ParamsControlDialogComponent {
     this.data.element.options.push({ key: this.selection_current, value: this.selection_current });
     this.selection_current = "";
   }
-
+  removeOption(key: string) {
+    let index = this.data.element.options.findIndex((o: any) => o.key === key);
+    if (index > -1)
+      this.data.element.options.splice(index);
+  }
   onNoClick(): void {
     this.dialogRef.close();
   }
