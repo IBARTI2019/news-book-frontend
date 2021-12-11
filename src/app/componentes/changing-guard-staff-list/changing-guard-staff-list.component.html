@@ -97,7 +97,7 @@
             </mat-error>
           </mat-form-field>
         </div>
-        <div *ngIf="settings.showProtocolField" fxLayoutAlign="center center" fxFlex="1 1 11%" fxLayout="row"
+        <div *ngIf="settings.showProtocolField" fxLayoutAlign="center center" fxFlex="1 1 11%" fxLayout="column"
           style="background-color: #ffffff" class="item">
           <mat-slide-toggle formControlName="protocol" #protocolST [disabled]="readOnly">{{
             protocolST.checked ? "SI" : "NO"

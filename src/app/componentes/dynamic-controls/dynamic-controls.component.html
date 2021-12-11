@@ -12,6 +12,9 @@
     <app-scope [id]="question.key" *ngSwitchCase="'scope'" [readOnly]="readOnly" [fGRoot]="form"
       [scopeArrSelected]="question.value || []" [scopeArr]="question.options" [settings]="question.settings">
     </app-scope>
+    <app-vehicles [id]="question.key" *ngSwitchCase="'vehicles'" [readOnly]="readOnly" [fGRoot]="form"
+      [vehiclesArrSelected]="question.value || []" [vehiclesArr]="question.vehicles" [settings]="question.settings">
+    </app-vehicles>
     <!-- <ng-template #hour *ngSwitchCase="'hour'">
       <mat-icon aria-hidden=" false" aria-label="Horario">schedule</mat-icon>
     </ng-template> -->

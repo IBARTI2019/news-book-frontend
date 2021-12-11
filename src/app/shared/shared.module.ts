@@ -12,7 +12,7 @@ import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { LayoutModule } from '@angular/cdk/layout';
 import { DemoMaterialModule } from 'app/demo-material-module';
 import { ScopeComponent } from 'app/componentes/scope/scope.component';
-
+import { VehiclesComponent } from 'app/componentes/vehicles/vehicles.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +21,8 @@ import { ScopeComponent } from 'app/componentes/scope/scope.component';
     AccordionDirective,
     NotFoundComponent,
     ChangingGuardStaffListComponent,
-    ScopeComponent
+    ScopeComponent,
+    VehiclesComponent
   ],
   exports: [
     AccordionAnchorDirective,
@@ -29,7 +30,8 @@ import { ScopeComponent } from 'app/componentes/scope/scope.component';
     AccordionDirective,
     NotFoundComponent,
     ChangingGuardStaffListComponent,
-    ScopeComponent
+    ScopeComponent,
+    VehiclesComponent
   ],
   imports: [
     CommonModule,

@@ -21,6 +21,11 @@ export class ControlService {
             ? new FormArray([], Validators.required)
             : new FormArray([]);
           break;
+        case "vehicles":
+          group[question.key] = question.required
+            ? new FormArray([], Validators.required)
+            : new FormArray([]);
+          break;
         default:
           group[question.key] = question.required
             ? new FormControl(question.value || "", Validators.required)

@@ -71,7 +71,15 @@ export interface Material {
 export interface Vehicle {
   id: string;
   license_plate: string;
+  owner_full_name?: string;
   is_active?: string;
+  protocol?: boolean;
+  entry?: boolean;
+  hour?: string;
+  movement_type?: string;
+  owner_type?: string;
+  materials?: any[];
+  cargo_vehicle?: any;
 }
 
 export interface TypePeople {
@@ -323,6 +331,11 @@ export interface QuestionBaseParams {
     identification_card?: string;
     name_and_surname?: string;
   }[];
+  vehicles?: {
+    license_plate: string;
+    owner_name?: string;
+    owner_last_name?: string;
+  }[];
   applies_security_protocol?: boolean;
   form_field?: boolean;
   percentage_per_row?: number;
@@ -344,5 +357,16 @@ export interface Point {
   code?: string;
   name?: string;
   is_active?: boolean;
+}
+
+export interface VehiclesSettings {
+  percentage?: number;
+  showTokenField?: boolean;
+  showNameField?: boolean;
+  showOwnerTypeField?: boolean;
+  showMovementTypeField?: boolean;
+  showHourField?: boolean;
+  showEntryField?: boolean;
+  showProtocolField?: boolean;
 }
 

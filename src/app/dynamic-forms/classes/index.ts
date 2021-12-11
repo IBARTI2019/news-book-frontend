@@ -1,4 +1,4 @@
-import { QuestionBaseParams, ScopeSettings, StaffReceivingTheGuardSettings } from "app/interfaces";
+import { QuestionBaseParams, ScopeSettings, StaffReceivingTheGuardSettings, VehiclesSettings } from "app/interfaces";
 
 export class QuestionBase {
   value?: any;
@@ -15,11 +15,16 @@ export class QuestionBase {
     identification_card?: string;
     name_and_surname?: string;
   }[];
+  vehicles?: {
+    license_plate: string;
+    owner_name?: string;
+    owner_last_name?: string;
+  }[];
   applies_security_protocol?: boolean;
   form_field: boolean | undefined = true;
   percentage_per_row: number;
   maximum_characters: number;
-
+  settings?: any;
   constructor(
     options: QuestionBaseParams = {},
     public service: any
@@ -56,6 +61,10 @@ export class QuestionBase {
       this.service.oesvica_staff().subscribe((data: any) => {
         this.fichas = data;
       });
+    } else if (options.code === "VEHICLES") {
+      this.service.list().subscribe((data: any) => {
+        this.vehicles = data;
+      });
     } else if (options.code === "FORMER_GUARD") {
       this.service.former_guard().subscribe((data: any) => {
         this.fichas = [];
@@ -72,6 +81,7 @@ export class QuestionBase {
       });
     } else {
       this.fichas = options.fichas || [];
+      this.vehicles = options.vehicles || [];
     }
   }
 
@@ -197,6 +207,26 @@ export class StaffOesvica extends QuestionBase {
     showCheckInField: true,
     showCheckOutField: false,
     showGuardStatusField: true,
+  };
+
+  constructor(options: QuestionBaseParams, public service: any) {
+    super(options, service)
+    if (options.settings)
+      this.settings = options.settings;
+  }
+}
+
+export class Vehicles extends QuestionBase {
+  controlType = "vehicles";
+  settings?: VehiclesSettings = {
+    percentage: 100,
+    showTokenField: true,
+    showNameField: true,
+    showOwnerTypeField: true,
+    showMovementTypeField: true,
+    showHourField: true,
+    showEntryField: true,
+    showProtocolField: true
   };
 
   constructor(options: QuestionBaseParams, public service: any) {

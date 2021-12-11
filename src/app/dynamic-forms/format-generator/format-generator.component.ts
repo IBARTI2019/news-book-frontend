@@ -145,6 +145,21 @@ export class FormatGeneratorComponent implements OnInit {
             showObservationField: true
           }
         }
+      } else if (element.code === 'VEHICLES') {
+        _element = {
+          ...element,
+          settings: element.settings || {
+            percentage: 100,
+            showTokenField: true,
+            showNameField: true,
+            showOwnerTypeField: true,
+            showMovementTypeField: true,
+            showHourField: true,
+            showEntryField: true,
+            showProtocolField: true
+          }
+        }
+
       } else {
         _element = element
       }
