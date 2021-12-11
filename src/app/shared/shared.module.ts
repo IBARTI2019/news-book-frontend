@@ -13,6 +13,7 @@ import { LayoutModule } from '@angular/cdk/layout';
 import { DemoMaterialModule } from 'app/demo-material-module';
 import { ScopeComponent } from 'app/componentes/scope/scope.component';
 import { VehiclesComponent } from 'app/componentes/vehicles/vehicles.component';
+import { VehicleComponent } from 'app/componentes/vehicle/vehicle.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { VehiclesComponent } from 'app/componentes/vehicles/vehicles.component';
     NotFoundComponent,
     ChangingGuardStaffListComponent,
     ScopeComponent,
-    VehiclesComponent
+    VehiclesComponent,
+    VehicleComponent
   ],
   exports: [
     AccordionAnchorDirective,
@@ -31,7 +33,8 @@ import { VehiclesComponent } from 'app/componentes/vehicles/vehicles.component';
     NotFoundComponent,
     ChangingGuardStaffListComponent,
     ScopeComponent,
-    VehiclesComponent
+    VehiclesComponent,
+    VehicleComponent
   ],
   imports: [
     CommonModule,

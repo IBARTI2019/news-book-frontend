@@ -61,7 +61,7 @@ export class QuestionBase {
       this.service.oesvica_staff().subscribe((data: any) => {
         this.fichas = data;
       });
-    } else if (options.code === "VEHICLES") {
+    } else if (options.code === "VEHICLES" || options.code === "VEHICLE") {
       this.service.list().subscribe((data: any) => {
         this.vehicles = data;
       });
@@ -218,6 +218,27 @@ export class StaffOesvica extends QuestionBase {
 
 export class Vehicles extends QuestionBase {
   controlType = "vehicles";
+  settings?: VehiclesSettings = {
+    percentage: 100,
+    showTokenField: true,
+    showNameField: true,
+    showOwnerTypeField: true,
+    showMovementTypeField: true,
+    showHourField: true,
+    showEntryField: true,
+    showProtocolField: true
+  };
+
+  constructor(options: QuestionBaseParams, public service: any) {
+    super(options, service)
+    if (options.settings)
+      this.settings = options.settings;
+  }
+
+}
+
+export class Vehicle extends QuestionBase {
+  controlType = "vehicle";
   settings?: VehiclesSettings = {
     percentage: 100,
     showTokenField: true,

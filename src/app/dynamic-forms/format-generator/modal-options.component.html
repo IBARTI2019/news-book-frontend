@@ -40,7 +40,7 @@
     </div>
   </div>
 </ng-container>
-<ng-container *ngIf="data.element?.settings && data.element.code !== 'VEHICLES'">
+<ng-container *ngIf="data.element?.settings && (data.element.code !== 'VEHICLES' && data.element.code !== 'VEHICLE')">
   <div mat-dialog-content>
     <mat-form-field>
       <mat-label>Porcentaje en fila</mat-label>
@@ -131,18 +131,12 @@
   </div>
 </ng-container>
 
-<ng-container *ngIf="data.element?.settings && data.element.code === 'VEHICLES'">
+<ng-container *ngIf="data.element?.settings && (data.element.code === 'VEHICLES' || data.element.code === 'VEHICLE')">
   <div mat-dialog-content>
     <mat-form-field>
       <mat-label>Porcentaje en fila</mat-label>
       <input matInput tabindex="1" [(ngModel)]="data.element.settings.percentage" />
     </mat-form-field>
-    <div>
-      <p>Múltiple</p>
-      <mat-slide-toggle [(ngModel)]="data.element.settings.multiple" ngDefaultControl>{{
-        data.element.settings.showNameField ? "SI" : "NO"
-        }}</mat-slide-toggle>
-    </div>
     <div>
       <p>Mostrar la columna <strong>Nombre y Apellido</strong></p>
       <mat-slide-toggle [(ngModel)]="data.element.settings.showNameField" ngDefaultControl>{{

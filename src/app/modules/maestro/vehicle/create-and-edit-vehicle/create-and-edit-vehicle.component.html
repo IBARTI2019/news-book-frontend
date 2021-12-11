@@ -1,21 +1,15 @@
 <mat-card>
   <app-card-header modulo="Vehiculos" menu="{{ update ? 'Actualizar Vehiculo' : 'Crear Vehiculo' }}"> </app-card-header>
   <mat-card-content>
-    <form
-      [formGroup]="fg"
-      fxLayout="column"
-      fxLayoutGap="5px"
-      (ngSubmit)="onSubmit()"
-      #formRol
-    >
+    <form [formGroup]="fg" fxLayout="column" fxLayoutGap="5px" (ngSubmit)="onSubmit()" #formRol>
       <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="5px">
         <mat-form-field>
           <mat-label>Placa Vehiculo</mat-label>
-          <input
-            matInput
-            placeholder="Placa"
-            formControlName="license_plate"
-          />
+          <input matInput placeholder="Placa" formControlName="license_plate" />
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Nombre y apellido del propietario</mat-label>
+          <input matInput placeholder="Nombre y appellido del propietario" formControlName="owner_full_name" />
         </mat-form-field>
 
         <div fxFlex="50">

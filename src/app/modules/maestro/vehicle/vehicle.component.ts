@@ -32,6 +32,10 @@ export class VehicleComponent implements OnInit {
         attribute: "Placa Vehiculo",
       },
       {
+        dataAttribute: "owner_full_name",
+        attribute: "Propietario",
+      },
+      {
         header: "Activo",
         dataAttribute: "is_active",
         attribute: "is_active",
