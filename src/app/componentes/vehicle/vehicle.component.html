@@ -48,7 +48,8 @@
                 style="background-color: #ffffff" class="item">
                 <mat-form-field appearance="fill">
                     <mat-label>Nombre y Apellido</mat-label>
-                    <input type="text" matInput formControlName="owner_full_name" placeholder="Nombre y Apellido" />
+                    <input type="text" matInput formControlName="owner_full_name" placeholder="Nombre y Apellido"
+                        [disabled]="readOnly" />
                     <mat-error *ngIf="fVehicle.controls.owner_full_name.hasError('required')">
                         El nombre es <strong>requerido</strong>
                     </mat-error>
