@@ -46,6 +46,11 @@ export interface DTColumn {
   propertyObjectExcelColumn?: string;
 }
 
+export interface DTFilterField {
+  value?: string;
+  description?: string;
+}
+
 export interface DTFilter {
   /** Tipo de input, por defecto html */
   type: 'select' | 'html' | 'range' | 'callable';
@@ -83,4 +88,29 @@ export interface CheckChangeEvent {
 
   /** Nuevo valor del checkbox */
   value: boolean;
+}
+
+// TODO: mejorar
+export interface DTFilters {
+  0?: DTFilter;
+  1?: DTFilter;
+  2?: DTFilter;
+  3?: DTFilter;
+  4?: DTFilter;
+  5?: DTFilter;
+  6?: DTFilter;
+  7?: DTFilter;
+  8?: DTFilter;
+  9?: DTFilter;
+  10?: DTFilter;
+  11?: DTFilter;
+  12?: DTFilter;
+  13?: DTFilter;
+  14?: DTFilter;
+  15?: DTFilter;
+  16?: DTFilter;
+  17?: DTFilter;
+  18?: DTFilter;
+  19?: DTFilter;
+  20?: DTFilter;
 }

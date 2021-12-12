@@ -40,7 +40,7 @@ export abstract class API<T> {
    * @param params parametros para el query params
    */
   list(params?: {}): Observable<T[]> {
-    return this.http.get<T[]>(this.URL + '?not_paginator=true', { params });
+    return this.http.get<T[]>(this.URL, { params });
   }
 
   /**
@@ -60,7 +60,7 @@ export abstract class API<T> {
    * @param params query params que se pasan con la consulta get
    */
   get(id: string | number, params?: {}): Observable<T> {
-    return this.http.get<T>(this.URL + id + '/?not_paginator=true', { params });
+    return this.http.get<T>(this.URL + id, { params });
   }
 
   /**
@@ -105,7 +105,7 @@ export abstract class API<T> {
    */
   ajax(parametros: HttpParams): Observable<T> {
     //const params = DataTableRender.buildQueryParams(parametros);
-    return this.http.get<T>(this.URL + '?not_paginator=true', { params: parametros });
+    return this.http.get<T>(this.URL, { params: parametros });
   }
 
   /**
@@ -126,5 +126,9 @@ export abstract class API<T> {
  */
   field_options_multiple(fields: string[]): Observable<any> {
     return this.http.get<any>(this.URL + 'field_options/', { params: { fields } });
+  }
+
+  previousNext(url: string): Observable<T> {
+    return this.http.get<T>(url);
   }
 }

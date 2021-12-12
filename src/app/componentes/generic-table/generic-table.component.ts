@@ -1,14 +1,16 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { API } from 'app/utils/api';
+import { AfterViewChecked, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild, ChangeDetectorRef } from '@angular/core';
+import { API } from '../../utils/api';
 import * as _ from 'lodash';
-import { CheckChangeEvent, DTColumn, DTCSVConfig } from 'app/componentes/generic-table/interface';
+import { CheckChangeEvent, DTColumn, DTCSVConfig, DTFilterField, DTFilters } from './interface';
 import { MatSort } from '@angular/material/sort';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatTableDataSource } from '@angular/material/table';
-import { GlobalService } from 'app/utils/global.service';
+import { GlobalService } from '../../utils/global.service';
 import { trigger, state, style, transition, animate } from '@angular/animations';
-import { HttpErrorResponse } from '@angular/common/http';
-import { ToastrService } from 'ngx-toastr';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
+import * as $ from "jquery";
+import { ActivatedRoute, Router } from '@angular/router';
+import { User } from 'app/interfaces';
+import { UserService } from 'app/services/user.service';
 
 @Component({
   selector: 'app-generic-table',
@@ -23,7 +25,19 @@ import { ToastrService } from 'ngx-toastr';
   ],
 })
 
-export class GenericTableComponent implements OnInit {
+export class GenericTableComponent implements OnInit, AfterViewChecked {
+
+  @Input()
+  /* Campos a filtrar */
+  filterFields: DTFilterField[] = [];
+
+  @Input()
+  /** Filtros que se colocan en la cabecera. Si no se define un filtro se colocará un campo de texto */
+  filters: DTFilters = {};
+
+  @Input()
+  /** Ocultar los filtros */
+  showFilters = false;
 
   @Input()
   /** Mostrar los filtro */
@@ -39,7 +53,7 @@ export class GenericTableComponent implements OnInit {
 
   @Input()
   /** Arreglo desde el cual se mostrarán los elemento */
-  data: any[] = [];
+  data: any = [];
 
   @Input()
   /** Método de la API que se usa para la consulta */
@@ -47,7 +61,7 @@ export class GenericTableComponent implements OnInit {
 
   @Input()
   /** Método de la API que se usa para la consulta */
-  serviceMethodParams = {};
+  serviceMethodParams: any = {};
 
   @Input()
   /** Colocar botón de descarga de CSV */
@@ -68,7 +82,7 @@ export class GenericTableComponent implements OnInit {
 
   @Input()
   /** Texto por defecto en columnas vacías */
-  textDefault = '- -';
+  textDefault = 'N/A';
 
   @Input()
   /** Imagen por defecto si la columna imagen es nula */
@@ -79,8 +93,8 @@ export class GenericTableComponent implements OnInit {
   orderColumn = 0;
 
   @Input()
-  /** Dirección en la que se ordena la tabla, por defecto ascendente */
-  orderDir = 'asc';
+  /** Dirección en la que se ordena la tabla, por defecto descendente */
+  orderDir = 'desc';
 
   @Input()
   /** Parametros ajax de la tabla */
@@ -96,7 +110,7 @@ export class GenericTableComponent implements OnInit {
 
   @Input()
   /** Atributo del objeto del que se extrae lo que se mostrará en el option para filtros en select */
-  defaultOptionDisplayAttribute = 'nombre';
+  defaultOptionDisplayAttribute = 'name';
 
 
   @Input()
@@ -105,15 +119,27 @@ export class GenericTableComponent implements OnInit {
 
   @Input()
   /** Atributo unico que se utiliza para distinguir items */
-  checkColumnAttribute = '_id';
+  checkColumnAttribute = 'id';
+
+  @Input()
+  /** Mostrar boton para agregar */
+  btnAdd?: boolean = true;
+
+  @Input()
+  /** Icono a mostrar en el boton para agregar */
+  addIcon?: string = undefined;
 
   @Input()
   /** Mostrar boton para refrescamiento manual */
   btnRefresh?: boolean;
 
   @Input()
+  /** Mostrar boton para Carga Masiva manual */
+  btnbulkload?: boolean;
+
+  @Input()
   /** Mostrar boton para exportación de archivo excel */
-  btnExcel: boolean = true;
+  btnExcel: boolean = false;
 
   @Input()
   /** Nombre de reporte excel */
@@ -132,17 +158,43 @@ export class GenericTableComponent implements OnInit {
   defaultRouterLinkAttribute = '_id';
 
   @Input()
+  /** Atributo que se usa para mostrar o no el paginador */
+  is_paged: boolean = true;
+
+  @Input()
   /** Formato del paginador */
-  pageSizeOptions: number[] = [10, 20, 30, 40, 50];
+  paginatorOptions: any = { pageSizeOptions: [], length: 0 };
 
   @Input()
   /** Clave del diccionario de plantillas de donde se extrae el template para el Collapse de la fila */
   templateCollapsed: { template: string } = { template: '' };
 
+  @Input()
+  hideMobileDesignGeneric = false
+  /** Hace que se oculte el diseño movil y se muestre la tabla en horizontal */
+
+  @Input()
+  /** Clave del diccionario de plantillas de donde se extrae el template para el diseño movil de la fila */
+  templateMovilDesign: { template: string } = { template: '' };
+
+  @Input()
+  /** Clave del diccionario de plantillas de donde se extrae el template para el diseño movil de la fila */
+  fieldTitleMovilDesign?: string = '';
+
+  @Input()
+  /** Hace que el collase de cada fila se expanda al activarse el hover sobre una fila */
+  openHoverCollapsed = false;
 
   @Input()
   /** Mensaje a mostrar cuando no exista data en la Tabla */
   messageNoData: string = 'No Data';
+
+  @Input()
+  /** Define si es necesario que la tabla renderise el diseño para movil, en sace de que no sea necesario (false), mejora el rendimiento  */
+  applyMovil = true
+
+  @Input()
+  pageSize: number = 50;
 
   /** Formato de fecha por defecto para las columnas de fecha */
   defaultDateFormat = 'dd/MM/yyyy HH:mm';
@@ -155,6 +207,13 @@ export class GenericTableComponent implements OnInit {
   @Output()
   checkedItemsChange = new EventEmitter();
 
+  @Output()
+  addChange = new EventEmitter();
+
+  /** Evento que devuelve la longitud de la data */
+  @Output()
+  lengthResult = new EventEmitter<number>();
+
   checkedItemsValue: any[] = [];
 
   checkBoxValue: any = {};
@@ -162,15 +221,44 @@ export class GenericTableComponent implements OnInit {
 
   dataSource: any = new MatTableDataSource([]);
 
-  @ViewChild(MatSort) sort: any | MatSort;
-  @ViewChild(MatPaginator) paginator: any | MatPaginator;
+  private paginator!: MatPaginator;
+  private sort: any;
 
+  @ViewChild(MatPaginator) set matPaginator(mp: MatPaginator) {
+    this.paginator = mp;
+    this.setDataSourceAttributes();
+  }
+
+  @ViewChild(MatSort) set content(content: ElementRef) {
+    this.sort = content;
+    if (this.sort) {
+      this.dataSource.sort = this.sort;
+    }
+  }
+
+  paging = false;
   cargando = true;
+  filterValue: string = '';
+
+  placeholder: string = "Buscar ";
+  selectedField!: DTFilterField | null;
+
+  filterValues = {};
+
+  user: User = {
+    email: '',
+    name: '',
+    last_name: ''
+  };
+
+  filterTimeController: any = "";
 
   constructor(
     private globalService: GlobalService,
-    private toastrService: ToastrService,
-  ) {
+    private router: Router,
+    private route: ActivatedRoute,
+    private userService: UserService,
+    private cdr: ChangeDetectorRef) {
   }
 
   @Input()
@@ -191,15 +279,53 @@ export class GenericTableComponent implements OnInit {
 
   async ngOnInit() {
     if (this.checkBoxColumn === true) {
-      const cols: DTColumn[] = [{
-        attribute: 'cbColumn',
-        header: ' ',
-      }];
-      cols.push(...this.columns);
-      this.columns = cols;
-      this.colStartIndex = 1;
+      this.addCbColumn();
     }
     this.refresh();
+    this.getPlaceHolder()
+  }
+
+  ngAfterViewChecked(): void {
+    //Called after every check of the component's view. Applies to components only.
+    //Add 'implements AfterViewChecked' to the class.
+    if (this.filterFields.length <= 0) {
+      this.columns.forEach((currentColum: DTColumn) => {
+        if ('attribute' in currentColum && !('template' in currentColum)) {
+          if (!('dataAttribute' in currentColum)) {
+            this.filterFields.push({
+              value: currentColum.attribute,
+              description: currentColum.header
+            });
+          } else {
+            this.filterFields.push({
+              value: currentColum.dataAttribute,
+              description: currentColum.header
+            })
+          }
+
+        }
+      });
+    }
+    this.cdr.detectChanges();
+  }
+
+  getPlaceHolder() {
+    if (!this.selectedField) {
+      this.placeholder = 'Buscar ' + '( TODOS )';
+    } else {
+      this.placeholder = 'Buscar ( ' + this.selectedField.description + ' )';
+    }
+    this.setupFilter();
+  }
+
+  setFilter(value: DTFilterField | null) {
+    console.log(value);
+    if (value) {
+      this.selectedField = value;
+    } else {
+      this.selectedField = null;
+    }
+    this.getPlaceHolder();
   }
 
   /** obtiene el valor de objeto.atributo con soporte para atributos anidados */
@@ -218,41 +344,53 @@ export class GenericTableComponent implements OnInit {
     return data === 1 || data === true ? 'SI' : 'NO';
   }
 
-  /** Workaround para disparar evento en componentes de fechas */
-  dateChange($event: Date, input: HTMLInputElement) {
-    setTimeout(() => {
-      $(input).trigger('change');
-    });
-  }
-
-
-  refresh() {
+  refresh(params?: {}) {
     this.cargando = true;
     if (this.service) {
-      this.service[this.serviceMethod](this.serviceMethodParams).subscribe(
-        (data: any) => {
+      if (params) {
+        this.service[this.serviceMethod](params).subscribe((data: any) => {
+          this.data = data;
+          if ('length' in data) {
+            this.lengthResult.emit(data.length);
+          } else {
+            this.lengthResult.emit(data.results.length);
+          }
+          this.lengthResult.emit(data.length);
           this.setSource(data);
-        }, (error: HttpErrorResponse) => {
-          this.cargando = false;
-          console.error(error)
-          this.toastrService.error(error.error.message || 'Origin error: refresh function from gerenic-table.component.ts');
-        }
-      );
+        });
+      } else {
+        this.service[this.serviceMethod](this.serviceMethodParams).subscribe((data: any) => {
+          this.data = data;
+          if ('length' in data) {
+            this.lengthResult.emit(data.length);
+          } else {
+            this.lengthResult.emit(data.results.length);
+          }
+          this.setSource(data);
+        });
+      }
     } else {
       this.setSource(this.data);
     }
   }
 
-  setSource(data: any[]) {
-    this.items = [...data];
-    this.dataSource = new MatTableDataSource([...data]);
-    this.dataSource.sort = this.sort;
-    this.dataSource.paginator = this.paginator;
-    this.cargando = false;
+  setSource(data: any) {
+    if (data.results) {
+      this.items = [...data.results];
+      this.paginatorOptions.length = data.count;
+      this.dataSource = new MatTableDataSource([...data.results]);
+      this.setDataSourceAttributes(true)
+      this.cargando = false;
+    } else {
+      this.items = [...data];
+      if (this.is_paged) this.paginatorOptions.length = data.length;
+      this.dataSource = new MatTableDataSource([...data]);
+      this.cargando = false;
+    }
   }
 
   checkAll($event: any) {
-    const value = $event.checked;
+    const value = $event;
     for (const item of this.items) {
       const flat = this.showCheck ? this.showCheck(item) : true;
       if (flat) {
@@ -287,8 +425,8 @@ export class GenericTableComponent implements OnInit {
   }
 
   cbColumnChange($event: any, i: number) {
-    const value = $event.checked;
-    this.checkBoxValue[this.getRealValue(this.items[i], this.checkColumnAttribute)] = $event.checked;
+    const value = $event;
+    //    this.checkBoxValue[this.getRealValue(this.items[i], this.checkColumnAttribute)] = $event;
     // Cambiar el valor de 1
     this.updateCheckedItems({
       value,
@@ -302,6 +440,10 @@ export class GenericTableComponent implements OnInit {
 
   parseColumns(columns: DTColumn[]) {
     return columns.map((c) => c.dataAttribute || c.attribute);
+  }
+
+  parseColumnsFilters(columns: DTColumn[]) {
+    return columns.map((c) => c.dataAttribute ? `${c.dataAttribute}-filters` : `${c.attribute}-filters`);
   }
 
   public updateCheckboxAll() {
@@ -318,6 +460,156 @@ export class GenericTableComponent implements OnInit {
     filterValue = filterValue.trim(); // Remove whitespace
     filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
     this.dataSource.filter = filterValue;
+  }
+
+  applyFilter2(e?: any, index?: number, isColumn?: boolean) {
+    if (this.data.results && isColumn && index) {
+      //console.log(this.data.results);
+      const fireEvent = e.type !== 'ionInput';
+      const control = e.target;
+      let column = this.columns[index].dataAttribute;
+      let attribute = this.columns[index].attribute || null
+      if (attribute)
+        column = this.columns[index].dataAttribute ? this.columns[index].dataAttribute : attribute.replace('.', "__");
+
+      if (control.name === 'cbColumn') {
+        e.stopPropagation();
+        return; // No disparar para checkbox
+      }
+      // this.filterServerData(control.value);
+      if (
+        control.name.endsWith('_range-min') ||
+        control.name.endsWith('_range-max')
+      ) {
+        const min = $(
+          '[name=' + control.name.replace('_range-max', '_range-min') + ']'
+        ).val();
+        const max = $(
+          '[name=' + control.name.replace('_range-min', '_range-max') + ']'
+        ).val();
+        const search_range = `${min}~${max}`;
+
+        // No buscar vacíos
+        if (search_range === '~') {
+          return;
+        }
+
+        if (fireEvent) {
+          if (min || min === 0) {
+            this.serviceMethodParams[control.name.replace('_range-min', '')] = Number(min);
+          } else if (this.serviceMethodParams[control.name.replace('_range-min', '')]) {
+            delete this.serviceMethodParams[control.name.replace('_range-min', '')];
+          }
+          if (max || max === 0) {
+            this.serviceMethodParams[control.name.replace('_range-max', '')] = Number(max);
+          } else if (this.serviceMethodParams[control.name.replace('_range-max', '')]) {
+            delete this.serviceMethodParams[control.name.replace('_range-max', '')];
+          }
+          clearTimeout(this.filterTimeController);
+          this.filterTimeController = setTimeout(() => this.refresh(), 2000);
+        }
+      } else if (
+        control.name.endsWith('_date-min') ||
+        control.name.endsWith('_date-max')
+      ) {
+        const min = $(
+          '[name=' + control.name.replace('_date-max', '_date-min') + ']'
+        ).val();
+        const max = $(
+          '[name=' + control.name.replace('_date-min', '_date-max') + ']'
+        ).val();
+        const search_range = `${min}~${max}`;
+
+        // No buscar vacíos
+        if (search_range === '~') {
+          return;
+        }
+
+        if (fireEvent) {
+          if (min || min === 0) {
+            this.serviceMethodParams[control.name.replace('_date-min', '')] = min;
+          } else if (this.serviceMethodParams[control.name.replace('_date-min', '')]) {
+            delete this.serviceMethodParams[control.name.replace('_date-min', '')];
+          }
+          if (max || max === 0) {
+            this.serviceMethodParams[control.name.replace('_date-max', '')] = max;
+          } else if (this.serviceMethodParams[control.name.replace('_date-max', '')]) {
+            delete this.serviceMethodParams[control.name.replace('_date-max', '')];
+          }
+          clearTimeout(this.filterTimeController);
+          this.filterTimeController = setTimeout(() => this.refresh(), 2000);
+        }
+      } else if (fireEvent) {
+        if (control.value || control.value === 0) {
+          if (column)
+            this.serviceMethodParams[column] = control.value;
+        } else {
+          if (column)
+            delete this.serviceMethodParams[column];
+        }
+        clearTimeout(this.filterTimeController);
+        this.filterTimeController = setTimeout(() => this.refresh(), 2000);
+      } else {
+        clearTimeout(this.filterTimeController);
+        this.filterTimeController = setTimeout(() => this.refresh(), 2000);
+      }
+
+    } else {
+      if (e?.detail?.data) {
+        let data = e.detail.data;
+        data = data.toString();
+        data = data.trim();
+        data = data.toLocaleLowerCase();
+        this.dataSource.filter = data;
+      } else {
+        if (this.data.results) {
+          clearTimeout(this.filterTimeController);
+          if (typeof e === "string") {
+            this.filterValue = e;
+          }
+          if (this.filterValue !== "" || (typeof e === "string" && e !== "")) {
+            this.serviceMethodParams["search"] = this.filterValue.toString();
+            this.filterTimeController = setTimeout(() => this.refresh(), 1500);
+          } else if (this.serviceMethodParams["search"]) {
+            delete this.serviceMethodParams["search"];
+            this.filterTimeController = setTimeout(() => this.refresh(), 1500);
+          }
+        } else {
+          this.filterValue = this.filterValue.toString();
+          this.filterValue = this.filterValue.trim();
+          let newFilter = this.filterValue.toLocaleLowerCase();
+          this.dataSource.filter = newFilter;
+        }
+      }
+    }
+  }
+
+  setupFilter() {
+    if (this.selectedField) {
+      this.applyFilter2();
+      /*       this.dataSource.filterPredicate = (d: any, filter: string) => {
+              if (this.selectedField) {
+                let search = `d.${this.selectedField.value}`;
+                const textToSearch = eval(search) && eval(search).toString().toLowerCase() || '';
+                return textToSearch.indexOf(filter) !== -1;
+              } else {
+                let band = false;
+                const keys = Object.keys(d);
+                for (let index = 0; index < keys.length && !band; index++) {
+                  let currentKey = keys[index];
+                  if (d[currentKey] && typeof (d[currentKey]) !== 'object') {
+                    const textToSearchPredicate = d[currentKey] && d[currentKey].toString().toLowerCase() || '';
+                    band = textToSearchPredicate.indexOf(filter) !== -1;
+                  }
+                }
+                return band;
+              }
+      
+            }; */
+    } else {
+      this.applyFilter2();
+    }
+
   }
 
   exportAsXLSX(): void {
@@ -345,4 +637,44 @@ export class GenericTableComponent implements OnInit {
     this.globalService.exportAsExcelFile(dataExcel, this.nameExcel);
   }
 
+  pageEvent(event: any) {
+    if (this.data.results) {
+      let url = event.previousPageIndex < event.pageIndex ? this.data.next : this.data.previous
+      this.paging = true;
+      this.service['previousNext'](url).subscribe((data: any) => {
+        this.data = data;
+        this.items = [...data.results];
+        this.paginatorOptions.length = data.count;
+        this.dataSource = new MatTableDataSource([...data.results]);
+      }).add(() => { this.paging = false; this.cargando = false; })
+    }
+  }
+
+  onAdd() {
+    if (this.addChange.observers.length > 0) {
+      this.addChange.emit({});
+    } else {
+      this.router.navigate(['add'], { relativeTo: this.route });
+    }
+  }
+
+  filterServerData(value: string) {
+    this.refresh(value);
+  }
+
+  addCbColumn() {
+    const cols: DTColumn[] = [{
+      dataAttribute: 'cbColumn',
+      attribute: 'cbColumn',
+      header: ' ',
+    }];
+    cols.push(...this.columns);
+    this.columns = cols;
+    this.colStartIndex = 1;
+  }
+
+  setDataSourceAttributes(add_paginator?: boolean) {
+    if (this.is_paged && add_paginator) this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+  }
 }

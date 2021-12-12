@@ -27,9 +27,9 @@
             </mat-checkbox>
         </span>
         <!-- fxFlex.gt-sm="80"  -->
-        
+
         <mat-form-field fxFlex.gt-xs="80" fxFlex="80" *ngIf="showFilter === true">
-            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filtrar">
+            <input matInput (keyup)="applyFilter2($event.target.value)" placeholder="Filtrar">
         </mat-form-field>
         <button fxFlex.gt-xs="10" fxFlex.gt-sm="10" fxFlex="10" *ngIf="btnRefresh === true" mat-button color="primary"
             (click)="refresh()">
@@ -67,7 +67,8 @@
 
                     <!-- Enlace -->
                     <a *ngIf="!column.template && column.routerLink"
-                        [routerLink]="[column.routerLink,getRealValue(item, column.routerLinkAttribute || defaultRouterLinkAttribute)]">{{getRealValue(item, column.dataAttribute || column.attribute, column.shortUUID)}}
+                        [routerLink]="[column.routerLink,getRealValue(item, column.routerLinkAttribute || defaultRouterLinkAttribute)]">{{getRealValue(item,
+                        column.dataAttribute || column.attribute, column.shortUUID)}}
                     </a>
 
                     <!-- Imagen -->
@@ -127,6 +128,9 @@
             <tr mat-footer-row *matFooterRowDef="['noData']"
                 [ngClass]="{'hide':!(dataSource!=null && dataSource.data.length==0)}"></tr>
         </table>
-        <mat-paginator [pageSizeOptions]="pageSizeOptions" showFirstLastButtons></mat-paginator>
+        <mat-paginator [pageSizeOptions]="paginatorOptions.pageSizeOptions" [length]="paginatorOptions.length"
+            [pageSize]="pageSize" *ngIf="!cargando && is_paged" (page)="pageEvent($event)" showFirstLastion-buttons
+            [hidden]="paging">
+        </mat-paginator>
     </div>
 </div>
