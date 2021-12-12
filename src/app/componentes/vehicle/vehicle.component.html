@@ -49,7 +49,7 @@
                 <mat-form-field appearance="fill">
                     <mat-label>Nombre y Apellido</mat-label>
                     <input type="text" matInput formControlName="owner_full_name" placeholder="Nombre y Apellido"
-                        [disabled]="readOnly" />
+                        [readonly]="readOnly" />
                     <mat-error *ngIf="fVehicle.controls.owner_full_name.hasError('required')">
                         El nombre es <strong>requerido</strong>
                     </mat-error>
@@ -260,7 +260,7 @@
                     <div fxLayoutAlign="center center" fxFlex="1 1 15%" fxLayout="column"
                         style="text-overflow: ellipsis" class="item">
                         <mat-form-field appearance="fill">
-                            <input type="text" matInput placeholder="Placa del remolque"
+                            <input type="text" matInput placeholder="Placa del remolque" [readonly]="readOnly"
                                 [(ngModel)]="fVehicle.controls.cargo_vehicle.value.trailer_plate"
                                 [ngModelOptions]="{standalone: true}" />
                         </mat-form-field>
@@ -271,7 +271,7 @@
                     </div>
                     <div fxLayoutAlign="center center" fxFlex="1 1 15%" fxLayout="column" class="item">
                         <mat-form-field appearance="fill">
-                            <input type="text" matInput placeholder="Nro. de precinto"
+                            <input type="text" matInput placeholder="Nro. de precinto" [readonly]="readOnly"
                                 [(ngModel)]="fVehicle.controls.cargo_vehicle.value.seal_number"
                                 [ngModelOptions]="{standalone: true}" />
                         </mat-form-field>
@@ -284,7 +284,7 @@
                     </div>
                     <div fxLayoutAlign="center center" fxFlex="2 0 20%" fxLayout="column" class="item">
                         <mat-form-field appearance="fill">
-                            <input type="text" matInput placeholder=" Nro. de documento"
+                            <input type="text" matInput placeholder=" Nro. de documento" [readonly]="readOnly"
                                 [(ngModel)]="fVehicle.controls.cargo_vehicle.value.document_number"
                                 [ngModelOptions]="{standalone: true}" />
                         </mat-form-field>
