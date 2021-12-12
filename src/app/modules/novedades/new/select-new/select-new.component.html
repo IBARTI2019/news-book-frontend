@@ -3,18 +3,12 @@
     <mat-card>
       <app-card-header modulo="Novedades" menu="Seleccionar Tipo de Novedad">
       </app-card-header>
-      <mat-card-content>
-        <app-new-container
-          *ngFor="let typeNew of typeNews"
-          srcNew="{{ typeNew.image || '/assets/images/news/default.jpg' }}"
-          description="{{ typeNew.description }}"
-          idTN="{{ typeNew.id }}"
-          template="{{ typeNew.template }}"
-          prevUrl="crear"
-          [info]="typeNew.info"
-          [isSuperUser]="isSuperUser"
-          [isStaff]="isStaff"
-        ></app-new-container>
+      <mat-card-content fxLayout="row wrap">
+        <div fxFlex="100" fxFlex.gt-sm="50" fxFlex.gt-md="25" *ngFor="let typeNew of typeNews">
+          <app-new-container srcNew="{{ typeNew.image || '/assets/images/news/default.jpg' }}"
+            description="{{ typeNew.description }}" idTN="{{ typeNew.id }}" template="{{ typeNew.template }}"
+            prevUrl="crear" [info]="typeNew.info" [isSuperUser]="isSuperUser" [isStaff]="isStaff"></app-new-container>
+        </div>
       </mat-card-content>
     </mat-card>
   </div>

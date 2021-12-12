@@ -5,7 +5,8 @@
             <th fxLayout="column" fxFlex="33%" align="center">
                 <h1>{{new?.type_news_display?.description}}</h1>
             </th>
-            <th fxLayout="column" fxFlex="33%" align="left">{{new?.type_news_display?.created | date}}</th>
+            <th fxLayout="column" fxFlex="33%" align="left">Fecha: {{new?.created | date}} <br> Hora: {{new?.created |
+                date:'shortTime'}}</th>
         </tr>
         <tr fxFlex="1 0 100%" fxLayout="row" fxLayoutAlign="space-around">
             <th fxLayout="column" fxFlex="33%" align="left">Cliente: {{client?.cliente}} </th>
@@ -15,17 +16,15 @@
         <tr fxFlex="1 0 100%" fxLayout="row" fxLayoutAlign="space-around">
             <th fxLayout="column" fxFlex="33%" align="left">Ubicación / Libro: {{client?.ubicaicon}}</th>
             <th fxLayout="column" fxFlex="33%" align="left">Reportado por: {{new?.employee}}</th>
-            <th fxLayout="column" fxFlex="33%"></th>
+            <th fxLayout="column" fxFlex="33%" align="left">
+            </th>
         </tr>
         <tr fxFlex="1 0 100%" fxLayout="row" fxLayoutAlign="space-around">
-            <th fxLayout="column" fxFlex="33%" align="left">Fecha: {{new?.type_news_display?.created | date}}</th>
             <th fxLayout="column" fxFlex="33%" align="left" *ngIf="new?.turno">
                 Turno: {{new.turno}}
             </th>
-            <th fxLayout="column" fxFlex="33%" align="left">Hora: {{new?.type_news_display?.created |
-                date:'shortTime'}}
-            </th>
-            <th fxLayout="column" fxFlex="33%" *ngIf="!new?.turno"></th>
+            <th fxLayout="column" fxFlex="33%"></th>
+            <th fxLayout="column" fxFlex="33%"></th>
         </tr>
     </thead>
 </table>

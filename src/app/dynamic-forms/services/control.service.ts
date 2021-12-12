@@ -70,7 +70,7 @@ export class ControlService {
           question.value.protocol || false,
           question.settings.showProtocolField && Validators.required,
         ],
-        materials: new FormControl({ value: question.value.materials.value || [] }),
+        materials: new FormControl({ value: question.value?.materials?.value || [] }),
         cargo_vehicle: [
           question.value.cargo_vehicle || { trailer_plate: "", loaded: false, seal_number: "", document_number: "", sealed: false, loading_review: false }
         ],
