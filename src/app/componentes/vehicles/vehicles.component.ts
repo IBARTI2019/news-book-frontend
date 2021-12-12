@@ -68,10 +68,10 @@ export class VehiclesComponent implements OnInit {
   defaultValues = { ...VEHICLES_LIST_DEFAULT }
   vehiclesCurrent: Vehicle = { id: "", license_plate: "" };
   materialCurrent: any = { description: "", mark: "", model: "", color: "", serial: "", year: "", license_plate: "" }
-  constructor(private fB: FormBuilder, private toastr: ToastrService) { }
+  constructor(private fB: FormBuilder, private toastr: ToastrService) {
+  }
 
   ngOnInit(): void {
-
     if (this.fGRoot && this.id && this.fGRoot.get(this.id)) {
       this.fVehicles = this.fGRoot.get(this.id) as FormArray;
     }
@@ -149,7 +149,7 @@ export class VehiclesComponent implements OnInit {
         v.protocol || false,
         this.settings.showProtocolField && Validators.required,
       ],
-      materials: new FormControl({ value: v.materials || [] }),
+      materials: new FormControl({ value: v.materials?.value || [] }),
       cargo_vehicle: [
         v.cargo_vehicle || { trailer_plate: "", loaded: false, seal_number: "", document_number: "", sealed: false, loading_review: false }
       ],

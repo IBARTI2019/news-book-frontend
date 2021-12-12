@@ -32,7 +32,7 @@ export class CreateAndEditPersonComponent implements OnInit {
 
   ngOnInit() {
     this.id = this.route.snapshot.params.id;
-    this.typePeopleService.list().subscribe((data: TypePeople[]) => {
+    this.typePeopleService.list({ not_paginator: true }).subscribe((data: TypePeople[]) => {
       this.listap = data;
     });
     this.fg = this.fb.group(

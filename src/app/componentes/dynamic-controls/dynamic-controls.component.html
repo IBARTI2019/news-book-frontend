@@ -13,10 +13,10 @@
       [scopeArrSelected]="question.value || []" [scopeArr]="question.options" [settings]="question.settings">
     </app-scope>
     <app-vehicles [id]="question.key" *ngSwitchCase="'vehicles'" [readOnly]="readOnly" [fGRoot]="form"
-      [vehiclesArr]="question.vehicles" [settings]="question.settings">
+      [vehiclesArr]="question.vehicles" [settings]="question.settings" [vehiclesArrSelected]="question.value || []">
     </app-vehicles>
     <app-vehicle [id]="question.key" *ngSwitchCase="'vehicle'" [readOnly]="readOnly" [fGRoot]="form"
-      [vehicleSelected]="question.value || []" [vehiclesArr]="question.vehicles" [settings]="question.settings">
+      [vehicleSelected]="question.value || {}" [vehiclesArr]="question.vehicles" [settings]="question.settings">
     </app-vehicle>
     <!-- <ng-template #hour *ngSwitchCase="'hour'">
       <mat-icon aria-hidden=" false" aria-label="Horario">schedule</mat-icon>

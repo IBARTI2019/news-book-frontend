@@ -46,7 +46,7 @@ export class QuestionBase {
       options.code === "PLANNED_STAFF" ||
       options.code === "PLANNED_PERSONNEL_WITH_SAFETY_PROTOCOL"
     ) {
-      this.service.planned_staff().subscribe((data: any) => {
+      this.service.planned_staff({ not_paginator: true }).subscribe((data: any) => {
         this.fichas = data;
       });
     } else if (options.code === "POINT") {
@@ -54,19 +54,19 @@ export class QuestionBase {
         this.options = data;
       });
     } else if (options.code === "SUB_LINE") {
-      this.service.sub_line_scope().subscribe((data: any) => {
+      this.service.sub_line_scope({ not_paginator: true }).subscribe((data: any) => {
         this.options = data;
       });
     } else if (options.code === "OESVICA_STAFF") {
-      this.service.oesvica_staff().subscribe((data: any) => {
+      this.service.oesvica_staff({ not_paginator: true }).subscribe((data: any) => {
         this.fichas = data;
       });
     } else if (options.code === "VEHICLES" || options.code === "VEHICLE") {
-      this.service.list().subscribe((data: any) => {
+      this.service.list({ not_paginator: true }).subscribe((data: any) => {
         this.vehicles = data;
       });
     } else if (options.code === "FORMER_GUARD") {
-      this.service.former_guard().subscribe((data: any) => {
+      this.service.former_guard({ not_paginator: true }).subscribe((data: any) => {
         this.fichas = [];
         Object.keys(data).forEach((key: string) => {
           if (key === 'OESVICA_STAFF_0' || key === 'PLANNED_STAFF_0') {

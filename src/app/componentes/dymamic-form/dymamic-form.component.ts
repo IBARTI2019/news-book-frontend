@@ -39,7 +39,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
       if (this.info) {
         this.questions?.forEach((q: QuestionBase) => {
           q.setValue(this.info[q.getKey()]);
-        })
+        });
       }
       this.form = this.qcs.toFormGroup(this.questions as QuestionBase[]);
     }

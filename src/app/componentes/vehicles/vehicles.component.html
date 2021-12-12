@@ -137,57 +137,64 @@
                         Objetos maquinas herramientas o equipos con que ingresa
                         (Si son mas de dos solicite relación aparte con estos datos)
                     </div>
-                    <div fxLayoutAlign="center center" class="item" fxFlex="2 1 40%" fxLayout="column">
+                    <div *ngIf="!readOnly" fxLayoutAlign="center center" class="item" fxFlex="2 1 40%"
+                        fxLayout="column">
                         <mat-form-field appearance="fill">
                             <mat-label>Descripción</mat-label>
                             <input type="text" matInput placeholder="Descripción"
                                 [(ngModel)]="materialCurrent.description" [ngModelOptions]="{standalone: true}" />
                         </mat-form-field>
                     </div>
-                    <div fxLayoutAlign="center center" class="item" fxFlex="3 1 30%" fxLayout="column">
+                    <div *ngIf="!readOnly" fxLayoutAlign="center center" class="item" fxFlex="3 1 30%"
+                        fxLayout="column">
                         <mat-form-field appearance="fill">
                             <mat-label>Marca</mat-label>
                             <input type="text" matInput placeholder="Marca" [(ngModel)]="materialCurrent.mark"
                                 [ngModelOptions]="{standalone: true}" />
                         </mat-form-field>
                     </div>
-                    <div fxLayoutAlign="center center" class="item" fxFlex="1 1 30%" fxLayout="column">
+                    <div *ngIf="!readOnly" fxLayoutAlign="center center" class="item" fxFlex="1 1 30%"
+                        fxLayout="column">
                         <mat-form-field appearance="fill">
                             <mat-label>Modelo</mat-label>
                             <input type="text" matInput placeholder="Modelo" [(ngModel)]="materialCurrent.model"
                                 [ngModelOptions]="{standalone: true}" />
                         </mat-form-field>
                     </div>
-                    <div fxLayoutAlign="center center" class="item" fxFlex="1 1 30%" fxLayout="column">
+                    <div *ngIf="!readOnly" fxLayoutAlign="center center" class="item" fxFlex="1 1 30%"
+                        fxLayout="column">
                         <mat-form-field appearance="fill">
                             <mat-label>Color</mat-label>
                             <input type="text" matInput placeholder="Color" [(ngModel)]="materialCurrent.color"
                                 [ngModelOptions]="{standalone: true}" />
                         </mat-form-field>
                     </div>
-                    <div fxLayoutAlign="center center" class="item" fxFlex="1 1 30%" fxLayout="column">
+                    <div *ngIf="!readOnly" fxLayoutAlign="center center" class="item" fxFlex="1 1 30%"
+                        fxLayout="column">
                         <mat-form-field appearance="fill">
                             <mat-label>Serial</mat-label>
                             <input type="text" matInput placeholder="Serial" [(ngModel)]="materialCurrent.serial"
                                 [ngModelOptions]="{standalone: true}" />
                         </mat-form-field>
                     </div>
-                    <div fxLayoutAlign="center center" class="item" fxFlex="1 1 10%" fxLayout="column">
+                    <div *ngIf="!readOnly" fxLayoutAlign="center center" class="item" fxFlex="1 1 10%"
+                        fxLayout="column">
                         <mat-form-field appearance="fill">
                             <mat-label>Año</mat-label>
                             <input type="text" matInput placeholder="Ano" [(ngModel)]="materialCurrent.year"
                                 [ngModelOptions]="{standalone: true}" />
                         </mat-form-field>
                     </div>
-                    <div fxLayoutAlign="center center" class="item" fxFlex="1 1 15%" fxLayout="column">
+                    <div *ngIf="!readOnly" fxLayoutAlign="center center" class="item" fxFlex="1 1 15%"
+                        fxLayout="column">
                         <mat-form-field appearance="fill">
                             <mat-label>Placa</mat-label>
                             <input type="text" matInput placeholder="Placa" [(ngModel)]="materialCurrent.license_plate"
                                 [ngModelOptions]="{standalone: true}" />
                         </mat-form-field>
                     </div>
-                    <div fxLayoutAlign="center center" fxFlex="1 1 10%" fxLayout="column">
-                        <button mat-raised-button style="height: 50px" (click)="addMaterial(i)">
+                    <div *ngIf="!readOnly" fxLayoutAlign="center center" fxFlex="1 1 10%" fxLayout="column">
+                        <button mat-raised-button type="button" style="height: 50px" (click)="addMaterial(i)">
                             Agregar
                         </button>
                     </div>

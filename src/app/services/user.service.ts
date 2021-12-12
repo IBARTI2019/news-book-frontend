@@ -33,7 +33,7 @@ export class UserService extends API<User> {
 
   get(id: string | number, params?: {}): Observable<User> {
     return this.http
-      .get<User>(this.URL + id + "/?not_paginator=true", {
+      .get<User>(this.URL + id, {
         params,
       })
       .pipe(

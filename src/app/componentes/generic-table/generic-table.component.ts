@@ -319,7 +319,6 @@ export class GenericTableComponent implements OnInit, AfterViewChecked {
   }
 
   setFilter(value: DTFilterField | null) {
-    console.log(value);
     if (value) {
       this.selectedField = value;
     } else {
@@ -464,7 +463,6 @@ export class GenericTableComponent implements OnInit, AfterViewChecked {
 
   applyFilter2(e?: any, index?: number, isColumn?: boolean) {
     if (this.data.results && isColumn && index) {
-      //console.log(this.data.results);
       const fireEvent = e.type !== 'ionInput';
       const control = e.target;
       let column = this.columns[index].dataAttribute;

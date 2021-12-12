@@ -78,7 +78,7 @@ export interface Vehicle {
   hour?: string;
   movement_type?: string;
   owner_type?: string;
-  materials?: any[];
+  materials?: { value: any[] };
   cargo_vehicle?: any;
 }
 

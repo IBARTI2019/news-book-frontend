@@ -24,13 +24,13 @@ export class SelectNewComponent implements OnInit {
     private router: Router,
     private dialogService: ConfirmDialogService,
     private toastr: ToastrService
-  ) {}
+  ) { }
 
   async ngOnInit() {
     this.isSuperUser = await this.sessionService.isSuperUser()
     this.isStaff = await this.sessionService.isStaff()
     this.deleteStorageItem('id_user')
-    this.typeNewService.list().subscribe(
+    this.typeNewService.list({ not_paginator: true }).subscribe(
       (typeNewsResponse: TypeNew[]) => {
         this.typeNews = [...typeNewsResponse];
       },

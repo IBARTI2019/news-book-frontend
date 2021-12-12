@@ -196,13 +196,13 @@ export class CreateAndEditNotificationComponent implements OnInit {
   }
 
   getGroups() {
-    this.groupService.list().subscribe((response: GroupUser[]) => {
+    this.groupService.list({ not_paginator: true }).subscribe((response: GroupUser[]) => {
       this.listGroups = [...response];
     });
   }
 
   getSchedule() {
-    this.scheduleService.list().subscribe((response: Schedule[]) => {
+    this.scheduleService.list({ not_paginator: true }).subscribe((response: Schedule[]) => {
       this.listSchedule = [...response];
     });
   }
@@ -217,7 +217,7 @@ export class CreateAndEditNotificationComponent implements OnInit {
   }
 
   getTypeNews() {
-    this.typeNewService.list().subscribe((response: TypeNew[]) => {
+    this.typeNewService.list({ not_paginator: true }).subscribe((response: TypeNew[]) => {
       this.listTypeNew = [...response];
     });
   }
@@ -241,7 +241,7 @@ export class CreateAndEditNotificationComponent implements OnInit {
       this.resetModel = new Date(0);
       if (!this.CLOSE_ON_SELECTED) {
         const closeFn = this._picker?.close;
-        this._picker.close = () => {};
+        this._picker.close = () => { };
         this._picker[
           "_popupComponentRef"
         ].instance._calendar.monthView._createWeekCells();

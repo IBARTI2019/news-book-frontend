@@ -48,15 +48,10 @@ export class NewContainerComponent implements OnInit {
   }
 
   navigate() {
-    //if (this.isStaff) return
-    //if (this.allowNavigate && this.url) {
-    // console.log(this.link)
-    // console.log("Router: ", this.router.routerState.snapshot);
     this.router.navigate([
       this.router.routerState.snapshot.url,
       this.prevUrl,
       this.url,
     ]);
-    //}
   }
 }

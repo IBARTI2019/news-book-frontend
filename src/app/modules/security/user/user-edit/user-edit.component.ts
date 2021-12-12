@@ -49,7 +49,7 @@ export class UserEditComponent implements OnInit, AfterViewChecked {
     this.id = this.route.snapshot.params.id || "";
     this.redirectTo = this.routeState.redirectTo || ""
     this.isOesvicaUser = this.userService.user$.getValue().oesvica_user
-    this.booksService.list().subscribe((books: Book[]) => {
+    this.booksService.list({ not_paginator: true }).subscribe((books: Book[]) => {
       this.localBooks = books;
     });
     this.fg = this.fb.group(
@@ -120,7 +120,7 @@ export class UserEditComponent implements OnInit, AfterViewChecked {
   }
 
   getGroupsAndUsers() {
-    forkJoin([this.groupService.list(), this.userService.list()]).subscribe((response: [GroupUser[], User[]]) => {
+    forkJoin([this.groupService.list({ not_paginator: true }), this.userService.list({ not_paginator: true })]).subscribe((response: [GroupUser[], User[]]) => {
       this.listGroups = [...response[0]];
       this.listUsers = [...response[1].filter((user: User) => user.id !== this.id)];
     });
