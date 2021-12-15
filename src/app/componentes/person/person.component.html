@@ -4,80 +4,69 @@
         <div fxFlex="1 2 100%" fxLayout="row" style="height: 50px" fxLayoutGap="1px">
             <div *ngIf="settings.showTokenField" fxLayoutAlign="center center" fxFlex="2 0 15%" fxLayout="row"
                 class="item mat-toolbar mat-primary">
-                Placa
+                Cedula
             </div>
-            <div *ngIf="settings.showNameField" fxLayoutAlign="center center" fxFlex="3 0 15%" fxLayout="row"
+            <div *ngIf="settings.showNameField" fxLayoutAlign="center center" fxFlex="3 0 20%" fxLayout="row"
                 class="item mat-toolbar mat-primary">
                 Nombre y Apellido
             </div>
-            <div *ngIf="settings.showOwnerTypeField" fxLayoutAlign="center center" fxFlex="1 1 15%" fxLayout="row"
-                class="item mat-toolbar mat-primary">
-                Tipo de propietario
-            </div>
-            <div *ngIf="settings.showMovementTypeField" fxLayoutAlign="center center" fxFlex="1 1 15%" fxLayout="row"
+            <div *ngIf="settings.showMovementTypeField" fxLayoutAlign="center center" fxFlex="1 1 10%" fxLayout="row"
                 class="item mat-toolbar mat-primary">
                 Tipo de movimiento
             </div>
-            <div *ngIf="settings.showHourField" fxLayoutAlign="center center" fxFlex="1 1 14%" fxLayout="row"
+            <div *ngIf="settings.showHourField" fxLayoutAlign="center center" fxFlex="1 1 15%" fxLayout="row"
                 class="item mat-toolbar mat-primary">
                 Hora
             </div>
-            <div *ngIf="settings.showEntryField" fxLayoutAlign="center center" fxFlex="1 1 10%" fxLayout="row"
+            <div *ngIf="settings.showReasonVisitField" fxLayoutAlign="center center" fxFlex="1 1 20%" fxLayout="row"
+                class="item mat-toolbar mat-primary">
+                Motivo de Visita
+            </div>
+            <div *ngIf="settings.showEntryField" fxLayoutAlign="center center" fxFlex="1 1 8%" fxLayout="row"
                 class="item mat-toolbar mat-primary">
                 Ingreso de herramienta o equipo
             </div>
-            <div *ngIf="settings.showProtocolField" fxLayoutAlign="center center" fxFlex="1 1 6%" fxLayout="row"
+            <div *ngIf="settings.showProtocolField" fxLayoutAlign="center center" fxFlex="1 1 8%" fxLayout="row"
                 class="item mat-toolbar mat-primary">
-                Cumplió Protocolo
+                Cumplió Protocolo COVID 19
             </div>
         </div>
         <!-- Begin to Dynamic Form -->
-        <form fxFlex="{{ settings.percentage }}" [formGroup]="fVehicle" fxLayout="row wrad" fxLayoutGap="1px">
+        <form fxFlex="{{ settings.percentage }}" [formGroup]="fPerson" fxLayout="row wrad" fxLayoutGap="1px">
             <div *ngIf="settings.showTokenField" fxLayoutAlign="center center" fxFlex="2 0 15%" fxLayout="column"
                 style="background-color: #ffffff" class="item">
                 <mat-form-field appearance="fill">
-                    <mat-label>Placa</mat-label>
-                    <input type="text" matInput formControlName="license_plate" placeholder=""
-                        (keyup)="getVehicle($event.target.value)" [readonly]="readOnly" />
-                    <mat-error *ngIf="fVehicle.controls.license_plate.hasError('required')">
-                        La placa es <strong>requerida</strong>
+                    <mat-label>Cedula</mat-label>
+                    <input type="text" matInput formControlName="identification_number" placeholder=""
+                        (keyup)="getPerson($event.target.value)" [readonly]="readOnly" />
+                    <mat-error *ngIf="fPerson.controls.identification_number.hasError('required')">
+                        La cedula es <strong>requerida</strong>
                     </mat-error>
                 </mat-form-field>
             </div>
-            <div *ngIf="settings.showNameField" fxLayoutAlign="center center" fxFlex="3 0 15%" fxLayout="column"
+            <div *ngIf="settings.showNameField" fxLayoutAlign="center center" fxFlex="3 0 20%" fxLayout="column"
                 style="background-color: #ffffff" class="item">
                 <mat-form-field appearance="fill">
                     <mat-label>Nombre y Apellido</mat-label>
-                    <input type="text" matInput formControlName="owner_full_name" placeholder="Nombre y Apellido"
+                    <input type="text" matInput formControlName="full_name" placeholder="Nombre y Apellido"
                         [readonly]="readOnly" />
-                    <mat-error *ngIf="fVehicle.controls.owner_full_name.hasError('required')">
+                    <mat-error *ngIf="fPerson.controls.full_name.hasError('required')">
                         El nombre es <strong>requerido</strong>
                     </mat-error>
                 </mat-form-field>
             </div>
-            <div *ngIf="settings.showOwnerTypeField" fxLayoutAlign="center center" fxFlex="1 1 15%" fxLayout="column"
-                style="background-color: #ffffff" class="item">
-                <mat-radio-group style="margin: 15px 0" formControlName="owner_type" [disabled]="readOnly">
-                    <mat-radio-button *ngFor="let oT of ownerTypes" style="margin: 5px" [value]="oT.id">{{
-                        oT.text }}
-                    </mat-radio-button>
-                </mat-radio-group>
-                <mat-error *ngIf="fVehicle.controls.owner_type.hasError('required')">
-                    El tipo de Propietario es <strong>requerido</strong>
-                </mat-error>
-            </div>
-            <div *ngIf="settings.showMovementTypeField" fxLayoutAlign="center center" fxFlex="1 1 15%" fxLayout="column"
+            <div *ngIf="settings.showMovementTypeField" fxLayoutAlign="center center" fxFlex="1 1 10%" fxLayout="column"
                 style="background-color: #ffffff" class="item">
                 <mat-radio-group style="margin: 15px 0" formControlName="movement_type" [disabled]="readOnly">
                     <mat-radio-button *ngFor="let mT of movementTypes" style="margin: 5px" [value]="mT.id">{{
                         mT.text }}
                     </mat-radio-button>
                 </mat-radio-group>
-                <mat-error *ngIf="fVehicle.controls.movement_type.hasError('required')">
+                <mat-error *ngIf="fPerson.controls.movement_type.hasError('required')">
                     El tipo de movimiento es <strong>requerido</strong>
                 </mat-error>
             </div>
-            <div *ngIf="settings.showHourField" fxLayoutAlign="center center" fxFlex="1 1 14%" fxLayout="column"
+            <div *ngIf="settings.showHourField" fxLayoutAlign="center center" fxFlex="1 1 15%" fxLayout="column"
                 style="background-color: #ffffff" class="item">
                 <ngx-timepicker-field #hourP [format]="24" [defaultTime]="'00:00'" [toggleIcon]="icon_hour"
                     formControlName="hour" [disabled]="readOnly">
@@ -85,29 +74,40 @@
                 <ng-template #icon_hour>
                     <mat-icon aria-hidden="false">schedule</mat-icon>
                 </ng-template>
-                <mat-error *ngIf="fVehicle.controls.hour.hasError('required')">
+                <mat-error *ngIf="fPerson.controls.hour.hasError('required')">
                     La hora es <strong>requerida</strong>
                 </mat-error>
             </div>
-            <div *ngIf="settings.showEntryField" fxLayoutAlign="center center" fxFlex="1 1 10%" fxLayout="column"
+            <div *ngIf="settings.showNameField" fxLayoutAlign="center center" fxFlex="3 0 20%" fxLayout="column"
+                style="background-color: #ffffff" class="item">
+                <mat-form-field appearance="fill">
+                    <mat-label>Motivo de la visita</mat-label>
+                    <input type="text" matInput formControlName="reason_visit" placeholder="Motivo de la visita"
+                        [readonly]="readOnly" />
+                    <mat-error *ngIf="fPerson.controls.reason_visit.hasError('required')">
+                        El motivo es <strong>requerido</strong>
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div *ngIf="settings.showEntryField" fxLayoutAlign="center center" fxFlex="1 1 8%" fxLayout="column"
                 style="background-color: #ffffff" class="item">
                 <mat-slide-toggle formControlName="entry" #entryST [disabled]="readOnly">{{
                     entryST.checked ? "SI" : "NO"
                     }}</mat-slide-toggle>
-                <mat-error *ngIf="fVehicle.controls.entry.hasError('required')">
+                <mat-error *ngIf="fPerson.controls.entry.hasError('required')">
                     El ingreso es <strong>requerido</strong>
                 </mat-error>
             </div>
-            <div *ngIf="settings.showProtocolField" fxLayoutAlign="center center" fxFlex="1 1 6%" fxLayout="column"
+            <div *ngIf="settings.showProtocolField" fxLayoutAlign="center center" fxFlex="1 1 8%" fxLayout="column"
                 style="background-color: #ffffff" class="item">
                 <mat-slide-toggle formControlName="protocol" #protocolST [disabled]="readOnly">{{
                     protocolST.checked ? "SI" : "NO"
                     }}</mat-slide-toggle>
-                <mat-error *ngIf="fVehicle.controls.protocol.hasError('required')">
+                <mat-error *ngIf="fPerson.controls.protocol.hasError('required')">
                     Este campo es <strong>requerido</strong>
                 </mat-error>
             </div>
-            <div fxLayout="row wrap" *ngIf="settings.showEntryField && fVehicle.controls.entry.value === true"
+            <div fxLayout="row wrap" *ngIf="settings.showEntryField && fPerson.controls.entry.value === true"
                 fxLayoutGap="5px grid" fxFlex="100" style="background-color: #ffffff" class="item mat-toolbar">
                 <div fxLayoutAlign="center center" fxFlex="100" fxLayout="column" class="item mat-toolbar mat-primary">
                     Objetos maquinas herramientas o equipos con que ingresa
@@ -202,7 +202,7 @@
                         </div>
                     </div>
                     <div fxLayout="row" fxFlex="100"
-                        *ngFor="let material of fVehicle.controls.materials.value.value; index as i_material;"
+                        *ngFor="let material of fPerson.controls.materials.value.value; index as i_material;"
                         fxLayoutGap="1px">
                         <div fxLayoutAlign="center center" fxFlex="1 0 25%" fxLayout="column" class="item">
                             {{material.description}}
@@ -231,86 +231,6 @@
                                 <mat-icon>delete_sweep</mat-icon>
                             </button>
                         </div>
-                    </div>
-                </div>
-            </div>
-            <div fxLayout="row wrap"
-                *ngIf="settings.showEntryField && fVehicle.controls.owner_type.value === 'cargo_vehicle'"
-                fxLayoutGap="5px grid" fxFlex="100" style="background-color: #ffffff;" class="item mat-toolbar">
-                <div fxLayoutAlign="center center" fxFlex="100" fxLayout="column"
-                    style="margin-bottom: 5px; margin-top:15px;" class="item mat-toolbar mat-primary">
-                    Vehículo de carga
-                </div>
-                <div fxFlex="1 1 100%" fxLayout="row" style="height: 50px" fxLayoutGap="1px">
-                    <div fxLayoutAlign="center center" fxFlex="1 0 15%" fxLayout="column"
-                        class="item mat-toolbar mat-primary">
-                        Cargado
-                    </div>
-                    <div fxLayoutAlign="center center" fxFlex="2 0 20%" fxLayout="column" class="item">
-                        <mat-slide-toggle #cargoST [disabled]="readOnly"
-                            [(ngModel)]="fVehicle.controls.cargo_vehicle.value.loaded"
-                            [ngModelOptions]="{standalone: true}">
-                            {{ cargoST.checked ? "SI" : "NO" }}
-                        </mat-slide-toggle>
-                    </div>
-                    <div fxLayoutAlign="center center" fxFlex="3 0 20%" fxLayout="column"
-                        class="item mat-toolbar mat-primary">
-                        Placa del remolque
-                    </div>
-                    <div fxLayoutAlign="center center" fxFlex="1 1 15%" fxLayout="column"
-                        style="text-overflow: ellipsis" class="item">
-                        <mat-form-field appearance="fill">
-                            <input type="text" matInput placeholder="Placa del remolque" [readonly]="readOnly"
-                                [(ngModel)]="fVehicle.controls.cargo_vehicle.value.trailer_plate"
-                                [ngModelOptions]="{standalone: true}" />
-                        </mat-form-field>
-                    </div>
-                    <div fxLayoutAlign="center center" fxFlex="1 1 15%" fxLayout="column"
-                        style="text-overflow: ellipsis" class="item mat-toolbar mat-primary">
-                        Nro. de precinto
-                    </div>
-                    <div fxLayoutAlign="center center" fxFlex="1 1 15%" fxLayout="column" class="item">
-                        <mat-form-field appearance="fill">
-                            <input type="text" matInput placeholder="Nro. de precinto" [readonly]="readOnly"
-                                [(ngModel)]="fVehicle.controls.cargo_vehicle.value.seal_number"
-                                [ngModelOptions]="{standalone: true}" />
-                        </mat-form-field>
-                    </div>
-                </div>
-                <div fxFlex="1 1 100%" fxLayout="row" style="height: 50px" fxLayoutGap="1px">
-                    <div fxLayoutAlign="center center" fxFlex="1 0 15%" fxLayout="column"
-                        class="item mat-toolbar mat-primary">
-                        Nro. de documento
-                    </div>
-                    <div fxLayoutAlign="center center" fxFlex="2 0 20%" fxLayout="column" class="item">
-                        <mat-form-field appearance="fill">
-                            <input type="text" matInput placeholder=" Nro. de documento" [readonly]="readOnly"
-                                [(ngModel)]="fVehicle.controls.cargo_vehicle.value.document_number"
-                                [ngModelOptions]="{standalone: true}" />
-                        </mat-form-field>
-                    </div>
-                    <div fxLayoutAlign="center center" fxFlex="3 0 20%" fxLayout="column"
-                        class="item mat-toolbar mat-primary">
-                        Precintado
-                    </div>
-                    <div fxLayoutAlign="center center" fxFlex="1 1 15%" fxLayout="column"
-                        style="text-overflow: ellipsis" class="item">
-                        <mat-slide-toggle #sealedT [disabled]="readOnly"
-                            [(ngModel)]="fVehicle.controls.cargo_vehicle.value.sealed"
-                            [ngModelOptions]="{standalone: true}">
-                            {{ sealedT.checked ? "SI" : "NO" }}
-                        </mat-slide-toggle>
-                    </div>
-                    <div fxLayoutAlign="center center" fxFlex="1 1 15%" fxLayout="column"
-                        style="text-overflow: ellipsis" class="item mat-toolbar mat-primary">
-                        Revisión de carga
-                    </div>
-                    <div fxLayoutAlign="center center" fxFlex="1 1 15%" fxLayout="column" class="item">
-                        <mat-slide-toggle #loading_reviewT [disabled]="readOnly"
-                            [(ngModel)]="fVehicle.controls.cargo_vehicle.value.loading_review"
-                            [ngModelOptions]="{standalone: true}">
-                            {{ loading_reviewT.checked ? "SI" : "N/A" }}
-                        </mat-slide-toggle>
                     </div>
                 </div>
             </div>

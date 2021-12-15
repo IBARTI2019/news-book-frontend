@@ -91,16 +91,26 @@ export interface TypePeople {
 
 export interface Person {
   id: string;
-  code: string;
-  name: string;
-  last_name: string;
-  doc_ident: string;
-  address: string;
-  phone: string;
-  mobile: string;
+  code?: string;
+  name?: string;
+  identification_number: string;
+  last_name?: string;
+  doc_ident?: string;
+  address?: string;
+  phone?: string;
+  mobile?: string;
   type_person?: string;
   type_person_display?: TypePeople;
   is_active?: string;
+
+  //For Generic Control
+  movement_type?: string;
+  reason_visit?: string;
+  full_name?: string;
+  hour?: string;
+  protocol?: boolean;
+  materials?: { value: any[] };
+  entry?: boolean;
 }
 
 export interface TypeNew {
@@ -366,6 +376,17 @@ export interface VehiclesSettings {
   showOwnerTypeField?: boolean;
   showMovementTypeField?: boolean;
   showHourField?: boolean;
+  showEntryField?: boolean;
+  showProtocolField?: boolean;
+}
+
+export interface PersonsSettings {
+  percentage?: number;
+  showTokenField?: boolean;
+  showNameField?: boolean;
+  showMovementTypeField?: boolean;
+  showHourField?: boolean;
+  showReasonVisitField?: boolean;
   showEntryField?: boolean;
   showProtocolField?: boolean;
 }

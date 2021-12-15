@@ -18,6 +18,12 @@
     <app-vehicle [id]="question.key" *ngSwitchCase="'vehicle'" [readOnly]="readOnly" [fGRoot]="form"
       [vehicleSelected]="question.value || {}" [vehiclesArr]="question.vehicles" [settings]="question.settings">
     </app-vehicle>
+    <app-persons [id]="question.key" *ngSwitchCase="'persons'" [readOnly]="readOnly" [fGRoot]="form"
+      [personsArr]="question.persons" [settings]="question.settings" [personsArrSelected]="question.value || []">
+    </app-persons>
+    <app-person [id]="question.key" *ngSwitchCase="'person'" [readOnly]="readOnly" [fGRoot]="form"
+      [personSelected]="question.value || {}" [vehiclesArr]="question.persons" [settings]="question.settings">
+    </app-person>
     <!-- <ng-template #hour *ngSwitchCase="'hour'">
       <mat-icon aria-hidden=" false" aria-label="Horario">schedule</mat-icon>
     </ng-template> -->

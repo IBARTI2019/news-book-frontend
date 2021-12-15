@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { QuestionBase, DropdownQuestion, TextboxQuestion, StaffReceivingTheGuard, Title, StaffOesvica, SystemDate, SystemHour, BookScope, Amount, Point, formerGuard, FreeText, SelectionQuestion, Vehicles, Vehicle } from '../classes';
+import { QuestionBase, DropdownQuestion, TextboxQuestion, StaffReceivingTheGuard, Title, StaffOesvica, SystemDate, SystemHour, BookScope, Amount, Point, formerGuard, FreeText, SelectionQuestion, Vehicles, Vehicle, Persons, PersonQuestion } from '../classes';
 import { of } from 'rxjs';
 import { API } from '../../utils/api';
 import { HttpClient } from '@angular/common/http';
@@ -7,6 +7,7 @@ import { IbartiService } from 'app/services/ibarti.service';
 import { TemplateTypeNew } from '../../interfaces';
 import { PointsService } from 'app/services/points.service';
 import { VehicleService } from 'app/services/vehicle.service';
+import { PersonService } from 'app/services/person.service';
 
 @Injectable()
 export class QuestionService extends API<any> {
@@ -16,7 +17,8 @@ export class QuestionService extends API<any> {
     protected http: HttpClient,
     public ibartiService: IbartiService,
     public vehicleService: VehicleService,
-    public pointsService: PointsService
+    public pointsService: PointsService,
+    public personService: PersonService
   ) {
     super(http);
   }
@@ -286,6 +288,34 @@ export class QuestionService extends API<any> {
               percentage_per_row: Number(d.percentage_per_row) || 100,
               settings: d.settings,
             }, this.vehicleService)
+          )
+          break;
+        case 'PERSONS':
+          questions.push(
+            new Persons({
+              value: d.value || '',
+              key: `${d.code}_${index}`,
+              code: d.code,
+              label: d.label || 'Control de acceso de personas',
+              required: d.required,
+              form_field: false,
+              percentage_per_row: Number(d.percentage_per_row) || 100,
+              settings: d.settings,
+            }, this.personService)
+          )
+          break;
+        case 'PERSON':
+          questions.push(
+            new PersonQuestion({
+              value: d.value || '',
+              key: `${d.code}_${index}`,
+              code: d.code,
+              label: d.label || 'Control de acceso de persona',
+              required: d.required,
+              form_field: false,
+              percentage_per_row: Number(d.percentage_per_row) || 100,
+              settings: d.settings,
+            }, this.personService)
           )
           break;
         default:

@@ -14,6 +14,8 @@ import { DemoMaterialModule } from 'app/demo-material-module';
 import { ScopeComponent } from 'app/componentes/scope/scope.component';
 import { VehiclesComponent } from 'app/componentes/vehicles/vehicles.component';
 import { VehicleComponent } from 'app/componentes/vehicle/vehicle.component';
+import { PersonsComponent } from 'app/componentes/persons/persons.component';
+import { PersonComponent } from 'app/componentes/person/person.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +26,9 @@ import { VehicleComponent } from 'app/componentes/vehicle/vehicle.component';
     ChangingGuardStaffListComponent,
     ScopeComponent,
     VehiclesComponent,
-    VehicleComponent
+    VehicleComponent,
+    PersonsComponent,
+    PersonComponent
   ],
   exports: [
     AccordionAnchorDirective,
@@ -34,7 +38,9 @@ import { VehicleComponent } from 'app/componentes/vehicle/vehicle.component';
     ChangingGuardStaffListComponent,
     ScopeComponent,
     VehiclesComponent,
-    VehicleComponent
+    VehicleComponent,
+    PersonsComponent,
+    PersonComponent
   ],
   imports: [
     CommonModule,

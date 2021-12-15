@@ -179,7 +179,7 @@ export class VehiclesComponent implements OnInit {
   }
 
   removeMaterial(index_form: number, index_material: number): void {
-    this.fVehicles.controls[index_form].get('materials')?.value.value.splice(index_material, 0)
+    this.fVehicles.controls[index_form].get('materials')?.value.value.splice(index_material, 1);
   }
 
   addVehicle() {

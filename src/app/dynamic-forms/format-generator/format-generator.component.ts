@@ -160,6 +160,21 @@ export class FormatGeneratorComponent implements OnInit {
           }
         }
 
+      } else if (element.code === 'PERSONS' || element.code === 'PERSON') {
+        _element = {
+          ...element,
+          settings: element.settings || {
+            percentage: 100,
+            showTokenField: true,
+            showNameField: true,
+            showMovementTypeField: true,
+            showReasonVisitField: true,
+            showHourField: true,
+            showEntryField: true,
+            showProtocolField: true
+          }
+        }
+
       } else {
         _element = element
       }

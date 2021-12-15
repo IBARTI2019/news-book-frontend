@@ -1,27 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { Vehicle, VehiclesSettings } from 'app/interfaces';
+import { PersonsSettings, Person } from 'app/interfaces';
 import { ToastrService } from 'ngx-toastr';
-
-const OWNER_TYPES = [
-  {
-    id: "employee",
-    text: "Trabajador",
-  },
-  {
-    id: "visitor",
-    text: "Visitante",
-  },
-  {
-    id: "cargo_vehicle",
-    text: "Vehículo de carga",
-  },
-  {
-    id: "supplier",
-    text: "Proveedor",
-  },
-];
-
 
 const MOVEMENT_TYPES = [
   {
@@ -34,12 +14,12 @@ const MOVEMENT_TYPES = [
   }
 ];
 
-export const VEHICLES_LIST_DEFAULT: VehiclesSettings = {
+export const PERSONS_LIST_DEFAULT: PersonsSettings = {
   percentage: 100,
   showTokenField: true,
   showNameField: true,
-  showOwnerTypeField: true,
   showMovementTypeField: true,
+  showReasonVisitField: true,
   showHourField: true,
   showEntryField: true,
   showProtocolField: true
@@ -47,43 +27,42 @@ export const VEHICLES_LIST_DEFAULT: VehiclesSettings = {
 
 
 @Component({
-  selector: 'app-vehicle',
-  templateUrl: './vehicle.component.html',
-  styleUrls: ['./vehicle.component.css']
+  selector: 'app-person',
+  templateUrl: './person.component.html',
+  styleUrls: ['./person.component.css']
 })
-export class VehicleComponent implements OnInit {
+export class PersonComponent implements OnInit {
   @Input() id: string = '';
   @Input() value: any = null;
-  @Input() settings: VehiclesSettings = VEHICLES_LIST_DEFAULT;
-  @Input() vehiclesArr: Vehicle[] = [];
+  @Input() settings: PersonsSettings = PERSONS_LIST_DEFAULT;
+  @Input() personsArr: Person[] = [];
   @Input() fGRoot!: FormGroup;
-  fVehicle!: FormGroup;
+  fPerson!: FormGroup;
   @Input() readOnly: boolean = false;
 
   @Output() isValid: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-  ownerTypes = [...OWNER_TYPES];
   movementTypes = [...MOVEMENT_TYPES];
-  defaultValues = { ...VEHICLES_LIST_DEFAULT }
-  vehiclesCurrent: Vehicle = { id: "", license_plate: "" };
+  defaultValues = { ...PERSONS_LIST_DEFAULT }
+  PersonsCurrent: Person = { id: "", identification_number: "" };
   materialCurrent: any = { description: "", mark: "", model: "", color: "", serial: "", year: "", license_plate: "" }
   constructor(private toastr: ToastrService) { }
 
   ngOnInit(): void {
     let v: any = {};
     if (this.fGRoot && this.id && this.fGRoot.get(this.id)) {
-      this.fVehicle = this.fGRoot.get(this.id) as FormGroup;
+      this.fPerson = this.fGRoot.get(this.id) as FormGroup;
     }
   }
 
   ngOnChanges(change: SimpleChanges): void {
     if (change.settings && change.settings.firstChange) {
       this.settings = change.settings.currentValue || {
-        ...VEHICLES_LIST_DEFAULT,
+        ...PERSONS_LIST_DEFAULT,
       }
     } else if (change.settings && !change.settings.currentValue) {
       this.settings = {
-        ...VEHICLES_LIST_DEFAULT,
+        ...PERSONS_LIST_DEFAULT,
       }
     }
   }
@@ -100,18 +79,18 @@ export class VehicleComponent implements OnInit {
       }
     });
     if (error) return;
-    this.fVehicle.get('materials')?.value.value.push({ ...this.materialCurrent });
+    this.fPerson.get('materials')?.value.value.push({ ...this.materialCurrent });
     this.materialCurrent = { ...{ description: "", mark: "", model: "", color: "", serial: "", year: "", license_plate: "" } };
   }
 
   removeMaterial(index_material: number): void {
-    this.fVehicle.get('materials')?.value.value.splice(index_material, 1);
+    this.fPerson.get('materials')?.value.value.splice(index_material, 1);
   }
 
-  getVehicle(license_plate: string) {
-    let index = this.vehiclesArr.findIndex(v => v.license_plate == license_plate);
+  getPerson(identification_number: string) {
+    let index = this.personsArr.findIndex(v => v.identification_number == identification_number);
     if (index > -1) {
-      this.fVehicle.get("owner_full_name")!.setValue(this.vehiclesArr[index].owner_full_name);
+      this.fPerson.get("full_name")!.setValue(this.personsArr[index].full_name);
     }
   }
 }

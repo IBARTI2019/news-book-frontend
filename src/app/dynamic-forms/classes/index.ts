@@ -1,4 +1,4 @@
-import { QuestionBaseParams, ScopeSettings, StaffReceivingTheGuardSettings, VehiclesSettings } from "app/interfaces";
+import { Person, PersonsSettings, QuestionBaseParams, ScopeSettings, StaffReceivingTheGuardSettings, VehiclesSettings } from "app/interfaces";
 
 export class QuestionBase {
   value?: any;
@@ -25,6 +25,7 @@ export class QuestionBase {
   percentage_per_row: number;
   maximum_characters: number;
   settings?: any;
+  persons?: Person[];
   constructor(
     options: QuestionBaseParams = {},
     public service: any
@@ -78,6 +79,10 @@ export class QuestionBase {
           }
         });
         this.fichas = data['OESVICA_STAFF_0'];
+      });
+    } else if (options.code === "PERSONS" || options.code === "PERSON") {
+      this.service.list({ not_paginator: true }).subscribe((data: Person[]) => {
+        this.persons = data;
       });
     } else {
       this.fichas = options.fichas || [];
@@ -249,6 +254,36 @@ export class Vehicle extends QuestionBase {
     showEntryField: true,
     showProtocolField: true
   };
+
+  constructor(options: QuestionBaseParams, public service: any) {
+    super(options, service)
+    if (options.settings)
+      this.settings = options.settings;
+  }
+}
+
+export class PersonQuestion extends QuestionBase {
+  controlType = "person";
+  settings?: PersonsSettings = {
+    percentage: 100,
+    showTokenField: true,
+    showNameField: true,
+    showMovementTypeField: true,
+    showHourField: true,
+    showReasonVisitField: true,
+    showEntryField: true,
+    showProtocolField: true
+  };
+
+  constructor(options: QuestionBaseParams, public service: any) {
+    super(options, service)
+    if (options.settings)
+      this.settings = options.settings;
+  }
+}
+
+export class Persons extends PersonQuestion {
+  controlType = "persons";
 
   constructor(options: QuestionBaseParams, public service: any) {
     super(options, service)

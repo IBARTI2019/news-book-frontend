@@ -40,7 +40,8 @@
     </div>
   </div>
 </ng-container>
-<ng-container *ngIf="data.element?.settings && (data.element.code !== 'VEHICLES' && data.element.code !== 'VEHICLE')">
+<ng-container
+  *ngIf="data.element?.settings && (data.element.code !== 'VEHICLES' && data.element.code !== 'VEHICLE' && data.element.code !== 'PERSONS' && data.element.code !== 'PERSON')">
   <div mat-dialog-content>
     <mat-form-field>
       <mat-label>Porcentaje en fila</mat-label>
@@ -175,6 +176,52 @@
     </div>
   </div>
 </ng-container>
+
+<ng-container *ngIf="data.element?.settings && (data.element.code === 'PERSONS' || data.element.code === 'PERSON')">
+  <div mat-dialog-content>
+    <mat-form-field>
+      <mat-label>Porcentaje en fila</mat-label>
+      <input matInput tabindex="1" [(ngModel)]="data.element.settings.percentage" />
+    </mat-form-field>
+    <div>
+      <p>Mostrar la columna <strong>Nombre y Apellido</strong></p>
+      <mat-slide-toggle [(ngModel)]="data.element.settings.showNameField" ngDefaultControl>{{
+        data.element.settings.showNameField ? "SI" : "NO"
+        }}</mat-slide-toggle>
+    </div>
+    <div>
+      <p>Mostrar la columna <strong>Tipo de Movimiento</strong></p>
+      <mat-slide-toggle [(ngModel)]="data.element.settings.showMovementTypeField" ngDefaultControl>{{
+        data.element.settings.showMovementTypeField ? "SI" : "NO"
+        }}</mat-slide-toggle>
+    </div>
+    <div>
+      <p>Mostrar la columna <strong>Hora</strong></p>
+      <mat-slide-toggle [(ngModel)]="data.element.settings.showHourField" ngDefaultControl>{{
+        data.element.settings.showHourField ? "SI" : "NO"
+        }}</mat-slide-toggle>
+    </div>
+    <div>
+      <p>Mostrar la columna <strong>Ingreso de Motivo de Visita</strong></p>
+      <mat-slide-toggle [(ngModel)]="data.element.settings.showReasonVisitField" ngDefaultControl>{{
+        data.element.settings.showReasonVisitField ? "SI" : "NO"
+        }}</mat-slide-toggle>
+    </div>
+    <div>
+      <p>Mostrar la columna <strong>Ingreso de Herramienta o Equipo</strong></p>
+      <mat-slide-toggle [(ngModel)]="data.element.settings.showEntryField" ngDefaultControl>{{
+        data.element.settings.showEntryField ? "SI" : "NO"
+        }}</mat-slide-toggle>
+    </div>
+    <div>
+      <p>Mostrar la columna <strong>Cumplió protocolo</strong></p>
+      <mat-slide-toggle [(ngModel)]="data.element.settings.showProtocolField" ngDefaultControl>{{
+        data.element.settings.showProtocolField ? "SI" : "NO"
+        }}</mat-slide-toggle>
+    </div>
+  </div>
+</ng-container>
+
 <div mat-dialog-actions>
   <button mat-button [mat-dialog-close]="data" tabindex="2">Ok</button>
   <button mat-button (click)="onNoClick()" tabindex="-1">Cancelar</button>
