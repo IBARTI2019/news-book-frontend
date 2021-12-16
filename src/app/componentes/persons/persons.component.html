@@ -17,35 +17,39 @@
     </div>
     <div fxFlex fxLayout="row wrap" fxLayoutGap="1px grid">
         <div fxFlex="1 2 100%" fxLayout="row" style="height: 50px" fxLayoutGap="1px">
-            <div *ngIf="settings.showTokenField" fxLayoutAlign="center center" fxFlex="2 0 15%" fxLayout="row"
+            <div *ngIf="settings.showTokenField" fxLayoutAlign="center center" fxFlex="2 0 13%" fxLayout="row"
                 class="item mat-toolbar mat-primary">
                 Cedula
             </div>
-            <div *ngIf="settings.showNameField" fxLayoutAlign="center center" fxFlex="3 0 15%" fxLayout="row"
+            <div *ngIf="settings.showNameField" fxLayoutAlign="center center" fxFlex="3 0 13%" fxLayout="row"
                 class="item mat-toolbar mat-primary">
                 Nombre y Apellido
+            </div>
+            <div *ngIf="settings.showTypePersonField" fxLayoutAlign="center center" fxFlex="1 1 10%" fxLayout="row"
+                class="item mat-toolbar mat-primary">
+                Tipo de persona
             </div>
             <div *ngIf="settings.showMovementTypeField" fxLayoutAlign="center center" fxFlex="1 1 10%" fxLayout="row"
                 class="item mat-toolbar mat-primary">
                 Tipo de movimiento
             </div>
-            <div *ngIf="settings.showHourField" fxLayoutAlign="center center" fxFlex="1 1 14%" fxLayout="row"
+            <div *ngIf="settings.showHourField" fxLayoutAlign="center center" fxFlex="1 1 10%" fxLayout="row"
                 class="item mat-toolbar mat-primary">
                 Hora
             </div>
-            <div *ngIf="settings.showReasonVisitField" fxLayoutAlign="center center" fxFlex="3 0 15%" fxLayout="row"
+            <div *ngIf="settings.showReasonVisitField" fxLayoutAlign="center center" fxFlex="3 0 13%" fxLayout="row"
                 class="item mat-toolbar mat-primary">
                 Motivo de la Visita
             </div>
-            <div *ngIf="settings.showEntryField" fxLayoutAlign="center center" fxFlex="1 1 10%" fxLayout="row"
+            <div *ngIf="settings.showEntryField" fxLayoutAlign="center center" fxFlex="1 1 7%" fxLayout="row"
                 class="item mat-toolbar mat-primary">
                 Ingreso de Herramienta o equipo
             </div>
-            <div *ngIf="settings.showProtocolField" fxLayoutAlign="center center" fxFlex="1 1 6%" fxLayout="row"
+            <div *ngIf="settings.showProtocolField" fxLayoutAlign="center center" fxFlex="1 1 7%" fxLayout="row"
                 class="item mat-toolbar mat-primary">
                 Cumplió Protocolo COVID 19
             </div>
-            <div fxLayoutAlign="center center" fxFlex="1 1 5%" fxLayout="row" class="item mat-toolbar mat-primary"
+            <div fxLayoutAlign="center center" fxFlex="1 1 4%" fxLayout="row" class="item mat-toolbar mat-primary"
                 *ngIf="!readOnly">
             </div>
         </div>
@@ -53,7 +57,7 @@
         <div fxFlex="{{ settings.percentage }}" fxLayout="row wrad"
             *ngFor="let persons of fPersons.controls; index as i;" fxLayoutGap="1px">
             <ng-container [formGroup]="persons">
-                <div *ngIf="settings.showTokenField" fxLayoutAlign="center center" fxFlex="2 0 15%" fxLayout="column"
+                <div *ngIf="settings.showTokenField" fxLayoutAlign="center center" fxFlex="2 0 13%" fxLayout="column"
                     style="background-color: #ffffff" class="item">
                     <mat-form-field appearance="fill">
                         <mat-label>Cédula</mat-label>
@@ -64,7 +68,7 @@
                         </mat-error>
                     </mat-form-field>
                 </div>
-                <div *ngIf="settings.showNameField" fxLayoutAlign="center center" fxFlex="3 0 15%" fxLayout="column"
+                <div *ngIf="settings.showNameField" fxLayoutAlign="center center" fxFlex="3 0 13%" fxLayout="column"
                     style="background-color: #ffffff" class="item">
                     <mat-form-field appearance="fill">
                         <mat-label>Nombre y Apellido</mat-label>
@@ -74,6 +78,17 @@
                             El nombre es <strong>requerido</strong>
                         </mat-error>
                     </mat-form-field>
+                </div>
+                <div *ngIf="settings.showTypePersonField" fxLayoutAlign="center center" fxFlex="1 1 10%"
+                    fxLayout="column" style="background-color: #ffffff" class="item">
+                    <mat-radio-group style="margin: 15px 0" formControlName="type_person" [disabled]="readOnly">
+                        <mat-radio-button *ngFor="let mT of personTypes" style="margin: 5px" [value]="mT.id">{{
+                            mT.description }}
+                        </mat-radio-button>
+                    </mat-radio-group>
+                    <mat-error *ngIf="persons.controls.type_person.hasError('required')">
+                        El tipo de persona es <strong>requerido</strong>
+                    </mat-error>
                 </div>
                 <div *ngIf="settings.showMovementTypeField" fxLayoutAlign="center center" fxFlex="1 1 10%"
                     fxLayout="column" style="background-color: #ffffff" class="item">
@@ -86,7 +101,7 @@
                         El tipo de movimiento es <strong>requerido</strong>
                     </mat-error>
                 </div>
-                <div *ngIf="settings.showHourField" fxLayoutAlign="center center" fxFlex="1 1 14%" fxLayout="column"
+                <div *ngIf="settings.showHourField" fxLayoutAlign="center center" fxFlex="1 1 10%" fxLayout="column"
                     style="background-color: #ffffff" class="item">
                     <ngx-timepicker-field #hourP [format]="24" [defaultTime]="'00:00'" [toggleIcon]="icon_hour"
                         formControlName="hour" [disabled]="readOnly">
@@ -98,8 +113,8 @@
                         La hora es <strong>requerida</strong>
                     </mat-error>
                 </div>
-                <div *ngIf="settings.showNameField" fxLayoutAlign="center center" fxFlex="3 0 1%" fxLayout="column"
-                    style="background-color: #ffffff" class="item">
+                <div *ngIf="settings.showReasonVisitField" fxLayoutAlign="center center" fxFlex="3 0 13%"
+                    fxLayout="column" style="background-color: #ffffff" class="item">
                     <mat-form-field appearance="fill">
                         <mat-label>Motivo de la visita</mat-label>
                         <input type="text" matInput formControlName="reason_visit" placeholder="Motivo de la visita"
@@ -109,7 +124,7 @@
                         </mat-error>
                     </mat-form-field>
                 </div>
-                <div *ngIf="settings.showEntryField" fxLayoutAlign="center center" fxFlex="1 1 10%" fxLayout="column"
+                <div *ngIf="settings.showEntryField" fxLayoutAlign="center center" fxFlex="1 1 7%" fxLayout="column"
                     style="background-color: #ffffff" class="item">
                     <mat-slide-toggle formControlName="entry" #entryST [disabled]="readOnly">{{
                         entryST.checked ? "SI" : "NO"
@@ -118,7 +133,7 @@
                         El ingreso es <strong>requerido</strong>
                     </mat-error>
                 </div>
-                <div *ngIf="settings.showProtocolField" fxLayoutAlign="center center" fxFlex="1 1 6%" fxLayout="column"
+                <div *ngIf="settings.showProtocolField" fxLayoutAlign="center center" fxFlex="1 1 7%" fxLayout="column"
                     style="background-color: #ffffff" class="item">
                     <mat-slide-toggle formControlName="protocol" #protocolST [disabled]="readOnly">{{
                         protocolST.checked ? "SI" : "NO"
@@ -127,7 +142,7 @@
                         Este campo es <strong>requerido</strong>
                     </mat-error>
                 </div>
-                <div fxFlex="1 1 5%" fxLayoutAlign="center center" fxLayout="column" class="item" *ngIf="!readOnly">
+                <div fxFlex="1 1 4%" fxLayoutAlign="center center" fxLayout="column" class="item" *ngIf="!readOnly">
                     <button mat-raised-button type="button" (click)="removePerson(i)">
                         <mat-icon>delete_sweep</mat-icon>
                     </button>

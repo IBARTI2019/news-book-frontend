@@ -167,6 +167,7 @@ export class FormatGeneratorComponent implements OnInit {
             percentage: 100,
             showTokenField: true,
             showNameField: true,
+            showTypePersonField: true,
             showMovementTypeField: true,
             showReasonVisitField: true,
             showHourField: true,

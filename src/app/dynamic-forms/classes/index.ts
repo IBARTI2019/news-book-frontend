@@ -272,7 +272,8 @@ export class PersonQuestion extends QuestionBase {
     showHourField: true,
     showReasonVisitField: true,
     showEntryField: true,
-    showProtocolField: true
+    showProtocolField: true,
+    showTypePersonField: true
   };
 
   constructor(options: QuestionBaseParams, public service: any) {

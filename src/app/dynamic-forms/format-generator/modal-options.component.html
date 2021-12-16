@@ -190,6 +190,12 @@
         }}</mat-slide-toggle>
     </div>
     <div>
+      <p>Mostrar la columna <strong>Tipo de Persona</strong></p>
+      <mat-slide-toggle [(ngModel)]="data.element.settings.showTypePersonField" ngDefaultControl>{{
+        data.element.settings.showTypePersonField ? "SI" : "NO"
+        }}</mat-slide-toggle>
+    </div>
+    <div>
       <p>Mostrar la columna <strong>Tipo de Movimiento</strong></p>
       <mat-slide-toggle [(ngModel)]="data.element.settings.showMovementTypeField" ngDefaultControl>{{
         data.element.settings.showMovementTypeField ? "SI" : "NO"

@@ -96,6 +96,10 @@ export class ControlService {
         question.value.full_name || "",
         question.settings.showNameField && Validators.required,
       ],
+      type_person: [
+        question.value.type_person || null,
+        question.settings.showTypePersonField && Validators.required,
+      ],
       reason_visit: [
         question.value.reason_visit || null,
         question.settings.showReasonVisitField && Validators.required,

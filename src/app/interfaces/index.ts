@@ -389,5 +389,6 @@ export interface PersonsSettings {
   showReasonVisitField?: boolean;
   showEntryField?: boolean;
   showProtocolField?: boolean;
+  showTypePersonField?: boolean;
 }
 

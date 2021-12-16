@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { PersonsSettings, Person } from 'app/interfaces';
+import { PersonsSettings, Person, TypePeople } from 'app/interfaces';
+import { TypePeopleService } from 'app/services/type-people.service';
 import { ToastrService } from 'ngx-toastr';
 
 const MOVEMENT_TYPES = [
@@ -43,13 +44,17 @@ export class PersonComponent implements OnInit {
   @Output() isValid: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   movementTypes = [...MOVEMENT_TYPES];
+  personTypes: TypePeople[] = [];
   defaultValues = { ...PERSONS_LIST_DEFAULT }
   PersonsCurrent: Person = { id: "", identification_number: "" };
   materialCurrent: any = { description: "", mark: "", model: "", color: "", serial: "", year: "", license_plate: "" }
-  constructor(private toastr: ToastrService) { }
+  constructor(private toastr: ToastrService, private typePersonService: TypePeopleService) { }
 
   ngOnInit(): void {
-    let v: any = {};
+    this.typePersonService.list({ not_paginator: true }).subscribe(data => {
+      this.personTypes = data;
+    });
+    this.personTypes
     if (this.fGRoot && this.id && this.fGRoot.get(this.id)) {
       this.fPerson = this.fGRoot.get(this.id) as FormGroup;
     }

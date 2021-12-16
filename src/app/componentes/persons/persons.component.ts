@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Person, PersonsSettings } from 'app/interfaces';
+import { Person, PersonsSettings, TypePeople } from 'app/interfaces';
+import { TypePeopleService } from 'app/services/type-people.service';
 import { ToastrService } from 'ngx-toastr';
 
 const MOVEMENT_TYPES = [
@@ -45,13 +46,16 @@ export class PersonsComponent implements OnInit {
   fPersons: FormArray = new FormArray([]);
   fGPersons = new FormGroup({});
   movementTypes = [...MOVEMENT_TYPES];
+  personTypes: TypePeople[] = [];
   defaultValues = { ...PERSONS_LIST_DEFAULT }
   personCurrent: Person = { id: "", identification_number: "" };
   materialCurrent: any = { description: "", mark: "", model: "", color: "", serial: "", year: "", license_plate: "" }
-  constructor(private fB: FormBuilder, private toastr: ToastrService) {
-  }
+  constructor(private fB: FormBuilder, private toastr: ToastrService, private typePersonService: TypePeopleService) { }
 
   ngOnInit(): void {
+    this.typePersonService.list({ not_paginator: true }).subscribe(data => {
+      this.personTypes = data;
+    });
     if (this.fGRoot && this.id && this.fGRoot.get(this.id)) {
       this.fPersons = this.fGRoot.get(this.id) as FormArray;
     }
@@ -108,6 +112,10 @@ export class PersonsComponent implements OnInit {
       full_name: [
         v.full_name || "",
         this.settings.showNameField && Validators.required,
+      ],
+      type_person: [
+        v.type_person || null,
+        this.settings.showTypePersonField && Validators.required,
       ],
       reason_visit: [
         v.reason_visit || null,
