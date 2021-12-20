@@ -5,7 +5,7 @@
             <div fxFlex fxLayout="row wrap" fxLayoutGap="1px grid">
                 <mat-form-field fxFlex="1 0 30%" appearance="fill" *ngIf="!readOnly">
                     <mat-label>Cédula</mat-label>
-                    <input matInput placeholder="Placa" [(ngModel)]="personCurrent.identification_number"
+                    <input matInput placeholder="Cédula" [(ngModel)]="personCurrent.identification_number"
                         [ngModelOptions]="{standalone: true}" />
                 </mat-form-field>
                 <button mat-raised-button fxFlex="1 0 10%" style="height: 50px" (click)="addPerson()" *ngIf="!readOnly"
@@ -41,13 +41,17 @@
                 class="item mat-toolbar mat-primary">
                 Motivo de la Visita
             </div>
-            <div *ngIf="settings.showEntryField" fxLayoutAlign="center center" fxFlex="1 1 7%" fxLayout="row"
+            <div *ngIf="settings.showEntryField" fxLayoutAlign="center center" fxFlex="1 1 6%" fxLayout="row"
                 class="item mat-toolbar mat-primary">
                 Ingreso de Herramienta o equipo
             </div>
-            <div *ngIf="settings.showProtocolField" fxLayoutAlign="center center" fxFlex="1 1 7%" fxLayout="row"
+            <div *ngIf="settings.showProtocolField" fxLayoutAlign="center center" fxFlex="1 1 6%" fxLayout="row"
                 class="item mat-toolbar mat-primary">
                 Cumplió Protocolo COVID 19
+            </div>
+            <div *ngIf="settings.showVaccinationCardNumberField" fxLayoutAlign="center center" fxFlex="1 1 6%"
+                fxLayout="row" class="item mat-toolbar mat-primary">
+                Nro. de tarjeta de Vacunación
             </div>
             <div fxLayoutAlign="center center" fxFlex="1 1 4%" fxLayout="row" class="item mat-toolbar mat-primary"
                 *ngIf="!readOnly">
@@ -57,7 +61,7 @@
         <div fxFlex="{{ settings.percentage }}" fxLayout="row wrad"
             *ngFor="let persons of fPersons.controls; index as i;" fxLayoutGap="1px">
             <ng-container [formGroup]="persons">
-                <div *ngIf="settings.showTokenField" fxLayoutAlign="center center" fxFlex="2 0 13%" fxLayout="column"
+                <div *ngIf="settings.showTokenField" fxLayoutAlign="center center" fxFlex="2 0 11%" fxLayout="column"
                     style="background-color: #ffffff" class="item">
                     <mat-form-field appearance="fill">
                         <mat-label>Cédula</mat-label>
@@ -113,7 +117,7 @@
                         La hora es <strong>requerida</strong>
                     </mat-error>
                 </div>
-                <div *ngIf="settings.showReasonVisitField" fxLayoutAlign="center center" fxFlex="3 0 13%"
+                <div *ngIf="settings.showReasonVisitField" fxLayoutAlign="center center" fxFlex="1 1 13%"
                     fxLayout="column" style="background-color: #ffffff" class="item">
                     <mat-form-field appearance="fill">
                         <mat-label>Motivo de la visita</mat-label>
@@ -124,7 +128,7 @@
                         </mat-error>
                     </mat-form-field>
                 </div>
-                <div *ngIf="settings.showEntryField" fxLayoutAlign="center center" fxFlex="1 1 7%" fxLayout="column"
+                <div *ngIf="settings.showEntryField" fxLayoutAlign="center center" fxFlex="1 1 6%" fxLayout="column"
                     style="background-color: #ffffff" class="item">
                     <mat-slide-toggle formControlName="entry" #entryST [disabled]="readOnly">{{
                         entryST.checked ? "SI" : "NO"
@@ -133,7 +137,7 @@
                         El ingreso es <strong>requerido</strong>
                     </mat-error>
                 </div>
-                <div *ngIf="settings.showProtocolField" fxLayoutAlign="center center" fxFlex="1 1 7%" fxLayout="column"
+                <div *ngIf="settings.showProtocolField" fxLayoutAlign="center center" fxFlex="1 1 6%" fxLayout="column"
                     style="background-color: #ffffff" class="item">
                     <mat-slide-toggle formControlName="protocol" #protocolST [disabled]="readOnly">{{
                         protocolST.checked ? "SI" : "NO"
@@ -141,6 +145,17 @@
                     <mat-error *ngIf="persons.controls.protocol.hasError('required')">
                         Este campo es <strong>requerido</strong>
                     </mat-error>
+                </div>
+                <div *ngIf="settings.showVaccinationCardNumberField" fxLayoutAlign="center center" fxFlex="1 1 6%"
+                    fxLayout="column" style="background-color: #ffffff" class="item">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Nro. de tarjeta de Vacunación</mat-label>
+                        <input type="text" matInput formControlName="vaccination_card_number" placeholder=""
+                            [readonly]="readOnly" />
+                        <mat-error *ngIf="persons.controls.vaccination_card_number.hasError('required')">
+                            El nro. de tarjeta de vacunación es <strong>requerido</strong>
+                        </mat-error>
+                    </mat-form-field>
                 </div>
                 <div fxFlex="1 1 4%" fxLayoutAlign="center center" fxLayout="column" class="item" *ngIf="!readOnly">
                     <button mat-raised-button type="button" (click)="removePerson(i)">

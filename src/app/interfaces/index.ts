@@ -111,6 +111,7 @@ export interface Person {
   protocol?: boolean;
   materials?: { value: any[] };
   entry?: boolean;
+  vaccination_card_number?: string;
 }
 
 export interface TypeNew {
@@ -243,6 +244,7 @@ export interface NotificationSetting {
   is_active: boolean;
   frequency: number;
   groups_display?: GroupUser[];
+  schedule_display?: Schedule[];
 }
 
 export interface OptionField {
@@ -390,5 +392,6 @@ export interface PersonsSettings {
   showEntryField?: boolean;
   showProtocolField?: boolean;
   showTypePersonField?: boolean;
+  showVaccinationCardNumberField?: boolean;
 }
 

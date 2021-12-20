@@ -16,8 +16,8 @@
                     <input type="number" matInput placeholder="Cantidad" [(ngModel)]="scopeCurrent.amount"
                         [ngModelOptions]="{standalone: true}" />
                 </mat-form-field>
-                <button mat-raised-button fxFlex="1 0 10%" style="height: 50px" (click)="addSubLine()"
-                    *ngIf="!readOnly">
+                <button mat-raised-button fxFlex="1 0 10%" style="height: 50px" (click)="addSubLine()" *ngIf="!readOnly"
+                    type="button">
                     Agregar
                 </button>
             </div>
@@ -25,11 +25,11 @@
     </div>
     <div fxFlex fxLayout="row wrap" style="background-color: black;" fxLayoutGap="1px grid">
         <div fxFlex="1 1 100%" fxLayout="row" style="height: 50px" fxLayoutGap="1px">
-            <div *ngIf="settings.showItemField" fxLayoutAlign="center center" fxFlex="1 0 15%" fxLayout="row"
+            <div *ngIf="settings.showItemField" fxLayoutAlign="center center" fxFlex="1 0 17%" fxLayout="row"
                 class="item mat-toolbar mat-primary">
                 Serial
             </div>
-            <div *ngIf="settings.showTokenField" fxLayoutAlign="center center" fxFlex="2 0 15%" fxLayout="row"
+            <div *ngIf="settings.showTokenField" fxLayoutAlign="center center" fxFlex="2 0 17%" fxLayout="row"
                 class="item mat-toolbar mat-primary">
                 Código
             </div>
@@ -37,7 +37,7 @@
                 class="item mat-toolbar mat-primary">
                 Nombre
             </div>
-            <div *ngIf="settings.showAmountField" fxLayoutAlign="center center" fxFlex="1 1 10%" fxLayout="row"
+            <div *ngIf="settings.showAmountField" fxLayoutAlign="center center" fxFlex="1 1 6%" fxLayout="row"
                 style="text-overflow: ellipsis" class="item mat-toolbar mat-primary">
                 Cant.
             </div>
@@ -57,7 +57,7 @@
         <div fxFlex="{{ settings.percentage }}" fxLayout="row" *ngFor="let scope of fScope.controls; index as i;"
             fxLayoutGap="1px">
             <ng-container [formGroup]="scope">
-                <div *ngIf="settings.showItemField" fxLayoutAlign="center center" fxFlex="1 0 15%" fxLayout="row"
+                <div *ngIf="settings.showItemField" fxLayoutAlign="center center" fxFlex="1 0 17%" fxLayout="row"
                     style="background-color: #ffffff" class="item">
                     <mat-form-field appearance="fill">
                         <mat-label>Serial</mat-label>
@@ -67,7 +67,7 @@
                         </mat-error>
                     </mat-form-field>
                 </div>
-                <div *ngIf="settings.showTokenField" fxLayoutAlign="center center" fxFlex="2 0 15%" fxLayout="row"
+                <div *ngIf="settings.showTokenField" fxLayoutAlign="center center" fxFlex="2 0 17%" fxLayout="row"
                     style="background-color: #ffffff" class="item">
                     <mat-form-field appearance="fill">
                         <mat-label>Cod.</mat-label>
@@ -88,7 +88,7 @@
                         </mat-error>
                     </mat-form-field>
                 </div>
-                <div *ngIf="settings.showAmountField" fxLayoutAlign="center center" fxFlex="1 1 10%" fxLayout="row"
+                <div *ngIf="settings.showAmountField" fxLayoutAlign="center center" fxFlex="1 1 6%" fxLayout="row"
                     style="background-color: #ffffff" class="item">
                     <input type="number" matInput formControlName="amount" placeholder="Cantidad" />
                     <mat-error *ngIf="scope.controls.amount.hasError('required')">
@@ -116,7 +116,7 @@
                 </div>
                 <div fxFlex="1 1 5%" fxLayoutAlign="center center" fxLayout="column" style="background-color: #ffffff"
                     class="item" *ngIf="!readOnly">
-                    <button mat-raised-button (click)="addSubLine()">
+                    <button mat-raised-button type="button" (click)="addSubLine()">
                         <mat-icon (click)="removeSubLine(i)">delete_sweep</mat-icon>
                     </button>
                 </div>

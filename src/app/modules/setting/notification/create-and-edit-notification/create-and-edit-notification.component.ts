@@ -77,7 +77,7 @@ export class CreateAndEditNotificationComponent implements OnInit {
         description: ["", Validators.required],
         type: [null, Validators.required],
         groups: [[], Validators.required],
-        schedule: [null, Validators.required],
+        schedule: [[]],
         type_news: [null, Validators.required],
         week_days: [[]],
         day: [""],
@@ -104,11 +104,12 @@ export class CreateAndEditNotificationComponent implements OnInit {
     let data = this.fg.value;
     if (data.type === this.TYPE_RECURRENT) {
       delete data.day;
+      delete data.schedule;
     } else {
       switch (this.fg.get("frequency")?.value) {
         case 1:
           data.week_days = [];
-          data.day = "";
+          data.day = null;
           data.days = [];
           break;
         case 2:
@@ -118,14 +119,14 @@ export class CreateAndEditNotificationComponent implements OnInit {
           break;
         case 3:
           data.week_days = [];
-          data.day = "";
+          data.day = null;
           if (data.days)
             data.days = data.days.map((date: Date) =>
               moment(date).format("YYYY-MM-DD")
             );
           break;
         case 4:
-          data.day = "";
+          data.day = null;
           data.days = [];
           if (data.week_days)
             data.week_days = data.week_days.map((day: string) => Number(day));
@@ -166,8 +167,10 @@ export class CreateAndEditNotificationComponent implements OnInit {
       .subscribe((data: NotificationSetting) => {
         this.fg.get("description")!.setValue(data.description);
         this.fg.get("type")!.setValue(data.type);
-        this.fg.get("groups")!.setValue(data.groups);
-        this.fg.get("schedule")!.setValue(data.schedule);
+        let _groups = data?.groups_display ? data.groups_display.map((d: GroupUser) => d.id) : [];
+        this.fg.get("groups")!.setValue(_groups);
+        let _schedule = data?.schedule_display ? data.schedule_display.map((d: Schedule) => d.id) : [];
+        this.fg.get("schedule")!.setValue(_schedule);
         this.fg.get("type_news")!.setValue(data.type_news);
         if (data.week_days) {
           data.week_days = data.week_days.map((day: string) => String(day));

@@ -1,4 +1,5 @@
-<app-new-header style="padding: 5px;" *ngIf="!readOnly" [client]="client" [new]="new"></app-new-header>
+<app-new-header style="padding: 5px;" *ngIf="!readOnly" [client]="client" [new]="new">
+</app-new-header>
 <div>
   <form (ngSubmit)="onSubmit()" [formGroup]="form">
     <div fxLayout="row wrap" fxLayout.xs="column">

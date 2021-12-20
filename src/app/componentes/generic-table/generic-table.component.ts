@@ -462,8 +462,8 @@ export class GenericTableComponent implements OnInit, AfterViewChecked {
   }
 
   applyFilter2(e?: any, index?: number, isColumn?: boolean) {
-    if (this.data.results && isColumn && index) {
-      const fireEvent = e.type !== 'ionInput';
+    if (this.data.results && isColumn && index != undefined && index >= 0) {
+      const fireEvent = e.type !== 'input';
       const control = e.target;
       let column = this.columns[index].dataAttribute;
       let attribute = this.columns[index].attribute || null
@@ -486,12 +486,10 @@ export class GenericTableComponent implements OnInit, AfterViewChecked {
           '[name=' + control.name.replace('_range-min', '_range-max') + ']'
         ).val();
         const search_range = `${min}~${max}`;
-
         // No buscar vacíos
         if (search_range === '~') {
           return;
         }
-
         if (fireEvent) {
           if (min || min === 0) {
             this.serviceMethodParams[control.name.replace('_range-min', '')] = Number(min);

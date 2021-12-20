@@ -11,6 +11,11 @@ table {
     text-align: right;
 }
 
+
+.row-filter {
+ padding: 5px;
+}
+
 button {
 width: 30px;
 margin: auto;

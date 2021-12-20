@@ -60,6 +60,7 @@ export interface DTFilter {
 
   /** Opciones en caso de que type sea select */
   options?: any[];
+  multiple?: boolean;
 
   /** Atributo con el valor que se muestra en el select */
   optionDisplayAttribute?: string;

@@ -18,7 +18,8 @@
                         </div>
                     </ng-template>
                     <app-generic-table fxFlex="100" [columns]="columns" [showFilter]="true" [service]="newService"
-                        [btnRefresh]="true" [templates]="{opciones: templateOpciones, info: templateInfo}" #table>
+                        [btnRefresh]="true" [templates]="{opciones: templateOpciones, info: templateInfo}"
+                        [showFilters]="true" [filters]="filters" #table>
                     </app-generic-table>
                 </div>
             </mat-card-content>

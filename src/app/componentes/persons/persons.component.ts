@@ -138,6 +138,10 @@ export class PersonsComponent implements OnInit {
         this.settings.showProtocolField && Validators.required,
       ],
       materials: new FormControl({ value: v.materials?.value || [] }),
+      vaccination_card_number: [
+        v.vaccination_card_number || "",
+        this.settings.showVaccinationCardNumberField && Validators.required,
+      ],
     });
     this.fPersons.push(fG);
     this.personCurrent = { ...{ id: "", identification_number: "" } };

@@ -25,4 +25,9 @@ export class FullComponent implements OnDestroy, AfterViewInit {
     this.mobileQuery.removeListener(this._mobileQueryListener);
   }
   ngAfterViewInit() { }
+
+  snavToggle() {
+    if (!($('#snav').css('visibility') == 'hidden'))
+      $("#sidebarclosed").trigger("click");
+  }
 }

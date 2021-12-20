@@ -121,6 +121,10 @@ export class ControlService {
         question.settings.showProtocolField && Validators.required,
       ],
       materials: new FormControl({ value: question.value.materials?.value || [] }),
+      vaccination_card_number: [
+        question.value.vaccination_card_number || "",
+        question.settings.showVaccinationCardNumberField && Validators.required,
+      ],
     });
     return form;
   }

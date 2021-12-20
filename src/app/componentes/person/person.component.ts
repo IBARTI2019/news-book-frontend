@@ -23,7 +23,8 @@ export const PERSONS_LIST_DEFAULT: PersonsSettings = {
   showReasonVisitField: true,
   showHourField: true,
   showEntryField: true,
-  showProtocolField: true
+  showProtocolField: true,
+  showVaccinationCardNumberField: true,
 };
 
 

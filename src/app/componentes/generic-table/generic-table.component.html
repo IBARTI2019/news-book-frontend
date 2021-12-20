@@ -29,7 +29,7 @@
         <!-- fxFlex.gt-sm="80"  -->
 
         <mat-form-field fxFlex.gt-xs="80" fxFlex="80" *ngIf="showFilter === true">
-            <input matInput (keyup)="applyFilter2($event.target.value)" placeholder="Filtrar">
+            <input matInput (change)="applyFilter2($event.target.value)" placeholder="Filtrar">
         </mat-form-field>
         <button fxFlex.gt-xs="10" fxFlex.gt-sm="10" fxFlex="10" *ngIf="btnRefresh === true" mat-button color="primary"
             (click)="refresh()">
@@ -44,7 +44,7 @@
         <mat-spinner></mat-spinner>
     </div>
     <div class="mat-elevation-z6">
-        <table mat-table matSort *ngIf="!cargando" multiTemplateDataRows matTableResponsive [dataSource]="dataSource"
+        <table mat-table matSort [hidden]="cargando" multiTemplateDataRows matTableResponsive [dataSource]="dataSource"
             #tablaMaster>
             <ng-container *ngFor="let column of columns; index as i;"
                 [cdkColumnDef]="column.dataAttribute || column.attribute">
@@ -101,7 +101,65 @@
                     </span>
                 </td>
             </ng-container>
-
+            <ng-container *ngFor="let column of columns; index as idx;"
+                [cdkColumnDef]="column.dataAttribute ? column.dataAttribute + '-filters' : column.attribute + '-filters'">
+                <th mat-header-cell *cdkHeaderCellDef>
+                    <mat-form-field class="row-filter" *ngIf="column.disableFilter !== true && column.type==='bool' &&
+                        !column.hideFilter">
+                        <mat-select (change)="applyFilter2($event, idx, true)" value=""
+                            [name]="'search-' + column.attribute" class="form-control form-control-sm">
+                            <mat-option value="">Todos
+                            </mat-option>
+                            <mat-option value="true">SI</mat-option>
+                            <mat-option value="false">NO</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field class="row-filter"
+                        *ngIf="column.disableFilter !== true && filters[idx]?.type === 'select'  && !column.hideFilter">
+                        <mat-select [name]="'search-' + column.attribute" (change)="applyFilter2($event, idx, true)"
+                            value="" [multiple]="filters[idx]?.multiple">
+                            <mat-option value="">Todos
+                            </mat-option>
+                            <mat-option *ngFor="let option of filters[idx].options"
+                                [value]="getRealValue(option, filters[idx].optionValueAttribute || defaultOptionValueAttribute)">
+                                {{getRealValue(option, filters[idx].optionDisplayAttribute ||
+                                defaultOptionDisplayAttribute)}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field class="row-filter"
+                        *ngIf="column.disableFilter !== true && (filters[idx]?.type === 'html' || !filters[idx]) && column.type !== 'bool'  && !column.hideFilter">
+                        <input color="primary" placeholder="filtrar" matInput [type]="filters[idx]?.dataType || 'text'"
+                            [name]="'search-' + column.attribute" (change)="applyFilter2($event, idx, true)" />
+                    </mat-form-field>
+                    <div class="row-filter"
+                        *ngIf="column.disableFilter !== true && filters[idx]?.type === 'range' && filters[idx].dataType === 'number'  && !column.hideFilter">
+                        <mat-form-field>
+                            <input type="number" color="primary" placeholder="min" matInput
+                                [name]="'min_' + column.attribute + '_range-min'" class="form-control form-control-sm"
+                                (change)="applyFilter2($event, idx, true)" />
+                        </mat-form-field>
+                        <mat-form-field>
+                            <input type="number" color="primary" placeholder="max" matInput
+                                [name]="'max_' + column.attribute + '_range-max'" class="form-control  form-control-sm"
+                                (change)="applyFilter2($event, idx, true)" />
+                        </mat-form-field>
+                    </div>
+                    <div class="row-filter"
+                        *ngIf="column.disableFilter !== true && filters[idx]?.type === 'range' && filters[idx].dataType === 'date'  && !column.hideFilter">
+                        <mat-form-field>
+                            <input type="date" color="primary" placeholder="desde" matInput
+                                [name]="'min_' + column.attribute + '_date-min'" class="form-control form-control-sm"
+                                (change)="applyFilter2($event, idx, true)" />
+                        </mat-form-field>
+                        <mat-form-field>
+                            <input #dateMax type="date" color="primary" placeholder="hasta" matInput
+                                [name]="'max_' + column.attribute + '_date-max'" class="form-control form-control-sm"
+                                (change)="applyFilter2($event, idx, true)" />
+                        </mat-form-field>
+                    </div>
+                </th>
+            </ng-container>
             <ng-container matColumnDef="expandedDetail">
                 <td mat-cell *matCellDef="let item; index as i" [attr.colspan]="columns.length">
                     <div class="example-element-detail"
@@ -120,6 +178,8 @@
             </ng-container>
 
             <tr mat-header-row *matHeaderRowDef="parseColumns(columns);"></tr>
+            <tr mat-header-row *matHeaderRowDef="parseColumnsFilters(columns);" [ngClass]="{'hide': !showFilters}">
+            </tr>
             <tr mat-row *matRowDef="let row; columns: parseColumns(columns)" class="example-element-row"
                 [class.example-expanded-row]="expandedElement === row"
                 (click)="expandedElement = expandedElement === row ? null : row"></tr>

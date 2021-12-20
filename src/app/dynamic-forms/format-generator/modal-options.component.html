@@ -225,6 +225,12 @@
         data.element.settings.showProtocolField ? "SI" : "NO"
         }}</mat-slide-toggle>
     </div>
+    <div>
+      <p>Mostrar la columna <strong>Nro. de tarjeta de vacunación</strong></p>
+      <mat-slide-toggle [(ngModel)]="data.element.settings.showVaccinationCardNumberField" ngDefaultControl>{{
+        data.element.settings.showVaccinationCardNumberField ? "SI" : "NO"
+        }}</mat-slide-toggle>
+    </div>
   </div>
 </ng-container>
 

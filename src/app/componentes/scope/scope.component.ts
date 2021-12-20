@@ -95,8 +95,7 @@ export class ScopeComponent implements OnInit, OnChanges {
   addFG(v: Scope): void {
     const fG = this.fB.group({
       item: [
-        v.item || "",
-        this.settings.showItemField && Validators.required,
+        v.item || ""
       ],
       code: [
         v.code || "",

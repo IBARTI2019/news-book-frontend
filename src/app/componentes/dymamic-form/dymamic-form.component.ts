@@ -5,7 +5,7 @@ import {
   OnChanges,
   OnInit,
   Output,
-  SimpleChanges,
+  SimpleChanges
 } from "@angular/core";
 import { FormGroup } from "@angular/forms";
 import { New } from "app/interfaces";
@@ -52,5 +52,4 @@ export class DynamicFormComponent implements OnInit, OnChanges {
     this.payLoad = this.form.getRawValue();
     this.onSaveChange.emit(this.payLoad);
   }
-
 }
