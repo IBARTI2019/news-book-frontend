@@ -1,5 +1,5 @@
 .example-card {
-  max-width: 400px;
+  max-width: 600px;
   border: 1px solid lightblue;
   border-radius: 8px;
 }
@@ -7,6 +7,13 @@
 mat-card-content {
   height: 165px;
 }
+
+mat-card-content p {
+  text-align: center;
+ /*  font-size: 15pt; */
+  font-size: 1rem;
+  width: auto;
+} 
 
 .mat-card-image:first-child {
   margin-top: 0;
