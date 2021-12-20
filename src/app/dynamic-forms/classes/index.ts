@@ -1,4 +1,4 @@
-import { Person, PersonsSettings, QuestionBaseParams, ScopeSettings, StaffReceivingTheGuardSettings, VehiclesSettings } from "app/interfaces";
+import { Person, PersonsSettings, QuestionBaseParams, RoundSettings, ScopeSettings, StaffReceivingTheGuardSettings, VehiclesSettings } from "app/interfaces";
 
 export class QuestionBase {
   value?: any;
@@ -286,6 +286,26 @@ export class PersonQuestion extends QuestionBase {
 
 export class Persons extends PersonQuestion {
   controlType = "persons";
+
+  constructor(options: QuestionBaseParams, public service: any) {
+    super(options, service)
+    if (options.settings)
+      this.settings = options.settings;
+  }
+}
+
+
+
+export class Round extends QuestionBase {
+  controlType = "round";
+  settings?: RoundSettings = {
+    percentage: 100,
+    showNumberField: true,
+    showHourStartField: true,
+    showHourEndField: true,
+    showObservationField: true,
+    showReasonField: true,
+  };
 
   constructor(options: QuestionBaseParams, public service: any) {
     super(options, service)

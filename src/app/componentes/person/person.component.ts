@@ -46,8 +46,7 @@ export class PersonComponent implements OnInit {
 
   movementTypes = [...MOVEMENT_TYPES];
   personTypes: TypePeople[] = [];
-  defaultValues = { ...PERSONS_LIST_DEFAULT }
-  PersonsCurrent: Person = { id: "", identification_number: "" };
+  defaultValues = { ...PERSONS_LIST_DEFAULT };
   materialCurrent: any = { description: "", mark: "", model: "", color: "", serial: "", year: "", license_plate: "" }
   constructor(private toastr: ToastrService, private typePersonService: TypePeopleService) { }
 

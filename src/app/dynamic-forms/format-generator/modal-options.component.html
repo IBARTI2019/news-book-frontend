@@ -41,7 +41,7 @@
   </div>
 </ng-container>
 <ng-container
-  *ngIf="data.element?.settings && (data.element.code !== 'VEHICLES' && data.element.code !== 'VEHICLE' && data.element.code !== 'PERSONS' && data.element.code !== 'PERSON')">
+  *ngIf="data.element?.settings && (data.element.code === 'PLANNED_STAFF' || data.element.code === 'OESVICA_STAFF' || data.element.code === 'FORMER_GUARD' || data.element.code === 'SUB_LINE')">
   <div mat-dialog-content>
     <mat-form-field>
       <mat-label>Porcentaje en fila</mat-label>
@@ -229,6 +229,45 @@
       <p>Mostrar la columna <strong>Nro. de tarjeta de vacunación</strong></p>
       <mat-slide-toggle [(ngModel)]="data.element.settings.showVaccinationCardNumberField" ngDefaultControl>{{
         data.element.settings.showVaccinationCardNumberField ? "SI" : "NO"
+        }}</mat-slide-toggle>
+    </div>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="data.element?.settings && data.element.code === 'ROUND'">
+  <div mat-dialog-content>
+    <mat-form-field>
+      <mat-label>Porcentaje en fila</mat-label>
+      <input matInput tabindex="1" [(ngModel)]="data.element.settings.percentage" />
+    </mat-form-field>
+    <div>
+      <p>Mostrar la columna <strong>Nro de la ronda</strong></p>
+      <mat-slide-toggle [(ngModel)]="data.element.settings.showNumberField" ngDefaultControl>{{
+        data.element.settings.showNumberField ? "SI" : "NO"
+        }}</mat-slide-toggle>
+    </div>
+    <div>
+      <p>Mostrar la columna <strong>Hora de inicio</strong></p>
+      <mat-slide-toggle [(ngModel)]="data.element.settings.showHourStartField" ngDefaultControl>{{
+        data.element.settings.showHourStartField ? "SI" : "NO"
+        }}</mat-slide-toggle>
+    </div>
+    <div>
+      <p>Mostrar la columna <strong>Hora de finalización</strong></p>
+      <mat-slide-toggle [(ngModel)]="data.element.settings.showHourEndField" ngDefaultControl>{{
+        data.element.settings.showHourEndField ? "SI" : "NO"
+        }}</mat-slide-toggle>
+    </div>
+    <div>
+      <p>Mostrar la columna <strong>Observación del estatus perimetral</strong></p>
+      <mat-slide-toggle [(ngModel)]="data.element.settings.showObservationField" ngDefaultControl>{{
+        data.element.settings.showObservationField ? "SI" : "NO"
+        }}</mat-slide-toggle>
+    </div>
+    <div>
+      <p>Mostrar la columna <strong>Motivo de imcumplimiento de ronda</strong></p>
+      <mat-slide-toggle [(ngModel)]="data.element.settings.showReasonField" ngDefaultControl>{{
+        data.element.settings.showReasonField ? "SI" : "NO"
         }}</mat-slide-toggle>
     </div>
   </div>

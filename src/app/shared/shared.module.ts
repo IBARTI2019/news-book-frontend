@@ -16,6 +16,7 @@ import { VehiclesComponent } from 'app/componentes/vehicles/vehicles.component';
 import { VehicleComponent } from 'app/componentes/vehicle/vehicle.component';
 import { PersonsComponent } from 'app/componentes/persons/persons.component';
 import { PersonComponent } from 'app/componentes/person/person.component';
+import { RoundComponent } from 'app/componentes/round/round.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { PersonComponent } from 'app/componentes/person/person.component';
     VehiclesComponent,
     VehicleComponent,
     PersonsComponent,
-    PersonComponent
+    PersonComponent,
+    RoundComponent
   ],
   exports: [
     AccordionAnchorDirective,
@@ -40,7 +42,8 @@ import { PersonComponent } from 'app/componentes/person/person.component';
     VehiclesComponent,
     VehicleComponent,
     PersonsComponent,
-    PersonComponent
+    PersonComponent,
+    RoundComponent
   ],
   imports: [
     CommonModule,

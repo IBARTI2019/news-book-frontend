@@ -382,6 +382,16 @@ export interface VehiclesSettings {
   showProtocolField?: boolean;
 }
 
+export interface RoundSettings {
+  percentage?: number;
+  showNumberField?: boolean;
+  showHourStartField?: boolean;
+  showHourEndField?: boolean;
+  showObservationField?: boolean;
+  showReasonField?: boolean;
+}
+
+
 export interface PersonsSettings {
   percentage?: number;
   showTokenField?: boolean;
@@ -395,3 +405,11 @@ export interface PersonsSettings {
   showVaccinationCardNumberField?: boolean;
 }
 
+
+export interface Round {
+  number: string;
+  hour_start?: string;
+  hour_end?: string;
+  observation: string;
+  reason?: string;
+}

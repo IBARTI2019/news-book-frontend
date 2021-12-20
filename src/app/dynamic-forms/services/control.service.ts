@@ -37,6 +37,9 @@ export class ControlService {
         case "vehicle":
           group[question.key] = this.newFormVahicle(question);
           break;
+        case "round":
+          group[question.key] = this.newFormRound(question);
+          break;
         default:
           group[question.key] = question.required
             ? new FormControl(question.value || "", Validators.required)
@@ -128,4 +131,31 @@ export class ControlService {
     });
     return form;
   }
+
+  public newFormRound(question: QuestionBase) {
+    const form = this.fB.group({
+      number: [
+        question.value.number || "",
+        question.settings.showNumberField && Validators.required,
+      ],
+      hour_start: [
+        question.value.hour_start || "",
+        question.settings.showHourStartField && Validators.required,
+      ],
+      hour_end: [
+        question.value.hour_end || "",
+        question.settings.showHourEndField && Validators.required,
+      ],
+      observation: [
+        question.value.observation || "",
+        question.settings.showObservationField && Validators.required,
+      ],
+      reason: [
+        question.value.reason || "",
+        question.settings.showReasonField && question.required && Validators.required,
+      ]
+    });
+    return form;
+  }
+
 }

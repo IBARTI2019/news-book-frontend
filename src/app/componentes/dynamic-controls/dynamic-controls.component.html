@@ -24,6 +24,9 @@
     <app-person [id]="question.key" *ngSwitchCase="'person'" [readOnly]="readOnly" [fGRoot]="form"
       [personSelected]="question.value || {}" [vehiclesArr]="question.persons" [settings]="question.settings">
     </app-person>
+    <app-round [id]="question.key" *ngSwitchCase="'round'" [readOnly]="readOnly" [fGRoot]="form"
+      [settings]="question.settings">
+    </app-round>
     <!-- <ng-template #hour *ngSwitchCase="'hour'">
       <mat-icon aria-hidden=" false" aria-label="Horario">schedule</mat-icon>
     </ng-template> -->

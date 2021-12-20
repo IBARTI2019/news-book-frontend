@@ -177,6 +177,19 @@ export class FormatGeneratorComponent implements OnInit {
           }
         }
 
+      } else if (element.code === 'ROUND') {
+        _element = {
+          ...element,
+          settings: element.settings || {
+            percentage: 100,
+            showNumberField: true,
+            showHourStartField: true,
+            showHourEndField: true,
+            showObservationField: true,
+            showReasonField: true
+          }
+        }
+
       } else {
         _element = element
       }
