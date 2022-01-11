@@ -121,7 +121,7 @@ export class VehicleComponent implements OnInit {
   }
 
 
-  addVehicle() {
+  createVehicle() {
     const dialogRef = this.dialog.open(CreateAndEditVehicleComponent, {
       data: {
         modal: true
