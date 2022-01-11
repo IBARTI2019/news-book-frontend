@@ -2,7 +2,7 @@
   <app-card-header modulo="Vehiculos" menu="{{ update ? 'Actualizar Vehiculo' : 'Crear Vehiculo' }}"> </app-card-header>
   <mat-card-content>
     <form [formGroup]="fg" fxLayout="column" fxLayoutGap="5px" (ngSubmit)="onSubmit()" #formRol>
-      <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="5px">
+      <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap="5px">
         <mat-form-field>
           <mat-label>Placa Vehiculo</mat-label>
           <input matInput placeholder="Placa" formControlName="license_plate" />
@@ -17,7 +17,8 @@
         </div>
       </div>
 
-      <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="end">
+      <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between center">
+        <button mat-raised-button type="button" [mat-dialog-close]="true">Cerrar</button>
         <button mat-raised-button color="primary" type="submit">{{ update ? 'Actualizar' : 'Crear' }}</button>
       </div>
     </form>

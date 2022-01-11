@@ -1,5 +1,6 @@
 import { HttpErrorResponse } from "@angular/common/http";
 import { Component, OnInit, ViewChild } from "@angular/core";
+import { MatDialog } from "@angular/material/dialog";
 import { Router } from "@angular/router";
 import { ConfirmDialogService } from "app/componentes/confirm-dialog/confirm-dialog.service";
 import { GenericTableComponent } from "app/componentes/generic-table/generic-table.component";
@@ -7,6 +8,7 @@ import { DTColumn } from "app/componentes/generic-table/interface";
 import { Vehicle } from "app/interfaces";
 import { ToastrService } from "ngx-toastr";
 import { VehicleService } from "../../../services/vehicle.service";
+import { CreateAndEditVehicleComponent } from "./create-and-edit-vehicle/create-and-edit-vehicle.component";
 
 @Component({
   selector: "app-vehicle",
@@ -20,7 +22,8 @@ export class VehicleComponent implements OnInit {
     public vehicleService: VehicleService,
     private router: Router,
     private dialogService: ConfirmDialogService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    public dialog: MatDialog
   ) { }
 
   showCheck = () => true;
@@ -50,7 +53,8 @@ export class VehicleComponent implements OnInit {
   }
 
   update(id: string) {
-    this.router.navigate(["vehicle", id]);
+    // this.router.navigate(["vehicle", id]);
+    this.showModalVehicle(id);
   }
 
   delete(usuario: Vehicle) {
@@ -72,6 +76,18 @@ export class VehicleComponent implements OnInit {
           }
         );
       }
+    });
+  }
+
+  showModalVehicle(id?: string) {
+    const dialogRef = this.dialog.open(CreateAndEditVehicleComponent, {
+      data: {
+        id: id
+      },
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
     });
   }
 }

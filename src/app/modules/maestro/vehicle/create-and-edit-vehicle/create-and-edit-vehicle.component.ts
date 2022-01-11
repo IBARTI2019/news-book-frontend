@@ -1,10 +1,17 @@
 import { HttpErrorResponse } from "@angular/common/http";
-import { Component, OnInit } from "@angular/core";
+import { Component, Inject, Input, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Vehicle } from "../../../../interfaces/index";
 import { VehicleService } from "../../../../services/vehicle.service";
 import { ToastrService } from "ngx-toastr";
+import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
+
+
+export interface DialogData {
+  id: string;
+  redirect: boolean;
+}
 
 @Component({
   selector: "app-create-and-edit-vehicle",
@@ -25,13 +32,15 @@ export class CreateAndEditVehicleComponent implements OnInit {
     private toastr: ToastrService,
     private router: Router,
     private route: ActivatedRoute,
+    public dialogRef: MatDialogRef<CreateAndEditVehicleComponent>,
+    @Inject(MAT_DIALOG_DATA) public data?: DialogData,
   ) {
     this.fg = this.fb.group({});
     this.routeState = history.state
   }
 
   ngOnInit() {
-    this.id = this.route.snapshot.params.id;
+    this.id = this.data?.id || ''; //this.route.snapshot.params.id;
     this.redirectTo = this.routeState.redirectTo || ""
     this.fg = this.fb.group(
       {
@@ -60,7 +69,8 @@ export class CreateAndEditVehicleComponent implements OnInit {
   onReset() {
     this.submitted = false;
     this.fg.reset();
-    this.router.navigate([this.redirectTo || "vehicle"]);
+    if (this.data?.redirect == true)
+      this.router.navigate([this.redirectTo || "vehicle"]);
   }
 
   save() {
@@ -68,8 +78,10 @@ export class CreateAndEditVehicleComponent implements OnInit {
       (data) => {
         this.toastr.success("Vehiculo creado con éxito");
         this.submitted = false;
+        this.dialogRef.close(this.fg.value);
         this.fg.reset();
-        this.router.navigate([this.redirectTo || "vehicle"]);
+        if (this.data?.redirect == true)
+          this.router.navigate([this.redirectTo || "vehicle"]);
       },
       (error: HttpErrorResponse) => {
         this.toastr.error(
@@ -94,8 +106,10 @@ export class CreateAndEditVehicleComponent implements OnInit {
           "El vehiculo se ha actualizado satisfactoriamente!."
         );
         this.submitted = false;
+        this.dialogRef.close(this.fg.value);
         this.fg.reset();
-        this.router.navigate(["vehicle"]);
+        if (this.data?.redirect == true)
+          this.router.navigate(["vehicle"]);
       },
       (error: HttpErrorResponse) => {
         this.toastr.error(

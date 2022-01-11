@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router, PRIMARY_OUTLET } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { first, filter, map } from 'rxjs/operators';
@@ -39,6 +39,7 @@ export class CardHeaderComponent implements OnInit, OnDestroy {
     label: 'Inicio',
     params: []
   };
+  @Output() addChange = new EventEmitter();
   private url_menu: string = "/";
   constructor(
     private router: Router,
@@ -106,7 +107,11 @@ export class CardHeaderComponent implements OnInit, OnDestroy {
   }
 
   add() {
-    this.router.navigate([`/${this.url_menu}`, this.link]);
+    if (this.addChange.observers.length > 0) {
+      this.addChange.emit({});
+    } else {
+      this.router.navigate([`/${this.url_menu}`, this.link]);
+    }
   }
 
   navigate(urlArray: any) {

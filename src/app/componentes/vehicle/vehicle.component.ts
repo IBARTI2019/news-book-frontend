@@ -1,6 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { Vehicle, VehiclesSettings } from 'app/interfaces';
+import { CreateAndEditVehicleComponent } from 'app/modules/maestro/vehicle/create-and-edit-vehicle/create-and-edit-vehicle.component';
 import { ToastrService } from 'ngx-toastr';
 
 const OWNER_TYPES = [
@@ -67,7 +69,8 @@ export class VehicleComponent implements OnInit {
   defaultValues = { ...VEHICLES_LIST_DEFAULT }
   vehiclesCurrent: Vehicle = { id: "", license_plate: "" };
   materialCurrent: any = { description: "", mark: "", model: "", color: "", serial: "", year: "", license_plate: "" }
-  constructor(private toastr: ToastrService) { }
+
+  constructor(private toastr: ToastrService, public dialog: MatDialog) { }
 
   ngOnInit(): void {
     let v: any = {};
@@ -112,6 +115,27 @@ export class VehicleComponent implements OnInit {
     let index = this.vehiclesArr.findIndex(v => v.license_plate == license_plate);
     if (index > -1) {
       this.fVehicle.get("owner_full_name")!.setValue(this.vehiclesArr[index].owner_full_name);
+    } else {
+      this.fVehicle.get("owner_full_name")!.setValue('');
     }
   }
+
+
+  addVehicle() {
+    const dialogRef = this.dialog.open(CreateAndEditVehicleComponent, {
+      data: {
+        modal: true
+      },
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+      if (result?.license_plate) {
+        this.vehiclesArr.push(result);
+        this.fVehicle.get("license_plate")!.setValue(result.license_plate);
+        this.getVehicle(result.license_plate);
+      }
+    });
+  }
+
 }
