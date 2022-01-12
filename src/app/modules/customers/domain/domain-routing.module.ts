@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { ADMIN } from 'app/constants';
+import { ADMIN } from '../../../constants';
 import { NgxPermissionsGuard } from 'ngx-permissions';
 import { CreateAndEditDomainComponent } from './create-and-edit-domain/create-and-edit-domain.component';
 import { DomainComponent } from './domain.component';
