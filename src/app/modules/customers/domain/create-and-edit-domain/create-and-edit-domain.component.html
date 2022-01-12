@@ -1,0 +1,25 @@
+<mat-card>
+    <app-card-header modulo="Dominios" menu="{{ update ? 'Actualizar Dominio' : 'Crear Dominio' }}">
+    </app-card-header>
+    <mat-card-content>
+        <form [formGroup]="fg" fxLayout="column" fxLayoutGap="5px" (ngSubmit)="onSubmit()" #formT="ngForm">
+            <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="5px">
+                <mat-form-field>
+                    <mat-label>Url de Dominio</mat-label>
+                    <input matInput placeholder="Nombre de la url" formControlName="domain" />
+                </mat-form-field>
+            </div>
+            <mat-form-field appearance="fill" style="background-color: #ffffff;">
+                <mat-label>Cliente</mat-label>
+                <mat-select #staffRef formControlName="tenant_id">
+                    <mat-option *ngFor="let client of clients" [value]="client.id">
+                        {{ client?.name }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <div class="panel-container" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="end">
+                <button mat-raised-button color="primary" type="submit">{{ update ? 'Actualizar' : 'Crear' }}</button>
+            </div>
+        </form>
+    </mat-card-content>
+</mat-card>

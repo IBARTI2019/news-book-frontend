@@ -413,3 +413,19 @@ export interface Round {
   observation: string;
   reason?: string;
 }
+
+export interface Client {
+  id?: string;
+  name?: string;
+  schema_name?: string;
+  paid_until?: string;
+  on_trail?: boolean;
+}
+
+
+export interface Domain {
+  id?: string;
+  domain?: string;
+  tenant?: Client;
+  tenant_id?: number;
+}
