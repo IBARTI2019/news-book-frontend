@@ -67,7 +67,7 @@ export class UserEditComponent implements OnInit, AfterViewChecked {
         type_user: [0, Validators.required],
         groups: [[]],
         locations: [[]], // <- books
-        security_user: ["", Validators.required],
+        security_user: [""],
         is_staff: [false],
         is_active: [true, Validators.required]
       }
