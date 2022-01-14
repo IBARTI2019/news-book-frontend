@@ -234,6 +234,19 @@ export const AppRoutes: Routes = [
               ),
           },
           {
+            path: "clientes",
+            canLoad: [NgxPermissionsGuard],
+            data: {
+              permissions: {
+                only: [ADMIN],
+              }
+            },
+            loadChildren: () =>
+              import("app/modules/clientes/gestionclientes/clientes.module").then(
+                (m) => m.ClientesModule
+              ),
+          },
+          {
             path: "domains",
             canLoad: [NgxPermissionsGuard],
             data: {

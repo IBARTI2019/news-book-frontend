@@ -39,6 +39,17 @@
       </mat-expansion-panel-header>
       <ng-template [ngxPermissionsOnly]="['ADMIN']">
         <mat-nav-list dense>
+          <a mat-list-item [routerLink]="['clientes']">
+            <span>
+              <mat-icon aria-hidden="false" aria-label="Assignment">assignment</mat-icon>
+              Clientes
+            </span>
+            <span fxFlex></span>
+          </a>
+        </mat-nav-list>
+      </ng-template>
+      <ng-template [ngxPermissionsOnly]="['ADMIN']">
+        <mat-nav-list dense>
           <a mat-list-item [routerLink]="['domains']">
             <span>
               <mat-icon aria-hidden="false" aria-label="Assignment">assignment</mat-icon>
@@ -48,6 +59,7 @@
           </a>
         </mat-nav-list>
       </ng-template>
+      
     </mat-expansion-panel>
     <mat-expansion-panel [class.mat-elevation-z0]="true" dense>
       <mat-expansion-panel-header>

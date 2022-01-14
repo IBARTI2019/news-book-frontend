@@ -419,7 +419,7 @@ export interface Client {
   name?: string;
   schema_name?: string;
   paid_until?: string;
-  on_trail?: boolean;
+  on_trial?: boolean;
 }
 
 
