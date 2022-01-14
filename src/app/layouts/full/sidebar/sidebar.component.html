@@ -59,7 +59,7 @@
           </a>
         </mat-nav-list>
       </ng-template>
-      
+
     </mat-expansion-panel>
     <mat-expansion-panel [class.mat-elevation-z0]="true" dense>
       <mat-expansion-panel-header>
@@ -238,6 +238,34 @@
             <span>
               <mat-icon aria-hidden="false" aria-label="Notifications">notification_important</mat-icon>
               Notificaciones
+            </span>
+            <span fxFlex></span>
+          </a>
+        </mat-nav-list>
+      </ng-template>
+    </mat-expansion-panel>
+  </ng-template>
+  <ng-template [ngxPermissionsOnly]="['ADMIN']">
+    <mat-expansion-panel [class.mat-elevation-z0]="true" dense>
+      <mat-expansion-panel-header>
+        <mat-icon aria-hidden="false" aria-label="Formats">assignment</mat-icon>
+        Generación de Formatos
+      </mat-expansion-panel-header>
+      <ng-template [ngxPermissionsOnly]="['ADMIN']">
+        <mat-nav-list dense>
+          <a mat-list-item [routerLink]="['dynamic-forms']">
+            <span>
+              <mat-icon aria-hidden="false" aria-label="Test Dynamic Forms">bug_report</mat-icon>
+              Test
+            </span>
+            <span fxFlex></span>
+          </a>
+        </mat-nav-list>
+        <mat-nav-list dense>
+          <a mat-list-item [routerLink]="['dynamic-forms/generator']">
+            <span>
+              <mat-icon aria-hidden="false" aria-label="Dynamic Forms">perm_data_setting</mat-icon>
+              Generador
             </span>
             <span fxFlex></span>
           </a>
