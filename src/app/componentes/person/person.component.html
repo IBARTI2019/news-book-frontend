@@ -1,6 +1,12 @@
 <div fxFlex="{{ settings?.percentage || defaultValues.percentage}}" fxLayoutGap="40px" fxLayout="column"
     style="padding-top: 10px; padding-bottom: 10px;">
-    <div fxFlex fxLayout="row wrap" fxLayoutGap="1px grid">
+    <div fxFlex fxLayout="row wrap" fxLayoutGap="1px grid"><div fxLayoutAlign="end center" fxFlex="100%" fxLayout="row" *ngIf="!readOnly" style="margin: 10px;">
+        <!-- fxFlex="1 0 10%" -->
+        <button mat-raised-button color="primary" (click)="createPersona()" type="button">
+            Nuevo
+        </button>
+    </div>
+
         <div fxFlex="1 2 100%" fxLayout="row" style="height: 50px" fxLayoutGap="1px">
             <div *ngIf="settings.showTokenField" fxLayoutAlign="center center" fxFlex="2 0 11%" fxLayout="row"
                 class="item mat-toolbar mat-primary">

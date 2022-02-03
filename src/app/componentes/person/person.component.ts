@@ -1,5 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { CreateAndEditPersonComponent } from 'app/modules/maestro/person/create-and-edit-person/create-and-edit-person.component';
 import { PersonsSettings, Person, TypePeople } from 'app/interfaces';
 import { TypePeopleService } from 'app/services/type-people.service';
 import { ToastrService } from 'ngx-toastr';
@@ -48,7 +50,8 @@ export class PersonComponent implements OnInit {
   personTypes: TypePeople[] = [];
   defaultValues = { ...PERSONS_LIST_DEFAULT };
   materialCurrent: any = { description: "", mark: "", model: "", color: "", serial: "", year: "", license_plate: "" }
-  constructor(private toastr: ToastrService, private typePersonService: TypePeopleService) { }
+  constructor(private toastr: ToastrService, private typePersonService: TypePeopleService,public dialog: MatDialog) { }
+  
 
   ngOnInit(): void {
     this.typePersonService.list({ not_paginator: true }).subscribe(data => {
@@ -97,5 +100,21 @@ export class PersonComponent implements OnInit {
     if (index > -1) {
       this.fPerson.get("full_name")!.setValue(this.personsArr[index].full_name);
     }
+  }
+  createPersona() {
+    const dialogRef = this.dialog.open(CreateAndEditPersonComponent, {
+      data: {
+        modal: true
+      },
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+      if (result?.license_plate) {
+        this.personsArr.push(result);
+        this.fPerson.get("code")!.setValue(result.code);
+        this.getPerson(result.code);
+      }
+    });
   }
 }
