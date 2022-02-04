@@ -77,8 +77,13 @@ export class CreateAndEditNewComponent implements OnInit {
                 } 
         this.setShowCorrespondent();
         */
-        this.currentNew.template = typeNew.template;
-        this.generateControls(typeNew.template !== 'object' ? JSON.parse(typeNew.template) : [])
+        try{
+          this.currentNew.template = JSON.parse(typeNew.template);
+        }catch(e){
+          this.currentNew.template = [];
+          console.log(e);
+        }
+        this.generateControls(this.currentNew.template !== 'object' ? this.currentNew.template : [])
       },
       (error: HttpErrorResponse) => {
         this.setShowCorrespondent();
