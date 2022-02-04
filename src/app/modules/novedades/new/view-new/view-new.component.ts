@@ -38,7 +38,8 @@ export class ViewNewComponent implements OnInit {
     this.newService.get(this.id).subscribe(
       (_new: New) => {
         this._new = _new;
-        this.generateControls(_new.template !== 'object' ? _new.template : [])
+        console.log(_new.template !== 'object');
+        this.generateControls(_new.template !== 'object' ? JSON.parse(_new.template) : [])
       },
       (error: HttpErrorResponse) => {
         this.toastr.error(

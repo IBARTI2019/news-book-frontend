@@ -37,6 +37,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
     if (change.questions) {
       this.questions = change.questions.currentValue;
       if (this.info) {
+        this.info = JSON.parse(this.info);
         this.questions?.forEach((q: QuestionBase) => {
           q.setValue(this.info[q.getKey()]);
         });

@@ -78,7 +78,7 @@ export class CreateAndEditNewComponent implements OnInit {
         this.setShowCorrespondent();
         */
         this.currentNew.template = typeNew.template;
-        this.generateControls(typeNew.template !== 'object' ? typeNew.template : [])
+        this.generateControls(typeNew.template !== 'object' ? JSON.parse(typeNew.template) : [])
       },
       (error: HttpErrorResponse) => {
         this.setShowCorrespondent();
@@ -147,6 +147,9 @@ export class CreateAndEditNewComponent implements OnInit {
 
   save(data: any) {
     this.currentNew.info = data;
+    try{
+    this.currentNew.template = JSON.parse(this.currentNew.template);
+    }catch {}
     this.newService.add(this.currentNew).subscribe(
       (data) => {
         this.toastr.success("Novedad creada con éxito.");
