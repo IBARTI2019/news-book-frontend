@@ -233,6 +233,32 @@ export const AppRoutes: Routes = [
                 (m) => m.PointsModule
               ),
           },
+          {
+            path: "clientes",
+            canLoad: [NgxPermissionsGuard],
+            data: {
+              permissions: {
+                only: [ADMIN],
+              }
+            },
+            loadChildren: () =>
+              import("app/modules/clientes/gestionclientes/clientes.module").then(
+                (m) => m.ClientesModule
+              ),
+          },
+          {
+            path: "domains",
+            canLoad: [NgxPermissionsGuard],
+            data: {
+              permissions: {
+                only: [ADMIN],
+              }
+            },
+            loadChildren: () =>
+              import("app/modules/customers/domain/domain.module").then(
+                (m) => m.DomainModule
+              ),
+          },
         ],
       },
     ],

@@ -31,7 +31,36 @@
   </mat-menu>
 </div>
 <mat-nav-list dense>
-  <ng-template [ngxPermissionsOnly]="['ADMIN', 'USER']">
+  <ng-template [ngxPermissionsOnly]="['ADMIN']">
+    <mat-expansion-panel [class.mat-elevation-z0]="true" dense>
+      <mat-expansion-panel-header>
+        <mat-icon aria-hidden="false" aria-label="Home Icon">home</mat-icon>
+        Clientes
+      </mat-expansion-panel-header>
+      <ng-template [ngxPermissionsOnly]="['ADMIN']">
+        <mat-nav-list dense>
+          <a mat-list-item [routerLink]="['clientes']">
+            <span>
+              <mat-icon aria-hidden="false" aria-label="Assignment">assignment</mat-icon>
+              Clientes
+            </span>
+            <span fxFlex></span>
+          </a>
+        </mat-nav-list>
+      </ng-template>
+      <ng-template [ngxPermissionsOnly]="['ADMIN']">
+        <mat-nav-list dense>
+          <a mat-list-item [routerLink]="['domains']">
+            <span>
+              <mat-icon aria-hidden="false" aria-label="Assignment">assignment</mat-icon>
+              Dominios
+            </span>
+            <span fxFlex></span>
+          </a>
+        </mat-nav-list>
+      </ng-template>
+
+    </mat-expansion-panel>
     <mat-expansion-panel [class.mat-elevation-z0]="true" dense>
       <mat-expansion-panel-header>
         <mat-icon aria-hidden="false" aria-label="Home Icon">home</mat-icon>
@@ -244,116 +273,4 @@
       </ng-template>
     </mat-expansion-panel>
   </ng-template>
-  <!-- <mat-expansion-panel [class.mat-elevation-z0]="true" dense>
-        <mat-expansion-panel-header>
-         <mat-icon aria-hidden="false" aria-label="Example home icon">vpn_key</mat-icon>
-      
-            Seguridad
-        </mat-expansion-panel-header>
-        <mat-nav-list dense>
-            <a mat-list-item [routerLink]="['roles/', 'maestro']">
-                <span>
-                    <mat-icon aria-hidden="false" aria-label="Example home icon">people_outline</mat-icon>
-            
-                Roles</span>
-                <span fxFlex></span>
-            </a>
-        </mat-nav-list>
-        <mat-nav-list dense>
-            <a mat-list-item [routerLink]="['perfiles/', 'maestro']">
-                <span>
-                <mat-icon aria-hidden="false" aria-label="Example home icon">thumb_up_alt</mat-icon>
-                 Perfiles
-                </span>
-                <span fxFlex></span>
-            </a>
-        </mat-nav-list>
-        <mat-nav-list dense>
-            <a mat-list-item [routerLink]="['seguridad/', 'user']">
-                <span>
-                   <mat-icon aria-hidden="false" aria-label="Example home icon">people_outline</mat-icon>
-              
-                users</span>
-                <span fxFlex></span>
-            </a>
-        </mat-nav-list>
-    </mat-expansion-panel>
-    <mat-expansion-panel [class.mat-elevation-z0]="true" dense>
-        <mat-expansion-panel-header>
-          <mat-icon aria-hidden="false" aria-label="Example home icon">build</mat-icon>
-          Configuracion
-        </mat-expansion-panel-header>
-        <mat-nav-list dense>
-            <a mat-list-item [routerLink]="['ubicaciones/', 'maestro']">
-                <span>
-                 <mat-icon aria-hidden="false" aria-label="Example home icon">casino</mat-icon>
-                Ubicaciones
-                </span>
-                <span fxFlex></span>
-            </a>
-        </mat-nav-list>
-        <mat-nav-list dense>
-            <a mat-list-item [routerLink]="['notificacion/', 'maestro']">
-                <span>
-                   <mat-icon aria-hidden="false" aria-label="Example home icon">mms</mat-icon>
-                Notificaciones</span>
-                <span fxFlex></span>
-            </a>
-        </mat-nav-list>
-        <mat-nav-list dense>
-            <a mat-list-item [routerLink]="['listemail/', 'maestro']">
-                <span>
-                   <mat-icon aria-hidden="false" aria-label="Example home icon">alternate_email</mat-icon>
-                 Contactos Emails</span>
-                <span fxFlex></span>
-            </a>
-        </mat-nav-list>
-         <mat-nav-list dense>
-            <a mat-list-item [routerLink]="['listaadress/', 'maestro']">
-                <span>
-                   <mat-icon aria-hidden="false" aria-label="Example home icon">computer</mat-icon>
-                PC Macaddress</span>
-                <span fxFlex></span>
-            </a>
-        </mat-nav-list>
-        <mat-nav-list dense>
-            <a mat-list-item [routerLink]="['plantillas/', 'maestro']">
-                <span>
-                 <mat-icon aria-hidden="false" aria-label="Example home icon">wallpaper</mat-icon>
-                Plantillas</span>
-                <span fxFlex></span>
-            </a>
-        </mat-nav-list>
-    </mat-expansion-panel>
-    <mat-expansion-panel [class.mat-elevation-z0]="true" dense>
-        <mat-expansion-panel-header>
-          <mat-icon aria-hidden="false" aria-label="Example home icon">help</mat-icon>
-           Ayuda del Sistema
-        </mat-expansion-panel-header>
-        <mat-nav-list dense>
-            <a mat-list-item [routerLink]="['news/', 'maestro']">
-                <span>
-                 <mat-icon aria-hidden="false" aria-label="Example home icon">book</mat-icon>
-                Manual Online</span>
-                <span fxFlex></span>
-            </a>
-        </mat-nav-list>
-        
-    </mat-expansion-panel>
-    <mat-expansion-panel [class.mat-elevation-z0]="true" dense>
-        <mat-expansion-panel-header>
-           <mat-icon aria-hidden="false" aria-label="Example home icon">reply</mat-icon>
-           Salir del Sistema
-        </mat-expansion-panel-header>
-        <mat-nav-list dense>
-            <a mat-list-item [routerLink]="['news/', 'maestro']">
-                <span>
-                  <mat-icon aria-hidden="false" aria-label="Example home icon">call_missed</mat-icon>
-     
-                Salir</span>
-                <span fxFlex></span>
-            </a>
-        </mat-nav-list>
-        
-    </mat-expansion-panel> -->
 </mat-nav-list>
