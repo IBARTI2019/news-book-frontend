@@ -76,6 +76,9 @@ export class FormatGeneratorComponent implements OnInit {
     this.typeNewService.list({ not_paginator: true }).subscribe(
       (typeNewsResponse: TypeNew[]) => {
         this.typeNews = [...typeNewsResponse];
+        try{
+        this.typeNew.template = JSON.parse(this.typeNew.template);
+        }catch{}
       },
       (error: HttpErrorResponse) => {
         this.toastr.error(
@@ -251,6 +254,9 @@ export class FormatGeneratorComponent implements OnInit {
 
   async selectionTypeChange(event: any) {
     this.typeNew = await this.typeNewService.get(event.value).toPromise();
+    try{
+      this.typeNew.template = JSON.parse(this.typeNew.template);
+      }catch{}
     if (typeof this.typeNew.template !== "object") {
       this.typeNew.template = [];
     }
