@@ -40,7 +40,7 @@ export class CreateAndEditPersonComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.id = this.route.snapshot.params.id;
+    this.id = this.data?.id || ''; //this.route.snapshot.params.id;
     this.redirectTo = this.routeState.redirectTo || ""
     this.typePeopleService.list({ not_paginator: true }).subscribe((data: TypePeople[]) => {
       this.listap = data;

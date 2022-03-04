@@ -7,6 +7,8 @@ import { DTColumn } from "../../../componentes/generic-table/interface";
 import { PersonService } from "../../../services/person.service";
 import { Person } from "../../../interfaces";
 import { HttpErrorResponse } from "@angular/common/http";
+import { MatDialog } from "@angular/material/dialog";
+import { CreateAndEditPersonComponent } from "./create-and-edit-person/create-and-edit-person.component";
 
 @Component({
   selector: "app-person",
@@ -20,7 +22,8 @@ export class PersonComponent implements OnInit {
     public personService: PersonService,
     private router: Router,
     private dialogService: ConfirmDialogService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    public dialog: MatDialog
   ) { }
 
   showCheck = () => true
@@ -74,7 +77,8 @@ export class PersonComponent implements OnInit {
   }
 
   update(id: string) {
-    this.router.navigate(["person", id]);
+    // this.router.navigate(["person", id]);
+    this.showModalPerson(id);
   }
 
   delete(person: Person) {
@@ -96,6 +100,18 @@ export class PersonComponent implements OnInit {
           }
         );
       }
+    });
+  }
+
+  showModalPerson(id?: string) {
+    const dialogRef = this.dialog.open(CreateAndEditPersonComponent, {
+      data: {
+        id: id
+      },
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
     });
   }
 }

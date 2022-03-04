@@ -77,8 +77,13 @@ export class CreateAndEditNewComponent implements OnInit {
                 } 
         this.setShowCorrespondent();
         */
-        this.currentNew.template = typeNew.template;
-        this.generateControls(typeNew.template !== 'object' ? typeNew.template : [])
+        try{
+          this.currentNew.template = JSON.parse(typeNew.template);
+        }catch(e){
+          this.currentNew.template = [];
+          console.log(e);
+        }
+        this.generateControls(this.currentNew.template !== 'object' ? this.currentNew.template : [])
       },
       (error: HttpErrorResponse) => {
         this.setShowCorrespondent();
@@ -147,6 +152,9 @@ export class CreateAndEditNewComponent implements OnInit {
 
   save(data: any) {
     this.currentNew.info = data;
+    try{
+    this.currentNew.template = JSON.parse(this.currentNew.template);
+    }catch {}
     this.newService.add(this.currentNew).subscribe(
       (data) => {
         this.toastr.success("Novedad creada con éxito.");

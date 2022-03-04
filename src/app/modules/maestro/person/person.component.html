@@ -1,7 +1,8 @@
 <div fxLayout="row wrap">
     <div fxFlex.gt-xs="100" fxFlex="100">
         <mat-card>
-            <app-card-header link="crear" link-menu="Crear Personas" modulo="Personas" menu="Gestion de Personas">
+            <app-card-header link="crear" link-menu="Crear Personas" modulo="Personas" menu="Gestion de Personas"
+            (addChange)="showModalPerson()">
             </app-card-header>
             <mat-card-content>
                 <div class="d-flex flex-wrap">
