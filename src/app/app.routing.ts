@@ -67,12 +67,12 @@ export const AppRoutes: Routes = [
           },
           {
             path: "new",
-            canLoad: [NgxPermissionsGuard],
+      /*       canLoad: [NgxPermissionsGuard],
             data: {
               permissions: {
                 only: [ADMIN, AUDITOR, USER, SUPERVISOR],
               }
-            },
+            }, */
             loadChildren: () =>
               import("app/modules/novedades/new/new.module").then(
                 (m) => m.NewModule
