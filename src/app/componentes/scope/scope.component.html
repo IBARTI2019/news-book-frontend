@@ -3,7 +3,7 @@
     <div fxFlex="{{ settings.percentage }}" fxLayout="row" style="height: 50px">
         <form fxFlex="{{ settings.percentage }}" [formGroup]="fGscope">
             <div fxFlex fxLayout="row wrap" fxLayoutGap="1px grid">
-                <mat-form-field fxFlex="1 0 60%" appearance="fill" style="background-color: #ffffff;" *ngIf="!readOnly">
+                <mat-form-field fxFlex="1 0 30%" appearance="fill" style="background-color: #ffffff;" *ngIf="!readOnly">
                     <mat-label>Sub Linea</mat-label>
                     <mat-select #scopeRef formControlName="scope">
                         <mat-option *ngFor="let scopeItem of scopeArr" [value]="scopeItem">
@@ -16,10 +16,16 @@
                     <input type="number" matInput placeholder="Cantidad" [(ngModel)]="scopeCurrent.amount"
                         [ngModelOptions]="{standalone: true}" />
                 </mat-form-field>
+             <div> 
+                <button mat-raised-button fxFlex="1 1 10%" style="height: 50px" (click)="createMaterial()" *ngIf="!readOnly"
+                  type="button">
+                   Nuevo
+                </button>
                 <button mat-raised-button fxFlex="1 0 10%" style="height: 50px" (click)="addSubLine()" *ngIf="!readOnly"
                     type="button">
                     Agregar
                 </button>
+              </div>
             </div>
         </form>
     </div>

@@ -5,7 +5,24 @@ import { CreateAndEditPersonComponent } from 'app/modules/maestro/person/create-
 import { PersonsSettings, Person, TypePeople } from 'app/interfaces';
 import { TypePeopleService } from 'app/services/type-people.service';
 import { ToastrService } from 'ngx-toastr';
-
+const OWNER_TYPES = [
+  {
+    id: "employee",
+    text: "Trabajador",
+  },
+  {
+    id: "visitor",
+    text: "Visitante",
+  },
+  {
+    id: "cargo_vehicle",
+    text: "Vehículo de carga",
+  },
+  {
+    id: "supplier",
+    text: "Instituccion",
+  },
+];
 const MOVEMENT_TYPES = [
   {
     id: "employee",
@@ -45,9 +62,10 @@ export class PersonComponent implements OnInit {
   @Input() readOnly: boolean = false;
 
   @Output() isValid: EventEmitter<boolean> = new EventEmitter<boolean>();
-
+  ownerTypes = [...OWNER_TYPES];
   movementTypes = [...MOVEMENT_TYPES];
   personTypes: TypePeople[] = [];
+  personCurrent: Person = { id: "", identification_number: "" };
   defaultValues = { ...PERSONS_LIST_DEFAULT };
   materialCurrent: any = { description: "", mark: "", model: "", color: "", serial: "", year: "", license_plate: "" }
   constructor(private toastr: ToastrService, private typePersonService: TypePeopleService,public dialog: MatDialog) { }

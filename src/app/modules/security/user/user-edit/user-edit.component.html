@@ -82,16 +82,16 @@
       <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="5px">
         <mat-form-field appearance="fill">
           <mat-label>Contraseña</mat-label>
-          <input matInput placeholder="Contraseña" formControlName="password" />
+          <input matInput type="password" placeholder="Contraseña" formControlName="password" ngModel required /> 
         </mat-form-field>
         <mat-form-field appearance="fill">
           <mat-label>Repita Contraseña</mat-label>
-          <input matInput placeholder="Repita Contraseña" formControlName="password2" />
+          <input matInput type="password" placeholder="Repita Contraseña" formControlName="password2" ngModel required/>
         </mat-form-field>
       </div>
-
+      
       <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="end">
-        <button mat-raised-button color="primary" type="submit">
+        <button mat-raised-button color="primary"   type="submit">
           {{ update ? "Actualizar" : "Crear" }}
         </button>
       </div>
