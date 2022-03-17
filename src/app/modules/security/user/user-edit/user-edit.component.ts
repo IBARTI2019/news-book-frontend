@@ -160,7 +160,7 @@ export class UserEditComponent implements OnInit, AfterViewChecked {
     }
     this.userService.update(this.id, this.fg.value).subscribe(
       (data) => {
-        this.toastr.success("Datos Usuario actualizado ojojo");
+        this.toastr.success("Datos Usuario actualizado");
         this.submitted = false;
         this.fg.reset();
         this.router.navigate(["security/user"]);
