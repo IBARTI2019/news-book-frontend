@@ -1,10 +1,9 @@
 import { HttpErrorResponse } from "@angular/common/http";
 import { AfterViewChecked, ChangeDetectorRef, Component, OnInit } from "@angular/core";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { FormBuilder, FormGroup, Validators, } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Book, GroupUser, User } from "../../../../interfaces";
 import { ToastrService } from "ngx-toastr";
-
 import { UserService } from '../../../../services/user.service';
 import { UserGroupService } from '../../../../services/user-group.service';
 import { forkJoin } from 'rxjs';
@@ -16,6 +15,7 @@ import { BooksService } from "app/services/books.service";
   templateUrl: './user-edit.component.html',
   styleUrls: ['./user-edit.component.css']
 })
+
 export class UserEditComponent implements OnInit, AfterViewChecked {
   fg: FormGroup;
   id = "";
@@ -160,7 +160,7 @@ export class UserEditComponent implements OnInit, AfterViewChecked {
     }
     this.userService.update(this.id, this.fg.value).subscribe(
       (data) => {
-        this.toastr.success("Datos Usuario actualizado");
+        this.toastr.success("Datos Usuario actualizado ojojo");
         this.submitted = false;
         this.fg.reset();
         this.router.navigate(["security/user"]);

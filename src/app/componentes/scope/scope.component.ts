@@ -1,6 +1,10 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormGroup, FormArray, FormBuilder, Validators } from '@angular/forms';
 import { Scope, ScopeSettings } from 'app/interfaces';
+import { MatDialog } from '@angular/material/dialog';
+import { CreateAndEditMaterialComponent } from 'app/modules/maestro/materials/create-and-edit-material/create-and-edit-material.component';
+import { Person } from 'app/interfaces';
+
 
 const HEALTH_CONDITIONS = [
   {
@@ -45,18 +49,20 @@ export class ScopeComponent implements OnInit, OnChanges {
   @Input() value: any = null;
   @Input() settings: ScopeSettings = SCOPE_LIST_DEFAULT;
   @Input() scopeArrSelected: Scope[] = [];
+  @Input() personsArr: Person[] = [];
   @Input() scopeArr: Scope[] = SCOPE_ARR_DEAFAULT;
   @Input() fGRoot!: FormGroup;
   @Input() readOnly: boolean = false;
-
+  fPerson!: FormGroup;
   @Output() isValid: EventEmitter<boolean> = new EventEmitter<boolean>();
 
+     
   fScope: FormArray = new FormArray([]);
   healthConditions = [...HEALTH_CONDITIONS];
   fGscope = new FormGroup({});
   defaultValues = { ...SCOPE_LIST_DEFAULT }
   scopeCurrent: any = { amount: 1 };
-  constructor(private fB: FormBuilder) { }
+  constructor(private fB: FormBuilder,public dialog: MatDialog) { }
 
   ngOnInit(): void {
     if (this.fGRoot && this.id && this.fGRoot.get(this.id)) {
@@ -133,5 +139,28 @@ export class ScopeComponent implements OnInit, OnChanges {
 
   removeSubLine(index: number) {
     this.fScope.removeAt(index);
+  }
+  getPerson(identification_number: string) {
+    let index = this.personsArr.findIndex(v => v.identification_number == identification_number);
+    if (index > -1) {
+      this.fPerson.get("full_name")!.setValue(this.personsArr[index].full_name);
+    }
+  }
+  
+  createMaterial() {
+    const dialogRef = this.dialog.open(CreateAndEditMaterialComponent, {
+      data: {
+        modal: true
+      },
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+      if (result?.license_plate) {
+        this.personsArr.push(result);
+        this.fPerson.get("code")!.setValue(result.code);
+        this.getPerson(result.code);
+      }
+    });
   }
 }
