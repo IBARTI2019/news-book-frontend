@@ -164,7 +164,7 @@ export class CreateAndEditTypeNewComponent implements OnInit {
       const img = this.selectedFile;
       formData.append('image', img);
     }
-    this.typeNewsService.update(this.id, formData).subscribe(
+    this.typeNewsService.update_patch(this.id, formData).subscribe(
       (data) => {
         this.toastr.success("Tipo de Novedad actualizado");
         this.submitted = false;
