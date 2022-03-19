@@ -68,17 +68,7 @@ export class QuestionBase {
       });
     } else if (options.code === "FORMER_GUARD") {
       this.service.former_guard({ not_paginator: true }).subscribe((data: any) => {
-        this.fichas = [];
-        Object.keys(data).forEach((key: string) => {
-          if (key === 'OESVICA_STAFF_0' || key === 'PLANNED_STAFF_0') {
-            data[key].forEach((value: any) => {
-              if (!this.fichas!.find((f) => f.cod_ficha === value.cod_ficha)) {
-                this.fichas?.push(value);
-              }
-            })
-          }
-        });
-        this.fichas = data['OESVICA_STAFF_0'];
+        this.fichas = data;
       });
     } else if (options.code === "PERSONS" || options.code === "PERSON") {
       this.service.list({ not_paginator: true }).subscribe((data: Person[]) => {
