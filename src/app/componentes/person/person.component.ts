@@ -75,7 +75,6 @@ export class PersonComponent implements OnInit {
     this.typePersonService.list({ not_paginator: true }).subscribe(data => {
       this.personTypes = data;
     });
-    this.personTypes
     if (this.fGRoot && this.id && this.fGRoot.get(this.id)) {
       this.fPerson = this.fGRoot.get(this.id) as FormGroup;
     }
