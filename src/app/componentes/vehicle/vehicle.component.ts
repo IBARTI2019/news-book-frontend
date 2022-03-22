@@ -16,11 +16,11 @@ const OWNER_TYPES = [
   },
   {
     id: "cargo_vehicle",
-    text: "Vehículo de carga",
+    text: "Vehículo de cargao",
   },
   {
-    id: "supplier",
-    text: "Proveedor",
+    id: "Instituccion",
+    text: "Instituccion",
   },
 ];
 
