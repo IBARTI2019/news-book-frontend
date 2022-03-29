@@ -154,11 +154,13 @@ export class UserEditComponent implements OnInit, AfterViewChecked {
   }
 
   updateUser() {
+    let data = this.fg.value;
     if ((this.fg.value.password != this.fg.value.password2) && this.fg.value.password) {
       this.toastr.error("Las contraseñas no coinciden");
       return;
     }
-    this.userService.update(this.id, this.fg.value).subscribe(
+    if (data.password == "") delete data.password;
+    this.userService.update(this.id,data).subscribe(
       (data) => {
         this.toastr.success("Datos Usuario actualizado");
         this.submitted = false;
