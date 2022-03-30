@@ -47,11 +47,10 @@
         </div>
         <!-- Begin to Dynamic Form -->
         <form fxFlex="{{ settings.percentage }}" [formGroup]="fPerson" fxLayout="row wrad" fxLayoutGap="1px">
-            
             <div *ngIf="settings.showTokenField" fxLayoutAlign="center center" fxFlex="2 0 11%" fxLayout="column"
                 style="background-color: #ffffff" class="item">
                 <mat-form-field appearance="fill">
-                    <mat-label>Cedula</mat-label>
+                    <mat-label>Cedulao</mat-label>
                     <input type="text" matInput formControlName="identification_number" placeholder=""
                         (keyup)="getPerson($event.target.value)" [readonly]="readOnly" />
                     <mat-error *ngIf="fPerson.controls.identification_number.hasError('required')">
@@ -73,8 +72,8 @@
             <div *ngIf="settings.showTypePersonField" fxLayoutAlign="center center" fxFlex="1 1 11%" fxLayout="column"
                 style="background-color: #ffffff" class="item">
                 <mat-radio-group style="margin: 15px 0" formControlName="type_person" [disabled]="readOnly">
-                    <mat-radio-button *ngFor="let mT of personTypes" style="margin: 5px" [value]="mT.id">{{
-                        mT.description }}
+                    <mat-radio-button *ngFor="let mP of personTypes" style="margin: 5px" [value]="mP.is_institution">{{
+                        mP.description}}
                     </mat-radio-button>
                 </mat-radio-group>
                 <mat-error *ngIf="fPerson.controls.type_person.hasError('required')">
@@ -144,6 +143,57 @@
                     </mat-error>
                 </mat-form-field>
             </div>
+
+            <div fxLayout="row wrap" *ngIf="settings.showEntryField && fPerson.controls.type_person.value=== true"
+                fxLayoutGap="5px grid" fxFlex="100" style="background-color: #ffffff" class="item mat-toolbar">
+                <div fxLayoutAlign="center center" fxFlex="100" fxLayout="column" class="item mat-toolbar mat-primary">
+                    Datos de la Instituccion
+                </div>
+                <div *ngIf="!readOnly" fxLayoutAlign="center center" class="item" fxFlex="2 1 40%" fxLayout="column">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Nombre de la Instituccion</mat-label>
+                        <input type="text" matInput placeholder="Descripción" [(ngModel)]=" personCurrentseg.description"
+                            [ngModelOptions]="{standalone: true}" />
+                    </mat-form-field>
+                </div>
+                <div fxLayoutAlign="center center" fxFlex="100" fxLayout="column" class="item mat-toolbar mat-primary">
+                    Departamento de Seguridad
+                </div>
+                <div *ngIf="!readOnly" fxLayoutAlign="center center" class="item" fxFlex="3 1 30%" fxLayout="column">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Cedula</mat-label>
+                        <input type="text" matInput placeholder="Cedula" [(ngModel)]=" personCurrentseg.cedula"
+                            [ngModelOptions]="{standalone: true}" />
+                    </mat-form-field>
+                </div>
+                <div *ngIf="!readOnly" fxLayoutAlign="center center" class="item" fxFlex="1 1 30%" fxLayout="column">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Nombres</mat-label>
+                        <input type="text" matInput placeholder="Nombres" [(ngModel)]=" personCurrentseg.nombres"
+                            [ngModelOptions]="{standalone: true}" />
+                    </mat-form-field>
+                </div>
+                <div *ngIf="!readOnly" fxLayoutAlign="center center" class="item" fxFlex="1 1 30%" fxLayout="column">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Apellidos</mat-label>
+                        <input type="text" matInput placeholder="Apellidos" [(ngModel)]=" personCurrentseg.apellidos"
+                            [ngModelOptions]="{standalone: true}" />
+                    </mat-form-field>
+                </div>
+                <div *ngIf="!readOnly" fxLayoutAlign="center center" class="item" fxFlex="1 1 30%" fxLayout="column">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Observacion</mat-label>
+                        <input type="text" matInput placeholder="Observacion" [(ngModel)]=" personCurrentseg.observacion"
+                            [ngModelOptions]="{standalone: true}" />
+                    </mat-form-field>
+                </div>
+                             
+                    
+                
+            </div>
+
+
+
             <div fxLayout="row wrap" *ngIf="settings.showEntryField && fPerson.controls.entry.value === true"
                 fxLayoutGap="5px grid" fxFlex="100" style="background-color: #ffffff" class="item mat-toolbar">
                 <div fxLayoutAlign="center center" fxFlex="100" fxLayout="column" class="item mat-toolbar mat-primary">
@@ -271,7 +321,7 @@
                     </div>
                 </div>
             </div>
-                    
+                                   
       
         </form>
         <br><br>

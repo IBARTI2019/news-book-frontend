@@ -33,6 +33,7 @@ export class CreateAndEditTypePeopleComponent implements OnInit {
         description: ["", Validators.required],
         priority: ["", Validators.required],
         is_active: [true, Validators.required],
+        is_institution: [false, Validators.required],
       },
       {}
     );
@@ -79,6 +80,8 @@ export class CreateAndEditTypePeopleComponent implements OnInit {
         this.fg.get("description")!.setValue(data.description);
         this.fg.get("priority")!.setValue(data.priority);
         this.fg.get("is_active")!.setValue(data.is_active);
+        this.fg.get("is_institution")!.setValue(data.is_institution);
+        
       },
       (error: HttpErrorResponse) => {
         this.toastr.error(

@@ -36,12 +36,18 @@ export class TypePeopleComponent implements OnInit {
         attribute: "Prioridad",
       },
       {
+        dataAttribute: "is_institution",
+        attribute: "Es institucion",
+        header: "Activo",
+        type: "bool",
+      },
+      {
         dataAttribute: "is_active",
         attribute: "Status",
         header: "Activo",
         type: "bool",
       },
-
+    
       {
         attribute: "id",
         header: "Opciones",
