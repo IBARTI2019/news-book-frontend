@@ -61,7 +61,7 @@ export class ScopeComponent implements OnInit, OnChanges {
   healthConditions = [...HEALTH_CONDITIONS];
   fGscope = new FormGroup({});
   defaultValues = { ...SCOPE_LIST_DEFAULT }
-  scopeCurrent: any = { amount: 1 };
+  scopeCurrent: any = { amount: 0 };
   constructor(private fB: FormBuilder,public dialog: MatDialog) { }
 
   ngOnInit(): void {
