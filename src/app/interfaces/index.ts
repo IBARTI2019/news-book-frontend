@@ -87,6 +87,7 @@ export interface TypePeople {
   description: string;
   priority: string;
   is_active: string;
+  is_institution:string;
 }
 
 export interface Person {

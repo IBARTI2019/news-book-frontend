@@ -1,6 +1,9 @@
+import { HttpErrorResponse } from "@angular/common/http";
 import { Component, Inject, OnInit } from "@angular/core";
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { ToastrService } from "ngx-toastr";
+import { Router } from "@angular/router";
+import { serviceficha } from "../../services/ficha.service";
 
 @Component({
   selector: "app-validate-oesvica-token",
@@ -8,8 +11,14 @@ import { ToastrService } from "ngx-toastr";
   styleUrls: ["./validate-oesvica-token.component.css"],
 })
 export class ValidateOesvicaTokenComponent implements OnInit {
+  sendingficha = false;
+  sendfichaSucces = false;
+  verifyfichaSubmit = false;
+  
   constructor(
+    private router: Router,
     private toastr: ToastrService,
+    private serviceficha: serviceficha,
     public dialogRef: MatDialogRef<ValidateOesvicaTokenComponent>,
     @Inject(MAT_DIALOG_DATA) public data: string
   ) {}
@@ -23,12 +32,22 @@ export class ValidateOesvicaTokenComponent implements OnInit {
   private setLocalStorage(fieldName: string, value: any) {
     if (fieldName) localStorage.setItem(fieldName, JSON.stringify(value));
   }
-
-  validate() {
-    if (this.data) {
-      this.setLocalStorage('id_user', this.data)
-      this.toastr.success("Verificado!");
-      this.dialogRef.close(true);
+  
+  validate(ficha: string) {
+    if (ficha) {
+      this.serviceficha.ficha(ficha).subscribe((result) =>{
+        this.verifyfichaSubmit = true;
+        this.dialogRef.close(true);
+        
+      },
+      (error: HttpErrorResponse) => {
+        console.error(error.error.error);
+        this.toastr.error(
+          error.error.error || "Ha ocurrido un error inesperado"
+        );
+      })
     }
+    
   }
+  
 }

@@ -19,8 +19,8 @@ const OWNER_TYPES = [
     text: "Vehículo de carga",
   },
   {
-    id: "supplier",
-    text: "Instituccion",
+    id: "Instituccion",
+    text: "Instiruccion",
   },
 ];
 const MOVEMENT_TYPES = [
@@ -67,6 +67,7 @@ export class PersonComponent implements OnInit {
   personTypes: TypePeople[] = [];
   personCurrent: Person = { id: "", identification_number: "" };
   defaultValues = { ...PERSONS_LIST_DEFAULT };
+  personCurrentseg: any = { description:"" ,cedula: "", nombres:"",apellidos:"", observacion:"" };
   materialCurrent: any = { description: "", mark: "", model: "", color: "", serial: "", year: "", license_plate: "" }
   constructor(private toastr: ToastrService, private typePersonService: TypePeopleService,public dialog: MatDialog) { }
   
@@ -107,7 +108,23 @@ export class PersonComponent implements OnInit {
     this.fPerson.get('materials')?.value.value.push({ ...this.materialCurrent });
     this.materialCurrent = { ...{ description: "", mark: "", model: "", color: "", serial: "", year: "", license_plate: "" } };
   }
-
+  addpersonaseg(i: number) {
+    let error: boolean = false;
+    Object.keys(this.personCurrentseg).forEach((key: string = 'description') => {
+      if (error)
+        return;
+      if (!this.personCurrentseg[key]) {
+        this.toastr.error("Debe llenar todos los campos para registrar una Persona de Instituccion");
+        error = true;
+      }
+    });
+    if (error) return;
+    this.fPerson.get('materials')?.value.value.push({ ...this.personCurrentseg });
+    this.personCurrentseg = { ...{ description:"" ,cedula: "", nombres: "", apellidos: "",observacion: "" } };
+  }
+  removerpersonasI(index_persona: number): void {
+    this.fPerson.get('materials')?.value.value.splice(index_persona, 1);
+  }
   removeMaterial(index_material: number): void {
     this.fPerson.get('materials')?.value.value.splice(index_material, 1);
   }
