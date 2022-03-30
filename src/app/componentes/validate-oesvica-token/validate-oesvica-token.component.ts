@@ -36,9 +36,9 @@ export class ValidateOesvicaTokenComponent implements OnInit {
   validate(ficha: string) {
     if (ficha) {
       this.serviceficha.ficha(ficha).subscribe((result) =>{
+        this.setLocalStorage('id_user', this.data)
         this.verifyfichaSubmit = true;
-        this.dialogRef.close(true);
-        
+        this.dialogRef.close(true);  
       },
       (error: HttpErrorResponse) => {
         console.error(error.error.error);

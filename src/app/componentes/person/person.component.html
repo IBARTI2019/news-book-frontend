@@ -50,7 +50,7 @@
             <div *ngIf="settings.showTokenField" fxLayoutAlign="center center" fxFlex="2 0 11%" fxLayout="column"
                 style="background-color: #ffffff" class="item">
                 <mat-form-field appearance="fill">
-                    <mat-label>Cedulao</mat-label>
+                    <mat-label>Cedula</mat-label>
                     <input type="text" matInput formControlName="identification_number" placeholder=""
                         (keyup)="getPerson($event.target.value)" [readonly]="readOnly" />
                     <mat-error *ngIf="fPerson.controls.identification_number.hasError('required')">
