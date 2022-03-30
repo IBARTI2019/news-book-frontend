@@ -37,8 +37,7 @@ export class TypePeopleComponent implements OnInit {
       },
       {
         dataAttribute: "is_institution",
-        attribute: "Es institucion",
-        header: "Activo",
+        header: "Institución",
         type: "bool",
       },
       {
