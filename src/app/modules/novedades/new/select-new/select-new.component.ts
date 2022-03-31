@@ -36,7 +36,7 @@ export class SelectNewComponent implements OnInit {
       },
       (error: HttpErrorResponse) => {
         this.toastr.error(
-          error.error.message || "Error obteniendopolicia los Tipos de Novedades."
+          error.error.message || "Error obteniendo los Tipos de Novedades."
         );
       }
     );

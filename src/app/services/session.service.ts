@@ -47,6 +47,8 @@ export class SessionService extends API<User> {
    */
 
   sendCode(signinData: SigninData): Observable<any> {
+    let schema = signinData.code!.split('@', 2);
+    localStorage.setItem(API.SCHEMA_NAME, schema[1]);
     return this.http
       .post<void>(`${this.apiURL}/security/valid/request_security_code/`, {
         ...signinData,
@@ -105,6 +107,7 @@ export class SessionService extends API<User> {
 
   public logout() {
     deleteLocalStorageItem(ID_CRYPT);
+    deleteLocalStorageItem(API.SCHEMA_NAME);
     this.router.navigateByUrl("/sign-in");
   }
 
