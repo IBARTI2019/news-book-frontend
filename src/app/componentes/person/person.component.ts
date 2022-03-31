@@ -43,6 +43,7 @@ export const PERSONS_LIST_DEFAULT: PersonsSettings = {
   showHourField: true,
   showEntryField: true,
   showProtocolField: true,
+  showTypePersonField:true,
   showVaccinationCardNumberField: true,
 };
 
@@ -67,7 +68,7 @@ export class PersonComponent implements OnInit {
   personTypes: TypePeople[] = [];
   personCurrent: Person = { id: "", identification_number: "" };
   defaultValues = { ...PERSONS_LIST_DEFAULT };
-  personCurrentseg: any = { description:"" ,cedula: "", nombres:"",apellidos:"", observacion:"" };
+  personCurrentseg: any = { description:"" ,cedula: "", nombres:"",apellidos:"", observacion:"",year: "", license_plate: "" };
   materialCurrent: any = { description: "", mark: "", model: "", color: "", serial: "", year: "", license_plate: "" }
   constructor(private toastr: ToastrService, private typePersonService: TypePeopleService,public dialog: MatDialog) { }
   
@@ -119,11 +120,11 @@ export class PersonComponent implements OnInit {
       }
     });
     if (error) return;
-    this.fPerson.get('materials')?.value.value.push({ ...this.personCurrentseg });
-    this.personCurrentseg = { ...{ description:"" ,cedula: "", nombres: "", apellidos: "",observacion: "" } };
+    this.fPerson.get('institucciones')?.value.value.push({ ...this.personCurrentseg });
+    this.personCurrentseg = { ...{ description: "", cedula: "", nombres: "", apellidos: "", observacion: "",year: "", license_plate: "" } };
   }
   removerpersonasI(index_persona: number): void {
-    this.fPerson.get('materials')?.value.value.splice(index_persona, 1);
+    this.fPerson.get('institucciones')?.value.value.splice(index_persona, 1);
   }
   removeMaterial(index_material: number): void {
     this.fPerson.get('materials')?.value.value.splice(index_material, 1);

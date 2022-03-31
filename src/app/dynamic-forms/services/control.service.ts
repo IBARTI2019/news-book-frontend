@@ -23,7 +23,7 @@ export class ControlService {
           break;
         case "persons":
           group[question.key] = question.required
-            ? new FormArray([], Validators.required)
+           ? new FormArray([], Validators.required)
             : new FormArray([]);
           break;
         case "person":
@@ -123,6 +123,7 @@ export class ControlService {
         question.value.protocol || false,
         question.settings.showProtocolField && Validators.required,
       ],
+      institucciones: new FormControl({ value: question.value.institucciones?.value || [] }),
       materials: new FormControl({ value: question.value.materials?.value || [] }),
       vaccination_card_number: [
         question.value.vaccination_card_number || "",
