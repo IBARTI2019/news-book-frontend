@@ -15,13 +15,13 @@ export class Error401Interceptor implements HttpInterceptor {
     if (token) token = token.replace(/"/g, "");
 
     let id_book = getLocalStorage(API.BOOK);
-    let schema_name = localStorage.getItem(API.SCHEMA_NAME) || 'public';
+    let schema_name = localStorage.getItem(API.SCHEMA_NAME);
 
-    if (request.url.includes('/type_news/') || request.url.includes('/client/') || request.url.includes('/domain/')){
+/*     if (request.url.includes('/type_news/') || request.url.includes('/client/') || request.url.includes('/domain/')){
         schema_name = "public"
-    }
+    } */
     const req1 = request.clone({
-      headers: request.headers.set('Authorization', `Bearer ${token}`).set('location', `${id_book}`).set('X-Dts-Schema', schema_name),
+      headers: request.headers.set('Authorization', `Bearer ${token}`).set('location', `${id_book}`).set('X-Dts-Schema', schema_name || "public"),
     });
 
     return next.handle(req1).pipe(
