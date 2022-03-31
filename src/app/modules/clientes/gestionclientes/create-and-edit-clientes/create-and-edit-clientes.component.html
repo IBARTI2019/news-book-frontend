@@ -22,7 +22,8 @@
                 </div>
             </div>
             <div class="panel-container" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="end">
-                <button mat-raised-button color="primary" type="submit">{{ update ? 'Actualizar' : 'Crear' }}</button>
+                <span *ngIf="guardando">Guardando...</span>
+                <button mat-raised-button color="primary" type="submit" [disabled]="guardando">{{ update ? 'Actualizar' : 'Crear' }}</button>
             </div>
         </form>
     </mat-card-content>

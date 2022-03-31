@@ -5,6 +5,7 @@ import { User } from 'app/interfaces';
 import { USER } from 'app/constants';
 import { BehaviorSubject } from 'rxjs';
 import { UserService } from 'app/services/user.service';
+import { API } from 'app/utils/api';
 
 @Component({
   selector: 'app-sidebar',
@@ -43,4 +44,6 @@ export class AppSidebarComponent implements OnInit, OnDestroy {
   logout() {
     this.sessionService.logout();
   }
+
+  isSchemaPublic = () => localStorage.getItem(API.SCHEMA_NAME) == "public";
 }
