@@ -39,6 +39,7 @@ export class CreateAndEditClientescomponent implements OnInit {
       {
         schema_name: ["", Validators.required],
         name: ["", Validators.required],
+        email: ["", Validators.required],
         paid_until: [""],
         on_trial: [true, Validators.required],
       },
@@ -86,6 +87,7 @@ export class CreateAndEditClientescomponent implements OnInit {
     this.clientesService.get(this.id).subscribe((data: Client) => {
       this.fg.get("schema_name")!.setValue(data.schema_name);
       this.fg.get("name")!.setValue(data.name);
+      this.fg.get("email")!.setValue(data.email);
       this.fg.get("paid_until")!.setValue(data.paid_until);
       this.fg.get("on_trial")!.setValue(data.on_trial);
     },
