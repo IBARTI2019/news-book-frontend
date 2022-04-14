@@ -1,6 +1,9 @@
 import { HttpErrorResponse } from "@angular/common/http";
 import { Component, OnInit, ViewChild } from "@angular/core";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
+import { MatDialog } from '@angular/material/dialog';
+import { CreateAndEditScheduleComponent } from 'app/modules/maestro/schedule/create-and-edit-schedule/create-and-edit-schedule.component';
+
 import {
   MatDatepicker,
   MatDatepickerInputEvent,
@@ -61,7 +64,8 @@ export class CreateAndEditNotificationComponent implements OnInit {
     private fb: FormBuilder,
     private toastr: ToastrService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    public dialog: MatDialog
   ) {
     this.fg = this.fb.group({});
   }
@@ -266,6 +270,9 @@ export class CreateAndEditNotificationComponent implements OnInit {
 
   handleType = (event: MatRadioChange) => {
   };
+  
+ 
+
 
   checkFrequency(group: FormGroup) {
     switch (group.controls.frequency.value) {
@@ -290,5 +297,18 @@ export class CreateAndEditNotificationComponent implements OnInit {
       default:
         return null;
     }
+  }
+  createhorario() {
+    const dialogRef = this.dialog.open(CreateAndEditScheduleComponent, {
+      data: {
+        modal: true
+      },
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      this.submitted = true;
+      this.fg.reset();
+      this.router.navigateByUrl("/notification/crear");
+    });
+    
   }
 }

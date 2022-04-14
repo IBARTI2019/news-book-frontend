@@ -95,6 +95,12 @@
                     <mat-slide-toggle formControlName="is_active">Activo</mat-slide-toggle>
                 </div>
             </div>
+           
+            <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="end">
+                <button mat-raised-button color="primary" (click)="createhorario()" type="button">
+                    + Horarios
+                </button>
+            </div>
             <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="end">
                 <button mat-raised-button color="primary" type="submit">{{ update ? 'Actualizar' : 'Crear' }}</button>
             </div>
