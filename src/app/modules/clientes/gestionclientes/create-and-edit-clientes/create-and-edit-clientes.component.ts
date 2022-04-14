@@ -5,6 +5,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Client} from 'app/interfaces';
 import { ClientsService } from 'app/services/clients.service';
 import { ToastrService } from 'ngx-toastr';
+import * as moment from "moment";
 
 @Component({
   selector: 'app-create-and-edit-clientes',
@@ -18,7 +19,7 @@ export class CreateAndEditClientescomponent implements OnInit {
   id = "";
   routeState: any;
   redirectTo = "";
-
+  guardando = false;
   constructor(
     private clientesService: ClientsService,
     private fb: FormBuilder,
@@ -38,6 +39,7 @@ export class CreateAndEditClientescomponent implements OnInit {
       {
         schema_name: ["", Validators.required],
         name: ["", Validators.required],
+        email: ["", Validators.required],
         paid_until: [""],
         on_trial: [true, Validators.required],
       },
@@ -64,7 +66,10 @@ export class CreateAndEditClientescomponent implements OnInit {
   }
 
   save() {
-    this.clientesService.add(this.fg.value).subscribe(
+    this.guardando = true;
+    let data = this.fg.value;
+    data['paid_until'] = moment(this.fg.value.paid_until).format("YYYY-MM-DD")
+    this.clientesService.add(data).subscribe(
       (data) => {
         this.toastr.success("Cliente creado con éxito");
         this.submitted = false;
@@ -75,13 +80,14 @@ export class CreateAndEditClientescomponent implements OnInit {
         this.submitted = false;
         this.toastr.error(error.error.message || "No se pudo crear los datos");
       }
-    );
+    ).add(()=>this.guardando=false);
   }
 
   getCliente() {
     this.clientesService.get(this.id).subscribe((data: Client) => {
       this.fg.get("schema_name")!.setValue(data.schema_name);
       this.fg.get("name")!.setValue(data.name);
+      this.fg.get("email")!.setValue(data.email);
       this.fg.get("paid_until")!.setValue(data.paid_until);
       this.fg.get("on_trial")!.setValue(data.on_trial);
     },
@@ -92,7 +98,10 @@ export class CreateAndEditClientescomponent implements OnInit {
   }
 
   updateCliente() {
-    this.clientesService.update(this.id, this.fg.value).subscribe(
+    this.guardando = true;
+    let data = this.fg.value;
+    data['paid_until'] = moment(this.fg.value.paid_until).format("YYYY-MM-DD")
+    this.clientesService.update(this.id, data).subscribe(
       (data) => {
         this.toastr.success("Datos del Cliente actualizados");
         this.submitted = false;
@@ -105,6 +114,6 @@ export class CreateAndEditClientescomponent implements OnInit {
           error.error.message || "No se logro actualizar el Cliente"
         );
       }
-    );
+    ).add(()=>this.guardando=false);;
   }
 }

@@ -19,6 +19,7 @@ export abstract class API<T> {
   static JWT = 'jwt_id';
   static TYPE_USER = 'type_user';
   static BOOK = 'book';
+  static SCHEMA_NAME = 'schema_name';
   protected URL_API: string = env.API;
   protected abstract URL: string;
 

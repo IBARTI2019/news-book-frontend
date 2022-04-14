@@ -419,6 +419,7 @@ export interface Client {
   id?: string;
   name?: string;
   schema_name?: string;
+  email?: string;
   paid_until?: string;
   on_trial?: boolean;
 }

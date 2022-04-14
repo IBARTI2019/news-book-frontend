@@ -12,9 +12,13 @@
                 <mat-label>Nombre del Cliente</mat-label>
                 <input matInput placeholder="Nombre del Cliente" formControlName="name" />
             </mat-form-field>
+            <mat-form-field appearance="fill">
+                <mat-label>Correo</mat-label>
+                <input matInput placeholder="Correo" formControlName="email" />
+              </mat-form-field>
             <mat-form-field>
                 <mat-label>Fecha Expiracion</mat-label>
-                <input matInput placeholder="Fecha Expiracion" formControlName="paid_until" />
+                <input matInput type="date" placeholder="Fecha Expiracion" formControlName="paid_until" />
             </mat-form-field>
             <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="5px">
                 <div fxFlex="50">
@@ -22,7 +26,8 @@
                 </div>
             </div>
             <div class="panel-container" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="end">
-                <button mat-raised-button color="primary" type="submit">{{ update ? 'Actualizar' : 'Crear' }}</button>
+                <span *ngIf="guardando">Guardando...</span>
+                <button mat-raised-button color="primary" type="submit" [disabled]="guardando">{{ update ? 'Actualizar' : 'Crear' }}</button>
             </div>
         </form>
     </mat-card-content>

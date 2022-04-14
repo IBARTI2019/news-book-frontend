@@ -53,7 +53,8 @@ export class UserService extends API<User> {
   public checkAuthenticationAsPromise(): Promise<boolean> {
     return new Promise<boolean>((resolve) => {
       const userCrypt = getLocalStorage(ID_CRYPT);
-      if (userCrypt) {
+      const schema_name = localStorage.getItem(API.SCHEMA_NAME);
+      if (userCrypt && schema_name) {
         const userDecrypt = decryptUsingAES256(userCrypt);
         if (userDecrypt) {
           // this.get(userDecrypt).subscribe((user: User) => {
