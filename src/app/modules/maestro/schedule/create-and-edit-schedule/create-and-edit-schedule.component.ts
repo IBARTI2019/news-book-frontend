@@ -66,7 +66,14 @@ export class CreateAndEditScheduleComponent implements OnInit {
           this.toastr.success("Horario creada con éxito!");
           this.submitted = false;
           this.fg.reset();
-          this.router.navigate(["schedule"]);
+          if (this.id) {
+            this.router.navigate(["schedule"]);
+          } else {
+            this.submitted = false;
+            this.fg.reset();
+            this.router.navigate(["/notification/crear"]);
+          }
+
         },
         (error: HttpErrorResponse) => {
           this.submitted = false;

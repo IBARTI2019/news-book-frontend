@@ -30,3 +30,9 @@ File: scss
 
 @import '../../app/componentes/mat-table-responsive/mat-table-responsive.directive';
 
+.timepicker-overlay {
+  z-index: 1100 !important;
+}
+.timepicker-backdrop-overlay {
+    z-index: 1100 !important;
+  }
