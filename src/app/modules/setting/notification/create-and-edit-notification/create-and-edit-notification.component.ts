@@ -34,6 +34,7 @@ export class CreateAndEditNotificationComponent implements OnInit {
   fg: FormGroup;
   submitted = false;
   update: boolean = false;
+  esmodal: boolean = false;
   id: string = "";
   listGroups: GroupUser[] = [];
   types: OptionField[] = [];
@@ -287,8 +288,8 @@ export class CreateAndEditNotificationComponent implements OnInit {
       //     return {
       //       daysIsRequired: "Debe ingresar al menos 2 días.",
       //     };
-      //   break;
-      case 4:
+      //   break;y
+        case 4:
         if (!group.controls.week_days.value.length)
           return {
             weekDaysIsRequired: true,
@@ -305,9 +306,10 @@ export class CreateAndEditNotificationComponent implements OnInit {
       },
     });
     dialogRef.afterClosed().subscribe(result => {
-      this.submitted = true;
+      this.submitted = false;
       this.fg.reset();
-      this.router.navigateByUrl("/notification/crear");
+      this.router.navigateByUrl('/schedule', {skipLocationChange: true}).then(()=> this.router.navigate(["notification/crear"]));
+     
     });
     
   }
