@@ -112,7 +112,7 @@ export class ScopeComponent implements OnInit, OnChanges {
         this.settings.showNameField && Validators.required,
       ],
       amount: [
-        v.amount || 1,
+        v.amount,
         this.settings.showAmountField && Validators.required,
       ],
       health_condition: [
