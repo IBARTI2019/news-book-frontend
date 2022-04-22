@@ -120,10 +120,31 @@ export class ControlService {
         question.settings.showHourField && Validators.required,
       ],
       protocol: [
-        question.value.protocol || false,
+        question.value.protocol || '',
         question.settings.showProtocolField && Validators.required,
       ],
-      institucciones: new FormControl({ value: question.value.institucciones?.value || [] }),
+      instituccion: [
+        question.value.instituccion || '',
+        question.settings.showTypePersonField && Validators.required,
+      ],
+      observacion: [
+        question.value.observacion || '',
+        question.settings.showTypePersonField && Validators.required,
+      ],
+  
+      ident_recibe: [
+        question.value.ident_recibe || '',
+        question.settings.showTypePersonField && Validators.required,
+      ],
+      name_recibe: [
+        question.value.name_recibe || '',
+        question.settings.showTypePersonField && Validators.required,
+      ],
+      cargo_recibe: [
+        question.value.cargo_recibe || '',
+        question.settings.showTypePersonField && Validators.required,
+      ],
+      // institucciones: new FormControl({ value: question.value.institucciones?.value || {} }),
       materials: new FormControl({ value: question.value.materials?.value || [] }),
       vaccination_card_number: [
         question.value.vaccination_card_number || "",

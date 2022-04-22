@@ -2,7 +2,7 @@
 <div mat-dialog-content>
   <mat-form-field>
     <mat-label>Ingrese su ficha</mat-label>
-    <input matInput [(ngModel)]='data'>
+    <input matInput [(ngModel)]='data' (change)="validate(data)">
   </mat-form-field>
 </div>
 <div mat-dialog-actions>

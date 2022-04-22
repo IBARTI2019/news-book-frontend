@@ -109,20 +109,20 @@ export class PersonComponent implements OnInit {
     this.fPerson.get('materials')?.value.value.push({ ...this.materialCurrent });
     this.materialCurrent = { ...{ description: "", mark: "", model: "", color: "", serial: "", year: "", license_plate: "" } };
   }
-  addpersonaseg(i: number) {
-    let error: boolean = false;
-    Object.keys(this.personCurrentseg).forEach((key: string = 'description') => {
-      if (error)
-        return;
-      if (!this.personCurrentseg[key]) {
-        this.toastr.error("Debe llenar todos los campos para registrar una Persona de Instituccion");
-        error = true;
-      }
-    });
-    if (error) return;
-    this.fPerson.get('institucciones')?.value.value.push({ ...this.personCurrentseg });
-    this.personCurrentseg = { ...{ description: "", cedula: "", nombres: "", apellidos: "", observacion: "",year: "", license_plate: "" } };
-  }
+  // addpersonaseg(i: number) {
+  //   let error: boolean = false;
+  //   Object.keys(this.personCurrentseg).forEach((key: string = 'description') => {
+  //     if (error)
+  //       return;
+  //     if (!this.personCurrentseg[key]) {
+  //       this.toastr.error("Debe llenar todos los campos para registrar una Persona de Instituccion");
+  //       error = true;
+  //     }
+  //   });
+  //   if (error) return;
+  //   this.fPerson.get('institucciones')?.value.value.push({ ...this.personCurrentseg });
+  //   this.personCurrentseg = { ...{ description: "", cedula: "", nombres: "", apellidos: "", observacion: "",year: "", license_plate: "" } };
+  // }
   removerpersonasI(index_persona: number): void {
     this.fPerson.get('institucciones')?.value.value.splice(index_persona, 1);
   }
@@ -151,5 +151,25 @@ export class PersonComponent implements OnInit {
         this.getPerson(result.code);
       }
     });
+  }
+  check(value:boolean){
+    console.log('value ',value);
+    if(value){
+      this.fPerson.controls["instituccion"].setValue('');
+      this.fPerson.controls["observacion"].setValue('');
+      this.fPerson.controls["name_recibe"].setValue('');
+      this.fPerson.controls["ident_recibe"].setValue('');
+      this.fPerson.controls["cargo_recibe"].setValue('');
+   
+    }else{
+      this.fPerson.controls["instituccion"].setValue('-');
+      this.fPerson.controls["observacion"].setValue('-');
+      this.fPerson.controls["name_recibe"].setValue('-');
+      this.fPerson.controls["ident_recibe"].setValue('-');
+      this.fPerson.controls["cargo_recibe"].setValue('-');
+    }
+   
+
+
   }
 }
