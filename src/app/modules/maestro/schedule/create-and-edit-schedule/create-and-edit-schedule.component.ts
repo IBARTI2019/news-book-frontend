@@ -1,7 +1,9 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, Input, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Router, ActivatedRoute } from '@angular/router';
+import { ConfirmDialogComponent } from 'app/componentes/confirm-dialog/confirm-dialog.component';
 import { Schedule } from 'app/interfaces';
 import { ScheduleService } from 'app/services/schedule.service';
 import { ToastrService } from 'ngx-toastr';
@@ -18,6 +20,11 @@ export class CreateAndEditScheduleComponent implements OnInit {
   id: string = "";
 
   constructor(
+    @Inject(MAT_DIALOG_DATA) public data: {
+      modal: boolean,
+      id: string,
+    },
+    private mdDialogRef: MatDialogRef<ConfirmDialogComponent>,
     private scheduleService: ScheduleService,
     private fb: FormBuilder,
     private toastr: ToastrService,
@@ -28,7 +35,7 @@ export class CreateAndEditScheduleComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.id = this.route.snapshot.params.id;
+    this.id = this.route.snapshot.params.id ? this.route.snapshot.params.id : this.data.id;
     this.fg = this.fb.group(
       {
         description: ["", Validators.required],
@@ -42,6 +49,7 @@ export class CreateAndEditScheduleComponent implements OnInit {
       this.update = true;
       this.getSchedule();
     }
+    console.log('Modal', this.data.modal);
   }
 
   onSubmit() {
@@ -56,7 +64,9 @@ export class CreateAndEditScheduleComponent implements OnInit {
   onReset() {
     this.submitted = false;
     this.fg.reset();
-    this.router.navigate(["schedule"]);
+    if(this.data.modal == false){
+      this.router.navigate(["schedule"]);
+    }
   }
 
   save() {
@@ -67,11 +77,13 @@ export class CreateAndEditScheduleComponent implements OnInit {
           this.submitted = false;
           this.fg.reset();
           if (this.id) {
-            this.router.navigate(["schedule"]);
+            if(this.data.modal == false){
+              this.router.navigate(["schedule"]);
+              this.mdDialogRef.close();
+            }
           } else {
             this.submitted = false;
             this.fg.reset();
-            this.router.navigate(["/notification/crear"]);
           }
 
         },
@@ -102,7 +114,10 @@ export class CreateAndEditScheduleComponent implements OnInit {
         this.toastr.success("Horario actualizado!");
         this.submitted = false;
         this.fg.reset();
-        this.router.navigate(["schedule"]);
+        if(this.data.modal == false){
+          this.router.navigate(["schedule"]);
+        }
+        this.mdDialogRef.close();
       },
       (error: HttpErrorResponse) => {
         this.submitted = false;

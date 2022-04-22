@@ -1,7 +1,7 @@
 <div fxLayout="row wrap">
     <div fxFlex.gt-xs="100" fxFlex="100">
         <mat-card>
-            <app-card-header link="crear" link-menu="Crear Horarios" modulo="Horarios" menu="Gestion de Horarios">
+            <app-card-header link="crear" link-menu="Crear Horarios" modulo="Horarios" menu="Gestion de Horarios" (addChange)="showModalSchedule()">
             </app-card-header>
             <mat-card-content>
                 <div class="d-flex flex-wrap">
