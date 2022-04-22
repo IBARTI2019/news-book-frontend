@@ -96,7 +96,7 @@
                 </div>
             </div>
            
-            <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="end">
+            <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="end" *ngIf="fg.value.type === TYPE_OBLIGATORY">
                 <button mat-raised-button color="primary" (click)="createhorario()" type="button">
                     + Hor.
                 </button>
