@@ -6,6 +6,8 @@ import { HttpErrorResponse } from "@angular/common/http";
 import { Book, SigninData, VerifyCodeResponse } from "app/interfaces";
 import { API } from "app/utils/api";
 import { setLocalStorage } from "app/utils/localStorage";
+import { ThrowStmt } from "@angular/compiler";
+import { isInteger } from "lodash";
 
 @Component({
   selector: "app-login",
@@ -25,6 +27,8 @@ export class LoginComponent implements OnInit {
   verifyCodeSubmit = false;
   showVerifyCode = false;
   hide = false;
+  lerror= "";
+  titulog="";
   books: Book[] = [];
   constructor(
     private router: Router,
@@ -65,11 +69,35 @@ export class LoginComponent implements OnInit {
       (error: HttpErrorResponse) => {
         console.error(error.error.error);
         this.sendingCode = false;
+        let posicion =  error.message.indexOf(":");
+        let nuevo =posicion + 81;
+        let nuevo2= posicion + 82;
+        let nuevo3= posicion + 83;
+        let numero= error.message[nuevo]+error.message[nuevo2]+error.message[nuevo3];
+        switch(numero) { 
+          case '400': { 
+            this.titulog="Error en Password, en Blanco o no coincide..."; 
+             break; 
+          } 
+          case '404': { 
+             this.titulog="Usuario o Password no encontrados..."; 
+             break; 
+          } 
+          default: { 
+             break; 
+          } 
+       } 
+
+        this.lerror=  "Numero:" + error.message[nuevo]+error.message[nuevo2]+error.message[nuevo3] + "    "+ "Titulo: " + this.titulog ;
+        
         this.toastrService.error(
-          error.error.error || "Ha ocurrido un error inesperado"
-        );
+           this.lerror        
+            ); 
+       
       }
+    
     );
+    
   }
 
   verifyCode(): void {
