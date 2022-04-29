@@ -84,7 +84,8 @@ export class LoginComponent implements OnInit {
              break; 
           } 
           default: { 
-             break; 
+            this.titulog="Error Inesperado, Servidor Fuera de Servicio..."; 
+            break; 
           } 
        } 
 
