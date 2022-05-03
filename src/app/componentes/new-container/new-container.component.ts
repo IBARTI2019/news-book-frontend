@@ -33,8 +33,7 @@ export class NewContainerComponent implements OnInit {
     
         }
         */
-    //this.url = this.idTN;
-    
+    this.url = this.idTN;
   }
 
   openDialog(): void {
