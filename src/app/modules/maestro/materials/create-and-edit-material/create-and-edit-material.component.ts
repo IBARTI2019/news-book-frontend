@@ -36,7 +36,7 @@ export class CreateAndEditMaterialComponent implements OnInit {
 
     this.fg = this.fb.group(
       {
-        code: ["", Validators.required],
+        code: ["",],
         serial: [""],
         description: ["", Validators.required],
         is_active: [true, Validators.required],
