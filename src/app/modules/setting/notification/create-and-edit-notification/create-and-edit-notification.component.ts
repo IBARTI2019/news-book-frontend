@@ -305,6 +305,7 @@ export class CreateAndEditNotificationComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       this.submitted = false;
+      this.getSchedule();
     }); 
   }
 }
