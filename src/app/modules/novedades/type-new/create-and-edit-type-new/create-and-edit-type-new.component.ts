@@ -142,7 +142,7 @@ export class CreateAndEditTypeNewComponent implements OnInit {
       this.fg.get("is_active")!.setValue(data.is_active);
       this.fg.get("is_changing_of_the_guard")!.setValue(data.is_changing_of_the_guard);
       if (data.image_display)
-        this.preview = data.image;
+        this.preview = data.image_display;
       /*       this.fg.get("template")!.setValue(data.template);
             this.fg.get("is_active")!.setValue(data.is_active);
             this.template = this.templates.filter(
