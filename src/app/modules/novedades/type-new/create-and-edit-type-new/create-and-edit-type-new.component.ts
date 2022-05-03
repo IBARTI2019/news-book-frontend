@@ -66,7 +66,6 @@ export class CreateAndEditTypeNewComponent implements OnInit {
         description: ["", Validators.required],
         info: ["", Validators.required],
         code: ["", Validators.required],
-        //template: ["Plantilla por Defecto", Validators.required],
         is_changing_of_the_guard: [false, Validators.required],
         is_active: [true, Validators.required],
       },
@@ -142,8 +141,8 @@ export class CreateAndEditTypeNewComponent implements OnInit {
       this.fg.get("code")!.setValue(data.code);
       this.fg.get("is_active")!.setValue(data.is_active);
       this.fg.get("is_changing_of_the_guard")!.setValue(data.is_changing_of_the_guard);
-      if (data.image)
-        this.preview = data.image_display;
+      if (data.image_display)
+        this.preview = data.image;
       /*       this.fg.get("template")!.setValue(data.template);
             this.fg.get("is_active")!.setValue(data.is_active);
             this.template = this.templates.filter(
