@@ -173,7 +173,8 @@ export class FormatGeneratorComponent implements OnInit {
             showHourField: true,
             showEntryField: true,
             showProtocolField: true,
-            showVaccinationCardNumberField: true
+            showVaccinationCardNumberField: true,
+            showButtonNew:true
           }
         }
 

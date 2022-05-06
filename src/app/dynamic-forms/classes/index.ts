@@ -264,7 +264,8 @@ export class PersonQuestion extends QuestionBase {
     showEntryField: true,
     showProtocolField: true,
     showTypePersonField: true,
-    showVaccinationCardNumberField: true
+    showVaccinationCardNumberField: true,
+    showButtonNew:true
   };
 
   constructor(options: QuestionBaseParams, public service: any) {
