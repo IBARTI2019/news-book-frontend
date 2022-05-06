@@ -41,7 +41,7 @@ export class ClientesComponent implements OnInit {
       },
       {
         dataAttribute: "on_trial",
-        header: "Activo",
+        header: "En Juicio",
         type: "bool"
       },
       {
