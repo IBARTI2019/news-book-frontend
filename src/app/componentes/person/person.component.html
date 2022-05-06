@@ -71,7 +71,7 @@
             </div>
             <div *ngIf="settings.showTypePersonField" fxLayoutAlign="center center" fxFlex="1 1 11%" fxLayout="column"
                 style="background-color: #ffffff" class="item">
-                <mat-radio-group style="margin: 15px 0" formControlName="type_person" [disabled]="readOnly">
+                <mat-radio-group style="margin: 15px 0" formControlName="type_person" [disabled]="readOnly" [(ngModel)]="tp">
                     <mat-radio-button *ngFor="let mT of personTypes" style="margin: 5px" [value]="mT.id" (click)="check(mT.is_institution)">{{
                         mT.description}}
                     </mat-radio-button>

@@ -54,6 +54,7 @@ export const PERSONS_LIST_DEFAULT: PersonsSettings = {
   styleUrls: ['./person.component.css']
 })
 export class PersonComponent implements OnInit {
+  tp: string = '';
   @Input() id: string = '';
   @Input() value: any = null;
   @Input() settings: PersonsSettings = PERSONS_LIST_DEFAULT;
@@ -67,10 +68,12 @@ export class PersonComponent implements OnInit {
   movementTypes = [...MOVEMENT_TYPES];
   personTypes: TypePeople[] = [];
   isInstitution: boolean = false;
+ 
   personCurrent: Person = { id: "", identification_number: "" };
   defaultValues = { ...PERSONS_LIST_DEFAULT };
   personCurrentseg: any = { description:"" ,cedula: "", nombres:"",apellidos:"", observacion:"",year: "", license_plate: "" };
   materialCurrent: any = { description: "", mark: "", model: "", color: "", serial: "", year: "", license_plate: "" }
+ 
   constructor(private toastr: ToastrService, private typePersonService: TypePeopleService,public dialog: MatDialog) { }
   
 
@@ -132,11 +135,15 @@ export class PersonComponent implements OnInit {
   }
 
   getPerson(identification_number: string) {
-    let index = this.personsArr.findIndex(v => v.identification_number == identification_number);
+    console.log('PERSONA', identification_number, 'array',this.personsArr);
+    let index = this.personsArr.findIndex(v => v.doc_ident == identification_number);
     if (index > -1) {
       this.fPerson.get("full_name")!.setValue(this.personsArr[index].full_name);
+      this.tp =  String(this.personsArr[index].type_person);
+    console.log(this.tp);
     }
   }
+
   createPersona() {
     const dialogRef = this.dialog.open(CreateAndEditPersonComponent, {
       data: {
@@ -145,14 +152,15 @@ export class PersonComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
-      if (result?.license_plate) {
+      console.log('Dialog result:', result );
+      if (result?.doc_ident) {
         this.personsArr.push(result);
-        this.fPerson.get("code")!.setValue(result.code);
-        this.getPerson(result.code);
+        this.fPerson.get("identification_number")!.setValue(result.doc_ident);
+        this.getPerson(result.doc_ident);
       }
     });
   }
+  
   check(value:boolean){
     if(value){
       this.fPerson.controls["instituccion"].setValue('');
@@ -161,6 +169,7 @@ export class PersonComponent implements OnInit {
       this.fPerson.controls["ident_recibe"].setValue('');
       this.fPerson.controls["cargo_recibe"].setValue('');
       this.isInstitution = true;
+     
     }else{
       this.fPerson.controls["instituccion"].setValue('-');
       this.fPerson.controls["observacion"].setValue('-');
@@ -170,6 +179,12 @@ export class PersonComponent implements OnInit {
       this.isInstitution = false;
     }
   }
+
+  getTypePerson(){
+    return this.tp;
+  }
+
+
 
 
 }

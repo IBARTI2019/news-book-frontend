@@ -86,7 +86,7 @@ export class CreateAndEditPersonComponent implements OnInit {
       (data) => {
         this.toastr.success("Persona creada con éxito!");
         this.submitted = false;
-        this.dialogRef.close(this.fg.value);
+        this.dialogRef.close(data);
         this.fg.reset();
         if (this.data?.redirect == true)
           this.router.navigate([this.redirectTo || "person"]);
