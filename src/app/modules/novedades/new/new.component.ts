@@ -79,7 +79,7 @@ export class NewComponent implements OnInit {
         header: "Fecha de creación",
         type: "date"
       },
-      /*       {
+          /*   {
               attribute: "info",
               header: "Data",
               template: 'info'

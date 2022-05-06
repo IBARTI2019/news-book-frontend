@@ -66,6 +66,7 @@ export class PersonComponent implements OnInit {
   ownerTypes = [...OWNER_TYPES];
   movementTypes = [...MOVEMENT_TYPES];
   personTypes: TypePeople[] = [];
+  isInstitution: boolean = false;
   personCurrent: Person = { id: "", identification_number: "" };
   defaultValues = { ...PERSONS_LIST_DEFAULT };
   personCurrentseg: any = { description:"" ,cedula: "", nombres:"",apellidos:"", observacion:"",year: "", license_plate: "" };
@@ -153,23 +154,22 @@ export class PersonComponent implements OnInit {
     });
   }
   check(value:boolean){
-    console.log('value ',value);
     if(value){
       this.fPerson.controls["instituccion"].setValue('');
       this.fPerson.controls["observacion"].setValue('');
       this.fPerson.controls["name_recibe"].setValue('');
       this.fPerson.controls["ident_recibe"].setValue('');
       this.fPerson.controls["cargo_recibe"].setValue('');
-   
+      this.isInstitution = true;
     }else{
       this.fPerson.controls["instituccion"].setValue('-');
       this.fPerson.controls["observacion"].setValue('-');
       this.fPerson.controls["name_recibe"].setValue('-');
       this.fPerson.controls["ident_recibe"].setValue('-');
       this.fPerson.controls["cargo_recibe"].setValue('-');
+      this.isInstitution = false;
     }
-   
-
-
   }
+
+
 }

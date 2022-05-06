@@ -1,5 +1,6 @@
 import { HttpErrorResponse } from "@angular/common/http";
 import { Component, OnInit, ViewChild } from "@angular/core";
+import { MatDialog } from "@angular/material/dialog";
 import { Router } from "@angular/router";
 import { ConfirmDialogService } from "app/componentes/confirm-dialog/confirm-dialog.service";
 import { GenericTableComponent } from "app/componentes/generic-table/generic-table.component";
@@ -7,6 +8,7 @@ import { DTColumn } from "app/componentes/generic-table/interface";
 import { ToastrService } from "ngx-toastr";
 import { Material } from "../../../interfaces/index";
 import { MaterialsService } from "../../../services/materials.service";
+import { CreateAndEditMaterialComponent } from "./create-and-edit-material/create-and-edit-material.component";
 
 @Component({
   selector: "app-materials",
@@ -20,7 +22,8 @@ export class MaterialsComponent implements OnInit {
     public materialsService: MaterialsService,
     private router: Router,
     private dialogService: ConfirmDialogService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    public dialog: MatDialog
   ) { }
 
   showCheck = () => true;
@@ -54,7 +57,8 @@ export class MaterialsComponent implements OnInit {
   }
 
   update(id: string) {
-    this.router.navigate(["materials", id]);
+    // this.router.navigate(["materials", id]);
+    this.showModalMaterial(id);
   }
 
   delete(material: Material) {
@@ -76,6 +80,16 @@ export class MaterialsComponent implements OnInit {
           }
         );
       }
+    });
+  }
+
+  showModalMaterial(id?: string) {
+    const dialogRef = this.dialog.open(CreateAndEditMaterialComponent, {
+      data: { id },
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      this.table.refresh();
+      console.log(`Dialog result: ${result}`);
     });
   }
 }

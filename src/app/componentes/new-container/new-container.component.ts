@@ -24,6 +24,7 @@ export class NewContainerComponent implements OnInit {
 
   constructor(private router: Router, private dialog: MatDialog) { }
 
+
   ngOnInit(): void {
     /*     const templateNew = TemplatesNew.filter(
           (currentTemplate) => currentTemplate.name === this.template
@@ -32,7 +33,7 @@ export class NewContainerComponent implements OnInit {
     
         }
         */
-    this.url = this.idTN
+    this.url = this.idTN;
   }
 
   openDialog(): void {

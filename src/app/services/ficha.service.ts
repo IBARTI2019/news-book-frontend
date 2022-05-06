@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { QuestionBaseParams } from '../interfaces';
 import { API } from '../utils/api';
 
@@ -14,7 +15,7 @@ export class serviceficha extends API<QuestionBaseParams> {
     super(http);
   }
 
-  ficha(data:string) {
+  ficha(data:string): Observable<any> {
     return this.http.get(this.URL+'?ficha='+data);
 
 

@@ -301,16 +301,11 @@ export class CreateAndEditNotificationComponent implements OnInit {
   }
   createhorario() {
     const dialogRef = this.dialog.open(CreateAndEditScheduleComponent, {
-      data: {
-        modal: true
-      },
+      data: { modal: true },
     });
     dialogRef.afterClosed().subscribe(result => {
       this.submitted = false;
-      this.fg.reset();
-      this.router.navigateByUrl('/schedule', {skipLocationChange: true}).then(()=> this.router.navigate(["notification/crear"]));
-     
-    });
-    
+      this.getSchedule();
+    }); 
   }
 }

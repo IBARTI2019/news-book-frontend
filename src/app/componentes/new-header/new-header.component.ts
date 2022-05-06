@@ -8,6 +8,8 @@ import { Component, Input, OnInit } from '@angular/core';
 export class NewHeaderComponent implements OnInit {
   @Input() new: any;
   @Input() client: any;
+  @Input() readOnly: boolean = false;
+  
   constructor() { }
 
   ngOnInit(): void {

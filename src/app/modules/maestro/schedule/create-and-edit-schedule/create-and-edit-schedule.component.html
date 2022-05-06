@@ -37,7 +37,7 @@
                 </div>
             </div>
             <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="end">
-                <button mat-raised-button type="button" [mat-dialog-close]="false">Cerrar</button>
+                <button mat-raised-button type="button" [mat-dialog-close]="false" *ngIf="data.modal==true">Cerrar</button>
                 <button mat-raised-button color="primary" type="submit">{{ update ? 'Actualizar' : 'Crear' }}</button>
             </div>
         </form>

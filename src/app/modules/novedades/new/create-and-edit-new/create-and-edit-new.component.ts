@@ -60,9 +60,10 @@ export class CreateAndEditNewComponent implements OnInit {
   ngOnInit(): void {
     this.ibartiService.location_current().subscribe((client) => {
       this.client = client;
+      console.log(this.client);
     });
     this.idTN = this.route.snapshot.params.idTN;
-    this.currentNew.employee = this.currentNew.employee = this.getLocalStorage('id_user')
+    this.currentNew.employee = this.getLocalStorage('id_user')
     this.currentNew.type_news = this.idTN;
     this.typeNewService.get(this.idTN).subscribe(
       (typeNew: TypeNew) => {

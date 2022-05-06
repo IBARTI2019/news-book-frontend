@@ -4,6 +4,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { ToastrService } from "ngx-toastr";
 import { Router } from "@angular/router";
 import { serviceficha } from "../../services/ficha.service";
+import { json } from "d3";
 
 @Component({
   selector: "app-validate-oesvica-token",
@@ -11,10 +12,11 @@ import { serviceficha } from "../../services/ficha.service";
   styleUrls: ["./validate-oesvica-token.component.css"],
 })
 export class ValidateOesvicaTokenComponent implements OnInit {
+  info: any = null;
   sendingficha = false;
   sendfichaSucces = false;
   verifyfichaSubmit = false;
-  
+ 
   constructor(
     private router: Router,
     private toastr: ToastrService,
@@ -36,7 +38,7 @@ export class ValidateOesvicaTokenComponent implements OnInit {
   validate(ficha: string) {
     if (ficha) {
       this.serviceficha.ficha(ficha).subscribe((result) =>{
-        this.setLocalStorage('id_user', this.data)
+        this.setLocalStorage('id_user', `${result.ap_nombre} ${result.cod_ficha}`);
         this.verifyfichaSubmit = true;
         this.dialogRef.close(true);  
       },

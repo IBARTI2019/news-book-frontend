@@ -1,6 +1,7 @@
 import { HttpErrorResponse } from "@angular/common/http";
-import { Component, OnInit } from "@angular/core";
+import { Component, Inject, Input, OnInit, } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Material } from "app/interfaces";
 import { MaterialsService } from "app/services/materials.service";
@@ -18,8 +19,14 @@ export class CreateAndEditMaterialComponent implements OnInit {
   id = "";
   routeState: any;
   redirectTo = "";
+  @Input() modal = false;
 
   constructor(
+    @Inject(MAT_DIALOG_DATA) public data: {
+      modal: boolean,
+      id: string,
+    },
+    private mdDialogRef: MatDialogRef<CreateAndEditMaterialComponent>,
     private materialService: MaterialsService,
     private fb: FormBuilder,
     private toastr: ToastrService,
@@ -31,13 +38,13 @@ export class CreateAndEditMaterialComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.id = this.route.snapshot.params.id;
+    this.id = this.route.snapshot.params.id ? this.route.snapshot.params.id : this.data.id;
     this.redirectTo = this.routeState.redirectTo || ""
 
     this.fg = this.fb.group(
       {
-        code: ["", Validators.required],
-        serial: ["", Validators.required],
+        code: ["",],
+        serial: [""],
         description: ["", Validators.required],
         is_active: [true, Validators.required],
       },
@@ -68,8 +75,9 @@ export class CreateAndEditMaterialComponent implements OnInit {
       (data) => {
         this.toastr.success("Datos del Material creado con éxito");
         this.submitted = false;
-        this.fg.reset();
-        this.router.navigate([this.redirectTo || "materials"]);
+          this.fg.reset();
+          this.mdDialogRef.close();
+          // this.router.navigate([this.redirectTo || "materials"]);
       },
       (error: HttpErrorResponse) => {
         this.submitted = false;
@@ -97,8 +105,8 @@ export class CreateAndEditMaterialComponent implements OnInit {
       (data) => {
         this.toastr.success("Datos Material  actualizado");
         this.submitted = false;
-        this.fg.reset();
-        this.router.navigate(["materials"]);
+        // this.fg.reset();
+        // this.router.navigate(["materials"]);
       },
       (error: HttpErrorResponse) => {
         this.submitted = false;

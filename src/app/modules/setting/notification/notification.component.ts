@@ -37,7 +37,8 @@ export class NotificationComponent implements OnInit {
       },
       {
         header: "Grupos",
-        attribute: "groups"
+        attribute: "groups",
+        template: "groups"
       },
       {
         header: "Activo",
