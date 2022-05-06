@@ -274,6 +274,7 @@ export interface TemplateTypeNew {
   maximum_characters?: number;
   options?: { key: string; value: string }[];
   settings?: StaffReceivingTheGuardSettings | ScopeSettings;
+  person?: any;
 }
 
 export interface PlannedStaff {
@@ -319,6 +320,11 @@ export interface StaffReceivingTheGuardSettings {
   showGuardStatusField?: boolean;
 }
 
+export interface SelectionSettings {
+  showCP?: boolean;
+}
+
+
 export interface ScopeSettings {
   percentage?: number;
   showItemField?: boolean;
@@ -354,6 +360,7 @@ export interface QuestionBaseParams {
   percentage_per_row?: number;
   maximum_characters?: number;
   settings?: StaffReceivingTheGuardSettings;
+  person?: any;
 }
 
 export interface Book {

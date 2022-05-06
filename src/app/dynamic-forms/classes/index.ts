@@ -1,4 +1,4 @@
-import { Person, PersonsSettings, QuestionBaseParams, RoundSettings, ScopeSettings, StaffReceivingTheGuardSettings, VehiclesSettings } from "app/interfaces";
+import { Person, PersonsSettings, QuestionBaseParams, RoundSettings, ScopeSettings, SelectionSettings, StaffReceivingTheGuardSettings, VehiclesSettings } from "app/interfaces";
 
 export class QuestionBase {
   value?: any;
@@ -99,6 +99,18 @@ export class DropdownQuestion extends QuestionBase {
 
 export class SelectionQuestion extends QuestionBase {
   controlType = "selection";
+  settings?: SelectionSettings = {
+    showCP: false
+  };
+  person?: any;
+
+  constructor(options: QuestionBaseParams, public service: any) {
+    super(options, service)
+    if (options.settings)
+      this.settings = options.settings as SelectionSettings;
+    if (options.person)
+      this.person = options.person;
+  }
 }
 
 export class TextboxQuestion extends QuestionBase {

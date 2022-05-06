@@ -109,7 +109,17 @@ export class QuestionService extends API<any> {
               label: d.label || 'Seleccionar',
               required: d.required,
               options: d.options,
-              percentage_per_row: Number(d.percentage_per_row) || 100,
+              person: new PersonQuestion({
+                value: d?.person?.value || '',
+                key: `${d?.person?.code}_${d.code}`,
+                code: d?.person?.code,
+                label: d?.person?.label || 'Persona',
+                required: d?.person?.required,
+                form_field: false,
+                percentage_per_row: Number(d?.person?.percentage_per_row) || 100,
+                settings: d?.person?.settings,
+              }, this.personService),
+              percentage_per_row: Number(d?.person?.percentage_per_row) || 100,
               form_field: false
             }, null),
           )
