@@ -135,7 +135,7 @@ export class PersonComponent implements OnInit {
   }
 
   getPerson(identification_number: string) {
-    console.log('PERSONA', identification_number, 'array',this.personsArr);
+   /// console.log('PERSONA', identification_number, 'array',this.personsArr);
     let index = this.personsArr.findIndex(v => v.doc_ident == identification_number);
     if (index > -1) {
       this.fPerson.get("full_name")!.setValue(this.personsArr[index].full_name);
@@ -152,7 +152,7 @@ export class PersonComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('Dialog result:', result );
+      ///console.log('Dialog result:', result );
       if (result?.doc_ident) {
         this.personsArr.push(result);
         this.fPerson.get("identification_number")!.setValue(result.doc_ident);
@@ -179,12 +179,6 @@ export class PersonComponent implements OnInit {
       this.isInstitution = false;
     }
   }
-
-  getTypePerson(){
-    return this.tp;
-  }
-
-
 
 
 }
