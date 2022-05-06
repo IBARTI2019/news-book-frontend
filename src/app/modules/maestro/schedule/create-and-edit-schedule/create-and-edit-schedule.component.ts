@@ -24,7 +24,7 @@ export class CreateAndEditScheduleComponent implements OnInit {
       modal: boolean,
       id: string,
     },
-    private mdDialogRef: MatDialogRef<ConfirmDialogComponent>,
+    private mdDialogRef: MatDialogRef<CreateAndEditScheduleComponent>,
     private scheduleService: ScheduleService,
     private fb: FormBuilder,
     private toastr: ToastrService,

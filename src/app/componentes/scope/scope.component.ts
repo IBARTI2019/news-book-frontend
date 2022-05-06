@@ -4,6 +4,7 @@ import { Scope, ScopeSettings } from 'app/interfaces';
 import { MatDialog } from '@angular/material/dialog';
 import { CreateAndEditMaterialComponent } from 'app/modules/maestro/materials/create-and-edit-material/create-and-edit-material.component';
 import { Person } from 'app/interfaces';
+import { IbartiService } from 'app/services/ibarti.service';
 
 
 const HEALTH_CONDITIONS = [
@@ -21,13 +22,7 @@ const HEALTH_CONDITIONS = [
   },
 ];
 
-const SCOPE_ARR_DEAFAULT: Scope[] = [
-  {
-    code: "1234567890",
-    name: "Hemny Sibrian",
-    amount: 5
-  },
-];
+const SCOPE_ARR_DEAFAULT: Scope[] = [];
 
 export const SCOPE_LIST_DEFAULT: ScopeSettings = {
   percentage: 100,
@@ -62,7 +57,7 @@ export class ScopeComponent implements OnInit, OnChanges {
   fGscope = new FormGroup({});
   defaultValues = { ...SCOPE_LIST_DEFAULT }
   scopeCurrent: any = { amount: 0 };
-  constructor(private fB: FormBuilder,public dialog: MatDialog) { }
+  constructor(private fB: FormBuilder,public dialog: MatDialog, private ibartiService: IbartiService) { }
 
   ngOnInit(): void {
     if (this.fGRoot && this.id && this.fGRoot.get(this.id)) {
@@ -156,10 +151,10 @@ export class ScopeComponent implements OnInit, OnChanges {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
-      if (result?.license_plate) {
-        this.personsArr.push(result);
-        this.fPerson.get("code")!.setValue(result.code);
-        this.getPerson(result.code);
+      if (result?.description) {
+        this.ibartiService.sub_line_scope().subscribe((data: any) => {
+          this.scopeArr = data;
+        });
       }
     });
   }
