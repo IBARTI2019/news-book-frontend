@@ -144,7 +144,7 @@
                 </mat-form-field>
             </div>
             <!-- Begin to Institucion -->
-            <div fxLayout="row wrap" *ngIf="settings.showTypePersonField && fPerson.controls.type_person.value === true"
+            <div fxLayout="row wrap" *ngIf="settings.showTypePersonField && isInstitution"
                 fxLayoutGap="5px grid" fxFlex="100" style="background-color: #ffffff" class="item mat-toolbar">
                 <div fxLayoutAlign="center center" fxFlex="100" fxLayout="column" class="item mat-toolbar mat-primary">
                     Personal de la Instituccion (Datos de la Instituccion) 
