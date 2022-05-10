@@ -38,7 +38,10 @@
         data.element.required ? "SI" : "NO"
         }}</mat-slide-toggle>
     </div>
+
+ 
   </div>
+
 </ng-container>
 <ng-container
   *ngIf="data.element?.settings && (data.element.code === 'PLANNED_STAFF' || data.element.code === 'OESVICA_STAFF' || data.element.code === 'FORMER_GUARD' || data.element.code === 'SUB_LINE')">
@@ -183,6 +186,12 @@
       <mat-label>Porcentaje en fila</mat-label>
       <input matInput tabindex="1" [(ngModel)]="data.element.settings.percentage" />
     </mat-form-field>
+    <div >
+      <p>Mostrar el <strong>Boton Nuevo</strong></p>
+      <mat-slide-toggle [(ngModel)]="data.element.settings.showButtonNew" ngDefaultControl>{{
+        data.element.settings.showButtonNew ? "SI" : "NO"
+        }}</mat-slide-toggle>
+    </div>
     <div>
       <p>Mostrar la columna <strong>Nombre y Apellido</strong></p>
       <mat-slide-toggle [(ngModel)]="data.element.settings.showNameField" ngDefaultControl>{{

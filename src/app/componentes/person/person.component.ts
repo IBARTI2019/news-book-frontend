@@ -45,6 +45,7 @@ export const PERSONS_LIST_DEFAULT: PersonsSettings = {
   showProtocolField: true,
   showTypePersonField:true,
   showVaccinationCardNumberField: true,
+  showButtonNew:true
 };
 
 

@@ -318,6 +318,7 @@ export interface StaffReceivingTheGuardSettings {
   showCheckInField?: boolean;
   showCheckOutField?: boolean;
   showGuardStatusField?: boolean;
+  showButtonNew?:boolean;
 }
 
 export interface SelectionSettings {
@@ -333,6 +334,7 @@ export interface ScopeSettings {
   showAmountField?: boolean;
   showHealthConditionField?: boolean;
   showObservationField?: boolean;
+  showButtonNew?:boolean;
 }
 
 export interface QuestionBaseParams {
@@ -411,6 +413,7 @@ export interface PersonsSettings {
   showProtocolField?: boolean;
   showTypePersonField?: boolean;
   showVaccinationCardNumberField?: boolean;
+  showButtonNew?:boolean;
 }
 
 
