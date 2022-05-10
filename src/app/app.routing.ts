@@ -269,7 +269,7 @@ export const AppRoutes: Routes = [
     component: LoginComponent,
   },
   {
-    path: "viewlink/:id",
+    path: "viewlink/:id/:client_schema",
     component: ViewNewLinkComponent,
   },
   {

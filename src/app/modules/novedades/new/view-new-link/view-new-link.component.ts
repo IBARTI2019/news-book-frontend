@@ -21,7 +21,8 @@ export class ViewNewLinkComponent implements OnInit {
   controls$!: Observable<QuestionBase[]>;
   generating = true;
   _new: New = { id: "", employee: "" };
-  client: any;
+  client: {cliente?: string, ubicacion?: string} = {};
+  client_schema: string = "";
   constructor(private newService: NewService,
     private toastr: ToastrService,
     private route: ActivatedRoute,
@@ -32,12 +33,12 @@ export class ViewNewLinkComponent implements OnInit {
 
   ngOnInit(): void {
     this.id = this.route.snapshot.params.id;
-    this.ibartiService.location_current().subscribe((client) => {
-      this.client = client;
-    });
-    this.newService.getAllow(this.id).subscribe(
-      (_new: New) => {
-        this._new = _new;
+    this.client_schema = this.route.snapshot.params.client_schema;
+    this.newService.getAllow(this.id, this.client_schema).subscribe(
+      (_new: any) => {
+        this._new = _new.new;
+        this.client.cliente = _new.client;
+        this.client.ubicacion = _new.new.location_display.name;
         try{
           this._new.template = JSON.parse(this._new.template);
         }catch(e){

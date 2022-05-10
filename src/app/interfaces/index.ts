@@ -146,6 +146,7 @@ export interface New {
   type_news?: string;
   created_by?: string;
   template?: TemplateTypeNew[] | any;
+  client?: any;
 }
 
 export interface TemplateOne {
