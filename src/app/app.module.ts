@@ -37,6 +37,7 @@ import { decryptUsingAES256 } from './utils/crypt';
 import { TestsComponent } from './tests/tests.component';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { MatSelectModule } from '@angular/material/select';
+import { ViewNewLinkComponent } from "./modules/novedades/new/view-new-link/view-new-link.component";
 
 const getPermissionsFromLocalStorage = () => {
   const permissionsCrypt = getLocalStorage(PERMISSIONS);
@@ -55,7 +56,8 @@ const getPermissionsFromLocalStorage = () => {
     SpinnerComponent,
     AppSidebarComponent,
     LoginComponent,
-    TestsComponent
+    TestsComponent,
+    ViewNewLinkComponent
   ],
   imports: [
     BrowserModule,

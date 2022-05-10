@@ -1,0 +1,15 @@
+<div fxLayout="row wrap" fxLayoutAlign="center center">
+    <mat-card>
+        <mat-card-header>
+            <mat-card-title class="title">Novedad</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <div fxFlex.gt-xs="100" fxFlex="100">
+                <app-new-header [client]="client" [new]="_new" [readOnly]="true"></app-new-header>
+                <app-dymamic-form *ngIf="!generating" [questions]="controls$ | async" [readOnly]="true"
+                    [info]="_new.info" [new]="_new">
+                </app-dymamic-form>
+            </div>
+        </mat-card-content>
+    </mat-card>
+</div>

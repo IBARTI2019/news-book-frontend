@@ -7,6 +7,7 @@ import { AuthGuard } from "./utils/permiso.guard";
 import { ADMIN, AUDITOR, SUPERVISOR, USER } from "./constants";
 import { NgxPermissionsGuard } from 'ngx-permissions';
 import { TestsComponent } from './tests/tests.component';
+import { ViewNewLinkComponent } from "./modules/novedades/new/view-new-link/view-new-link.component";
 
 export const AppRoutes: Routes = [
   {
@@ -266,6 +267,10 @@ export const AppRoutes: Routes = [
   {
     path: "sign-in",
     component: LoginComponent,
+  },
+  {
+    path: "viewlink/:id",
+    component: ViewNewLinkComponent,
   },
   {
     path: "**",

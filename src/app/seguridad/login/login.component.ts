@@ -6,8 +6,6 @@ import { HttpErrorResponse } from "@angular/common/http";
 import { Book, SigninData, VerifyCodeResponse } from "app/interfaces";
 import { API } from "app/utils/api";
 import { setLocalStorage } from "app/utils/localStorage";
-import { ThrowStmt } from "@angular/compiler";
-import { isInteger } from "lodash";
 
 @Component({
   selector: "app-login",
