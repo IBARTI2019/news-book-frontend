@@ -45,10 +45,10 @@
 
       <mat-form-field  fxFlex="1 0 30%" appearance="fill" style="background-color: #ffffff;" *ngIf="!readOnly">
         <mat-select #staffRef formControlName="staff" multiple >
-        
-          <ngx-mat-select-search [formControl]="MultiFilterCtrl" [placeholderLabel]="'search...'"
-          [noEntriesFoundLabel]="'not found'" ></ngx-mat-select-search>
-         
+          <mat-option *ngIf="!readOnly">
+            <ngx-mat-select-search [formControl]="MultiFilterCtrl"  [placeholderLabel]="'search...'"
+            [noEntriesFoundLabel]="'not found'"></ngx-mat-select-search>
+         </mat-option>
           <mat-option *ngFor="let staffItem of listFilter" [value]="staffItem">
             {{staffItem?.cod_ficha}} - {{ staffItem?.name_and_surname }}
           </mat-option>

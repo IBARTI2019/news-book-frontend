@@ -101,7 +101,7 @@ export class ChangingGuardStaffListComponent implements OnInit, OnChanges {
   healthConditions = [...HEALTH_CONDITIONS];
   fGStaff = new FormGroup({});
   defaultValues = { ...CHANGING_GUARD_STAFF_LIST_DEFAULT }
-  listFilter: PlannedStaff[] | undefined;
+  listFilter: PlannedStaff[] | undefined = [];
 
   constructor(private fB: FormBuilder) { }
 
@@ -145,7 +145,8 @@ export class ChangingGuardStaffListComponent implements OnInit, OnChanges {
 
   ngOnChanges(change: SimpleChanges): void {
     //this.filteredMulti.next(this.staffArr.slice());
-    this.listFilter = this.staffArr;
+    if(this.staffArr)
+      this.listFilter = [...this.staffArr];
 
 
 
@@ -168,10 +169,12 @@ export class ChangingGuardStaffListComponent implements OnInit, OnChanges {
       .subscribe(() => {
         //this.filterBanksMulti();
         let search = this.MultiFilterCtrl.value;
-        let a =  this.searchFilter(search);
-        this.listFilter = a;
-        //console.log('Filtrando', a);
-
+        if(search){
+          let a =  this.searchFilter(search);
+          this.listFilter = a;
+        }else{
+          this.listFilter = [...this.staffArr];
+        }
 
       });
 
