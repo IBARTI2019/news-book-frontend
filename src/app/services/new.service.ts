@@ -16,6 +16,6 @@ export class NewService extends API<New> {
   }
 
   getAllow(id: string, schema_name: string): Observable<any> {
-    return this.http.get<any>(`${this.URL}${id}/get_allow/`, {params: {schema_name}});
+    return this.http.get<any>(`${this.URL_API}/main/newslink/${id}/`, {params: {schema_name}});
   }
 }

@@ -38,7 +38,7 @@ export class ViewNewLinkComponent implements OnInit {
       (_new: any) => {
         this._new = _new.new;
         this.client.cliente = _new.client;
-        this.client.ubicacion = _new.new.location_display.name;
+        this.client.ubicacion = _new.new?.location_display ? _new.new?.location_display.name : 'N/A';
         try{
           this._new.template = JSON.parse(this._new.template);
         }catch(e){
