@@ -69,32 +69,9 @@ export class LoginComponent implements OnInit {
       (error: HttpErrorResponse) => {
         console.error(error.error.error);
         this.sendingCode = false;
-        let posicion =  error.message.indexOf(":");
-        let nuevo =posicion + 81;
-        let nuevo2= posicion + 82;
-        let nuevo3= posicion + 83;
-        let numero= error.message[nuevo]+error.message[nuevo2]+error.message[nuevo3];
-        switch(numero) { 
-          case '400': { 
-            this.titulog="Error en Password, en Blanco o no coincide..."; 
-             break; 
-          } 
-          case '404': { 
-             this.titulog="Usuario o Password no encontrados..."; 
-             break; 
-          } 
-          default: { 
-            this.titulog="Error Inesperado, Servidor Fuera de Servicio..."; 
-            break; 
-          } 
-       } 
-
-        this.lerror=  "Numero:" + error.message[nuevo]+error.message[nuevo2]+error.message[nuevo3] + "    "+ "Titulo: " + this.titulog ;
         
         this.toastrService.error(
-           this.lerror        
-            ); 
-       
+          error.error.error      );       
       }
     
     );
