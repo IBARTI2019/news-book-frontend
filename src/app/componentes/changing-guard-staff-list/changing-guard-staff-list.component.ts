@@ -6,13 +6,17 @@ import {
   OnInit,
   Output,
   SimpleChanges,
+  ViewChild,
 } from "@angular/core";
-import { FormArray, FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
+import { MatSelect } from "@angular/material/select";
 import {
   PlannedStaff,
   Staff,
   StaffReceivingTheGuardSettings,
 } from "app/interfaces";
+import { ReplaySubject, Subject } from "rxjs";
+import { takeUntil } from "rxjs/operators";
 
 const HEALTH_CONDITIONS = [
   {
@@ -71,11 +75,23 @@ export const CHANGING_GUARD_STAFF_LIST_DEFAULT: StaffReceivingTheGuardSettings =
   styleUrls: ["./changing-guard-staff-list.component.css"],
 })
 export class ChangingGuardStaffListComponent implements OnInit, OnChanges {
+  //@ViewChild("staffRef") staffRef!: MatSelect;
+  @ViewChild('staffRef', { static: true }) staffRef!: MatSelect;
+
+  public MultiFilterCtrl: FormControl = new FormControl();
+
+  protected _onDestroy = new Subject<void>();
+  public filteredMulti: ReplaySubject<any[]> = new ReplaySubject<any[]>(
+    1
+  );
+
+
+
   @Input() id: string = '';
   @Input() value: any = null;
   @Input() settings: StaffReceivingTheGuardSettings = CHANGING_GUARD_STAFF_LIST_DEFAULT;
   @Input() staffArrSelected: Staff[] = [];
-  @Input() staffArr: PlannedStaff[] = STAFF_ARR_DEAFAULT;
+  @Input() staffArr: PlannedStaff[] = [];
   @Input() fGRoot!: FormGroup;
   @Input() readOnly: boolean = false;
 
@@ -85,10 +101,13 @@ export class ChangingGuardStaffListComponent implements OnInit, OnChanges {
   healthConditions = [...HEALTH_CONDITIONS];
   fGStaff = new FormGroup({});
   defaultValues = { ...CHANGING_GUARD_STAFF_LIST_DEFAULT }
+  listFilter: PlannedStaff[] | undefined;
 
   constructor(private fB: FormBuilder) { }
 
   ngOnInit(): void {
+
+
     if (this.fGRoot && this.id && this.fGRoot.get(this.id)) {
       this.fA = this.fGRoot.get(this.id) as FormArray;
     }
@@ -125,6 +144,11 @@ export class ChangingGuardStaffListComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(change: SimpleChanges): void {
+    //this.filteredMulti.next(this.staffArr.slice());
+    this.listFilter = this.staffArr;
+
+
+
     if (change.settings && change.settings.firstChange) {
       this.settings = change.settings.currentValue || {
         ...CHANGING_GUARD_STAFF_LIST_DEFAULT,
@@ -138,6 +162,21 @@ export class ChangingGuardStaffListComponent implements OnInit, OnChanges {
     if (change.settings?.currentValue?.testing) {
       this.staffArr = STAFF_ARR_DEAFAULT;
     }
+
+    this.MultiFilterCtrl.valueChanges
+      .pipe(takeUntil(this._onDestroy))
+      .subscribe(() => {
+        //this.filterBanksMulti();
+        let search = this.MultiFilterCtrl.value;
+        let a =  this.searchFilter(search);
+        this.listFilter = a;
+        //console.log('Filtrando', a);
+
+
+      });
+
+
+    // console.log('StaffArr',this.staffArr);
   }
 
   addFG(v: Staff): void {
@@ -172,5 +211,46 @@ export class ChangingGuardStaffListComponent implements OnInit, OnChanges {
       ],
     });
     this.fA.push(fG);
+  }
+  searchFilter(search: string) {
+    if (search) {
+     // console.log(search) 
+
+     // console.log(this.staffArr) 
+     if (search.length > 2) {
+      const results = this.staffArr.filter(element => {
+
+      
+         // console.log(element) 
+
+         const regex = new RegExp(search, "gi");
+          const comparison = regex.test(element.cod_ficha)
+         // console.log('comparison',comparison) 
+
+ 
+          if (comparison) {
+
+
+            return element;
+          }
+          //return element;
+
+       
+
+
+      });
+      return results;
+    }else{
+      return this.staffArr;
+    }
+
+     // console.log('results',results) 
+
+
+      
+
+
+    }
+
   }
 }
