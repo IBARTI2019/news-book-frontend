@@ -175,7 +175,7 @@ export class ScopeComponent implements OnInit, OnChanges {
       },
     });
     dialogRef.afterClosed().subscribe(result => {
-      console.log('Dialog Result:', result );
+    
       if (result?.code) {
         result['name'] = result.description;
         this.scopeArr.push(result);
