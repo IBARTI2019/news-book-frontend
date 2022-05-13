@@ -5,8 +5,8 @@
             <div fxFlex fxLayout="row wrap" fxLayoutGap="5px grid">
                 <mat-form-field fxFlex="1 0 30%" appearance="fill" style="background-color: #ffffff;" *ngIf="!readOnly">
                     <mat-label>Sub Linea</mat-label>
-                    <mat-select #scopeRef formControlName="scope">
-                        <mat-option *ngFor="let scopeItem of scopeArr" [value]="scopeItem">
+                    <mat-select #scopeRef formControlName="scope" >
+                        <mat-option *ngFor="let scopeItem of listFilter" [value]="scopeItem">
                             {{ scopeItem?.name }}
                         </mat-option>
                     </mat-select>
