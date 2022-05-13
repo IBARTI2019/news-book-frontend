@@ -3,14 +3,28 @@
     <div fxFlex="{{ settings.percentage }}" fxLayout="row" style="height: 50px">
         <form fxFlex="{{ settings.percentage }}" [formGroup]="fGscope">
             <div fxFlex fxLayout="row wrap" fxLayoutGap="5px grid">
-                <mat-form-field fxFlex="1 0 30%" appearance="fill" style="background-color: #ffffff;" *ngIf="!readOnly">
+
+<!--                 <mat-form-field fxFlex="1 0 30%" appearance="fill" style="background-color: #ffffff;" *ngIf="!readOnly">
                     <mat-label>Sub Linea</mat-label>
                     <mat-select #scopeRef formControlName="scope">
                         <mat-option *ngFor="let scopeItem of scopeArr" [value]="scopeItem">
                             {{ scopeItem?.name }}
                         </mat-option>
                     </mat-select>
-                </mat-form-field>
+                </mat-form-field> -->
+
+                <mat-form-field  fxFlex="1 0 30%" appearance="fill" style="background-color: #ffffff;" *ngIf="!readOnly">
+                    <mat-select #scopeRef formControlName="scope" placeholder="Materiales">
+                      <mat-option *ngIf="!readOnly">
+                        <ngx-mat-select-search [formControl]="MultiFilterCtrl"  [placeholderLabel]="'Buscar...'"
+                        [noEntriesFoundLabel]="'No Encontrado'"></ngx-mat-select-search>
+                     </mat-option>
+                      <mat-option *ngFor="let scopeItem of listFilter" [value]="scopeItem">
+                        {{ scopeItem?.name }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+
                 <mat-form-field fxFlex="1 0 30%" appearance="fill" *ngIf="!readOnly">
                     <mat-label>Cantidad</mat-label>
                     <input type="number" matInput placeholder="Cantidad" [(ngModel)]="scopeCurrent.amount"

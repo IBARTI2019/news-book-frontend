@@ -1,10 +1,12 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
-import { FormGroup, FormArray, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormArray, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { Scope, ScopeSettings } from 'app/interfaces';
 import { MatDialog } from '@angular/material/dialog';
 import { CreateAndEditMaterialComponent } from 'app/modules/maestro/materials/create-and-edit-material/create-and-edit-material.component';
 import { Person } from 'app/interfaces';
 import { IbartiService } from 'app/services/ibarti.service';
+import { ReplaySubject, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 
 const HEALTH_CONDITIONS = [
@@ -40,6 +42,14 @@ export const SCOPE_LIST_DEFAULT: ScopeSettings = {
   styleUrls: ['./scope.component.css']
 })
 export class ScopeComponent implements OnInit, OnChanges {
+
+  public MultiFilterCtrl: FormControl = new FormControl();
+
+  protected _onDestroy = new Subject<void>();
+  public filteredMulti: ReplaySubject<any[]> = new ReplaySubject<any[]>(
+    1
+  );
+
   @Input() id: string = '';
   @Input() value: any = null;
   @Input() settings: ScopeSettings = SCOPE_LIST_DEFAULT;
@@ -57,6 +67,9 @@ export class ScopeComponent implements OnInit, OnChanges {
   fGscope = new FormGroup({});
   defaultValues = { ...SCOPE_LIST_DEFAULT }
   scopeCurrent: any = { amount: 0 };
+
+  listFilter: Scope[] | undefined = [];
+
   constructor(private fB: FormBuilder,public dialog: MatDialog, private ibartiService: IbartiService) { }
 
   ngOnInit(): void {
@@ -82,6 +95,10 @@ export class ScopeComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(change: SimpleChanges): void {
+
+    if (this.scopeArr)
+    this.listFilter = [...this.scopeArr];
+
     if (change.settings && change.settings.firstChange) {
       this.settings = change.settings.currentValue || {
         ...SCOPE_LIST_DEFAULT,
@@ -91,6 +108,20 @@ export class ScopeComponent implements OnInit, OnChanges {
         ...SCOPE_LIST_DEFAULT,
       }
     }
+
+    this.MultiFilterCtrl.valueChanges
+    .pipe(takeUntil(this._onDestroy))
+    .subscribe(() => {
+      //this.filterBanksMulti();
+      let search = this.MultiFilterCtrl.value;
+      if (search) {
+        let a = this.searchFilter(search);
+        this.listFilter = a;
+      } else {
+        this.listFilter = [...this.scopeArr];
+      }
+
+    });
   }
 
   addFG(v: Scope): void {
@@ -157,5 +188,27 @@ export class ScopeComponent implements OnInit, OnChanges {
         });
       }
     });
+  }
+
+  searchFilter(search: string) { //Funcion de filtro de buscador
+    if (search) {
+      if (search.length > 2) {
+        const results = this.scopeArr.filter(element => {
+         
+          const regex = new RegExp(search, "gi");
+          const comparison = regex.test(element.name)
+         // const comparison1 = regex.test(element.name_and_surname)
+        
+          if (comparison) {
+           
+            return element;
+          }
+        });
+        return results;
+      } else {
+        return this.scopeArr;
+      }
+    }
+
   }
 }
