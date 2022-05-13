@@ -76,8 +76,8 @@ export class CreateAndEditMaterialComponent implements OnInit {
         this.toastr.success("Datos del Material creado con éxito");
         this.submitted = false;
           this.fg.reset();
-          this.mdDialogRef.close();
-          // this.router.navigate([this.redirectTo || "materials"]);
+          this.mdDialogRef.close(data);
+          
       },
       (error: HttpErrorResponse) => {
         this.submitted = false;

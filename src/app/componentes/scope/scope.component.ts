@@ -5,6 +5,11 @@ import { MatDialog } from '@angular/material/dialog';
 import { CreateAndEditMaterialComponent } from 'app/modules/maestro/materials/create-and-edit-material/create-and-edit-material.component';
 import { Person } from 'app/interfaces';
 import { IbartiService } from 'app/services/ibarti.service';
+import { MaterialsService } from 'app/services/materials.service';
+
+import { takeUntil } from "rxjs/operators";
+import { Subject } from "rxjs";
+import { ActivatedRoute, Router } from "@angular/router";
 
 
 const HEALTH_CONDITIONS = [
@@ -57,9 +62,13 @@ export class ScopeComponent implements OnInit, OnChanges {
   fGscope = new FormGroup({});
   defaultValues = { ...SCOPE_LIST_DEFAULT }
   scopeCurrent: any = { amount: 0 };
-  constructor(private fB: FormBuilder,public dialog: MatDialog, private ibartiService: IbartiService) { }
+  listFilter: Scope[] = [];
+  protected _onDestroy = new Subject<void>();
+  router: any;
+  constructor(private fB: FormBuilder,public dialog: MatDialog, private imaterial: MaterialsService) { }
 
   ngOnInit(): void {
+    
     if (this.fGRoot && this.id && this.fGRoot.get(this.id)) {
       this.fScope = this.fGRoot.get(this.id) as FormArray;
     }
@@ -82,6 +91,9 @@ export class ScopeComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(change: SimpleChanges): void {
+    if(this.scopeArr)
+      this.listFilter = [... this.scopeArr];
+
     if (change.settings && change.settings.firstChange) {
       this.settings = change.settings.currentValue || {
         ...SCOPE_LIST_DEFAULT,
@@ -91,6 +103,8 @@ export class ScopeComponent implements OnInit, OnChanges {
         ...SCOPE_LIST_DEFAULT,
       }
     }
+   
+    
   }
 
   addFG(v: Scope): void {
@@ -142,20 +156,32 @@ export class ScopeComponent implements OnInit, OnChanges {
     }
   }
   
+  getmaterial(cod_material: string) {
+    console.log(cod_material)
+    let index = this.scopeArr.findIndex(z => z.code == cod_material);
+    if (index > -1) {
+      this.fScope.get("descripcion")!.setValue(this.scopeArr[index].description);
+    } else {
+      this.fScope.get("descripcion")!.setValue('');
+    }
+  }
+  
+  
+
   createMaterial() {
     const dialogRef = this.dialog.open(CreateAndEditMaterialComponent, {
       data: {
         modal: true
       },
     });
-
     dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
-      if (result?.description) {
-        this.ibartiService.sub_line_scope().subscribe((data: any) => {
-          this.scopeArr = data;
-        });
+    
+      if (result?.code) {
+        result['name'] = result.description;
+        this.scopeArr.push(result);
+        this.listFilter=this.scopeArr;
       }
     });
+    
   }
 }
