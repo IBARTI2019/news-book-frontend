@@ -297,7 +297,7 @@ export interface Scope {
   code?: string;
   description?: string;
   amount?: number;
-  name?: string;
+  name: string;
   health_condition?: string;
   observation?: string;
 }

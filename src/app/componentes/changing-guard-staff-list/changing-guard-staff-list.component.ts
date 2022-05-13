@@ -76,7 +76,7 @@ export const CHANGING_GUARD_STAFF_LIST_DEFAULT: StaffReceivingTheGuardSettings =
 })
 export class ChangingGuardStaffListComponent implements OnInit, OnChanges {
   //@ViewChild("staffRef") staffRef!: MatSelect;
-  @ViewChild('staffRef', { static: true }) staffRef!: MatSelect;
+ // @ViewChild('staffRef', { static: true }) staffRef!: MatSelect;
 
   public MultiFilterCtrl: FormControl = new FormControl();
 
@@ -145,7 +145,7 @@ export class ChangingGuardStaffListComponent implements OnInit, OnChanges {
 
   ngOnChanges(change: SimpleChanges): void {
     //this.filteredMulti.next(this.staffArr.slice());
-    if(this.staffArr)
+    if (this.staffArr)
       this.listFilter = [...this.staffArr];
 
 
@@ -169,10 +169,10 @@ export class ChangingGuardStaffListComponent implements OnInit, OnChanges {
       .subscribe(() => {
         //this.filterBanksMulti();
         let search = this.MultiFilterCtrl.value;
-        if(search){
-          let a =  this.searchFilter(search);
+        if (search) {
+          let a = this.searchFilter(search);
           this.listFilter = a;
-        }else{
+        } else {
           this.listFilter = [...this.staffArr];
         }
 
@@ -215,44 +215,21 @@ export class ChangingGuardStaffListComponent implements OnInit, OnChanges {
     });
     this.fA.push(fG);
   }
-  searchFilter(search: string) {
+  searchFilter(search: string) { //Funcion de filtro de buscador
     if (search) {
-     // console.log(search) 
-
-     // console.log(this.staffArr) 
-     if (search.length > 2) {
-      const results = this.staffArr.filter(element => {
-
-      
-         // console.log(element) 
-
-         const regex = new RegExp(search, "gi");
+      if (search.length > 2) {
+        const results = this.staffArr.filter(element => {
+          const regex = new RegExp(search, "gi");
           const comparison = regex.test(element.cod_ficha)
-         // console.log('comparison',comparison) 
-
- 
-          if (comparison) {
-
-
+          const comparison1 = regex.test(element.name_and_surname)
+          if (comparison || comparison1) {
             return element;
           }
-          //return element;
-
-       
-
-
-      });
-      return results;
-    }else{
-      return this.staffArr;
-    }
-
-     // console.log('results',results) 
-
-
-      
-
-
+        });
+        return results;
+      } else {
+        return this.staffArr;
+      }
     }
 
   }
