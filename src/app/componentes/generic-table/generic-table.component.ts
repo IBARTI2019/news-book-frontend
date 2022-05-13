@@ -464,20 +464,27 @@ export class GenericTableComponent implements OnInit, AfterViewChecked {
   applyFilter2(e?: any, index?: number, isColumn?: boolean) {
     if (this.data.results && isColumn && index != undefined && index >= 0) {
       const fireEvent = e.type !== 'input';
-      const control = e.target;
+      let control;
+      if(e.target){
+        control = e.target;
+      }else{
+        // control = e.source?._elementRef?.nativeElement;
+        control = e.source;
+      }
+
       let column = this.columns[index].dataAttribute;
       let attribute = this.columns[index].attribute || null
       if (attribute)
         column = this.columns[index].dataAttribute ? this.columns[index].dataAttribute : attribute.replace('.', "__");
 
-      if (control.name === 'cbColumn') {
+      if (control?.name === 'cbColumn') {
         e.stopPropagation();
         return; // No disparar para checkbox
       }
       // this.filterServerData(control.value);
       if (
-        control.name.endsWith('_range-min') ||
-        control.name.endsWith('_range-max')
+        control?.name?.endsWith('_range-min') ||
+        control?.name?.endsWith('_range-max')
       ) {
         const min = $(
           '[name=' + control.name.replace('_range-max', '_range-min') + ']'
@@ -502,11 +509,11 @@ export class GenericTableComponent implements OnInit, AfterViewChecked {
             delete this.serviceMethodParams[control.name.replace('_range-max', '')];
           }
           clearTimeout(this.filterTimeController);
-          this.filterTimeController = setTimeout(() => this.refresh(), 2000);
+          this.filterTimeController = setTimeout(() => this.refresh(), 1500);
         }
       } else if (
-        control.name.endsWith('_date-min') ||
-        control.name.endsWith('_date-max')
+        control?.name?.endsWith('_date-min') ||
+        control?.name?.endsWith('_date-max')
       ) {
         const min = $(
           '[name=' + control.name.replace('_date-max', '_date-min') + ']'
@@ -533,9 +540,10 @@ export class GenericTableComponent implements OnInit, AfterViewChecked {
             delete this.serviceMethodParams[control.name.replace('_date-max', '')];
           }
           clearTimeout(this.filterTimeController);
-          this.filterTimeController = setTimeout(() => this.refresh(), 2000);
+          this.filterTimeController = setTimeout(() => this.refresh(), 1500);
         }
       } else if (fireEvent) {
+        debugger;
         if (control.value || control.value === 0) {
           if (column)
             this.serviceMethodParams[column] = control.value;
@@ -544,12 +552,11 @@ export class GenericTableComponent implements OnInit, AfterViewChecked {
             delete this.serviceMethodParams[column];
         }
         clearTimeout(this.filterTimeController);
-        this.filterTimeController = setTimeout(() => this.refresh(), 2000);
+        this.filterTimeController = setTimeout(() => this.refresh(), 1500);
       } else {
         clearTimeout(this.filterTimeController);
-        this.filterTimeController = setTimeout(() => this.refresh(), 2000);
+        this.filterTimeController = setTimeout(() => this.refresh(), 1500);
       }
-
     } else {
       if (e?.detail?.data) {
         let data = e.detail.data;

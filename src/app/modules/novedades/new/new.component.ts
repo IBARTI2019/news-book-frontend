@@ -68,6 +68,7 @@ export class NewComponent implements OnInit {
       {
         header: "Tipo",
         attribute: "type_news_display.description",
+        dataAttribute: "type_news_id",
       },
       {
         attribute: "employee",
