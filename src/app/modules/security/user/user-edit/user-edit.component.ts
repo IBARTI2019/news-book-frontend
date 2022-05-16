@@ -9,7 +9,8 @@ import { UserGroupService } from '../../../../services/user-group.service';
 import { forkJoin } from 'rxjs';
 import { USER_TYPES } from 'app/constants';
 import { BooksService } from "app/services/books.service";
-
+import { GroupUserEditComponent } from "../../group-user/group-user-edit/group-user-edit.component";
+import { MatDialog } from '@angular/material/dialog';
 @Component({
   selector: 'app-user-edit',
   templateUrl: './user-edit.component.html',
@@ -39,7 +40,8 @@ export class UserEditComponent implements OnInit, AfterViewChecked {
     private router: Router,
     private route: ActivatedRoute,
     private chDRef: ChangeDetectorRef,
-    private booksService: BooksService
+    private booksService: BooksService,
+    public dialog: MatDialog
   ) {
     this.fg = this.fb.group({});
     this.routeState = history.state
@@ -200,5 +202,21 @@ export class UserEditComponent implements OnInit, AfterViewChecked {
     this.submitted = false;
     this.fg.reset();
     this.router.navigate([this.redirectTo || "security/user"]);
+  }
+  creategrupos() {
+    const dialogRef = this.dialog.open(GroupUserEditComponent, {
+      data: {
+        modal: true
+      },
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('Dialog Result:', result );
+      if (result?.name) {
+        result['name'] = result.name;
+        this.listGroups.push(result);
+        
+      }
+    });
   }
 }

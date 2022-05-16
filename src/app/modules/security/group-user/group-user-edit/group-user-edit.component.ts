@@ -2,9 +2,10 @@ import { HttpErrorResponse } from "@angular/common/http";
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
+import { Inject} from '@angular/core';
 import { GroupUser } from "../../../../interfaces";
 import { ToastrService } from "ngx-toastr";
-
+import { MatDialogRef,MAT_DIALOG_DATA} from "@angular/material/dialog";
 import { UserGroupService } from '../../../../services/user-group.service';
 
 @Component({
@@ -20,6 +21,11 @@ export class GroupUserEditComponent implements OnInit {
   submitted = false;
   update = false;
   constructor(
+    @Inject(MAT_DIALOG_DATA) public data: {
+      modal: boolean,
+      id: string,
+    },
+    private mdDialogRef: MatDialogRef<GroupUserEditComponent>,
     private groupService: UserGroupService,
     private fb: FormBuilder,
     private toastr: ToastrService,
@@ -32,17 +38,18 @@ export class GroupUserEditComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.id = this.route.snapshot.params.id;
-    this.redirectTo = this.routeState.redirectTo || ""
+    this.id = this.route.snapshot.params.id ? this.route.snapshot.params.id : this.data.id;
     this.fg = this.fb.group(
       {
         name: ["", Validators.required]
-      }
+      }, 
+    
     );
     if (this.id) {
       this.update = true;
       this.getUser();
     }
+    
   }
 
   getUser() {
@@ -70,7 +77,8 @@ export class GroupUserEditComponent implements OnInit {
         this.toastr.success("Datos del Grupo creado con éxito");
         this.submitted = false;
         this.fg.reset();
-        this.router.navigate([this.redirectTo || "security/group"]);
+        this.mdDialogRef.close(data);
+        //this.router.navigate([this.redirectTo || "security/group"]);
       },
       (error: HttpErrorResponse) => {
         this.submitted = false;
@@ -99,6 +107,9 @@ export class GroupUserEditComponent implements OnInit {
   onReset() {
     this.submitted = false;
     this.fg.reset();
-    this.router.navigate([this.redirectTo || "security/group"]);
+    if(this.data.modal == false){
+      this.router.navigate([this.redirectTo || "security/group"]);
+    }
+    
   }
 }

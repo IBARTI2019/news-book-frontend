@@ -7,6 +7,9 @@ import { DTColumn } from '../../../componentes/generic-table/interface';
 import { UserGroupService } from '../../../services/user-group.service'
 import { ToastrService } from 'ngx-toastr';
 import { HttpErrorResponse } from '@angular/common/http';
+import { GroupUserEditComponent } from './group-user-edit/group-user-edit.component';
+import { MatDialog, MatDialogRef} from '@angular/material/dialog';
+
 @Component({
   selector: 'app-group-user',
   templateUrl: './group-user.component.html',
@@ -16,17 +19,18 @@ export class GroupUserComponent implements OnInit {
   @ViewChild("table") table!: GenericTableComponent;
   columns: DTColumn[] = [];
 
-  constructor(public groupService: UserGroupService, private router: Router, private dialogService: ConfirmDialogService, private toastr: ToastrService) { }
-
-  ngOnInit(): void {
+  constructor(public dialog: MatDialog,
+    public groupService: UserGroupService, private router: Router, private dialogService: ConfirmDialogService, private toastr: ToastrService) { }
+   
+    ngOnInit(): void {
     this.columns = [
       {
-        dataAttribute: "id",
-        attribute: "Identificador",
+        header: "Identificador",
+        attribute: "id",
       },
       {
-        dataAttribute: "name",
-        attribute: "Descripcion",
+        header: "Descripicon",
+        attribute: "name",
       },
       {
         attribute: "_id",
@@ -36,11 +40,20 @@ export class GroupUserComponent implements OnInit {
       },
     ];
   }
-
+ 
   update(id: string) {
-    this.router.navigate(["security", 'group', id]);
+    this.showModalGrupo(id);
+    
   }
-
+  showModalGrupo(id?: string) {
+    const dialogRef = this.dialog.open(GroupUserEditComponent, {
+      data: { id },
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      this.table.refresh();
+      console.log(`Dialog result: ${result}`);
+    });
+  }
   delete(group: GroupUser) {
     this.dialogService.open({
       message: `Esta seguro de que desea eliminar La Informacion de ${group.name}?`,
