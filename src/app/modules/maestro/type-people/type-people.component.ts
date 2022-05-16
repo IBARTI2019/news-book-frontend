@@ -29,7 +29,7 @@ export class TypePeopleComponent implements OnInit {
     this.columns = [
       {
         dataAttribute: "description",
-        attribute: "Descripcion",
+        header: "Descripción",
       },
       {
         dataAttribute: "priority",

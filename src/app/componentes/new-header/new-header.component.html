@@ -9,12 +9,12 @@
                 date:'shortTime'}}</th>
         </tr>
         <tr fxFlex="1 0 100%" fxLayout="row" fxLayoutAlign="space-around">
-            <th fxLayout="column" fxFlex="33%" align="left">Cliente: {{client?.cliente}} </th>
+            <th fxLayout="column" fxFlex="33%" align="left">Cliente: {{new?.client_display ? new?.client_display?.name : client?.cliente}} </th>
             <th fxLayout="column" fxFlex="33%" align="left" *ngIf="readOnly === true">Correlativo: {{new?.number}}</th>
             <th fxLayout="column" fxFlex="33%"></th>
         </tr>
         <tr fxFlex="1 0 100%" fxLayout="row" fxLayoutAlign="space-around">
-            <th fxLayout="column" fxFlex="33%" align="left" *ngIf="readOnly === true" >Ubicación / Libro: {{client?.ubicacion}}</th>
+            <th fxLayout="column" fxFlex="33%" align="left" *ngIf="readOnly === true" >Ubicación / Libro: {{new?.location_display ? new?.location_display?.description : client?.ubicacion}}</th>
             <th fxLayout="column" fxFlex="33%" align="left" *ngIf="readOnly === true" >Reportado  por: {{new?.employee}}</th>
             <th fxLayout="column" fxFlex="33%" align="left">
             </th>

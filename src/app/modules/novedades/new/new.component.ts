@@ -62,7 +62,7 @@ export class NewComponent implements OnInit {
     });
     this.columns = [
       {
-        header: "#",
+        header: "Número",
         attribute: "number",
       },
       {
@@ -77,7 +77,7 @@ export class NewComponent implements OnInit {
       {
         dataAttribute: "created",
         attribute: "created",
-        header: "Fecha de creación",
+        header: "Fecha de Creación",
         type: "date"
       },
           /*   {
