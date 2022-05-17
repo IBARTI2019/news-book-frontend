@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from "@angular/common/http";
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit,Input } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Inject} from '@angular/core';
@@ -20,12 +20,13 @@ export class GroupUserEditComponent implements OnInit {
   redirectTo = "";
   submitted = false;
   update = false;
+  @Input() modal = false;
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: {
       modal: boolean,
       id: string,
     },
-    private mdDialogRef: MatDialogRef<GroupUserEditComponent>,
+    public mdDialogRef: MatDialogRef<GroupUserEditComponent>,
     private groupService: UserGroupService,
     private fb: FormBuilder,
     private toastr: ToastrService,
@@ -39,17 +40,19 @@ export class GroupUserEditComponent implements OnInit {
 
   ngOnInit(): void {
     this.id = this.route.snapshot.params.id ? this.route.snapshot.params.id : this.data.id;
+    this.redirectTo = this.routeState.redirectTo || "";
+
     this.fg = this.fb.group(
       {
         name: ["", Validators.required]
-      }, 
-    
+      },
+      {}
     );
     if (this.id) {
       this.update = true;
       this.getUser();
     }
-    
+    console.log('Modal', this.data.modal);
   }
 
   getUser() {
@@ -67,7 +70,7 @@ export class GroupUserEditComponent implements OnInit {
     if (this.fg.invalid) {
       return;
     }
-    this.submitted = true;
+    this.submitted = false;
     this.update ? this.updateUser() : this.save();
   }
 
@@ -75,10 +78,18 @@ export class GroupUserEditComponent implements OnInit {
     this.groupService.add(this.fg.value).subscribe(
       (data) => {
         this.toastr.success("Datos del Grupo creado con éxito");
-        this.submitted = false;
-        this.fg.reset();
-        this.mdDialogRef.close(data);
-        //this.router.navigate([this.redirectTo || "security/group"]);
+        
+        if (this.id) {
+          if(this.data.modal == false){
+            this.router.navigate(["security/group"]);
+            this.mdDialogRef.close();
+          }
+        } else {
+          this.submitted = true;
+          this.mdDialogRef.close(data);
+          this.fg.reset();
+                              
+        }
       },
       (error: HttpErrorResponse) => {
         this.submitted = false;
@@ -112,4 +123,8 @@ export class GroupUserEditComponent implements OnInit {
     }
     
   }
+  close(): void {
+    this.mdDialogRef.close();
+   }
+
 }

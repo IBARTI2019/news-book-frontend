@@ -130,7 +130,9 @@ export class UserEditComponent implements OnInit, AfterViewChecked {
 
   onSubmit() {
     if (this.fg.invalid) {
+      this.submitted = false;
       return;
+     
     }
     this.submitted = true;
     this.update ? this.updateUser() : this.save();
@@ -206,12 +208,12 @@ export class UserEditComponent implements OnInit, AfterViewChecked {
   creategrupos() {
     const dialogRef = this.dialog.open(GroupUserEditComponent, {
       data: {
-        modal: true
-      },
+         modal: true
+      }
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('Dialog Result:', result );
+     
       if (result?.name) {
         result['name'] = result.name;
         this.listGroups.push(result);

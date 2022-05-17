@@ -14,7 +14,7 @@
         </mat-form-field>
         <mat-form-field appearance="fill">
           <mat-label>Apellidos</mat-label>
-          <input matInput placeholder="Apellidos" formControlName="last_name" />
+          <input matInput placeholder="Apellidos" formControlName="last_name"/>
         </mat-form-field>
       </div>
       <div *ngIf="isOesvicaUser" fxLayout="row" fxLayout.xs="column" fxLayoutGap="5px">
@@ -56,19 +56,19 @@
         </mat-form-field>
        
         <mat-form-field appearance="fill">
-          <mat-label>Grupos
-            
-          </mat-label>
+          <mat-label>Grupos</mat-label>
           <mat-select formControlName="groups" multiple>
             <mat-option *ngFor="let group of listGroups" [value]="group.id">{{ group.name | titlecase }}
             </mat-option>
           </mat-select>
         </mat-form-field> 
-        <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="end">
-          <button mat-icon-button color="primary"  (click)="creategrupos()" type="button" >
-            +
-          </button>
-        </div>
+       
+          <div fxLayout="row" fxLayout.xs="column">
+            <button mat-mini-fab color="primary"  (click)="creategrupos()">
+              <mat-icon>group_add</mat-icon>
+            </button>
+          </div>
+        
         <mat-form-field appearance="fill">
           <mat-label>Usuario de seguridad</mat-label>
           <mat-select formControlName="security_user">
