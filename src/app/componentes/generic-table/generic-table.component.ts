@@ -329,7 +329,6 @@ export class GenericTableComponent implements OnInit, AfterViewChecked {
 
   /** obtiene el valor de objeto.atributo con soporte para atributos anidados */
   getRealValue(obj: any, attribute: string, useShortUUID = false) {
-
     let value = _.get(obj, attribute);
 
     if (useShortUUID && value) {

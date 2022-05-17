@@ -1,5 +1,5 @@
 <ng-template #defaultTextTemplate let-column="column" let-i="i" let-item="item">
-    {{getRealValue(item, column.attribute || column.dataAttribute , column.shortUUID) || column.default || textDefault}}
+    {{getRealValue(item, column.dataAttribute  || column.attribute, column.shortUUID) || column.default || textDefault}}
 </ng-template>
 
 <ng-template #defaultImgTemplate let-column="column" let-item="item" let-i="i">
