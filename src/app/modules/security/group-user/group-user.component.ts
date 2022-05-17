@@ -21,7 +21,7 @@ export class GroupUserComponent implements OnInit {
 
   constructor(public dialog: MatDialog,
     public groupService: UserGroupService, private router: Router, private dialogService: ConfirmDialogService, private toastr: ToastrService) { }
-   
+    showCheck = () => true;
     ngOnInit(): void {
     this.columns = [
       {
@@ -29,7 +29,7 @@ export class GroupUserComponent implements OnInit {
         attribute: "id",
       },
       {
-        header: "Descripicon",
+        header: "Descripicion",
         attribute: "name",
       },
       {
@@ -51,7 +51,7 @@ export class GroupUserComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       this.table.refresh();
-      console.log(`Dialog result: ${result}`);
+      
     });
   }
   delete(group: GroupUser) {
