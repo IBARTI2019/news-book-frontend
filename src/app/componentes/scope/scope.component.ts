@@ -1,10 +1,9 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, AfterViewChecked, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { FormGroup, FormArray, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { Scope, ScopeSettings } from 'app/interfaces';
 import { MatDialog } from '@angular/material/dialog';
 import { CreateAndEditMaterialComponent } from 'app/modules/maestro/materials/create-and-edit-material/create-and-edit-material.component';
 import { Person } from 'app/interfaces';
-import { IbartiService } from 'app/services/ibarti.service';
 import { ReplaySubject, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { DTColumn } from '../generic-table/interface';
@@ -43,7 +42,7 @@ export const SCOPE_LIST_DEFAULT: ScopeSettings = {
   templateUrl: './scope.component.html',
   styleUrls: ['./scope.component.css']
 })
-export class ScopeComponent implements OnInit, OnChanges {
+export class ScopeComponent implements OnInit, OnChanges, AfterViewChecked {
 
   public MultiFilterCtrl: FormControl = new FormControl();
 
@@ -74,46 +73,63 @@ export class ScopeComponent implements OnInit, OnChanges {
   listScope: any[] = [];
   @ViewChild("tableScope") table!: GenericTableComponent;
 
-  constructor(private fB: FormBuilder,public dialog: MatDialog, private ibartiService: IbartiService) { }
+  constructor(private fB: FormBuilder,public dialog: MatDialog) { }
+
+  ngAfterViewChecked(): void {
+    this.table.refresh({}, this.fScope.controls);
+  }
 
   ngOnInit(): void {
-    this.columnsScope = [
-      {
-        attribute: "item",
-        header: "Serial",
-        template: "item" 
-      },
-      {
-        attribute: "code",
-        header: "Código",
-        template: "code"
-      },
-      {
+    this.columnsScope = [];
+    if(this.settings.showItemField)
+      this.columnsScope.push(
+        {
+          attribute: "item",
+          header: "Serial",
+          template: "item" 
+        },
+      );
+    if(this.settings.showTokenField)
+      this.columnsScope.push({
+          attribute: "code",
+          header: "Código",
+          template: "code"
+        });
+    if(this.settings.showNameField)
+      this.columnsScope.push({
         attribute: "name",
         header: "Nombre",
         template: "name"
-      },
-      {
+      },);
+    if(this.settings.showAmountField)
+      this.columnsScope.push({
         attribute: "amount",
         header: "Cantidad",
         template: "amount"
-      },
-      {
+      });
+
+    if(this.settings.showHealthConditionField)
+      this.columnsScope.push({
         attribute: "status",
         header: "Estado",
         template: "status"
-      },
-      {
+      });
+
+    if(this.settings.showObservationField)
+      this.columnsScope.push({
         attribute: "observation",
         header: "Observación",
         template: "observ"
-      },
-      {
+      });
+
+
+    if(!this.readOnly)
+      this.columnsScope.push({
         attribute: "id",
         header: "",
         template: "opciones"
-      },
-    ];
+      });
+
     if (this.fGRoot && this.id && this.fGRoot.get(this.id)) {
       this.fScope = this.fGRoot.get(this.id) as FormArray;
     }
@@ -192,7 +208,8 @@ export class ScopeComponent implements OnInit, OnChanges {
     });
     this.fScope.push(fG);
     this.listScope = [...this.fScope.value];
-    this.table.refresh({}, this.fScope.controls);
+    if(!this.readOnly)
+      this.table.refresh({}, this.fScope.controls);
   }
 
   addSubLine() {

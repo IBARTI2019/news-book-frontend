@@ -58,7 +58,7 @@
             <ng-container [formGroup]="item">
                 <mat-form-field appearance="fill">
                     <mat-label>Serial</mat-label>
-                    <input type="text" matInput formControlName="item" placeholder="1234567890" />
+                    <input type="text" matInput formControlName="item" placeholder="1234567890" [readonly]="readOnly" />
                     <mat-error *ngIf="item.controls.item.hasError('required')">
                         Serial es <strong>requerido</strong>
                     </mat-error>
@@ -90,7 +90,7 @@
         </ng-template>
         <ng-template #templateAmount let-column="column" let-item="item" let-i="i">
             <ng-container [formGroup]="item">
-                <input type="number" matInput formControlName="amount" placeholder="Cantidad" />
+                <input type="number" matInput formControlName="amount" placeholder="Cantidad" [readonly]="readOnly"/>
                 <mat-error *ngIf="item.controls.amount.hasError('required')">
                     Este campo es <strong>requerido</strong>
                 </mat-error>
@@ -98,7 +98,7 @@
         </ng-template>
         <ng-template #templateStatus let-column="column" let-item="item" let-i="i">
             <ng-container [formGroup]="item">
-                <mat-radio-group style="margin: 15px 0" formControlName="health_condition">
+                <mat-radio-group style="margin: 15px 0" formControlName="health_condition"  [disabled]="readOnly">
                     <mat-radio-button *ngFor="let hC of healthConditions" style="margin: 5px" [value]="hC.id">
                         {{ hC.text }}
                     </mat-radio-button>
@@ -112,7 +112,7 @@
             <ng-container [formGroup]="item">
                 <mat-form-field>
                     <textarea matInput cdkAutosizeMinRows="3" placeholder="Observación"
-                        formControlName="observation">
+                        formControlName="observation" [readonly]="readOnly">
                     </textarea>
                 </mat-form-field>
             </ng-container>
@@ -122,4 +122,35 @@
             name: templateName, amount: templateAmount,  status: templateStatus,  observ: templateObserv}" #tableScope>
         </app-generic-table>
     </div>
+    <!-- <div fxFlex fxLayout="row wrap" style="background-color: black;" fxLayoutGap="1px grid">
+        <div fxFlex="1 1 100%" fxLayout="row" style="height: 50px" fxLayoutGap="1px">
+            <div *ngIf="settings.showItemField" fxLayoutAlign="center center" fxFlex="1 0 17%" fxLayout="row"
+                class="item mat-toolbar mat-primary">
+                Serial
+            </div>
+            <div *ngIf="settings.showTokenField" fxLayoutAlign="center center" fxFlex="2 0 17%" fxLayout="row"
+                class="item mat-toolbar mat-primary">
+                Código
+            </div>
+            <div *ngIf="settings.showNameField" fxLayoutAlign="center center" fxFlex="3 0 25%" fxLayout="row"
+                class="item mat-toolbar mat-primary">
+                Nombre
+            </div>
+            <div *ngIf="settings.showAmountField" fxLayoutAlign="center center" fxFlex="1 1 6%" fxLayout="row"
+                style="text-overflow: ellipsis" class="item mat-toolbar mat-primary">
+                Cant.
+            </div>
+            <div *ngIf="settings.showHealthConditionField" fxLayoutAlign="center center" fxFlex="1 1 10%" fxLayout="row"
+                class="item mat-toolbar mat-primary">
+                Estado
+            </div>
+            <div *ngIf="settings.showObservationField" fxLayoutAlign="center center" fxFlex="1 1 20%" fxLayout="row"
+                class="item mat-toolbar mat-primary">
+                Observación
+            </div>
+            <div fxLayoutAlign="center center" fxFlex="1 1 5%" fxLayout="row" class="item mat-toolbar mat-primary"
+                *ngIf="!readOnly">
+            </div>
+        </div>
+    </div> -->
 </div>
