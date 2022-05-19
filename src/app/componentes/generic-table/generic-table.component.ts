@@ -5,7 +5,7 @@ import { CheckChangeEvent, DTColumn, DTCSVConfig, DTFilterField, DTFilters } fro
 import { MatSort } from '@angular/material/sort';
 import { GlobalService } from '../../utils/global.service';
 import { trigger, state, style, transition, animate } from '@angular/animations';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import * as $ from "jquery";
 import { ActivatedRoute, Router } from '@angular/router';
@@ -224,6 +224,8 @@ export class GenericTableComponent implements OnInit, AfterViewChecked {
   private paginator!: MatPaginator;
   private sort: any;
 
+  @ViewChild(MatTable) tablaMaster!: MatTable<any>;
+
   @ViewChild(MatPaginator) set matPaginator(mp: MatPaginator) {
     this.paginator = mp;
     this.setDataSourceAttributes();
@@ -342,33 +344,38 @@ export class GenericTableComponent implements OnInit, AfterViewChecked {
     return data === 1 || data === true ? 'SI' : 'NO';
   }
 
-  refresh(params?: {}) {
+  refresh(params?: {}, dataForce?: any[]) {
     this.cargando = true;
-    if (this.service) {
-      if (params) {
-        this.service[this.serviceMethod](params).subscribe((data: any) => {
-          this.data = data;
-          if ('length' in data) {
-            this.lengthResult.emit(data.length);
-          } else {
-            this.lengthResult.emit(data.results.length);
-          }
-          this.lengthResult.emit(data.length);
-          this.setSource(data);
-        });
-      } else {
-        this.service[this.serviceMethod](this.serviceMethodParams).subscribe((data: any) => {
-          this.data = data;
-          if ('length' in data) {
-            this.lengthResult.emit(data.length);
-          } else {
-            this.lengthResult.emit(data.results.length);
-          }
-          this.setSource(data);
-        });
-      }
-    } else {
+    if(dataForce){
+      this.data = [...dataForce];
       this.setSource(this.data);
+    }else{
+      if (this.service) {
+        if (params) {
+          this.service[this.serviceMethod](params).subscribe((data: any) => {
+            this.data = data;
+            if ('length' in data) {
+              this.lengthResult.emit(data.length);
+            } else {
+              this.lengthResult.emit(data.results.length);
+            }
+            this.lengthResult.emit(data.length);
+            this.setSource(data);
+          });
+        } else {
+          this.service[this.serviceMethod](this.serviceMethodParams).subscribe((data: any) => {
+            this.data = data;
+            if ('length' in data) {
+              this.lengthResult.emit(data.length);
+            } else {
+              this.lengthResult.emit(data.results.length);
+            }
+            this.setSource(data);
+          });
+        }
+      } else {
+        this.setSource(this.data);
+      }
     }
   }
 
@@ -678,5 +685,9 @@ export class GenericTableComponent implements OnInit, AfterViewChecked {
   setDataSourceAttributes(add_paginator?: boolean) {
     if (this.is_paged && add_paginator) this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+  }
+
+  renderRows(){
+    this.tablaMaster.renderRows()
   }
 }

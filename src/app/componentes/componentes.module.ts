@@ -8,7 +8,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { CdkTableModule } from '@angular/cdk/table';
 import { GenericTableComponent } from 'app/componentes/generic-table/generic-table.component';
-import { GenericTableComponentf } from 'app/componentes/tablefree/generic-table.component';
+// import { GenericTableComponentf } from 'app/componentes/tablefree/generic-table.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatGridListModule } from '@angular/material/grid-list';
@@ -38,6 +38,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { NewHeaderComponent } from './new-header/new-header.component';
 import { DemoMaterialModule } from 'app/demo-material-module';
+import { ScopeComponent } from 'app/componentes/scope/scope.component';
 
 export const entryComponentes = [
   ConfirmDialogComponent,
@@ -49,7 +50,7 @@ export const entryComponentes = [
   declarations: [
     CardHeaderComponent,
     GenericTableComponent,
-    GenericTableComponentf,
+    // GenericTableComponentf,
     MatTableResponsiveDirective,
     ConfirmDialogComponent,
     PermisoDirective,
@@ -59,7 +60,8 @@ export const entryComponentes = [
     InfoButtonComponent,
     DynamicFormComponent,
     DynamicControlsComponent,
-    NewHeaderComponent
+    NewHeaderComponent,
+    ScopeComponent
   ],
   exports: [
     GenericTableComponent,
@@ -72,7 +74,8 @@ export const entryComponentes = [
     InfoButtonComponent,
     DynamicFormComponent,
     DynamicControlsComponent,
-    NewHeaderComponent
+    NewHeaderComponent,
+    ScopeComponent
   ],
   imports: [
     CommonModule,

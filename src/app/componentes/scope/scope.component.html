@@ -45,6 +45,83 @@
             </div>
         </form>
     </div>
+    <div class="d-flex flex-wrap">
+        <ng-template #templateOpciones let-column="column" let-item="item" let-i="i">
+            <div fxFlex="1 1 5%" fxLayoutAlign="center center" fxLayout="column" style="background-color: #ffffff"
+            class="item" *ngIf="!readOnly">
+            <button mat-raised-button type="button">
+                <mat-icon (click)="removeSubLine(i)">delete_sweep</mat-icon>
+            </button>
+        </div>
+        </ng-template>
+        <ng-template #templateItem let-column="column" let-item="item" let-i="i">
+            <ng-container [formGroup]="item">
+                <mat-form-field appearance="fill">
+                    <mat-label>Serial</mat-label>
+                    <input type="text" matInput formControlName="item" placeholder="1234567890" />
+                    <mat-error *ngIf="item.controls.item.hasError('required')">
+                        Serial es <strong>requerido</strong>
+                    </mat-error>
+                </mat-form-field>
+            </ng-container>
+        </ng-template>
+        <ng-template #templateCode let-column="column" let-item="item" let-i="i">
+            <ng-container [formGroup]="item">
+                <mat-form-field appearance="fill">
+                    <mat-label>Cod.</mat-label>
+                    <input type="text" matInput formControlName="code" placeholder="1234567890" [readonly]="true" />
+                    <mat-error *ngIf="item.controls.code.hasError('required')">
+                        Código es <strong>requerido</strong>
+                    </mat-error>
+                </mat-form-field>
+            </ng-container>
+        </ng-template>
+        <ng-template #templateName let-column="column" let-item="item" let-i="i">
+            <ng-container [formGroup]="item">
+                <mat-form-field appearance="fill">
+                    <mat-label>Descripción</mat-label>
+                    <input type="text" matInput formControlName="name" placeholder="Nombre Completo"
+                        [readonly]="true" />
+                    <mat-error *ngIf="item.controls.name.hasError('required')">
+                        El nombre es <strong>requerido</strong>
+                    </mat-error>
+                </mat-form-field>
+            </ng-container>
+        </ng-template>
+        <ng-template #templateAmount let-column="column" let-item="item" let-i="i">
+            <ng-container [formGroup]="item">
+                <input type="number" matInput formControlName="amount" placeholder="Cantidad" />
+                <mat-error *ngIf="item.controls.amount.hasError('required')">
+                    Este campo es <strong>requerido</strong>
+                </mat-error>
+            </ng-container>
+        </ng-template>
+        <ng-template #templateStatus let-column="column" let-item="item" let-i="i">
+            <ng-container [formGroup]="item">
+                <mat-radio-group style="margin: 15px 0" formControlName="health_condition">
+                    <mat-radio-button *ngFor="let hC of healthConditions" style="margin: 5px" [value]="hC.id">
+                        {{ hC.text }}
+                    </mat-radio-button>
+                </mat-radio-group>
+                <mat-error *ngIf="item.controls.health_condition.hasError('required')">
+                    El estado de salud es <strong>requerido</strong>
+                </mat-error>
+            </ng-container>
+        </ng-template>
+        <ng-template #templateObserv let-column="column" let-item="item" let-i="i">
+            <ng-container [formGroup]="item">
+                <mat-form-field>
+                    <textarea matInput cdkAutosizeMinRows="3" placeholder="Observación"
+                        formControlName="observation">
+                    </textarea>
+                </mat-form-field>
+            </ng-container>
+        </ng-template>
+        <app-generic-table [hidden]="fScope.value.length === 0"  fxFlex="100" [columns]="columnsScope" [showFilter]="false" [btnRefresh]="false"
+        [is_paged]="false" [templates]="{opciones: templateOpciones, item: templateItem, code: templateCode,
+            name: templateName, amount: templateAmount,  status: templateStatus,  observ: templateObserv}" #tableScope>
+        </app-generic-table>
+    </div>
     <div fxFlex fxLayout="row wrap" style="background-color: black;" fxLayoutGap="1px grid">
         <div fxFlex="1 1 100%" fxLayout="row" style="height: 50px" fxLayoutGap="1px">
             <div *ngIf="settings.showItemField" fxLayoutAlign="center center" fxFlex="1 0 17%" fxLayout="row"

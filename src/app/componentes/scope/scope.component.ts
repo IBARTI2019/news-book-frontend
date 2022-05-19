@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { FormGroup, FormArray, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { Scope, ScopeSettings } from 'app/interfaces';
 import { MatDialog } from '@angular/material/dialog';
@@ -7,6 +7,8 @@ import { Person } from 'app/interfaces';
 import { IbartiService } from 'app/services/ibarti.service';
 import { ReplaySubject, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { DTColumn } from '../generic-table/interface';
+import { GenericTableComponent } from '../generic-table/generic-table.component';
 
 
 const HEALTH_CONDITIONS = [
@@ -57,10 +59,10 @@ export class ScopeComponent implements OnInit, OnChanges {
   @Input() personsArr: Person[] = [];
   @Input() scopeArr: Scope[] = SCOPE_ARR_DEAFAULT;
   @Input() fGRoot!: FormGroup;
-  @Input() readOnly: boolean = false;
+  @Input() readOnly: boolean = true;
   fPerson!: FormGroup;
   @Output() isValid: EventEmitter<boolean> = new EventEmitter<boolean>();
-
+  columnsScope: DTColumn[] = [];
      
   fScope: FormArray = new FormArray([]);
   healthConditions = [...HEALTH_CONDITIONS];
@@ -69,11 +71,49 @@ export class ScopeComponent implements OnInit, OnChanges {
   scopeCurrent: any = { amount: 0 };
   router: any;
   listFilter: Scope[] | undefined = [];
+  listScope: any[] = [];
+  @ViewChild("tableScope") table!: GenericTableComponent;
 
   constructor(private fB: FormBuilder,public dialog: MatDialog, private ibartiService: IbartiService) { }
 
   ngOnInit(): void {
-    
+    this.columnsScope = [
+      {
+        attribute: "item",
+        header: "Serial",
+        template: "item" 
+      },
+      {
+        attribute: "code",
+        header: "Código",
+        template: "code"
+      },
+      {
+        attribute: "name",
+        header: "Nombre",
+        template: "name"
+      },
+      {
+        attribute: "amount",
+        header: "Cantidad",
+        template: "amount"
+      },
+      {
+        attribute: "status",
+        header: "Estado",
+        template: "status"
+      },
+      {
+        attribute: "observation",
+        header: "Observación",
+        template: "observ"
+      },
+      {
+        attribute: "id",
+        header: "",
+        template: "opciones"
+      },
+    ];
     if (this.fGRoot && this.id && this.fGRoot.get(this.id)) {
       this.fScope = this.fGRoot.get(this.id) as FormArray;
     }
@@ -151,6 +191,8 @@ export class ScopeComponent implements OnInit, OnChanges {
       ],
     });
     this.fScope.push(fG);
+    this.listScope = [...this.fScope.value];
+    this.table.refresh({}, this.fScope.controls);
   }
 
   addSubLine() {
@@ -165,6 +207,7 @@ export class ScopeComponent implements OnInit, OnChanges {
 
   removeSubLine(index: number) {
     this.fScope.removeAt(index);
+    this.table.refresh({}, this.fScope.controls);
   }
   getPerson(identification_number: string) {
     let index = this.personsArr.findIndex(v => v.identification_number == identification_number);
