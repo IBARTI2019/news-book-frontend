@@ -1,10 +1,11 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Attribute, Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { ConfirmDialogService } from 'app/componentes/confirm-dialog/confirm-dialog.service';
 import { GenericTableComponent } from 'app/componentes/generic-table/generic-table.component';
 import { DTColumn } from 'app/componentes/generic-table/interface';
 import { NotificationSetting } from 'app/interfaces';
+import { template } from 'lodash';
 import { ToastrService } from 'ngx-toastr';
 import { SettingNotificationService } from "../../../services/setting-notification.service";
 
@@ -34,6 +35,11 @@ export class NotificationComponent implements OnInit {
       {
         header: "Tipo",
         attribute: "type_display",
+      },
+      {
+        header: "Tipo de Novedad",
+        attribute: "type_news",
+        template: "type_news"
       },
       {
         header: "Grupos",

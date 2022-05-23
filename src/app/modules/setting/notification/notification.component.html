@@ -16,12 +16,15 @@
                             </button> -->
                         </div>
                     </ng-template>
+                    <ng-template #templateTypeNews let-column="column" let-item="item" let-i="i">
+                        <span>{{item?.type_news_display?.description}}</span>
+                    </ng-template>
                     <ng-template #templateGroups let-column="column" let-item="item" let-i="i">
                         <div *ngFor='let group of item.groups_display;index as i;'> {{group.name}}</div>
                     </ng-template>
                     <app-generic-table fxFlex="100" [columns]="columns" [showFilter]="true"
                         [service]="settingNotificationService" [btnRefresh]="true"
-                        [templates]="{opciones: templateOpciones, groups: templateGroups}" #table>
+                        [templates]="{opciones: templateOpciones, groups: templateGroups, type_news: templateTypeNews}" #table>
                     </app-generic-table>
                 </div>
             </mat-card-content>

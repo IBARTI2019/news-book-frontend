@@ -37,6 +37,11 @@ export class UserComponent implements OnInit {
         header: "Telefono",
       },
       {
+        attribute: "groups",
+        header: "Grupos",
+        template: "groups"
+      },
+      {
         header: "Activo",
         attribute: "is_active",
         type: "bool"

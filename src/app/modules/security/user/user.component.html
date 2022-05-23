@@ -15,8 +15,13 @@
                             </button>
                         </div>
                     </ng-template>
+                    <ng-template #templateGroups let-column="column" let-item="item" let-i="i">
+                        <div *ngFor="let group of item?.groups_display">
+                            {{group?.name}}
+                        </div>
+                    </ng-template>
                     <app-generic-table fxFlex="100" [columns]="columns" [showFilter]="true" [service]="userService"
-                        [btnRefresh]="true" [templates]="{opciones: templateOpciones}" #table>
+                        [btnRefresh]="true" [templates]="{opciones: templateOpciones, groups: templateGroups}" #table>
                     </app-generic-table>
                 </div>
             </mat-card-content>
