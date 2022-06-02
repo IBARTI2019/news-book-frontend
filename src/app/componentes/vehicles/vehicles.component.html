@@ -44,7 +44,7 @@
                 <ng-template #templateNombre let-column="column" let-item="item" let-i="i">
                     <ng-container [formGroup]="item"> 
                             <mat-form-field appearance="fill">
-                                <mat-label>Nombre y Apellido</mat-label>
+                                <mat-label>Nombre y apellido</mat-label>
                                 <input type="text" matInput formControlName="owner_full_name" placeholder="Nombre y Apellido"
                                     [readonly]="readOnly" />
                                 <mat-error *ngIf="item.controls.owner_full_name.hasError('required')">
@@ -117,7 +117,7 @@
                 
                 
     
-    <app-generic-table [hidden]="fGVehicles.value.length === 0"  fxFlex="100" [columns]="columnsVehiculos" [showFilter]="false" [btnRefresh]="false"
+    <app-generic-table [hidden]="fGVehicles.value.length ===0"  fxFlex="100" [columns]="columnsVehiculos" [showFilter]="false" [btnRefresh]="false"
      [is_paged]="false" [templates]="{opciones: templateOpciones, idplaca: templatePlaca, idnombre: templateNombre,idtipop: templatePropietario, idtipom: templateMovimiento,  idhora: templateHora,  idheq: templateHerramienta,idprotocolo: templateProtocolo}" #tableVehiculos>
     </app-generic-table>   
             

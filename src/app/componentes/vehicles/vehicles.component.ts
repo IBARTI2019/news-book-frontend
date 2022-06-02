@@ -125,7 +125,7 @@ export class VehiclesComponent implements OnInit,OnChanges,AfterViewChecked {
       this.columnsVehiculos.push({
         attribute: "protocol",
         header: "Cumplio protocolo",
-        template: "idprotocol"
+        template: "idprotocolo"
       });
 
 
