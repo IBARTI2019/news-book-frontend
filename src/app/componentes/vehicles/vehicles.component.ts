@@ -1,9 +1,11 @@
-import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, OnChanges, AfterViewChecked,SimpleChanges,ViewChild } from '@angular/core';
 import { FormGroup, FormArray, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Vehicle, VehiclesSettings } from 'app/interfaces';
 import { CreateAndEditVehicleComponent } from 'app/modules/maestro/vehicle/create-and-edit-vehicle/create-and-edit-vehicle.component';
 import { ToastrService } from 'ngx-toastr';
+import { DTColumn } from '../generic-table/interface';
+import { GenericTableComponent } from '../generic-table/generic-table.component';
 
 const OWNER_TYPES = [
   {
@@ -52,7 +54,7 @@ export const VEHICLES_LIST_DEFAULT: VehiclesSettings = {
   templateUrl: './vehicles.component.html',
   styleUrls: ['./vehicles.component.css']
 })
-export class VehiclesComponent implements OnInit {
+export class VehiclesComponent implements OnInit,OnChanges,AfterViewChecked {
   @Input() id: string = '';
   @Input() value: any = null;
   @Input() settings: VehiclesSettings = VEHICLES_LIST_DEFAULT;
@@ -62,7 +64,7 @@ export class VehiclesComponent implements OnInit {
   @Input() readOnly: boolean = false;
 
   @Output() isValid: EventEmitter<boolean> = new EventEmitter<boolean>();
-
+  columnsVehiculos: DTColumn[] = [];
   fVehicles: FormArray = new FormArray([]);
   fGVehicles = new FormGroup({});
   ownerTypes = [...OWNER_TYPES];
@@ -70,10 +72,72 @@ export class VehiclesComponent implements OnInit {
   defaultValues = { ...VEHICLES_LIST_DEFAULT }
   vehiclesCurrent: Vehicle = { id: "", license_plate: "" };
   materialCurrent: any = { description: "", mark: "", model: "", color: "", serial: "", year: "", license_plate: "" }
+  listVehiculos: any[] = [];
+  @ViewChild("tableVehiculos") table!: GenericTableComponent;
   constructor(private fB: FormBuilder, private toastr: ToastrService, public dialog: MatDialog) {
   }
-
+  ngAfterViewChecked(): void {
+    this.table.refresh({}, this.fVehicles.controls);
+  }
   ngOnInit(): void {
+    this.columnsVehiculos = [];
+    if(this.settings.showTokenField)
+      this.columnsVehiculos.push(
+        {
+          attribute:"license_plate",
+          header: "Placa",
+          template: "idplaca" 
+        },
+      );
+    if(this.settings.showNameField)
+      this.columnsVehiculos.push({
+          attribute: "owner_full_name",
+          header:"Nombres y apellidos",
+          template: "idnombre"
+        });
+    if(this.settings.showNameField)
+      this.columnsVehiculos.push({
+        attribute:"owner_type",
+        header: "Tipo propietario",
+        template: "idtipop"
+      },);
+    if(this.settings.showMovementTypeField)
+      this.columnsVehiculos.push({
+        attribute:"movement_type",
+        header: " Tipo de movimiento",
+        template: "idtipom"
+      });
+
+    if(this.settings.showHourField)
+      this.columnsVehiculos.push({
+        attribute: "hour",
+        header: "Hora",
+        template: "idhora"
+      });
+
+    if(this.settings.showEntryField)
+      this.columnsVehiculos.push({
+        attribute: "entry",
+        header: "Ingreso de herramienta o equipo",
+        template: "idheq"
+      });
+      if(this.settings.showProtocolField)
+      this.columnsVehiculos.push({
+        attribute: "protocol",
+        header: "Cumplio protocolo",
+        template: "idprotocol"
+      });
+
+
+    if(!this.readOnly)
+      this.columnsVehiculos.push({
+        attribute: "id",
+        header: "",
+        template: "opciones"
+      });
+   
+
+
     if (this.fGRoot && this.id && this.fGRoot.get(this.id)) {
       this.fVehicles = this.fGRoot.get(this.id) as FormArray;
     }
@@ -158,6 +222,9 @@ export class VehiclesComponent implements OnInit {
     });
     this.fVehicles.push(fG);
     this.vehiclesCurrent = { ...{ id: "", license_plate: "" } };
+    this.listVehiculos = [...this.fVehicles.value];
+    if(!this.readOnly)
+      this.table.refresh({}, this.fVehicles.controls);
   }
 
   addMaterial(i: number) {
@@ -173,6 +240,7 @@ export class VehiclesComponent implements OnInit {
     if (error) return;
     this.fVehicles.controls[i].get('materials')?.value.value.push({ ...this.materialCurrent });
     this.materialCurrent = { ...{ description: "", mark: "", model: "", color: "", serial: "", year: "", license_plate: "" } };
+   
     /*     let _materials_currents = this.fVehicles.controls[i].get('materials')?.value.value || []
         let _materials = _materials_currents.push(this.materialCurrent);
         let f = this.fVehicles.controls[i].patchValue({

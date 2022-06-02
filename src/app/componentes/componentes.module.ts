@@ -39,7 +39,7 @@ import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { NewHeaderComponent } from './new-header/new-header.component';
 import { DemoMaterialModule } from 'app/demo-material-module';
 import { ScopeComponent } from 'app/componentes/scope/scope.component';
-
+import { VehiclesComponent} from 'app/componentes/vehicles/vehicles.component';
 export const entryComponentes = [
   ConfirmDialogComponent,
   ValidateOesvicaTokenComponent,
@@ -61,7 +61,8 @@ export const entryComponentes = [
     DynamicFormComponent,
     DynamicControlsComponent,
     NewHeaderComponent,
-    ScopeComponent
+    ScopeComponent,
+    VehiclesComponent
   ],
   exports: [
     GenericTableComponent,
@@ -75,7 +76,8 @@ export const entryComponentes = [
     DynamicFormComponent,
     DynamicControlsComponent,
     NewHeaderComponent,
-    ScopeComponent
+    ScopeComponent,
+    VehiclesComponent
   ],
   imports: [
     CommonModule,
