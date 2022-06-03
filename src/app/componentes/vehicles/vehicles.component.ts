@@ -8,7 +8,11 @@ import { DTColumn } from '../generic-table/interface';
 import { GenericTableComponent } from '../generic-table/generic-table.component';
 import {DataSource} from '@angular/cdk/collections';
 import {Observable, ReplaySubject} from 'rxjs';
-import { MatButton } from '@angular/material/button';
+
+export interface PeriodicCarga {
+  cargado: string;
+    
+}
 export interface PeriodicElement {
   description: string;
   mark: string;
@@ -18,6 +22,25 @@ export interface PeriodicElement {
   year: string;
   license_plate:string;
   
+}
+const ELEMENT_CARGA: PeriodicCarga[] = [];
+class DataSourceCarga extends DataSource<PeriodicCarga> {
+  private _dataStream = new ReplaySubject<PeriodicCarga[]>();
+
+  constructor(initialDatacarga: PeriodicCarga[]) {
+    super();
+    this.setData(initialDatacarga);
+  }
+
+  connect(): Observable<PeriodicCarga[]> {
+    return this._dataStream;
+  }
+
+  disconnect() {}
+
+  setData(data: PeriodicCarga[]) {
+    this._dataStream.next(data);
+  }
 }
 
 const ELEMENT_DATA: PeriodicElement[] = [];
@@ -110,7 +133,9 @@ export class VehiclesComponent implements OnInit,OnChanges,AfterViewChecked {
   @ViewChild("tableVehiculos") table!: GenericTableComponent;
   displayedColumns: string[] = ['description', 'mark', 'model', 'color','serial','year', 'license_plate','star'];
   dataToDisplay = [...ELEMENT_DATA];
-
+  displayedColumnsC: string[] = ['cargado'];
+  dataToDisplayC = [...ELEMENT_CARGA];
+  dataSourceC = new DataSourceCarga(this.dataToDisplayC);
   dataSource = new DataSourceV(this.dataToDisplay);
   constructor(private fB: FormBuilder, private toastr: ToastrService, public dialog: MatDialog) {
   }
