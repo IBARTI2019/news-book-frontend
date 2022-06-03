@@ -6,6 +6,39 @@ import { CreateAndEditVehicleComponent } from 'app/modules/maestro/vehicle/creat
 import { ToastrService } from 'ngx-toastr';
 import { DTColumn } from '../generic-table/interface';
 import { GenericTableComponent } from '../generic-table/generic-table.component';
+import {DataSource} from '@angular/cdk/collections';
+import {Observable, ReplaySubject} from 'rxjs';
+import { MatButton } from '@angular/material/button';
+export interface PeriodicElement {
+  description: string;
+  mark: string;
+  model: string;
+  color: string;
+  serial: string;
+  year: string;
+  license_plate:string;
+  
+}
+
+const ELEMENT_DATA: PeriodicElement[] = [];
+class DataSourceV extends DataSource<PeriodicElement> {
+  private _dataStream = new ReplaySubject<PeriodicElement[]>();
+
+  constructor(initialData: PeriodicElement[]) {
+    super();
+    this.setData(initialData);
+  }
+
+  connect(): Observable<PeriodicElement[]> {
+    return this._dataStream;
+  }
+
+  disconnect() {}
+
+  setData(data: PeriodicElement[]) {
+    this._dataStream.next(data);
+  }
+}
 
 const OWNER_TYPES = [
   {
@@ -73,7 +106,12 @@ export class VehiclesComponent implements OnInit,OnChanges,AfterViewChecked {
   vehiclesCurrent: Vehicle = { id: "", license_plate: "" };
   materialCurrent: any = { description: "", mark: "", model: "", color: "", serial: "", year: "", license_plate: "" }
   listVehiculos: any[] = [];
+  
   @ViewChild("tableVehiculos") table!: GenericTableComponent;
+  displayedColumns: string[] = ['description', 'mark', 'model', 'color','serial','year', 'license_plate','star'];
+  dataToDisplay = [...ELEMENT_DATA];
+
+  dataSource = new DataSourceV(this.dataToDisplay);
   constructor(private fB: FormBuilder, private toastr: ToastrService, public dialog: MatDialog) {
   }
   ngAfterViewChecked(): void {
@@ -222,6 +260,7 @@ export class VehiclesComponent implements OnInit,OnChanges,AfterViewChecked {
     });
     this.fVehicles.push(fG);
     this.vehiclesCurrent = { ...{ id: "", license_plate: "" } };
+    
     this.listVehiculos = [...this.fVehicles.value];
     if(!this.readOnly)
       this.table.refresh({}, this.fVehicles.controls);
@@ -237,10 +276,16 @@ export class VehiclesComponent implements OnInit,OnChanges,AfterViewChecked {
         error = true;
       }
     });
-    if (error) return;
-    this.fVehicles.controls[i].get('materials')?.value.value.push({ ...this.materialCurrent });
+    
+    //this.fVehicles.controls[i].get('materials')?.value.value.push({ ...this.materialCurrent });
+    const randomElementIndex = i ;
+    ELEMENT_DATA[randomElementIndex]={ ...this.materialCurrent }
+    console.log( ELEMENT_DATA[randomElementIndex]);
+    this.dataToDisplay = [...this.dataToDisplay, ELEMENT_DATA[randomElementIndex]];
+    this.dataSource.setData(this.dataToDisplay);
+    
     this.materialCurrent = { ...{ description: "", mark: "", model: "", color: "", serial: "", year: "", license_plate: "" } };
-   
+    
     /*     let _materials_currents = this.fVehicles.controls[i].get('materials')?.value.value || []
         let _materials = _materials_currents.push(this.materialCurrent);
         let f = this.fVehicles.controls[i].patchValue({
@@ -249,7 +294,9 @@ export class VehiclesComponent implements OnInit,OnChanges,AfterViewChecked {
   }
 
   removeMaterial(index_form: number, index_material: number): void {
-    this.fVehicles.controls[index_form].get('materials')?.value.value.splice(index_material, 1);
+    //this.fVehicles.controls[index_form].get('materials')?.value.value.splice(index_material, 1);
+    this.dataToDisplay = this.dataToDisplay.slice(0, -1);
+    this.dataSource.setData(this.dataToDisplay);
   }
 
   addVehicle() {
@@ -294,4 +341,5 @@ export class VehiclesComponent implements OnInit,OnChanges,AfterViewChecked {
   removeVehicle(index: number) {
     this.fVehicles.removeAt(index);
   }
+  
 }
