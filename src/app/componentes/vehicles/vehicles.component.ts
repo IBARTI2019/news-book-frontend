@@ -135,6 +135,7 @@ export class VehiclesComponent implements OnInit,OnChanges,AfterViewChecked {
   dataToDisplay = [...ELEMENT_DATA];
   displayedColumnsC: string[] = ['cargado'];
   dataToDisplayC = [...ELEMENT_CARGA];
+  datadisplayaux=[...ELEMENT_DATA];
   dataSourceC = new DataSourceCarga(this.dataToDisplayC);
   dataSource = new DataSourceV(this.dataToDisplay);
   constructor(private fB: FormBuilder, private toastr: ToastrService, public dialog: MatDialog) {
@@ -301,7 +302,7 @@ export class VehiclesComponent implements OnInit,OnChanges,AfterViewChecked {
         error = true;
       }
     });
-    
+    if (error) return;
     //this.fVehicles.controls[i].get('materials')?.value.value.push({ ...this.materialCurrent });
     const randomElementIndex = i ;
     ELEMENT_DATA[randomElementIndex]={ ...this.materialCurrent }
@@ -318,10 +319,11 @@ export class VehiclesComponent implements OnInit,OnChanges,AfterViewChecked {
         }); */
   }
 
-  removeMaterial(index_form: number, index_material: number): void {
-    //this.fVehicles.controls[index_form].get('materials')?.value.value.splice(index_material, 1);
-    this.dataToDisplay = this.dataToDisplay.slice(0, -1);
-    this.dataSource.setData(this.dataToDisplay);
+  removeMaterial(index_material: number): void {
+    if (index_material> -1) {
+      this.datadisplayaux= this.dataToDisplay.splice(index_material,1);
+      this.dataSource.setData(this.dataToDisplay);
+    }
   }
 
   addVehicle() {
