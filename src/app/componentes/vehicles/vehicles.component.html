@@ -266,7 +266,7 @@
 
                                              
                                
-                                <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 demo-table"  >
+                                <table mat-table [dataSource]="dataSource" class="mat-elevation-z6 demo-table"  >
                                     <!-- Position Column -->
                                        <ng-container matColumnDef="description">
                                            <th mat-header-cell *matHeaderCellDef>Descripcion</th>
@@ -295,7 +295,7 @@
                                            <td mat-cell *matCellDef="let element">{{element.serial}}</td>
                                        </ng-container>
                                        <ng-container matColumnDef="year">
-                                           <th mat-header-cell *matHeaderCellDef>Ano</th>
+                                           <th mat-header-cell *matHeaderCellDef>Año</th>
                                            <td mat-cell *matCellDef="let element">{{element.year}}</td>
                                        </ng-container>
                                        <ng-container matColumnDef="license_plate">

@@ -1,330 +1,361 @@
 <div fxFlex="{{ settings?.percentage || defaultValues.percentage}}" fxLayoutGap="40px" fxLayout="column"
     style="padding-top: 10px; padding-bottom: 10px;">
-    <div fxFlex fxLayout="row wrap" fxLayoutGap="1px grid">
-        <div fxLayoutAlign="end center" fxFlex="100%" fxLayout="row" *ngIf="!readOnly" style="margin: 10px;">
-            <!-- fxFlex="1 0 10%" -->
-            <button mat-raised-button color="primary" (click)="createVehicle()" type="button">
-                Nuevo
-            </button>
-        </div>
-        <div fxFlex="1 2 100%" fxLayout="row" style="height: 50px" fxLayoutGap="1px">
-            <div *ngIf="settings.showTokenField" fxLayoutAlign="center center" fxFlex="2 0 15%" fxLayout="row"
-                class="item mat-toolbar mat-primary">
-                Placa
-            </div>
-            <div *ngIf="settings.showNameField" fxLayoutAlign="center center" fxFlex="3 0 15%" fxLayout="row"
-                class="item mat-toolbar mat-primary">
-                Nombre y Apellido
-            </div>
-            <div *ngIf="settings.showOwnerTypeField" fxLayoutAlign="center center" fxFlex="1 1 15%" fxLayout="row"
-                class="item mat-toolbar mat-primary">
-                Tipo de propietario
-            </div>
-            <div *ngIf="settings.showMovementTypeField" fxLayoutAlign="center center" fxFlex="1 1 15%" fxLayout="row"
-                class="item mat-toolbar mat-primary">
-                Tipo de movimiento
-            </div>
-            <div *ngIf="settings.showHourField" fxLayoutAlign="center center" fxFlex="1 1 14%" fxLayout="row"
-                class="item mat-toolbar mat-primary">
-                Hora
-            </div>
-            <div *ngIf="settings.showEntryField" fxLayoutAlign="center center" fxFlex="1 1 10%" fxLayout="row"
-                class="item mat-toolbar mat-primary">
-                Ingreso de herramienta o equipo
-            </div>
-            <div *ngIf="settings.showProtocolField" fxLayoutAlign="center center" fxFlex="1 1 6%" fxLayout="row"
-                class="item mat-toolbar mat-primary">
-                Cumplió Protocolo
-            </div>
-        </div>
-        <!-- Begin to Dynamic Form -->
-        <form fxFlex="{{ settings.percentage }}" [formGroup]="fVehicle" fxLayout="row wrad" fxLayoutGap="1px">
-            <div *ngIf="settings.showTokenField" fxLayoutAlign="center center" fxFlex="2 0 15%" fxLayout="column"
-                style="background-color: #ffffff" class="item">
-                <mat-form-field appearance="fill">
-                    <mat-label>Placa</mat-label>
-                    <input type="text" matInput formControlName="license_plate" placeholder=""
-                        (keyup)="getVehicle($event.target.value)" [readonly]="readOnly" />
-                    <mat-error *ngIf="fVehicle.controls.license_plate.hasError('required')">
-                        La placa es <strong>requerida</strong>
-                    </mat-error>
-                </mat-form-field>
-            </div>
-            <div *ngIf="settings.showNameField" fxLayoutAlign="center center" fxFlex="3 0 15%" fxLayout="column"
-                style="background-color: #ffffff" class="item">
-                <mat-form-field appearance="fill">
-                    <mat-label>Nombre y Apellido</mat-label>
-                    <input type="text" matInput formControlName="owner_full_name" placeholder="Nombre y Apellido"
-                        [readonly]="readOnly" />
-                    <mat-error *ngIf="fVehicle.controls.owner_full_name.hasError('required')">
-                        El nombre es <strong>requerido</strong>
-                    </mat-error>
-                </mat-form-field>
-            </div>
-            <div *ngIf="settings.showOwnerTypeField" fxLayoutAlign="center center" fxFlex="1 1 15%" fxLayout="column"
-                style="background-color: #ffffff" class="item">
-                <mat-radio-group style="margin: 15px 0" formControlName="owner_type" [disabled]="readOnly">
-                    <mat-radio-button *ngFor="let oT of ownerTypes" style="margin: 5px" [value]="oT.id">{{
-                        oT.text }}
-                    </mat-radio-button>
-                </mat-radio-group>
-                <mat-error *ngIf="fVehicle.controls.owner_type.hasError('required')">
-                    El tipo de Propietario es <strong>requerido</strong>
-                </mat-error>
-            </div>
-            <div *ngIf="settings.showMovementTypeField" fxLayoutAlign="center center" fxFlex="1 1 15%" fxLayout="column"
-                style="background-color: #ffffff" class="item">
-                <mat-radio-group style="margin: 15px 0" formControlName="movement_type" [disabled]="readOnly">
-                    <mat-radio-button *ngFor="let mT of movementTypes" style="margin: 5px" [value]="mT.id">{{
-                        mT.text }}
-                    </mat-radio-button>
-                </mat-radio-group>
-                <mat-error *ngIf="fVehicle.controls.movement_type.hasError('required')">
-                    El tipo de movimiento es <strong>requerido</strong>
-                </mat-error>
-            </div>
-            <div *ngIf="settings.showHourField" fxLayoutAlign="center center" fxFlex="1 1 14%" fxLayout="column"
-                style="background-color: #ffffff" class="item">
-                <ngx-timepicker-field #hourP [format]="24" [defaultTime]="'00:00'" [toggleIcon]="icon_hour"
-                    formControlName="hour" [disabled]="readOnly">
-                </ngx-timepicker-field>
-                <ng-template #icon_hour>
-                    <mat-icon aria-hidden="false">schedule</mat-icon>
-                </ng-template>
-                <mat-error *ngIf="fVehicle.controls.hour.hasError('required')">
-                    La hora es <strong>requerida</strong>
-                </mat-error>
-            </div>
-            <div *ngIf="settings.showEntryField" fxLayoutAlign="center center" fxFlex="1 1 10%" fxLayout="column"
-                style="background-color: #ffffff" class="item">
-                <mat-slide-toggle formControlName="entry" #entryST [disabled]="readOnly">{{
-                    entryST.checked ? "SI" : "NO"
-                    }}</mat-slide-toggle>
-                <mat-error *ngIf="fVehicle.controls.entry.hasError('required')">
-                    El ingreso es <strong>requerido</strong>
-                </mat-error>
-            </div>
-            <div *ngIf="settings.showProtocolField" fxLayoutAlign="center center" fxFlex="1 1 6%" fxLayout="column"
-                style="background-color: #ffffff" class="item">
-                <mat-slide-toggle formControlName="protocol" #protocolST [disabled]="readOnly">{{
-                    protocolST.checked ? "SI" : "NO"
-                    }}</mat-slide-toggle>
-                <mat-error *ngIf="fVehicle.controls.protocol.hasError('required')">
-                    Este campo es <strong>requerido</strong>
-                </mat-error>
-            </div>
-            <div fxLayout="row wrap" *ngIf="settings.showEntryField && fVehicle.controls.entry.value === true"
-                fxLayoutGap="5px grid" fxFlex="100" style="background-color: #ffffff" class="item mat-toolbar">
-                <div fxLayoutAlign="center center" fxFlex="100" fxLayout="column" class="item mat-toolbar mat-primary">
-                    Objetos maquinas herramientas o equipos con que ingresa
-                    (Si son mas de dos solicite relación aparte con estos datos)
-                </div>
-                <div *ngIf="!readOnly" fxLayoutAlign="center center" class="item" fxFlex="2 1 40%" fxLayout="column">
-                    <mat-form-field appearance="fill">
-                        <mat-label>Descripción</mat-label>
-                        <input type="text" matInput placeholder="Descripción" [(ngModel)]="materialCurrent.description"
-                            [ngModelOptions]="{standalone: true}" />
-                    </mat-form-field>
-                </div>
-                <div *ngIf="!readOnly" fxLayoutAlign="center center" class="item" fxFlex="3 1 30%" fxLayout="column">
-                    <mat-form-field appearance="fill">
-                        <mat-label>Marca</mat-label>
-                        <input type="text" matInput placeholder="Marca" [(ngModel)]="materialCurrent.mark"
-                            [ngModelOptions]="{standalone: true}" />
-                    </mat-form-field>
-                </div>
-                <div *ngIf="!readOnly" fxLayoutAlign="center center" class="item" fxFlex="1 1 30%" fxLayout="column">
-                    <mat-form-field appearance="fill">
-                        <mat-label>Modelo</mat-label>
-                        <input type="text" matInput placeholder="Modelo" [(ngModel)]="materialCurrent.model"
-                            [ngModelOptions]="{standalone: true}" />
-                    </mat-form-field>
-                </div>
-                <div *ngIf="!readOnly" fxLayoutAlign="center center" class="item" fxFlex="1 1 30%" fxLayout="column">
-                    <mat-form-field appearance="fill">
-                        <mat-label>Color</mat-label>
-                        <input type="text" matInput placeholder="Color" [(ngModel)]="materialCurrent.color"
-                            [ngModelOptions]="{standalone: true}" />
-                    </mat-form-field>
-                </div>
-                <div *ngIf="!readOnly" fxLayoutAlign="center center" class="item" fxFlex="1 1 30%" fxLayout="column">
-                    <mat-form-field appearance="fill">
-                        <mat-label>Serial</mat-label>
-                        <input type="text" matInput placeholder="Serial" [(ngModel)]="materialCurrent.serial"
-                            [ngModelOptions]="{standalone: true}" />
-                    </mat-form-field>
-                </div>
-                <div *ngIf="!readOnly" fxLayoutAlign="center center" class="item" fxFlex="1 1 10%" fxLayout="column">
-                    <mat-form-field appearance="fill">
-                        <mat-label>Año</mat-label>
-                        <input type="text" matInput placeholder="Ano" [(ngModel)]="materialCurrent.year"
-                            [ngModelOptions]="{standalone: true}" />
-                    </mat-form-field>
-                </div>
-                <div *ngIf="!readOnly" fxLayoutAlign="center center" class="item" fxFlex="1 1 15%" fxLayout="column">
-                    <mat-form-field appearance="fill">
-                        <mat-label>Placa</mat-label>
-                        <input type="text" matInput placeholder="Placa" [(ngModel)]="materialCurrent.license_plate"
-                            [ngModelOptions]="{standalone: true}" />
-                    </mat-form-field>
-                </div>
-                <div *ngIf="!readOnly" fxLayoutAlign="center center" fxFlex="1 1 10%" fxLayout="column">
-                    <button mat-raised-button type="button" style="height: 50px" (click)="addMaterial(i)">
-                        Agregar
-                    </button>
-                </div>
-                <div fxFlex fxLayout="row wrap" fxLayoutGap="1px grid">
-                    <div fxFlex="1 1 100%" fxLayout="row" style="height: 50px" fxLayoutGap="1px">
-                        <div fxLayoutAlign="center center" fxFlex="1 0 25%" fxLayout="row"
-                            class="item mat-toolbar mat-primary">
-                            Descripción
-                        </div>
-                        <div fxLayoutAlign="center center" fxFlex="2 0 15%" fxLayout="row"
-                            class="item mat-toolbar mat-primary">
-                            Marca
-                        </div>
-                        <div fxLayoutAlign="center center" fxFlex="3 0 15%" fxLayout="row"
-                            class="item mat-toolbar mat-primary">
-                            Modelo
-                        </div>
-                        <div fxLayoutAlign="center center" fxFlex="1 1 10%" fxLayout="row"
-                            style="text-overflow: ellipsis" class="item mat-toolbar mat-primary">
-                            Color
-                        </div>
-                        <div fxLayoutAlign="center center" fxFlex="1 1 10%" fxLayout="row"
-                            style="text-overflow: ellipsis" class="item mat-toolbar mat-primary">
-                            Serial
-                        </div>
-                        <div fxLayoutAlign="center center" fxFlex="1 1 10%" fxLayout="row"
-                            class="item mat-toolbar mat-primary">
-                            Año
-                        </div>
-                        <div fxLayoutAlign="center center" fxFlex="1 1 10%" fxLayout="row"
-                            class="item mat-toolbar mat-primary">
-                            Placa
-                        </div>
-                        <div fxLayoutAlign="center center" fxFlex="1 1 5%" fxLayout="row"
-                            class="item mat-toolbar mat-primary" *ngIf="!readOnly">
-                        </div>
-                    </div>
-                    <div fxLayout="row" fxFlex="100"
-                        *ngFor="let material of fVehicle.controls.materials.value.value; index as i_material;"
-                        fxLayoutGap="1px">
-                        <div fxLayoutAlign="center center" fxFlex="1 0 25%" fxLayout="column" class="item">
-                            {{material.description}}
-                        </div>
-                        <div fxLayoutAlign="center center" fxFlex="2 0 15%" fxLayout="column" class="item">
-                            {{material.mark}}
-                        </div>
-                        <div fxLayoutAlign="center center" fxFlex="3 0 15%" fxLayout="column" class="item">
-                            {{material.model}}
-                        </div>
-                        <div fxLayoutAlign="center center" fxFlex="1 0 10%" fxLayout="column" class="item">
-                            {{material.color}}
-                        </div>
-                        <div fxLayoutAlign="center center" fxFlex="1 0 10%" fxLayout="column" class="item">
-                            {{material.serial}}
-                        </div>
-                        <div fxLayoutAlign="center center" fxFlex="1 0 10%" fxLayout="column" class="item">
-                            {{material.year}}
-                        </div>
-                        <div fxLayoutAlign="center center" fxFlex="2 0 10%" fxLayout="column" class="item">
-                            {{material.license_plate}}
-                        </div>
-                        <div fxFlex="1 1 5%" fxLayoutAlign="center center" fxLayout="column" class="item"
-                            *ngIf="!readOnly">
-                            <button mat-raised-button type="button" (click)="removeMaterial(i_material)">
-                                <mat-icon>delete_sweep</mat-icon>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div fxLayout="row wrap"
-                *ngIf="settings.showEntryField && fVehicle.controls.owner_type.value === 'cargo_vehicle'"
-                fxLayoutGap="5px grid" fxFlex="100" style="background-color: #ffffff;" class="item mat-toolbar">
-                <div fxLayoutAlign="center center" fxFlex="100" fxLayout="column"
-                    style="margin-bottom: 5px; margin-top:15px;" class="item mat-toolbar mat-primary">
-                    Vehículo de carga
-                </div>
-                <div fxFlex="1 1 100%" fxLayout="row" style="height: 50px" fxLayoutGap="1px">
-                    <div fxLayoutAlign="center center" fxFlex="1 0 15%" fxLayout="column"
-                        class="item mat-toolbar mat-primary">
-                        Cargado
-                    </div>
-                    <div fxLayoutAlign="center center" fxFlex="2 0 20%" fxLayout="column" class="item">
-                        <mat-slide-toggle #cargoST [disabled]="readOnly"
-                            [(ngModel)]="fVehicle.controls.cargo_vehicle.value.loaded"
-                            [ngModelOptions]="{standalone: true}">
-                            {{ cargoST.checked ? "SI" : "NO" }}
-                        </mat-slide-toggle>
-                    </div>
-                    <div fxLayoutAlign="center center" fxFlex="3 0 20%" fxLayout="column"
-                        class="item mat-toolbar mat-primary">
-                        Placa del remolque
-                    </div>
-                    <div fxLayoutAlign="center center" fxFlex="1 1 15%" fxLayout="column"
-                        style="text-overflow: ellipsis" class="item">
-                        <mat-form-field appearance="fill">
-                            <input type="text" matInput placeholder="Placa del remolque" [readonly]="readOnly"
-                                [(ngModel)]="fVehicle.controls.cargo_vehicle.value.trailer_plate"
-                                [ngModelOptions]="{standalone: true}" />
-                        </mat-form-field>
-                    </div>
-                    <div fxLayoutAlign="center center" fxFlex="1 1 15%" fxLayout="column"
-                        style="text-overflow: ellipsis" class="item mat-toolbar mat-primary">
-                        Nro. de precinto
-                    </div>
-                    <div fxLayoutAlign="center center" fxFlex="1 1 15%" fxLayout="column" class="item">
-                        <mat-form-field appearance="fill">
-                            <input type="text" matInput placeholder="Nro. de precinto" [readonly]="readOnly"
-                                [(ngModel)]="fVehicle.controls.cargo_vehicle.value.seal_number"
-                                [ngModelOptions]="{standalone: true}" />
-                        </mat-form-field>
-                    </div>
-                </div>
-                <div fxFlex="1 1 100%" fxLayout="row" style="height: 50px" fxLayoutGap="1px">
-                    <div fxLayoutAlign="center center" fxFlex="1 0 15%" fxLayout="column"
-                        class="item mat-toolbar mat-primary">
-                        Nro. de documento
-                    </div>
-                    <div fxLayoutAlign="center center" fxFlex="2 0 20%" fxLayout="column" class="item">
-                        <mat-form-field appearance="fill">
-                            <input type="text" matInput placeholder=" Nro. de documento" [readonly]="readOnly"
-                                [(ngModel)]="fVehicle.controls.cargo_vehicle.value.document_number"
-                                [ngModelOptions]="{standalone: true}" />
-                        </mat-form-field>
-                    </div>
-                    <div fxLayoutAlign="center center" fxFlex="3 0 20%" fxLayout="column"
-                        class="item mat-toolbar mat-primary">
-                        Precintado
-                    </div>
-                    <div fxLayoutAlign="center center" fxFlex="1 1 15%" fxLayout="column"
-                        style="text-overflow: ellipsis" class="item">
-                        <mat-slide-toggle #sealedT [disabled]="readOnly"
-                            [(ngModel)]="fVehicle.controls.cargo_vehicle.value.sealed"
-                            [ngModelOptions]="{standalone: true}">
-                            {{ sealedT.checked ? "SI" : "NO" }}
-                        </mat-slide-toggle>
-                    </div>
-                    <div fxLayoutAlign="center center" fxFlex="1 1 15%" fxLayout="column"
-                        style="text-overflow: ellipsis" class="item mat-toolbar mat-primary">
-                        Revisión de carga
-                    </div>
-                    <div fxLayoutAlign="center center" fxFlex="1 1 15%" fxLayout="column" class="item">
-                        <mat-slide-toggle #loading_reviewT [disabled]="readOnly"
-                            [(ngModel)]="fVehicle.controls.cargo_vehicle.value.loading_review"
-                            [ngModelOptions]="{standalone: true}">
-                            {{ loading_reviewT.checked ? "SI" : "N/A" }}
-                        </mat-slide-toggle>
-                    </div>
-                </div>
-            </div>
-
-            
-        </form>
-        <br><br>
+   
+    <div fxLayoutAlign="end center" fxFlex="100%" fxLayout="row" *ngIf="!readOnly" style="margin: 10px;">
+        <!-- fxFlex="1 0 10%" -->
+        <button mat-raised-button color="primary" (click)="createVehicle()" type="button">
+            Nuevo
+        </button>
     </div>
+    <div fxFlex="{{ settings.percentage }}" fxLayout="row" style="height: 50px">
+        <form fxFlex="{{ settings.percentage }}" [formGroup]="fGVehicles">
+            <div fxFlex fxLayout="row wrap" fxLayoutGap="1px grid">
+                <mat-form-field fxFlex="1 0 30%" appearance="fill" *ngIf="!readOnly">
+                    <mat-label>Placa</mat-label>
+                    <input matInput placeholder="Placa" [(ngModel)]="vehiclesCurrent.license_plate"
+                        [ngModelOptions]="{standalone: true}" />
+                </mat-form-field>
+                <button mat-raised-button fxFlex="1 0 10%" style="height: 50px" (click)="addVehicle()" *ngIf="!readOnly"
+                    [disabled]="!vehiclesCurrent.license_plate">
+                    Agregar
+                </button>
+            </div>
+        </form>
+    </div>
+    
+    <div class="d-flex flex-wrap" >
+               <ng-template #templateOpciones let-column="column" let-item="item" let-i="i">
+                        <button mat-raised-button type="button">
+                          <mat-icon (click)=" removeVehicle(i)">delete_sweep</mat-icon>
+                        </button>
+                    
+                </ng-template>
+                <ng-template #templatePlaca let-column="column" let-item="item" let-i="i">
+                    <ng-container [formGroup]="item"> 
+                            <mat-form-field appearance="fill">
+                                <mat-label>Placa</mat-label>
+                                <input type="text" matInput formControlName="license_plate" placeholder="" [readonly]="true" />
+                                <mat-error *ngIf="item.controls.license_plate.hasError('required')">
+                                    La placa es <strong>requerida</strong>
+                                </mat-error>
+                            </mat-form-field>
+                        
+                    </ng-container>
+                </ng-template>
+                <ng-template #templateNombre let-column="column" let-item="item" let-i="i">
+                    <ng-container [formGroup]="item"> 
+                            <mat-form-field appearance="fill">
+                                <mat-label>Nombre y apellido</mat-label>
+                                <input type="text" matInput formControlName="owner_full_name" placeholder="Nombre y Apellido"
+                                    [readonly]="readOnly" />
+                                <mat-error *ngIf="item.controls.owner_full_name.hasError('required')">
+                                    El nombre es <strong>requerido</strong>
+                                </mat-error>
+                            </mat-form-field>
+                        
+                    </ng-container>
+                </ng-template>
+                <ng-template #templatePropietario let-column="column" let-item="item" let-i="i">
+                       <ng-container [formGroup]="item"> 
+                            <mat-radio-group style="margin: 15px 0" formControlName="owner_type" [disabled]="readOnly">
+                                 <mat-radio-button *ngFor="let oT of ownerTypes" style="margin: 5px" [value]="oT.id">{{
+                                    oT.text }}
+                                 </mat-radio-button>
+                            </mat-radio-group>
+                            <mat-error *ngIf="item.controls.owner_type.hasError('required')">
+                                El tipo de Propietario es <strong>requerido</strong>
+                            </mat-error>
+                        </ng-container> 
+                </ng-template>  
+                <ng-template #templateMovimiento let-column="column" let-item="item" let-i="i">
+                    <ng-container [formGroup]="item"> 
+                             <mat-radio-group style="margin: 15px 0" formControlName="movement_type" [disabled]="readOnly">
+                                <mat-radio-button *ngFor="let mT of movementTypes" style="margin: 5px" [value]="mT.id">{{
+                                     mT.text }}
+                                </mat-radio-button>
+                            </mat-radio-group>
+                            <mat-error *ngIf="item.controls.movement_type.hasError('required')">
+                                El tipo de movimiento es <strong>requerido</strong>
+                            </mat-error>
+                        
+                    </ng-container> 
+                </ng-template>
+                <ng-template #templateHora let-column="column" let-item="item" let-i="i">
+                    <ng-container [formGroup]="item"> 
+                              <ngx-timepicker-field #hourP [format]="24" [defaultTime]="'00:00'" [toggleIcon]="icon_hour"
+                                formControlName="hour" [disabled]="readOnly">
+                            </ngx-timepicker-field>
+                            <ng-template #icon_hour>
+                                <mat-icon aria-hidden="false">schedule</mat-icon>
+                            </ng-template>
+                            <mat-error *ngIf="item.controls.hour.hasError('required')">
+                                La hora es <strong>requerida</strong>
+                            </mat-error>
+                        
+                     </ng-container>    
+                </ng-template>
+                <ng-template #templateHerramienta let-column="column" let-item="item" let-i="i">
+                    <ng-container [formGroup]="item"> 
+                                 <mat-slide-toggle formControlName="entry" #entryST [disabled]="readOnly">{{
+                                    entryST.checked ? "SI" : "NO"
+                                 }}</mat-slide-toggle>
+                                <mat-error *ngIf="item.controls.entry.hasError('required')">
+                                    El ingreso es <strong>requerido</strong>
+                                </mat-error>
+                        
+                    </ng-container>   
+                </ng-template>
+                <ng-template #templateProtocolo let-column="column" let-item="item" let-i="i">
+                    <ng-container [formGroup]="item"> 
+                                <mat-slide-toggle formControlName="protocol" #protocolST [disabled]="readOnly">{{
+                                 protocolST.checked ? "SI" : "NO"}}
+                                </mat-slide-toggle>
+                            <mat-error *ngIf="item.controls.protocol.hasError('required')">
+                                Este campo es <strong>requerido</strong>
+                            </mat-error>
+                    </ng-container>    
+                </ng-template>
+                 <!-- Inicio Bloque Collapsed -->
+                <ng-template #templateC let-column="column" let-item="item" let-i="i" >  
+                    <ng-container [formGroup]="item" > 
+                    <div fxLayout="row wrap">
+                        <div fxLayout="row wrap" *ngIf="settings.showEntryField && item.controls.owner_type.value === 'cargo_vehicle'"
+                            fxLayoutGap="5px grid" fxFlex="100" style="background-color: #ffffff;" class="item mat-toolbar">
+                            <div fxLayoutAlign="center center" fxFlex="100" fxLayout="column"
+                                style="margin-bottom: 5px; margin-top:10px;" class="item mat-toolbar mat-primary">
+                                 Vehículo de carga
+                            </div>
+                            <div fxFlex="1 1 100%" fxLayout="row" style="height: 50px" fxLayoutGap="1px">
+                                <div fxLayoutAlign="center center" fxFlex="1 0 15%" fxLayout="column"
+                                    class="item mat-toolbar mat-primary">
+                                    Cargado
+                                </div>
+                                <div fxLayoutAlign="center center" fxFlex="2 0 20%" fxLayout="column" class="item">
+                                  <mat-slide-toggle #cargoST [disabled]="readOnly"
+                                    [(ngModel)]="item.controls.cargo_vehicle.value.loaded"
+                                    [ngModelOptions]="{standalone: true}">
+                                     {{ cargoST.checked ? "SI" : "NO" }}
+                                  </mat-slide-toggle>
+                                </div>
+                                <div fxLayoutAlign="center center" fxFlex="3 0 20%" fxLayout="column" class="item mat-toolbar mat-primary">
+                                     Placa del remolque
+                                </div>
+                                <div fxLayoutAlign="center center" fxFlex="1 1 15%" fxLayout="column" style="text-overflow: ellipsis" class="item">
+                                    <mat-form-field appearance="fill">
+                                        <input type="text" matInput placeholder="Placa del remolque" [readonly]="readOnly"
+                                         [(ngModel)]="item.controls.cargo_vehicle.value.trailer_plate"
+                                        [ngModelOptions]="{standalone: true}" />
+                                    </mat-form-field>
+                                </div>
+                                <div fxLayoutAlign="center center" fxFlex="1 1 15%" fxLayout="column"
+                                    style="text-overflow: ellipsis" class="item mat-toolbar mat-primary">
+                                    Nro. de precinto
+                                </div>
+                                <div fxLayoutAlign="center center" fxFlex="1 1 15%" fxLayout="column" class="item">
+                                    <mat-form-field appearance="fill">
+                                        <input type="text" matInput placeholder="Nro. de precinto" [readonly]="readOnly"
+                                            [(ngModel)]="item.controls.cargo_vehicle.value.seal_number"
+                                            [ngModelOptions]="{standalone: true}" />
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div fxFlex="1 1 100%" fxLayout="row" style="height: 50px" fxLayoutGap="1px">
+                                    <div fxLayoutAlign="center center" fxFlex="1 0 15%" fxLayout="column"
+                                    class="item mat-toolbar mat-primary">
+                                    Nro. de documento
+                                </div>
+                                <div fxLayoutAlign="center center" fxFlex="2 0 20%" fxLayout="column" class="item">
+                                    <mat-form-field appearance="fill">
+                                        <input type="text" matInput placeholder=" Nro. de documento" [readonly]="readOnly"
+                                            [(ngModel)]="item.controls.cargo_vehicle.value.document_number"
+                                             [ngModelOptions]="{standalone: true}" />
+                                    </mat-form-field>
+                                </div>
+                                <div fxLayoutAlign="center center" fxFlex="3 0 20%" fxLayout="column"class="item mat-toolbar mat-primary">
+                                    Precintado
+                                </div>
+                                <div fxLayoutAlign="center center" fxFlex="1 1 15%" fxLayout="column" style="text-overflow: ellipsis" class="item">
+                                    <mat-slide-toggle #sealedT [disabled]="readOnly"
+                                        [(ngModel)]="item.controls.cargo_vehicle.value.sealed"
+                                        [ngModelOptions]="{standalone: true}">
+                                        {{ sealedT.checked ? "SI" : "NO" }}
+                                    </mat-slide-toggle>
+                                </div>
+                                <div fxLayoutAlign="center center" fxFlex="1 1 15%" fxLayout="column"
+                                    style="text-overflow: ellipsis" class="item mat-toolbar mat-primary">
+                                    Revisión de carga
+                                </div>
+                                <div fxLayoutAlign="center center" fxFlex="1 1 15%" fxLayout="column" class="item">
+                                    <mat-slide-toggle #loading_reviewT [disabled]="readOnly"
+                                        [(ngModel)]="item.controls.cargo_vehicle.value.loading_review"
+                                        [ngModelOptions]="{standalone: true}">
+                                        {{ loading_reviewT.checked ? "SI" : "N/A" }}
+                                    </mat-slide-toggle>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div fxLayout="row wrap" *ngIf="settings.showEntryField && item.controls.entry.value === true"
+                            fxLayoutGap="5px grid" fxFlex="100" style="background-color: #ffffff" class="item mat-toolbar">
+                            <div fxLayoutAlign="center center" fxFlex="100" fxLayout="column"
+                                 class="item mat-toolbar mat-primary">
+                                 Objetos maquinas herramientas o equipos con que ingresa
+                                (Si son mas de dos solicite relación aparte con estos datos)
+                            </div>
+                            <div *ngIf="!readOnly" fxLayoutAlign="center center" class="item" fxFlex="2 1 40%"
+                                fxLayout="column">
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Descripción</mat-label>
+                                    <input type="text" matInput placeholder="Descripción"
+                                    [(ngModel)]="materialCurrent.description" [ngModelOptions]="{standalone: true}" />
+                                </mat-form-field>
+                        
+                            </div>
+                            <div *ngIf="!readOnly" fxLayoutAlign="center center" class="item" fxFlex="3 1 30%"
+                                fxLayout="column">
+                                    <mat-form-field appearance="fill">
+                                        <mat-label>Marca</mat-label>
+                                        <input type="text" matInput placeholder="Marca" [(ngModel)]="materialCurrent.mark"
+                                        [ngModelOptions]="{standalone: true}" />
+                                    </mat-form-field>
+                            </div>
+                                <div *ngIf="!readOnly" fxLayoutAlign="center center" class="item" fxFlex="1 1 30%"
+                                    fxLayout="column">
+                                    <mat-form-field appearance="fill">
+                                         <mat-label>Modelo</mat-label>
+                                        <input type="text" matInput placeholder="Modelo" [(ngModel)]="materialCurrent.model"
+                                          [ngModelOptions]="{standalone: true}" />
+                                    </mat-form-field>
+                                </div>
+                          <div *ngIf="!readOnly" fxLayoutAlign="center center" class="item" fxFlex="1 1 30%"
+                                fxLayout="column">
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Color</mat-label>
+                                    <input type="text" matInput placeholder="Color" [(ngModel)]="materialCurrent.color"
+                                     [ngModelOptions]="{standalone: true}" />
+                                </mat-form-field>
+                            </div>
+                          <div *ngIf="!readOnly" fxLayoutAlign="center center" class="item" fxFlex="1 1 30%"
+                                fxLayout="column">
+                                <mat-form-field appearance="fill">
+                                  <mat-label>Serial</mat-label>
+                                  <input type="text" matInput placeholder="Serial" [(ngModel)]="materialCurrent.serial"
+                                       [ngModelOptions]="{standalone: true}" />
+                                </mat-form-field>
+                          </div>
+                          <div *ngIf="!readOnly" fxLayoutAlign="center center" class="item" fxFlex="1 1 10%"
+                              fxLayout="column">
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Año</mat-label>
+                                    <input type="text" matInput placeholder="Ano" [(ngModel)]="materialCurrent.year"
+                                         [ngModelOptions]="{standalone: true}" />
+                                </mat-form-field>
+                            </div>
+                            <div *ngIf="!readOnly" fxLayoutAlign="center center" class="item" fxFlex="1 1 15%"
+                                    fxLayout="column">
+                                <mat-form-field appearance="fill">
+                                     <mat-label>Placa</mat-label>
+                                    <input type="text" matInput placeholder="Placa" [(ngModel)]="materialCurrent.license_plate"
+                                         [ngModelOptions]="{standalone: true}" />
+                                </mat-form-field>
+                                
+                            </div>
+                            <div *ngIf="!readOnly" fxLayoutAlign="center center" fxFlex="1 1 10%" fxLayout="column">
+                                <button mat-raised-button type="button" style="height: 50px" (click)="addMaterial(i)">
+                                    Agregar
+                                </button>
+                            </div>
 
-</div>
+                                             
+                               
+                                <table mat-table [dataSource]="dataSource" class="mat-elevation-z6 demo-table" >
+                                    <!-- Position Column -->
+                                       <ng-container matColumnDef="description">
+                                           <th mat-header-cell *matHeaderCellDef>Descripcion</th>
+                                           <td mat-cell *matCellDef="let element">{{element.description}}</td>
+                                       </ng-container>
+                                 
+                                        <!-- Name Column -->
+                                       <ng-container matColumnDef="mark">
+                                           <th mat-header-cell *matHeaderCellDef>Marca</th>
+                                           <td mat-cell *matCellDef="let element">{{element.mark}}</td>
+                                       </ng-container>
+                                 
+                                       <!-- Weight Column -->
+                                       <ng-container matColumnDef="model">
+                                           <th mat-header-cell *matHeaderCellDef>Modelo</th>
+                                           <td mat-cell *matCellDef="let element">{{element.model}}</td>
+                                       </ng-container>
+                                 
+                                       <!-- Symbol Column -->
+                                       <ng-container matColumnDef="color">
+                                           <th mat-header-cell *matHeaderCellDef>Color</th>
+                                           <td mat-cell *matCellDef="let element">{{element.color}}</td>
+                                       </ng-container>
+                                       <ng-container matColumnDef="serial">
+                                           <th mat-header-cell *matHeaderCellDef>Serial</th>
+                                           <td mat-cell *matCellDef="let element">{{element.serial}}</td>
+                                       </ng-container>
+                                       <ng-container matColumnDef="year">
+                                           <th mat-header-cell *matHeaderCellDef>Año</th>
+                                           <td mat-cell *matCellDef="let element">{{element.year}}</td>
+                                       </ng-container>
+                                       <ng-container matColumnDef="license_plate">
+                                           <th mat-header-cell *matHeaderCellDef>Placa</th>
+                                           <td mat-cell *matCellDef="let element">{{element.license_plate}}</td>
+                                       </ng-container>
+                                       <ng-container matColumnDef="star" >
+                                            <th mat-header-cell *matHeaderCellDef>Option</th>
+                                            <td mat-cell *matCellDef="let element; let j = index;"> 
+                                            <button mat-icon-button (click)="removeMaterial(j)">
+                                                <mat-icon>delete_sweep</mat-icon>
+                                            </button>
+                                        </td>
+                                      </ng-container>
+                                       <tr mat-header-row *matHeaderRowDef="displayedColumns ;sticky: true"></tr>
+                                       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                                 </table>
+                                   <div fxLayout="row" fxFlex="100" *ngFor="let material of item.controls.materials.value.value; index as i_material;" fxLayoutGap="1px">
+                                    <div fxLayoutAlign="center center" fxFlex="1 0 25%" fxLayout="column" class="item">
+                                        {{material.description}}
+                                   </div>
+                                   <div fxLayoutAlign="center center" fxFlex="2 0 15%" fxLayout="column" class="item">
+                                       {{material.mark}}
+                                   </div>
+                                   <div fxLayoutAlign="center center" fxFlex="3 0 15%" fxLayout="column" class="item">
+                                       {{material.model}} 
+                                   </div>
+                                   <div fxLayoutAlign="center center" fxFlex="1 0 10%" fxLayout="column" class="item">
+                                       {{material.color}}
+                                   </div>
+                                   <div fxLayoutAlign="center center" fxFlex="1 0 10%" fxLayout="column" class="item">
+                                       {{material.serial}}
+                                   </div>
+                                   <div fxLayoutAlign="center center" fxFlex="1 0 10%" fxLayout="column" class="item">
+                                       {{material.year}}
+                                   </div>
+                                   <div fxLayoutAlign="center center" fxFlex="2 0 10%" fxLayout="column" class="item">
+                                        {{material.license_plate}}
+                                   </div>
+                                   <div fxFlex="1 1 5%" fxLayoutAlign="center center" fxLayout="column" class="item"
+                                       *ngIf="!readOnly">
+                                       <button mat-raised-button type="button" (click)="removeMaterial(i, i_material)">
+                                           <mat-icon>delete_sweep</mat-icon>
+                                       </button>
+                                    </div>
+                                                                   
+                               </div>
+                            
+                        </div>
+                    </ng-container>    
+                  </ng-template>
+            
+                  <!-- Fin del Bloque Collapsed -->
+    <app-generic-table  [openHoverCollapsed]="true" [hidden]="fVehicles.value.length===0"  fxFlex="100" [columns]="columnsVehiculo" [showFilter]="false" [btnRefresh]="false" 
+        [is_paged]="false" [templateCollapsed]="{template:templateC}" [templates]="{opciones: templateOpciones, idplaca: templatePlaca, idnombre: templateNombre,idtipop: templatePropietario, idtipom: templateMovimiento,  idhora: templateHora,  idheq: templateHerramienta,idprotocolo: templateProtocolo}" #tableVehiculo>
+    </app-generic-table>   
+            
+         
+    </div>        
+    
+</div> 

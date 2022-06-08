@@ -310,7 +310,7 @@ export class GenericTableComponent implements OnInit, AfterViewChecked {
     }
     this.cdr.detectChanges();
   }
-
+  
   getPlaceHolder() {
     if (!this.selectedField) {
       this.placeholder = 'Buscar ' + '( TODOS )';

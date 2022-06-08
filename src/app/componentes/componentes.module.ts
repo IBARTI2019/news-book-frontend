@@ -40,6 +40,7 @@ import { NewHeaderComponent } from './new-header/new-header.component';
 import { DemoMaterialModule } from 'app/demo-material-module';
 import { ScopeComponent } from 'app/componentes/scope/scope.component';
 import { VehiclesComponent} from 'app/componentes/vehicles/vehicles.component';
+import { VehicleComponent} from 'app/componentes/vehicle/vehicle.component';
 export const entryComponentes = [
   ConfirmDialogComponent,
   ValidateOesvicaTokenComponent,
@@ -62,7 +63,8 @@ export const entryComponentes = [
     DynamicControlsComponent,
     NewHeaderComponent,
     ScopeComponent,
-    VehiclesComponent
+    VehiclesComponent,
+    VehicleComponent
   ],
   exports: [
     GenericTableComponent,
@@ -77,7 +79,8 @@ export const entryComponentes = [
     DynamicControlsComponent,
     NewHeaderComponent,
     ScopeComponent,
-    VehiclesComponent
+    VehiclesComponent,
+    VehicleComponent
   ],
   imports: [
     CommonModule,

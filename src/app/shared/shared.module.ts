@@ -13,7 +13,7 @@ import { LayoutModule } from '@angular/cdk/layout';
 import { DemoMaterialModule } from 'app/demo-material-module';
 // import { ScopeComponent } from 'app/componentes/scope/scope.component';
 //import { VehiclesComponent } from 'app/componentes/vehicles/vehicles.component';
-import { VehicleComponent } from 'app/componentes/vehicle/vehicle.component';
+//import { VehicleComponent } from 'app/componentes/vehicle/vehicle.component';
 import { PersonsComponent } from 'app/componentes/persons/persons.component';
 import { PersonComponent } from 'app/componentes/person/person.component';
 import { RoundComponent } from 'app/componentes/round/round.component';
@@ -27,7 +27,7 @@ import { RoundComponent } from 'app/componentes/round/round.component';
     ChangingGuardStaffListComponent,
     // ScopeComponent,
     //VehiclesComponent,
-    VehicleComponent,
+    //VehicleComponent,
     PersonsComponent,
     PersonComponent,
     RoundComponent
@@ -38,9 +38,9 @@ import { RoundComponent } from 'app/componentes/round/round.component';
     AccordionDirective,
     NotFoundComponent,
     ChangingGuardStaffListComponent,
-    // ScopeComponent,
+    //ScopeComponent,
     //VehiclesComponent,
-    VehicleComponent,
+    //VehicleComponent,
     PersonsComponent,
     PersonComponent,
     RoundComponent

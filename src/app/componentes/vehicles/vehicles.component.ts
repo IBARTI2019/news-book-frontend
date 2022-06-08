@@ -288,8 +288,10 @@ export class VehiclesComponent implements OnInit,OnChanges,AfterViewChecked {
     this.vehiclesCurrent = { ...{ id: "", license_plate: "" } };
     
     this.listVehiculos = [...this.fVehicles.value];
+
     if(!this.readOnly)
       this.table.refresh({}, this.fVehicles.controls);
+
   }
 
   addMaterial(i: number) {

@@ -1,9 +1,46 @@
-import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { Component, EventEmitter, Input, OnInit, Output, OnChanges,AfterViewChecked, SimpleChanges,ViewChild } from '@angular/core';
+import { FormGroup, FormArray, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Vehicle, VehiclesSettings } from 'app/interfaces';
 import { CreateAndEditVehicleComponent } from 'app/modules/maestro/vehicle/create-and-edit-vehicle/create-and-edit-vehicle.component';
 import { ToastrService } from 'ngx-toastr';
+import { DTColumn } from '../generic-table/interface';
+import { GenericTableComponent } from '../generic-table/generic-table.component';
+import {DataSource} from '@angular/cdk/collections';
+import {Observable, ReplaySubject} from 'rxjs';
+
+
+export interface PeriodicElement {
+  description: string;
+  mark: string;
+  model: string;
+  color: string;
+  serial: string;
+  year: string;
+  license_plate:string;
+  
+}
+
+
+const ELEMENT_DATA: PeriodicElement[] = [];
+class DataSourceVa extends DataSource<PeriodicElement> {
+  private _dataStream = new ReplaySubject<PeriodicElement[]>();
+
+  constructor(initialData: PeriodicElement[]) {
+    super();
+    this.setData(initialData);
+  }
+
+  connect(): Observable<PeriodicElement[]> {
+    return this._dataStream;
+  }
+
+  disconnect() {}
+
+  setData(data: PeriodicElement[]) {
+    this._dataStream.next(data);
+  }
+}
 
 const OWNER_TYPES = [
   {
@@ -16,11 +53,11 @@ const OWNER_TYPES = [
   },
   {
     id: "cargo_vehicle",
-    text: "Vehículo de cargao",
+    text: "Vehículo de carga",
   },
   {
-    id: "Instituccion",
-    text: "Instituccion",
+    id: "supplier",
+    text: "Proveedor",
   },
 ];
 
@@ -53,30 +90,130 @@ export const VEHICLES_LIST_DEFAULT: VehiclesSettings = {
   templateUrl: './vehicle.component.html',
   styleUrls: ['./vehicle.component.css']
 })
-export class VehicleComponent implements OnInit {
+export class VehicleComponent implements OnInit,OnChanges,AfterViewChecked{
   @Input() id: string = '';
   @Input() value: any = null;
   @Input() settings: VehiclesSettings = VEHICLES_LIST_DEFAULT;
+  @Input() vehiclesArrSelected: Vehicle[] = [];
   @Input() vehiclesArr: Vehicle[] = [];
   @Input() fGRoot!: FormGroup;
-  fVehicle!: FormGroup;
+
   @Input() readOnly: boolean = false;
 
   @Output() isValid: EventEmitter<boolean> = new EventEmitter<boolean>();
-
+  columnsVehiculo: DTColumn[] = [];
+  fVehicles: FormArray = new FormArray([]);
+  fGVehicles = new FormGroup({});
   ownerTypes = [...OWNER_TYPES];
   movementTypes = [...MOVEMENT_TYPES];
   defaultValues = { ...VEHICLES_LIST_DEFAULT }
   vehiclesCurrent: Vehicle = { id: "", license_plate: "" };
   materialCurrent: any = { description: "", mark: "", model: "", color: "", serial: "", year: "", license_plate: "" }
-
-  constructor(private toastr: ToastrService, public dialog: MatDialog) { }
-
+  listVehiculos: any[] = [];
+  @ViewChild("tableVehiculo") table!: GenericTableComponent ;
+ 
+  displayedColumns: string[] = ['description', 'mark', 'model', 'color','serial','year', 'license_plate','star'];
+  dataToDisplay = [...ELEMENT_DATA];
+  displayedColumnsC: string[] = ['cargado'];
+  datadisplayaux=[...ELEMENT_DATA];
+  
+  dataSource = new DataSourceVa(this.dataToDisplay);
+  constructor(private fB: FormBuilder, private toastr: ToastrService, public dialog: MatDialog) {
+  }
+  ngAfterViewChecked(): void {
+    this.table.refresh({}, this.fVehicles.controls);
+  }
   ngOnInit(): void {
-    let v: any = {};
+    this.columnsVehiculo = [];
+    if(this.settings.showTokenField)
+      this.columnsVehiculo.push(
+        {
+          attribute:"license_plate",
+          header: "Placa",
+          template: "idplaca" 
+        },
+      );
+    if(this.settings.showNameField)
+      this.columnsVehiculo.push({
+          attribute: "owner_full_name",
+          header:"Nombres y apellidos",
+          template: "idnombre"
+        });
+    if(this.settings.showNameField)
+      this.columnsVehiculo.push({
+        attribute:"owner_type",
+        header: "Tipo propietario",
+        template: "idtipop"
+      },);
+    if(this.settings.showMovementTypeField)
+      this.columnsVehiculo.push({
+        attribute:"movement_type",
+        header: " Tipo de movimiento",
+        template: "idtipom"
+      });
+
+    if(this.settings.showHourField)
+      this.columnsVehiculo.push({
+        attribute: "hour",
+        header: "Hora",
+        template: "idhora"
+      });
+
+    if(this.settings.showEntryField)
+      this.columnsVehiculo.push({
+        attribute: "entry",
+        header: "Ingreso de herramienta o equipo",
+        template: "idheq"
+      });
+      if(this.settings.showProtocolField)
+      this.columnsVehiculo.push({
+        attribute: "protocol",
+        header: "Cumplio protocolo",
+        template: "idprotocolo"
+      });
+
+    if(!this.readOnly)
+      this.columnsVehiculo.push({
+        attribute: "id",
+        header: "",
+        template: "opciones"
+      });
+   
+
+
     if (this.fGRoot && this.id && this.fGRoot.get(this.id)) {
-      this.fVehicle = this.fGRoot.get(this.id) as FormGroup;
+      this.fVehicles = this.fGRoot.get(this.id) as FormArray;
     }
+
+    this.fVehicles.statusChanges.subscribe((currentStatus) => {
+      this.isValid.emit(currentStatus === "VALID" ? true : false);
+    });
+    this.vehiclesArrSelected.forEach((v) => {
+      this.addFG(v);
+    });
+
+    this.fGVehicles = this.fB.group({
+      vehicles: [this.vehiclesArrSelected.map((v) => v)],
+    });
+    this.fGVehicles.valueChanges.subscribe((values) => {
+      values.vehicles.forEach((s: Vehicle) => {
+        let found = null;
+        if (this.fVehicles.value) {
+          found = this.fVehicles.value.some((v: any) => {
+            return v.license_plate === s.license_plate;
+          });
+        }
+        if (!found) this.addFG(s);
+      });
+      this.fVehicles.value.forEach((v: any, index: number) => {
+        const found = values.vehicles.some((s: Vehicle) => {
+          return v.license_plate === s.license_plate;
+        });
+        if (!found) this.fVehicles.removeAt(index);
+      });
+      this.vehiclesCurrent = values.vehicles;
+    });
+
   }
 
   ngOnChanges(change: SimpleChanges): void {
@@ -92,6 +229,49 @@ export class VehicleComponent implements OnInit {
   }
 
 
+  addFG(v: Vehicle): void {
+    const fG = this.fB.group({
+      license_plate: [
+        v.license_plate || "",
+        this.settings.showTokenField && Validators.required,
+      ],
+      owner_full_name: [
+        v.owner_full_name || "",
+        this.settings.showNameField && Validators.required,
+      ],
+      owner_type: [
+        v.owner_type || null,
+        this.settings.showOwnerTypeField && Validators.required,
+      ],
+      movement_type: [
+        v.movement_type || null,
+        this.settings.showMovementTypeField && Validators.required,
+      ],
+      hour: [
+        v.hour || '',
+        this.settings.showHourField && Validators.required,
+      ],
+      entry: [
+        v.entry || false,
+        this.settings.showEntryField && Validators.required,
+      ],
+      protocol: [
+        v.protocol || false,
+        this.settings.showProtocolField && Validators.required,
+      ],
+      materials: new FormControl({ value: v.materials?.value || [] }),
+      cargo_vehicle: [
+        v.cargo_vehicle || { trailer_plate: "", loaded: false, seal_number: "", document_number: "", sealed: false, loading_review: false }
+      ],
+    });
+    this.fVehicles.push(fG);
+    this.vehiclesCurrent = { ...{ id: "", license_plate: "" } };
+    
+    this.listVehiculos = [...this.fVehicles.value];
+    if(!this.readOnly)
+       this.table.refresh({}, this.fVehicles.controls);
+  }
+
   addMaterial(i: number) {
     let error: boolean = false;
     Object.keys(this.materialCurrent).forEach((key: string = 'description') => {
@@ -103,21 +283,49 @@ export class VehicleComponent implements OnInit {
       }
     });
     if (error) return;
-    this.fVehicle.get('materials')?.value.value.push({ ...this.materialCurrent });
+    //this.fVehicles.controls[i].get('materials')?.value.value.push({ ...this.materialCurrent });
+    const randomElementIndex = i ;
+    ELEMENT_DATA[randomElementIndex]={ ...this.materialCurrent }
+    console.log( ELEMENT_DATA[randomElementIndex]);
+    this.dataToDisplay = [...this.dataToDisplay, ELEMENT_DATA[randomElementIndex]];
+    this.dataSource.setData(this.dataToDisplay);
+    
     this.materialCurrent = { ...{ description: "", mark: "", model: "", color: "", serial: "", year: "", license_plate: "" } };
+    
+    /*     let _materials_currents = this.fVehicles.controls[i].get('materials')?.value.value || []
+        let _materials = _materials_currents.push(this.materialCurrent);
+        let f = this.fVehicles.controls[i].patchValue({
+          materials: _materials
+        }); */
   }
 
   removeMaterial(index_material: number): void {
-    this.fVehicle.get('materials')?.value.value.splice(index_material, 1);
+    if (index_material> -1) {
+      this.datadisplayaux= this.dataToDisplay.splice(index_material,1);
+      this.dataSource.setData(this.dataToDisplay);
+    }
   }
 
-  getVehicle(license_plate: string) {
-    let index = this.vehiclesArr.findIndex(v => v.license_plate == license_plate);
-    if (index > -1) {
-      this.fVehicle.get("owner_full_name")!.setValue(this.vehiclesArr[index].owner_full_name);
+  addVehicle() {
+    let exist = false;
+    let index = this.vehiclesArr.findIndex(v => v.license_plate == this.vehiclesCurrent.license_plate);
+    if (index > -1)
+      this.vehiclesCurrent = { ...this.vehiclesArr[index] };
+    exist = this.fVehicles.value.find((v: any) => {
+      return v.license_plate === this.vehiclesCurrent.license_plate;
+    });
+    if (exist) {
+      this.toastr.error(`La placa ${this.vehiclesCurrent.license_plate} ya fue registrada`);
+      return;
     } else {
-      this.fVehicle.get("owner_full_name")!.setValue('');
+      this.addFG(this.vehiclesCurrent);
     }
+    /*     this.fVehicles.value.forEach((v: any, index: number) => {
+          const found = this.fGVehicles.value.Vehicles.some((s: Vehicles) => {
+            return v.code === s.code;
+          });
+          if (!found) this.fVehicles.removeAt(index);
+        }); */
   }
 
 
@@ -131,11 +339,15 @@ export class VehicleComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
       if (result?.license_plate) {
+        this.vehiclesCurrent.license_plate = result.license_plate;
         this.vehiclesArr.push(result);
-        this.fVehicle.get("license_plate")!.setValue(result.license_plate);
-        this.getVehicle(result.license_plate);
+        this.addVehicle();
       }
     });
   }
 
+  removeVehicle(index: number) {
+    this.fVehicles.removeAt(index);
+  }
+  
 }
