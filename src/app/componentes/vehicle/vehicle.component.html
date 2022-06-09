@@ -351,8 +351,8 @@
                   </ng-template>
             
                   <!-- Fin del Bloque Collapsed -->
-    <app-generic-table  [openHoverCollapsed]="true" [hidden]="fVehicles.value.length===0"  fxFlex="100" [columns]="columnsVehiculo" [showFilter]="false" [btnRefresh]="false" 
-        [is_paged]="false" [templateCollapsed]="{template:templateC}" [templates]="{opciones: templateOpciones, idplaca: templatePlaca, idnombre: templateNombre,idtipop: templatePropietario, idtipom: templateMovimiento,  idhora: templateHora,  idheq: templateHerramienta,idprotocolo: templateProtocolo}" #tableVehiculo>
+    <app-generic-table  [openHoverCollapsed]="true" [hidden]="fVehicles.value.length===0"  fxFlex="100" [columns]="columnsVehiculos" [showFilter]="false" [btnRefresh]="false" 
+        [is_paged]="false" [templateCollapsed]="{template:templateC}" [templates]="{opciones: templateOpciones, idplaca: templatePlaca, idnombre: templateNombre,idtipop: templatePropietario, idtipom: templateMovimiento,  idhora: templateHora,  idheq: templateHerramienta,idprotocolo: templateProtocolo}" #tableVehiculos>
     </app-generic-table>   
             
          

@@ -259,60 +259,88 @@
                                 
                             </div>
                             <div *ngIf="!readOnly" fxLayoutAlign="center center" fxFlex="1 1 10%" fxLayout="column">
-                                <button mat-raised-button type="button" style="height: 50px" (click)="addMaterial(i)">
-                                    Agregar
-                                </button>
+                                <div class="example-button-container">
+                                    <button mat-icon-button color="primary" aria-label="Example icon button with a home icon"  (click)="addMaterial(i)">
+                                        <mat-icon><span class="material-icons">
+                                            add_shopping_cart
+                                            </span></mat-icon>
+                                      </button>
+                                </div>
                             </div>
 
-                                             
-                               
-                                <table mat-table [dataSource]="dataSource" class="mat-elevation-z6 demo-table"  >
-                                    <!-- Position Column -->
-                                       <ng-container matColumnDef="description">
-                                           <th mat-header-cell *matHeaderCellDef>Descripcion</th>
-                                           <td mat-cell *matCellDef="let element">{{element.description}}</td>
-                                       </ng-container>
-                                 
-                                        <!-- Name Column -->
-                                       <ng-container matColumnDef="mark">
-                                           <th mat-header-cell *matHeaderCellDef>Marca</th>
-                                           <td mat-cell *matCellDef="let element">{{element.mark}}</td>
-                                       </ng-container>
-                                 
-                                       <!-- Weight Column -->
-                                       <ng-container matColumnDef="model">
-                                           <th mat-header-cell *matHeaderCellDef>Modelo</th>
-                                           <td mat-cell *matCellDef="let element">{{element.model}}</td>
-                                       </ng-container>
-                                 
-                                       <!-- Symbol Column -->
-                                       <ng-container matColumnDef="color">
-                                           <th mat-header-cell *matHeaderCellDef>Color</th>
-                                           <td mat-cell *matCellDef="let element">{{element.color}}</td>
-                                       </ng-container>
-                                       <ng-container matColumnDef="serial">
-                                           <th mat-header-cell *matHeaderCellDef>Serial</th>
-                                           <td mat-cell *matCellDef="let element">{{element.serial}}</td>
-                                       </ng-container>
-                                       <ng-container matColumnDef="year">
-                                           <th mat-header-cell *matHeaderCellDef>Año</th>
-                                           <td mat-cell *matCellDef="let element">{{element.year}}</td>
-                                       </ng-container>
-                                       <ng-container matColumnDef="license_plate">
-                                           <th mat-header-cell *matHeaderCellDef>Placa</th>
-                                           <td mat-cell *matCellDef="let element">{{element.license_plate}}</td>
-                                       </ng-container>
-                                       <ng-container matColumnDef="star" >
-                                            <th mat-header-cell *matHeaderCellDef>Option</th>
-                                            <td mat-cell *matCellDef="let element; let j = index;"> 
-                                            <button mat-icon-button (click)="removeMaterial(j)">
-                                                <mat-icon>delete_sweep</mat-icon>
-                                            </button>
-                                        </td>
-                                      </ng-container>
-                                       <tr mat-header-row *matHeaderRowDef="displayedColumns ;sticky: true"></tr>
-                                       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-                                 </table>
+                           
+                            <table mat-table [dataSource]="dataSource"  [class.isMobile]="isMobile" >
+                                <!-- Position Column -->
+                                   <ng-container matColumnDef="description">
+                                       <th mat-header-cell *matHeaderCellDef>Descripcion</th>
+                                       <td mat-cell *matCellDef="let element">
+                                        <span class="mobile-label">Descripcion:</span>
+                                           {{element.description}}</td>
+                                   </ng-container>
+                             
+                                    <!-- Name Column -->
+                                   <ng-container matColumnDef="mark">
+                                       <th mat-header-cell *matHeaderCellDef>Marca</th>
+                                       <td mat-cell *matCellDef="let element">
+                                        <span class="mobile-label">Marca:</span>
+                                        {{element.mark}}</td>
+                                   </ng-container>
+                             
+                                   <!-- Weight Column -->
+                                   <ng-container matColumnDef="model">
+                                       <th mat-header-cell *matHeaderCellDef>Modelo</th>
+                                       <td mat-cell *matCellDef="let element">
+                                        <span class="mobile-label">Modelo:</span>
+                                        {{element.model}}</td>
+                                   </ng-container>
+                             
+                                   <!-- Symbol Column -->
+                                   <ng-container matColumnDef="color">
+                                       <th mat-header-cell *matHeaderCellDef>Color</th>
+                                       <td mat-cell *matCellDef="let element">
+                                        <span class="mobile-label">Color:</span>
+                                        {{element.color}}</td>
+                                   </ng-container>
+                                   <ng-container matColumnDef="serial">
+                                       <th mat-header-cell *matHeaderCellDef>Serial</th>
+                                       <td mat-cell *matCellDef="let element">
+                                        <span class="mobile-label">Serial:</span>
+                                        {{element.serial}}</td>
+                                   </ng-container>
+                                   <ng-container matColumnDef="year">
+                                       <th mat-header-cell *matHeaderCellDef>Año</th>
+                                       <td mat-cell *matCellDef="let element">
+                                        <span class="mobile-label">Año:</span>
+                                        {{element.year}}</td>
+                                   </ng-container>
+                                   <ng-container matColumnDef="license_plate">
+                                       <th mat-header-cell *matHeaderCellDef>Placa</th>
+                                       <td mat-cell *matCellDef="let element">
+                                        <span class="mobile-label">Placa:</span>
+                                           {{element.license_plate}}</td>
+                                   </ng-container>
+                                   <ng-container matColumnDef="star" >
+                                        <th mat-header-cell *matHeaderCellDef>Option </th>
+                                            <span class="mobile-label">Option:</span>  
+                                            <mat-cell *matCellDef="let element; let j = index;"> 
+                                                <div *ngIf="!readOnly" fxLayoutAlign="right right" fxFlex="1 1 10%" fxLayout="column">
+                                                    
+                                                        <button mat-icon-button color="primary" aria-label="Example icon button with a home icon"  (click)="removeMaterial(j)">
+                                                            <mat-icon><span class="material-icons">
+                                                                delete
+                                                            </span></mat-icon>
+                                                          </button>
+                                                    
+                                                </div>                                           
+                                                  
+                                            </mat-cell>
+                                                                            
+                                  </ng-container>
+                                   <tr mat-header-row *matHeaderRowDef="displayedColumns ;sticky: true"></tr>
+                                   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                             </table>
+                                  
+                             
                                    <div fxLayout="row" fxFlex="100" *ngFor="let material of item.controls.materials.value.value; index as i_material;" fxLayoutGap="1px">
                                     <div fxLayoutAlign="center center" fxFlex="1 0 25%" fxLayout="column" class="item">
                                         {{material.description}}

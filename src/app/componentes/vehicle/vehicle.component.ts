@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, OnChanges,AfterViewChecked, SimpleChanges,ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, OnChanges, AfterViewChecked,SimpleChanges,ViewChild } from '@angular/core';
 import { FormGroup, FormArray, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Vehicle, VehiclesSettings } from 'app/interfaces';
@@ -9,7 +9,10 @@ import { GenericTableComponent } from '../generic-table/generic-table.component'
 import {DataSource} from '@angular/cdk/collections';
 import {Observable, ReplaySubject} from 'rxjs';
 
-
+export interface PeriodicCarga {
+  cargado: string;
+    
+}
 export interface PeriodicElement {
   description: string;
   mark: string;
@@ -20,10 +23,28 @@ export interface PeriodicElement {
   license_plate:string;
   
 }
+const ELEMENT_CARGA: PeriodicCarga[] = [];
+class DataSourceCarga extends DataSource<PeriodicCarga> {
+  private _dataStream = new ReplaySubject<PeriodicCarga[]>();
 
+  constructor(initialDatacarga: PeriodicCarga[]) {
+    super();
+    this.setData(initialDatacarga);
+  }
+
+  connect(): Observable<PeriodicCarga[]> {
+    return this._dataStream;
+  }
+
+  disconnect() {}
+
+  setData(data: PeriodicCarga[]) {
+    this._dataStream.next(data);
+  }
+}
 
 const ELEMENT_DATA: PeriodicElement[] = [];
-class DataSourceVa extends DataSource<PeriodicElement> {
+class DataSourceV extends DataSource<PeriodicElement> {
   private _dataStream = new ReplaySubject<PeriodicElement[]>();
 
   constructor(initialData: PeriodicElement[]) {
@@ -84,24 +105,22 @@ export const VEHICLES_LIST_DEFAULT: VehiclesSettings = {
   showProtocolField: true
 };
 
-
 @Component({
   selector: 'app-vehicle',
   templateUrl: './vehicle.component.html',
   styleUrls: ['./vehicle.component.css']
 })
-export class VehicleComponent implements OnInit,OnChanges,AfterViewChecked{
+export class VehicleComponent implements OnInit,OnChanges,AfterViewChecked {
   @Input() id: string = '';
   @Input() value: any = null;
   @Input() settings: VehiclesSettings = VEHICLES_LIST_DEFAULT;
   @Input() vehiclesArrSelected: Vehicle[] = [];
   @Input() vehiclesArr: Vehicle[] = [];
   @Input() fGRoot!: FormGroup;
-
   @Input() readOnly: boolean = false;
 
   @Output() isValid: EventEmitter<boolean> = new EventEmitter<boolean>();
-  columnsVehiculo: DTColumn[] = [];
+  columnsVehiculos: DTColumn[] = [];
   fVehicles: FormArray = new FormArray([]);
   fGVehicles = new FormGroup({});
   ownerTypes = [...OWNER_TYPES];
@@ -110,23 +129,24 @@ export class VehicleComponent implements OnInit,OnChanges,AfterViewChecked{
   vehiclesCurrent: Vehicle = { id: "", license_plate: "" };
   materialCurrent: any = { description: "", mark: "", model: "", color: "", serial: "", year: "", license_plate: "" }
   listVehiculos: any[] = [];
-  @ViewChild("tableVehiculo") table!: GenericTableComponent ;
- 
+  
+  @ViewChild("tableVehiculos") table!: GenericTableComponent;
   displayedColumns: string[] = ['description', 'mark', 'model', 'color','serial','year', 'license_plate','star'];
   dataToDisplay = [...ELEMENT_DATA];
   displayedColumnsC: string[] = ['cargado'];
+  dataToDisplayC = [...ELEMENT_CARGA];
   datadisplayaux=[...ELEMENT_DATA];
-  
-  dataSource = new DataSourceVa(this.dataToDisplay);
+  dataSourceC = new DataSourceCarga(this.dataToDisplayC);
+  dataSource = new DataSourceV(this.dataToDisplay);
   constructor(private fB: FormBuilder, private toastr: ToastrService, public dialog: MatDialog) {
   }
   ngAfterViewChecked(): void {
     this.table.refresh({}, this.fVehicles.controls);
   }
   ngOnInit(): void {
-    this.columnsVehiculo = [];
+    this.columnsVehiculos = [];
     if(this.settings.showTokenField)
-      this.columnsVehiculo.push(
+      this.columnsVehiculos.push(
         {
           attribute:"license_plate",
           header: "Placa",
@@ -134,46 +154,47 @@ export class VehicleComponent implements OnInit,OnChanges,AfterViewChecked{
         },
       );
     if(this.settings.showNameField)
-      this.columnsVehiculo.push({
+      this.columnsVehiculos.push({
           attribute: "owner_full_name",
           header:"Nombres y apellidos",
           template: "idnombre"
         });
     if(this.settings.showNameField)
-      this.columnsVehiculo.push({
+      this.columnsVehiculos.push({
         attribute:"owner_type",
         header: "Tipo propietario",
         template: "idtipop"
       },);
     if(this.settings.showMovementTypeField)
-      this.columnsVehiculo.push({
+      this.columnsVehiculos.push({
         attribute:"movement_type",
         header: " Tipo de movimiento",
         template: "idtipom"
       });
 
     if(this.settings.showHourField)
-      this.columnsVehiculo.push({
+      this.columnsVehiculos.push({
         attribute: "hour",
         header: "Hora",
         template: "idhora"
       });
 
     if(this.settings.showEntryField)
-      this.columnsVehiculo.push({
+      this.columnsVehiculos.push({
         attribute: "entry",
         header: "Ingreso de herramienta o equipo",
         template: "idheq"
       });
       if(this.settings.showProtocolField)
-      this.columnsVehiculo.push({
+      this.columnsVehiculos.push({
         attribute: "protocol",
         header: "Cumplio protocolo",
         template: "idprotocolo"
       });
 
+
     if(!this.readOnly)
-      this.columnsVehiculo.push({
+      this.columnsVehiculos.push({
         attribute: "id",
         header: "",
         template: "opciones"
@@ -213,7 +234,6 @@ export class VehicleComponent implements OnInit,OnChanges,AfterViewChecked{
       });
       this.vehiclesCurrent = values.vehicles;
     });
-
   }
 
   ngOnChanges(change: SimpleChanges): void {
@@ -268,8 +288,10 @@ export class VehicleComponent implements OnInit,OnChanges,AfterViewChecked{
     this.vehiclesCurrent = { ...{ id: "", license_plate: "" } };
     
     this.listVehiculos = [...this.fVehicles.value];
+
     if(!this.readOnly)
-       this.table.refresh({}, this.fVehicles.controls);
+      this.table.refresh({}, this.fVehicles.controls);
+
   }
 
   addMaterial(i: number) {
@@ -327,7 +349,6 @@ export class VehicleComponent implements OnInit,OnChanges,AfterViewChecked{
           if (!found) this.fVehicles.removeAt(index);
         }); */
   }
-
 
   createVehicle() {
     const dialogRef = this.dialog.open(CreateAndEditVehicleComponent, {
