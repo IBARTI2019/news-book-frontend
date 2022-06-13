@@ -1,0 +1,121 @@
+
+<mat-card>
+  <app-card-header modulo="Materiales" menu="{{ update ? 'Actualizar Material' : 'Crear Material' }}">
+  </app-card-header>
+  <mat-card-content>
+    <form [formGroup]="fg" fxLayout="column" fxLayoutGap="5px" (ngSubmit)="onSubmit()" #formT="ngForm">
+      <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="5px">
+       
+        <mat-form-field>
+          <mat-label>Descripcion</mat-label>
+          <input matInput placeholder="Descripcion" formControlName="description" />
+        </mat-form-field>
+         <mat-form-field>
+            <mat-label>Marca</mat-label>
+            <input matInput placeholder="Marca" formControlName="mark" />
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Modelo</mat-label>
+            <input matInput placeholder="Modelo" formControlName="model" />
+          </mat-form-field>
+          <mat-form-field>
+           <mat-label>Color</mat-label>
+            <input matInput placeholder="Color" formControlName="color" />
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Serial </mat-label>
+            <input matInput placeholder="Serial del material" formControlName="serial" />
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label> Año</mat-label>
+            <input matInput placeholder="Año" formControlName="year" />
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Placa</mat-label>
+            <input matInput placeholder="Placa" formControlName="licence_plate" />
+          </mat-form-field>
+          
+      </div>
+      <div class="panel-container" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="end">
+        <button mat-raised-button type="button" [mat-dialog-close]="true">Cerrar</button>
+        <button mat-raised-button color="primary" type="submit">{{ update ? 'Actualizar' : 'Agregar' }}</button>
+      </div>
+      <div class="panel-container" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="end" >
+        <table mat-table [dataSource]="dataSource"   >
+        <!-- Position Column -->
+           <ng-container matColumnDef="description">
+               <th mat-header-cell *matHeaderCellDef>Descripcion</th>
+               <td mat-cell *matCellDef="let element">
+                <span class="mobile-label">Descripcion:</span>
+                   {{element.description}}</td>
+           </ng-container>
+     
+            <!-- Name Column -->
+           <ng-container matColumnDef="mark">
+               <th mat-header-cell *matHeaderCellDef>Marca</th>
+               <td mat-cell *matCellDef="let element">
+                <span class="mobile-label">Marca:</span>
+                {{element.mark}}</td>
+           </ng-container>
+     
+           <!-- Weight Column -->
+           <ng-container matColumnDef="model">
+               <th mat-header-cell *matHeaderCellDef>Modelo</th>
+               <td mat-cell *matCellDef="let element">
+                <span class="mobile-label">Modelo:</span>
+                {{element.model}}</td>
+           </ng-container>
+     
+           <!-- Symbol Column -->
+           <ng-container matColumnDef="color">
+               <th mat-header-cell *matHeaderCellDef>Color</th>
+               <td mat-cell *matCellDef="let element">
+                <span class="mobile-label">Color:</span>
+                {{element.color}}</td>
+           </ng-container>
+           <ng-container matColumnDef="serial">
+               <th mat-header-cell *matHeaderCellDef>Serial</th>
+               <td mat-cell *matCellDef="let element">
+                <span class="mobile-label">Serial:</span>
+                {{element.serial}}</td>
+           </ng-container>
+           <ng-container matColumnDef="year">
+               <th mat-header-cell *matHeaderCellDef>Año</th>
+               <td mat-cell *matCellDef="let element">
+                <span class="mobile-label">Año:</span>
+                {{element.year}}</td>
+           </ng-container>
+           <ng-container matColumnDef="license_plate">
+               <th mat-header-cell *matHeaderCellDef>Placa</th>
+               <td mat-cell *matCellDef="let element">
+                <span class="mobile-label">Placa:</span>
+                   {{element.license_plate}}</td>
+           </ng-container>
+           <ng-container matColumnDef="star" >
+                <th mat-header-cell *matHeaderCellDef>Option </th>
+                    <span class="mobile-label">Option:</span>  
+                    <mat-cell *matCellDef="let element; let j = index;"> 
+                        <div *ngIf="!readOnly" fxLayoutAlign="right right" fxFlex="1 1 10%" fxLayout="column">
+                            
+                                <button mat-icon-button color="primary" aria-label="Example icon button with a home icon"  (click)="removeMaterial(j)">
+                                    <mat-icon><span class="material-icons">
+                                        delete
+                                    </span></mat-icon>
+                                  </button>
+                            
+                        </div>                                           
+                          
+                    </mat-cell>
+                                                    
+          </ng-container>
+           <tr mat-header-row *matHeaderRowDef="displayedColumns ;sticky: true"></tr>
+           <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+     </table>
+    </div>
+      
+    </form>
+  </mat-card-content>
+</mat-card>
+   
+          
+    

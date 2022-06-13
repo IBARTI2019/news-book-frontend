@@ -3,7 +3,9 @@ import { FormGroup, FormArray, FormBuilder, Validators, FormControl } from '@ang
 import { MatDialog } from '@angular/material/dialog';
 import { Vehicle, VehiclesSettings } from 'app/interfaces';
 import { CreateAndEditVehicleComponent } from 'app/modules/maestro/vehicle/create-and-edit-vehicle/create-and-edit-vehicle.component';
+import { creatematherComponent } from  'app/componentes/vehicles/vehiclesmaterialesherramientas/vehiclesmaterialesherramientas.component'
 import { ToastrService } from 'ngx-toastr';
+import { ActivatedRoute, Router } from "@angular/router";
 import { DTColumn } from '../generic-table/interface';
 import { GenericTableComponent } from '../generic-table/generic-table.component';
 import {DataSource} from '@angular/cdk/collections';
@@ -110,6 +112,10 @@ export const VEHICLES_LIST_DEFAULT: VehiclesSettings = {
   templateUrl: './vehicles.component.html',
   styleUrls: ['./vehicles.component.css']
 })
+
+
+
+
 export class VehiclesComponent implements OnInit,OnChanges,AfterViewChecked {
   @Input() id: string = '';
   @Input() value: any = null;
@@ -129,7 +135,7 @@ export class VehiclesComponent implements OnInit,OnChanges,AfterViewChecked {
   vehiclesCurrent: Vehicle = { id: "", license_plate: "" };
   materialCurrent: any = { description: "", mark: "", model: "", color: "", serial: "", year: "", license_plate: "" }
   listVehiculos: any[] = [];
-  
+  redirectTo="";
   @ViewChild("tableVehiculos") table!: GenericTableComponent;
   displayedColumns: string[] = ['description', 'mark', 'model', 'color','serial','year', 'license_plate','star'];
   dataToDisplay = [...ELEMENT_DATA];
@@ -138,7 +144,8 @@ export class VehiclesComponent implements OnInit,OnChanges,AfterViewChecked {
   datadisplayaux=[...ELEMENT_DATA];
   dataSourceC = new DataSourceCarga(this.dataToDisplayC);
   dataSource = new DataSourceV(this.dataToDisplay);
-  constructor(private fB: FormBuilder, private toastr: ToastrService, public dialog: MatDialog) {
+  constructor(private fB: FormBuilder, private toastr: ToastrService, public dialog: MatDialog, private router: Router,
+    private route: ActivatedRoute) {
   }
   ngAfterViewChecked(): void {
     this.table.refresh({}, this.fVehicles.controls);
@@ -366,7 +373,23 @@ export class VehiclesComponent implements OnInit,OnChanges,AfterViewChecked {
       }
     });
   }
+  createmather() {
+    const dialogRef = this.dialog.open(creatematherComponent, {
+      data: {
+        modal: true
+      },
+    });
 
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+      if (result?.license_plate) {
+        this.vehiclesCurrent.license_plate = result.license_plate;
+        this.vehiclesArr.push(result);
+        this.addVehicle();
+      }
+    });
+
+  }
   removeVehicle(index: number) {
     this.fVehicles.removeAt(index);
   }

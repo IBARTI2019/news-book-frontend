@@ -99,9 +99,11 @@
                                     entryST.checked ? "SI" : "NO"
                                  }}</mat-slide-toggle>
                                 <mat-error *ngIf="item.controls.entry.hasError('required')">
-                                    El ingreso es <strong>requerido</strong>
+                                  El ingreso es <strong>requerido</strong>
                                 </mat-error>
-                        
+                                <button mat-raised-button type="button"  [disabled]="item.controls.entry.value===false">
+                                    <mat-icon (click)="createmather()">home</mat-icon>
+                                  </button>
                     </ng-container>   
                 </ng-template>
                 <ng-template #templateProtocolo let-column="column" let-item="item" let-i="i">
@@ -268,7 +270,7 @@
                                 </div>
                             </div>
 
-                           
+
                             <table mat-table [dataSource]="dataSource"  [class.isMobile]="isMobile" >
                                 <!-- Position Column -->
                                    <ng-container matColumnDef="description">
