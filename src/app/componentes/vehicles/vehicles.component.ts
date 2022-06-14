@@ -383,8 +383,8 @@ export class VehiclesComponent implements OnInit,OnChanges,AfterViewChecked {
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
       if (result?.license_plate) {
-        this.vehiclesCurrent.license_plate = result.license_plate;
-        this.vehiclesArr.push(result);
+        this.materialCurrent.licence_plate= result.license_plate;
+        this.materialCurrent.push(result);
         this.addVehicle();
       }
     });

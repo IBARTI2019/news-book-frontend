@@ -51,9 +51,11 @@ export class creatematherComponent implements OnInit {
   submitted = false;
   update = false;
   id = "";
+  i:number=1;
   routeState: any;
   redirectTo = "";
   @Input() modal = false;
+  materialCurrent: any = { description: "", mark: "", model: "", color: "", serial: "", year: "", license_plate: "" }
   displayedColumns: string[] = ['description', 'mark', 'model', 'color','serial','year', 'license_plate','star'];
   dataToDisplay = [...ELEMENT_DATA];
   displayedColumnsC: string[] = ['cargado'];
@@ -81,30 +83,31 @@ export class creatematherComponent implements OnInit {
   ngOnInit() {
     this.id = this.route.snapshot.params.id ? this.route.snapshot.params.id : this.data.id;
     this.redirectTo = this.routeState.redirectTo || ""
-
+     
     this.fg = this.fb.group(
       {
         description: ["",],
-        mark: ["", Validators.required],
-        model: ["", Validators.required],
-        color: ["", Validators.required],
-        serial: ["", Validators.required],
-        year: ["", Validators.required],
-        licence_plate: ["", Validators.required],
-        is_active: [true, Validators.required],
+        mark: ["", ],
+        model: ["", ],
+        color: ["", ],
+        serial: ["",],
+        year: ["", ],
+        licence_plate: ["", ],
+        
       },
       {}
     );
+    this.materialCurrent[this.i]= this.fg.value;
+    
     if (this.id) {
       this.update = true;
-      this.getMaterial();
+      this.materialCurrent=this.fg.value
+      this.dataSource = new DataSourceV(this.fg.value);
+      
     }
   }
 
-  onSubmit() {
-    if (this.fg.invalid) {
-      return;
-    }
+  onSubmit() { 
     this.submitted = true;
     this.update ? this.updateMaterial() : this.save();
   }
@@ -112,25 +115,39 @@ export class creatematherComponent implements OnInit {
   onReset() {
     this.submitted = false;
     this.fg.reset();
-    this.router.navigate([this.redirectTo || "materials"]);
+    
   }
 
   save() {
-    this.materialService.add(this.fg.value).subscribe(
-      (data) => {
-        this.toastr.success("Datos del Material creado con éxito");
-        this.submitted = false;
-          this.fg.reset();
-          this.mdDialogRef.close(data);
-          
-      },
-      (error: HttpErrorResponse) => {
-        this.submitted = false;
-        this.toastr.error(error.error.message || "No se pudo crear los datos");
-      }
-    );
+    this.submitted = true;
+    this.fg.reset();
   }
-
+  addMaterial(i: number) {
+    let error: boolean = false;
+    this.materialCurrent= this.fg.value;
+    
+    Object.keys(this.materialCurrent).forEach((key: string = 'description') => {
+      if (error)
+        return;
+      if (!this.materialCurrent[key]) {
+        this.toastr.error("Debe llenar todos los campos para registrar una material, herramienta o equipo");
+        error = true;
+      }
+    });
+    if (error) return;
+    //this.fVehicles.controls[i].get('materials')?.value.value.push({ ...this.materialCurrent });
+    const randomElementIndex = i ;
+    ELEMENT_DATA[randomElementIndex]={ ...this.materialCurrent }
+    
+    this.dataToDisplay = [...this.dataToDisplay, ELEMENT_DATA[randomElementIndex]];
+    this.dataSource.setData(this.dataToDisplay);
+    
+     this.i=this.i + 1;
+     
+    this.materialCurrent = { ...{ description: "", mark: "", model: "", color: "", serial: "", year: "", license_plate: "" } };
+    this.fg.reset;
+    
+  }
   getMaterial() {
     this.materialService.get(this.id).subscribe(
       (data: Material) => {
@@ -150,8 +167,8 @@ export class creatematherComponent implements OnInit {
       (data) => {
         this.toastr.success("Datos Material  actualizado");
         this.submitted = false;
-        // this.fg.reset();
-        // this.router.navigate(["materials"]);
+        //this.fg.reset();
+        //this.router.navigate(["materials"]);
       },
       (error: HttpErrorResponse) => {
         this.submitted = false;
@@ -160,5 +177,11 @@ export class creatematherComponent implements OnInit {
         );
       }
     );
+  }
+  removeMaterial(index_material: number): void {
+    if (index_material> -1) {
+      this.datadisplayaux= this.dataToDisplay.splice(index_material,1);
+      this.dataSource.setData(this.dataToDisplay);
+    }
   }
 }
