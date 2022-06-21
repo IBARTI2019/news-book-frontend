@@ -153,7 +153,7 @@ export class PersonComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('Dialog ojo result:', result );
+      console.log('Dialog Result:', result );
       if (result?.doc_ident) {
         this.personsArr.push(result);
         this.fPerson.get("identification_number")!.setValue(result.doc_ident);

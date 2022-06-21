@@ -48,14 +48,14 @@
         </mat-form-field>
       </div>
       <div class="panel-container" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="end">
-        <button mat-icon-button color="primary" aria-label="Example icon button with a home icon"  (click)="addMaterial(i)">
+        <button mat-icon-button color="primary"  (click)="addMaterial(i)">
           <mat-icon><span class="material-icons">
               add_shopping_cart
               </span></mat-icon>
         </button>
       </div>
-      <div class="panel-container" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="end" >
-        <table mat-table [dataSource]="dataSource"   >
+      <div class="panel-container"  [formGroup]="fg" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" >
+        <table mat-table [dataSource]="dataSource"  >
         <!-- Position Column -->
            <ng-container matColumnDef="description">
                <th mat-header-cell *matHeaderCellDef>Descripcion</th>
@@ -122,12 +122,12 @@
                     </mat-cell>
                                                     
           </ng-container>
-           <tr mat-header-row *matHeaderRowDef="displayedColumns ;sticky: true"></tr>
+           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
      </table>
     </div>
     <div class="panel-container" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="end">
-      <button mat-raised-button type="button" [mat-dialog-close]="true">Cerrar</button>
+      <button mat-button [mat-dialog-close]="data.materialCurrentaux" cdkFocusInitial>Cerrar</button>
       </div>
     </form>
   </mat-card-content>

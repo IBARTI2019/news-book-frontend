@@ -11,6 +11,9 @@ import { GenericTableComponent } from '../generic-table/generic-table.component'
 import {DataSource} from '@angular/cdk/collections';
 import {Observable, ReplaySubject} from 'rxjs';
 
+
+
+
 export interface PeriodicCarga {
   cargado: string;
     
@@ -124,7 +127,8 @@ export class VehiclesComponent implements OnInit,OnChanges,AfterViewChecked {
   @Input() vehiclesArr: Vehicle[] = [];
   @Input() fGRoot!: FormGroup;
   @Input() readOnly: boolean = false;
-
+  @Input() materialCurrentaux: any = [...ELEMENT_DATA];
+  materialo: any = [...ELEMENT_DATA];
   @Output() isValid: EventEmitter<boolean> = new EventEmitter<boolean>();
   columnsVehiculos: DTColumn[] = [];
   fVehicles: FormArray = new FormArray([]);
@@ -135,6 +139,7 @@ export class VehiclesComponent implements OnInit,OnChanges,AfterViewChecked {
   vehiclesCurrent: Vehicle = { id: "", license_plate: "" };
   materialCurrent: any = { description: "", mark: "", model: "", color: "", serial: "", year: "", license_plate: "" }
   listVehiculos: any[] = [];
+  materiaprueba:any[] = [];
   redirectTo="";
   @ViewChild("tableVehiculos") table!: GenericTableComponent;
   displayedColumns: string[] = ['description', 'mark', 'model', 'color','serial','year', 'license_plate','star'];
@@ -144,9 +149,12 @@ export class VehiclesComponent implements OnInit,OnChanges,AfterViewChecked {
   datadisplayaux=[...ELEMENT_DATA];
   dataSourceC = new DataSourceCarga(this.dataToDisplayC);
   dataSource = new DataSourceV(this.dataToDisplay);
-  constructor(private fB: FormBuilder, private toastr: ToastrService, public dialog: MatDialog, private router: Router,
+  
+  constructor(private fB: FormBuilder, 
+    private toastr: ToastrService, public dialog: MatDialog, private router: Router,
     private route: ActivatedRoute) {
   }
+  
   ngAfterViewChecked(): void {
     this.table.refresh({}, this.fVehicles.controls);
   }
@@ -245,6 +253,7 @@ export class VehiclesComponent implements OnInit,OnChanges,AfterViewChecked {
 
   ngOnChanges(change: SimpleChanges): void {
     if (change.settings && change.settings.firstChange) {
+      
       this.settings = change.settings.currentValue || {
         ...VEHICLES_LIST_DEFAULT,
       }
@@ -318,14 +327,15 @@ export class VehiclesComponent implements OnInit,OnChanges,AfterViewChecked {
     console.log( ELEMENT_DATA[randomElementIndex]);
     this.dataToDisplay = [...this.dataToDisplay, ELEMENT_DATA[randomElementIndex]];
     this.dataSource.setData(this.dataToDisplay);
-    
+
     this.materialCurrent = { ...{ description: "", mark: "", model: "", color: "", serial: "", year: "", license_plate: "" } };
-    
-    /*     let _materials_currents = this.fVehicles.controls[i].get('materials')?.value.value || []
-        let _materials = _materials_currents.push(this.materialCurrent);
-        let f = this.fVehicles.controls[i].patchValue({
-          materials: _materials
-        }); */
+    this.fGVehicles.controls[i].get('materials')?.value.value.push({ ...this.dataToDisplay });
+   
+    //let _materials_currents = this.fVehicles.controls[i].get('materials')?.value.value || []
+       // let _materials = _materials_currents.push(this.materialCurrent);
+        //let f = this.fVehicles.controls[i].patchValue({
+        //  materials: _materials
+       // }); //
   }
 
   removeMaterial(index_material: number): void {
@@ -375,23 +385,26 @@ export class VehiclesComponent implements OnInit,OnChanges,AfterViewChecked {
   }
   createmather() {
     const dialogRef = this.dialog.open(creatematherComponent, {
-      data: {
-        modal: true
-      },
+      data: { materialCurrenAux: this.materiaprueba}
+      
     });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
-      if (result?.license_plate) {
-        this.materialCurrent.licence_plate= result.license_plate;
-        this.materialCurrent.push(result);
-        this.addVehicle();
+    
+    dialogRef.afterClosed().subscribe(data => {
+      console.log(`Dialog Policia: ${data}`);
+      if (data) {
+         this.materiaprueba=data;
+         this.materialo=data;
+         this.materialCurrent=data;
+         console.log(this.materialCurrent)
+            
       }
     });
-
+    
   }
   removeVehicle(index: number) {
     this.fVehicles.removeAt(index);
   }
-  
+  retornarAleatorio(mat:any) {
+    return mat;
+  }
 }
