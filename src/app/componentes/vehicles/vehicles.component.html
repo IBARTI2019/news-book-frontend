@@ -6,9 +6,9 @@
             Nuevo
         </button>
     </div>
-    <div fxFlex="{{ settings.percentage }}" fxLayout="row" style="height: 50px">
+    <div fxFlex="{{ settings.percentage }}"   fxLayout="row" style="height: 50px" >
         <form fxFlex="{{ settings.percentage }}" [formGroup]="fGVehicles">
-            <div fxFlex fxLayout="row wrap" fxLayoutGap="1px grid">
+            <div fxFlex fxLayout="row wrap"  fxLayoutGap="1px grid">
                 <mat-form-field fxFlex="1 0 30%" appearance="fill" *ngIf="!readOnly">
                     <mat-label>Placa</mat-label>
                     <input matInput placeholder="Placa" [(ngModel)]="vehiclesCurrent.license_plate"
@@ -22,7 +22,7 @@
         </form>
     </div>
     
-    <div class="d-flex flex-wrap" >
+    <div class="d-flex flex-wrap" fxLayoutGap="1px" >
                <ng-template #templateOpciones let-column="column" let-item="item" let-i="i">
                         <button mat-raised-button type="button">
                           <mat-icon (click)=" removeVehicle(i)">delete_sweep</mat-icon>
@@ -115,7 +115,7 @@
                     </ng-container>    
                 </ng-template>
                  <!-- Inicio Bloque Collapsed -->
-                <ng-template #templateC let-column="column" let-item="item" let-i="i" >  
+                <ng-template #templateC  let-column="column" let-item="item" let-i="i" >  
                     <ng-container [formGroup]="item" > 
                        <div fxLayout="row wrap">
                            <div fxLayout="row wrap" *ngIf="settings.showEntryField && item.controls.owner_type.value === 'cargo_vehicle'" fxLayoutGap="5px grid" fxFlex="100" style="background-color: #ffffff;" class="item mat-toolbar">
@@ -198,7 +198,7 @@
                     </div>
                     <div fxLayout="row wrap" *ngIf="settings.showEntryField && item.controls.entry.value === true" fxLayoutGap="5px grid" fxFlex="100" style="background-color: #ffffff" class="item mat-toolbar">
                         
-                        <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap="5px grid">
+                        <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap="5px grid" *ngFor="let material of fVehicles.controls; index as i;">
                             <div fxLayoutAlign="center center" fxFlex="100" fxLayout="column"
                                 class="item mat-toolbar mat-primary">
                                     Objetos maquinas herramientas o equipos con que ingresa
@@ -267,6 +267,7 @@
                             <div *ngIf="!readOnly"  fxFlex="1 1 10%" fxLayout="column">
                                 
                                     <button mat-raised-button type="button">
+                                        
                                         <mat-icon (click)="addMaterial(i)">add_shopping_cart</mat-icon>
                                       </button>
                                     
@@ -275,8 +276,11 @@
                         </div>  
 
 
-                            <table mat-table [dataSource]="dataSource"  [class.isMobile]="isMobile" >
-                                <!-- Position Column -->
+                            <table mat-table [dataSource]="dataSource" >
+                                
+                                                                                          
+                               
+                                <!---ition Column -->
                                    <ng-container matColumnDef="description">
                                        <th mat-header-cell *matHeaderCellDef>Descripcion</th>
                                        <td mat-cell *matCellDef="let element">
@@ -332,7 +336,7 @@
                                                 <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="5px grid">
                                 
                                                     <button mat-raised-button type="button" >
-                                                        <mat-icon (click)="removeMaterial(j)">delete_sweep</mat-icon>
+                                                        <mat-icon (click)="removeMaterial(i,j)">delete_sweep</mat-icon>
                                                       </button>
                                                     
                                                 
@@ -341,11 +345,12 @@
                                                                                
                                   </ng-container>
                                    <tr mat-header-row *matHeaderRowDef="displayedColumns ;sticky: true"></tr>
-                                   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-                             </table>
+                                   <tr mat-row *matRowDef="let row=i; columns: displayedColumns;"></tr>
+                                
+                                </table>
                                   
-                             
-                                   <div fxLayout="row" fxFlex="100" *ngFor="let material of item.controls.materials.value.value; index as i_material;" fxLayoutGap="1px">
+                                  <!--
+                                   <div fxLayout="row" fxFlex="100" *ngFor="let material of item.controls.materials.value.value; index as i;" fxLayoutGap="1px">
                                     <div fxLayoutAlign="center center" fxFlex="1 0 25%" fxLayout="column" class="item">
                                         {{material.description}}
                                    </div>
@@ -368,12 +373,12 @@
                                         {{material.license_plate}}
                                    </div>
                                    <div fxFlex="1 1 10%" fxLayoutAlign="center center" fxLayout="column" class="item">
-                                       <button mat-raised-button type="button" (click)="removeMaterial(i_material)">
+                                       <button mat-raised-button type="button" (click)="removeMaterial(i)">
                                            <mat-icon>delete_sweep</mat-icon>
                                        </button>
                                     </div>
                                                                    
-                               </div>
+                               </div> -->
                             
                         </div>
                     </ng-container>    

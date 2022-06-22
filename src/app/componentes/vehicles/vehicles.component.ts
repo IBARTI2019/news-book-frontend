@@ -307,7 +307,7 @@ export class VehiclesComponent implements OnInit,OnChanges,AfterViewChecked {
 
     if(!this.readOnly)
       this.table.refresh({}, this.fVehicles.controls);
-
+      
   }
 
   addMaterial(i: number) {
@@ -321,27 +321,22 @@ export class VehiclesComponent implements OnInit,OnChanges,AfterViewChecked {
       }
     });
     if (error) return;
-    //this.fVehicles.controls[i].get('materials')?.value.value.push({ ...this.materialCurrent });
+
     const randomElementIndex = i ;
     ELEMENT_DATA[randomElementIndex]={ ...this.materialCurrent }
-    console.log( ELEMENT_DATA[randomElementIndex]);
+    console.log(this.materialCurrent);
     this.dataToDisplay = [...this.dataToDisplay, ELEMENT_DATA[randomElementIndex]];
     this.dataSource.setData(this.dataToDisplay);
-
+    this.fVehicles.controls[i].get('materials')?.value.value.push({ ... this.materialCurrent });
+    
     this.materialCurrent = { ...{ description: "", mark: "", model: "", color: "", serial: "", year: "", license_plate: "" } };
-    this.fGVehicles.controls[i].get('materials')?.value.value.push({ ...this.dataToDisplay });
-   
-    //let _materials_currents = this.fVehicles.controls[i].get('materials')?.value.value || []
-       // let _materials = _materials_currents.push(this.materialCurrent);
-        //let f = this.fVehicles.controls[i].patchValue({
-        //  materials: _materials
-       // }); //
   }
 
-  removeMaterial(index_material: number): void {
+  removeMaterial(index_form: number,index_material: number): void {
     if (index_material> -1) {
       this.datadisplayaux= this.dataToDisplay.splice(index_material,1);
       this.dataSource.setData(this.dataToDisplay);
+      this.fVehicles.controls[index_form].get('materials')?.value.value.splice(index_material,1);
     }
   }
 
