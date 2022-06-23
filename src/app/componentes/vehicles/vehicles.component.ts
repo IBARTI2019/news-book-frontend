@@ -148,7 +148,7 @@ export class VehiclesComponent implements OnInit,OnChanges,AfterViewChecked {
   dataToDisplayC = [...ELEMENT_CARGA];
   datadisplayaux=[...ELEMENT_DATA];
   dataSourceC = new DataSourceCarga(this.dataToDisplayC);
-  dataSource = new DataSourceV(this.dataToDisplay);
+  dataSource=  Array (new DataSourceV(this.dataToDisplay));
   
   constructor(private fB: FormBuilder, 
     private toastr: ToastrService, public dialog: MatDialog, private router: Router,
@@ -157,6 +157,10 @@ export class VehiclesComponent implements OnInit,OnChanges,AfterViewChecked {
   
   ngAfterViewChecked(): void {
     this.table.refresh({}, this.fVehicles.controls);
+    for (var index = 0; index < this.fVehicles.controls.length; index++) {
+      this.dataSource[index].setData(this.fVehicles.controls[0].get('materials')?.value.value);
+     }
+    
   }
   ngOnInit(): void {
     this.columnsVehiculos = [];
@@ -305,8 +309,11 @@ export class VehiclesComponent implements OnInit,OnChanges,AfterViewChecked {
     
     this.listVehiculos = [...this.fVehicles.value];
 
-    if(!this.readOnly)
+    if(!this.readOnly){
       this.table.refresh({}, this.fVehicles.controls);
+      
+    
+    }
       
   }
 
@@ -324,9 +331,8 @@ export class VehiclesComponent implements OnInit,OnChanges,AfterViewChecked {
 
     const randomElementIndex = i ;
     ELEMENT_DATA[randomElementIndex]={ ...this.materialCurrent }
-    console.log(this.materialCurrent);
     this.dataToDisplay = [...this.dataToDisplay, ELEMENT_DATA[randomElementIndex]];
-    this.dataSource.setData(this.dataToDisplay);
+    this.dataSource[i].setData(this.dataToDisplay);
     this.fVehicles.controls[i].get('materials')?.value.value.push({ ... this.materialCurrent });
     
     this.materialCurrent = { ...{ description: "", mark: "", model: "", color: "", serial: "", year: "", license_plate: "" } };
@@ -335,8 +341,8 @@ export class VehiclesComponent implements OnInit,OnChanges,AfterViewChecked {
   removeMaterial(index_form: number,index_material: number): void {
     if (index_material> -1) {
       this.datadisplayaux= this.dataToDisplay.splice(index_material,1);
-      this.dataSource.setData(this.dataToDisplay);
-      this.fVehicles.controls[index_form].get('materials')?.value.value.splice(index_material,1);
+      this.dataSource[0].setData(this.dataToDisplay);
+      this.fVehicles.controls[0].get('materials')?.value.value.splice(index_material,1);
     }
   }
 

@@ -152,6 +152,7 @@ export class CreateAndEditNewComponent implements OnInit {
   }
 
   save(data: any) {
+    
     this.currentNew.info = data;
     try{
     this.currentNew.template = JSON.parse(this.currentNew.template);
