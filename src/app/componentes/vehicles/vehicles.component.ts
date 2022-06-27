@@ -148,7 +148,7 @@ export class VehiclesComponent implements OnInit,OnChanges,AfterViewChecked {
   dataToDisplayC = [...ELEMENT_CARGA];
   datadisplayaux=[...ELEMENT_DATA];
   dataSourceC = new DataSourceCarga(this.dataToDisplayC);
-  dataSource=  Array (new DataSourceV(this.dataToDisplay));
+  dataSource=  Array (new DataSourceV(this.dataToDisplay)) ;
   
   constructor(private fB: FormBuilder, 
     private toastr: ToastrService, public dialog: MatDialog, private router: Router,
@@ -158,7 +158,8 @@ export class VehiclesComponent implements OnInit,OnChanges,AfterViewChecked {
   ngAfterViewChecked(): void {
     this.table.refresh({}, this.fVehicles.controls);
     for (var index = 0; index < this.fVehicles.controls.length; index++) {
-      this.dataSource[index].setData(this.fVehicles.controls[0].get('materials')?.value.value);
+      this.dataSource[index].setData(this.fVehicles.controls[index].get('materials')?.value.value);
+      
      }
     
   }
@@ -317,7 +318,7 @@ export class VehiclesComponent implements OnInit,OnChanges,AfterViewChecked {
       
   }
 
-  addMaterial(i: number) {
+  addMaterial(i: number,j: number) {
     let error: boolean = false;
     Object.keys(this.materialCurrent).forEach((key: string = 'description') => {
       if (error)
@@ -329,20 +330,23 @@ export class VehiclesComponent implements OnInit,OnChanges,AfterViewChecked {
     });
     if (error) return;
 
-    const randomElementIndex = i ;
+    const randomElementIndex = j ;
     ELEMENT_DATA[randomElementIndex]={ ...this.materialCurrent }
     this.dataToDisplay = [...this.dataToDisplay, ELEMENT_DATA[randomElementIndex]];
+   
     this.dataSource[i].setData(this.dataToDisplay);
     this.fVehicles.controls[i].get('materials')?.value.value.push({ ... this.materialCurrent });
-    
-    this.materialCurrent = { ...{ description: "", mark: "", model: "", color: "", serial: "", year: "", license_plate: "" } };
+   this.materialCurrent = { ...{ description: "", mark: "", model: "", color: "", serial: "", year: "", license_plate: "" } };
+   i= i+ 1;
+   this.dataSource=Array(i)
+   this.dataSource= Array (new DataSourceV(this.materialCurrent))
   }
 
   removeMaterial(index_form: number,index_material: number): void {
     if (index_material> -1) {
       this.datadisplayaux= this.dataToDisplay.splice(index_material,1);
-      this.dataSource[0].setData(this.dataToDisplay);
-      this.fVehicles.controls[0].get('materials')?.value.value.splice(index_material,1);
+      this.dataSource[index_form].setData(this.dataToDisplay);
+      this.fVehicles.controls[index_form].get('materials')?.value.value.splice(index_material,1);
     }
   }
 

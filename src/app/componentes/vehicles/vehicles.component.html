@@ -21,7 +21,8 @@
         </form>
     </div>
     
-     <div class="d-flex flex-wrap" fxLayoutGap="1px"   *ngFor="let item of fVehicles.controls; index as v;">
+    <div fxFlex="{{ settings.percentage }}" fxLayout="row wrad" *ngFor="let fVehicles of fVehicles.controls; index as v;" fxLayoutGap="1px">
+        <ng-container [formGroup]="fVehicles" *ngIf="v>=0">
         
                <ng-template #templateOpciones let-column="column" let-item="item" let-i="i">
                         <button mat-raised-button type="button">
@@ -116,7 +117,7 @@
                 </ng-template>
                  <!-- Inicio Bloque Collapsed -->
                 <ng-template #templateC  let-column="column" let-item="item" let-i="i"  >  
-                    <ng-container [formGroup]="item" > 
+                    <ng-container [formGroup]="fVehicles" *ngIf="fVehicles.controls.license_plate===fVehicles.controls.license_plate" > 
                        <div fxLayout="row wrap">
                            <div fxLayout="row wrap" *ngIf="settings.showEntryField && item.controls.owner_type.value === 'cargo_vehicle'" fxLayoutGap="5px grid" fxFlex="100" style="background-color: #ffffff;" class="item mat-toolbar">
                             <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap="5px grid">
@@ -196,10 +197,10 @@
                             </div>
                             </div>
                        </div>
-                       <br><br>
-                    <div fxLayout="row wrap" *ngIf="settings.showEntryField && item.controls.entry.value === true" fxLayoutGap="5px grid" fxFlex="100" style="background-color: #ffffff" class="item mat-toolbar">
+                       
+                    <div fxLayout="row wrap" *ngIf="settings.showEntryField && item.controls.entry.value === true " fxLayoutGap="5px grid" fxFlex="100" style="background-color: #ffffff" class="item mat-toolbar">
                         
-                        <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap="5px grid" *ngFor="let material of fVehicles.controls; index as i;">
+                        <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap="5px grid">
                             <div fxLayoutAlign="center center" fxFlex="100" fxLayout="column"
                                 class="item mat-toolbar mat-primary">
                                     Objetos maquinas herramientas o equipos con que ingresa
@@ -269,14 +270,15 @@
                                 
                                     <button mat-raised-button type="button">
                                         
-                                        <mat-icon (click)="addMaterial(i)">add_shopping_cart</mat-icon>
+                                        <mat-icon (click)="addMaterial(v,i)">add_shopping_cart</mat-icon>
                                       </button>
                                     
                                 
                             </div>
                         </div>  
 
-
+                        <div fxLayout="row" fxFlex="100">
+                  
                             <table mat-table [dataSource]="dataSource[v]" >
                                 
                                                                                           
@@ -345,11 +347,11 @@
                                             </mat-cell>
                                                                                
                                   </ng-container>
-                                   <tr mat-header-row *matHeaderRowDef="displayedColumns ;sticky: true"></tr>
+                                   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                                 
                                 </table>
-                                  
+                            </div>
                                   
                         </div>
                     </ng-container>
@@ -357,11 +359,11 @@
                   </ng-template>
             
                   <!-- Fin del Bloque Collapsed -->
-              <app-generic-table  [openHoverCollapsed]="true" [hidden]="fVehicles.value.length===0"  fxFlex="100" [columns]="columnsVehiculos" [showFilter]="false" [btnRefresh]="false" 
+              <app-generic-table  [openHoverCollapsed]="true" [hidden]="v>0"  fxFlex="100" [columns]="columnsVehiculos" [showFilter]="false" [btnRefresh]="false" 
                   [is_paged]="false" [templateCollapsed]="{template:templateC}" [templates]="{opciones: templateOpciones, idplaca: templatePlaca, idnombre: templateNombre,idtipop: templatePropietario, idtipom: templateMovimiento,  idhora: templateHora,  idheq: templateHerramienta,idprotocolo: templateProtocolo}" #tableVehiculos>
               </app-generic-table>
                  
-        
+        </ng-container>
                 
     </div>   
          

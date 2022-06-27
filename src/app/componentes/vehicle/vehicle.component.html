@@ -23,8 +23,9 @@
         </form>
     </div>
     <div fxFlex fxLayout="row wrap" fxLayoutGap="1px grid">
-      <div class="d-flex flex-wrap" *ngFor="let item of fVehicles.controls; index as v;">
-         <ng-container [formGroup]="item">   
+        <div fxFlex="{{ settings.percentage }}" fxLayout="row wrad" *ngFor="let fVehicles of fVehicles.controls; index as i;" fxLayoutGap="1px">
+  
+         <ng-container [formGroup]="fVehicles">   
                <ng-template #templateOpciones let-column="column" let-item="item" let-i="i">
                         <button mat-raised-button type="button">
                           <mat-icon (click)=" removeVehicle(i)">delete_sweep</mat-icon>
