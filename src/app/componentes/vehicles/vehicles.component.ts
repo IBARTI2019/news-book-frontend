@@ -127,6 +127,7 @@ export class VehiclesComponent implements OnInit,OnChanges,AfterViewChecked {
   @Input() vehiclesArr: Vehicle[] = [];
   @Input() fGRoot!: FormGroup;
   @Input() readOnly: boolean = false;
+  @Input() k: number=0;
   @Input() materialCurrentaux: any = [...ELEMENT_DATA];
   materialo: any = [...ELEMENT_DATA];
   @Output() isValid: EventEmitter<boolean> = new EventEmitter<boolean>();
@@ -148,7 +149,7 @@ export class VehiclesComponent implements OnInit,OnChanges,AfterViewChecked {
   dataToDisplayC = [...ELEMENT_CARGA];
   datadisplayaux=[...ELEMENT_DATA];
   dataSourceC = new DataSourceCarga(this.dataToDisplayC);
-  dataSource=  Array (new DataSourceV(this.dataToDisplay)) ;
+  dataSource= new Array(new DataSourceV(this.dataToDisplay));
   
   constructor(private fB: FormBuilder, 
     private toastr: ToastrService, public dialog: MatDialog, private router: Router,
@@ -309,13 +310,14 @@ export class VehiclesComponent implements OnInit,OnChanges,AfterViewChecked {
     this.vehiclesCurrent = { ...{ id: "", license_plate: "" } };
     
     this.listVehiculos = [...this.fVehicles.value];
-
+   
     if(!this.readOnly){
       this.table.refresh({}, this.fVehicles.controls);
-      
-    
+      this.k=this.listVehiculos.length; 
+      this.dataSource[this.k]=new DataSourceV(this.materialCurrent);
+      console.log(`policia sergio${this.dataSource[0]}`)
     }
-      
+   
   }
 
   addMaterial(i: number,j: number) {
@@ -333,13 +335,11 @@ export class VehiclesComponent implements OnInit,OnChanges,AfterViewChecked {
     const randomElementIndex = j ;
     ELEMENT_DATA[randomElementIndex]={ ...this.materialCurrent }
     this.dataToDisplay = [...this.dataToDisplay, ELEMENT_DATA[randomElementIndex]];
-   
+        
     this.dataSource[i].setData(this.dataToDisplay);
     this.fVehicles.controls[i].get('materials')?.value.value.push({ ... this.materialCurrent });
-   this.materialCurrent = { ...{ description: "", mark: "", model: "", color: "", serial: "", year: "", license_plate: "" } };
-   i= i+ 1;
-   this.dataSource=Array(i)
-   this.dataSource= Array (new DataSourceV(this.materialCurrent))
+    this.materialCurrent = { ...{ description: "", mark: "", model: "", color: "", serial: "", year: "", license_plate: "" } };
+    
   }
 
   removeMaterial(index_form: number,index_material: number): void {
@@ -408,6 +408,7 @@ export class VehiclesComponent implements OnInit,OnChanges,AfterViewChecked {
   }
   removeVehicle(index: number) {
     this.fVehicles.removeAt(index);
+    console.log(`policia Martes:${index}`)
   }
   retornarAleatorio(mat:any) {
     return mat;
