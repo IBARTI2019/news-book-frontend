@@ -10,6 +10,7 @@ import { DTColumn } from '../generic-table/interface';
 import { GenericTableComponent } from '../generic-table/generic-table.component';
 import {DataSource} from '@angular/cdk/collections';
 import {Observable, ReplaySubject} from 'rxjs';
+import { Text } from '@angular/compiler';
 
 
 
@@ -127,7 +128,7 @@ export class VehiclesComponent implements OnInit,OnChanges,AfterViewChecked {
   @Input() vehiclesArr: Vehicle[] = [];
   @Input() fGRoot!: FormGroup;
   @Input() readOnly: boolean = false;
-  @Input() k: number=0;
+  @Input() pos: number = 0;
   @Input() materialCurrentaux: any = [...ELEMENT_DATA];
   materialo: any = [...ELEMENT_DATA];
   @Output() isValid: EventEmitter<boolean> = new EventEmitter<boolean>();
@@ -149,7 +150,7 @@ export class VehiclesComponent implements OnInit,OnChanges,AfterViewChecked {
   dataToDisplayC = [...ELEMENT_CARGA];
   datadisplayaux=[...ELEMENT_DATA];
   dataSourceC = new DataSourceCarga(this.dataToDisplayC);
-  dataSource= new Array(new DataSourceV(this.dataToDisplay));
+  dataSource= new Array (new DataSourceV(this.dataToDisplay));
   
   constructor(private fB: FormBuilder, 
     private toastr: ToastrService, public dialog: MatDialog, private router: Router,
@@ -161,8 +162,9 @@ export class VehiclesComponent implements OnInit,OnChanges,AfterViewChecked {
     for (var index = 0; index < this.fVehicles.controls.length; index++) {
       this.dataSource[index].setData(this.fVehicles.controls[index].get('materials')?.value.value);
       
-     }
-    
+    }
+     
+  
   }
   ngOnInit(): void {
     this.columnsVehiculos = [];
@@ -310,18 +312,17 @@ export class VehiclesComponent implements OnInit,OnChanges,AfterViewChecked {
     this.vehiclesCurrent = { ...{ id: "", license_plate: "" } };
     
     this.listVehiculos = [...this.fVehicles.value];
-   
+    
     if(!this.readOnly){
       this.table.refresh({}, this.fVehicles.controls);
-      this.k=this.listVehiculos.length; 
-      this.dataSource[this.k]=new DataSourceV(this.materialCurrent);
-      console.log(`policia sergio${this.dataSource[0]}`)
+      this.dataSource= new Array (new DataSourceV(this.dataToDisplay),new DataSourceV(this.dataToDisplay),new DataSourceV(this.dataToDisplay));
     }
    
   }
 
   addMaterial(i: number,j: number) {
     let error: boolean = false;
+   
     Object.keys(this.materialCurrent).forEach((key: string = 'description') => {
       if (error)
         return;
@@ -334,19 +335,20 @@ export class VehiclesComponent implements OnInit,OnChanges,AfterViewChecked {
 
     const randomElementIndex = j ;
     ELEMENT_DATA[randomElementIndex]={ ...this.materialCurrent }
+    this.pos=this.fVehicles.controls.length -1;
     this.dataToDisplay = [...this.dataToDisplay, ELEMENT_DATA[randomElementIndex]];
-        
-    this.dataSource[i].setData(this.dataToDisplay);
-    this.fVehicles.controls[i].get('materials')?.value.value.push({ ... this.materialCurrent });
+    this.dataSource[this.pos].setData(this.dataToDisplay);
+    this.fVehicles.controls[this.pos].get('materials')?.value.value.push({ ... this.materialCurrent });
     this.materialCurrent = { ...{ description: "", mark: "", model: "", color: "", serial: "", year: "", license_plate: "" } };
     
   }
 
   removeMaterial(index_form: number,index_material: number): void {
     if (index_material> -1) {
+      this.pos=this.fVehicles.controls.length -1;
       this.datadisplayaux= this.dataToDisplay.splice(index_material,1);
-      this.dataSource[index_form].setData(this.dataToDisplay);
-      this.fVehicles.controls[index_form].get('materials')?.value.value.splice(index_material,1);
+      this.dataSource[this.pos].setData(this.dataToDisplay);
+      this.fVehicles.controls[this.pos].get('materials')?.value.value.splice(index_material,1);
     }
   }
 
@@ -406,11 +408,27 @@ export class VehiclesComponent implements OnInit,OnChanges,AfterViewChecked {
     });
     
   }
-  removeVehicle(index: number) {
-    this.fVehicles.removeAt(index);
-    console.log(`policia Martes:${index}`)
+  removeVehicle(index_v:number): void {
+
+    let exist = false;
+    console.log(index_v)
+    let index = this.vehiclesArr.findIndex(v => v.license_plate == this.vehiclesCurrent.license_plate);
+    if (index > -1)
+      this.vehiclesCurrent = { ...this.vehiclesArr[index] };
+      exist = this.fVehicles.value.find((v: any) => {
+      return v.license_plate === this.vehiclesCurrent.license_plate;
+    });
+    if (exist) {
+      this.fVehicles.removeAt(index);
+      this.toastr.error(`La placa ${this.vehiclesCurrent.license_plate} eliminada con exito`);
+      return;
+    } 
+
   }
-  retornarAleatorio(mat:any) {
-    return mat;
-  }
+  onRowClicked(row:any) {
+    console.log('Row clicked: ', row);
 }
+
+}
+
+

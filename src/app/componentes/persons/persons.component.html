@@ -1,5 +1,4 @@
-<div fxFlex="{{ settings?.percentage || defaultValues.percentage}}" fxLayoutGap="40px" fxLayout="column"
-    style="padding-top: 10px; padding-bottom: 10px;">
+<div fxFlex="{{ settings?.percentage || defaultValues.percentage}}" fxLayoutGap="40px" fxLayout="column" style="padding-top: 10px; padding-bottom: 10px;">
     <div fxFlex="{{ settings.percentage }}" fxLayout="row" style="height: 50px">
         <form fxFlex="{{ settings.percentage }}" [formGroup]="fGPersons">
             <div fxFlex fxLayout="row wrap" fxLayoutGap="1px grid">
@@ -58,8 +57,7 @@
             </div>
         </div>
         <!-- Begin to Dynamic Form -->
-        <div fxFlex="{{ settings.percentage }}" fxLayout="row wrad"
-            *ngFor="let persons of fPersons.controls; index as i;" fxLayoutGap="1px">
+        <div fxFlex="{{ settings.percentage }}" fxLayout="row wrad" *ngFor="let persons of fPersons.controls; index as i;" fxLayoutGap="1px">
             <ng-container [formGroup]="persons">
                 <div *ngIf="settings.showTokenField" fxLayoutAlign="center center" fxFlex="2 0 11%" fxLayout="column"
                     style="background-color: #ffffff" class="item">
@@ -162,8 +160,7 @@
                         <mat-icon>delete_sweep</mat-icon>
                     </button>
                 </div>
-                <div fxLayout="row wrap" *ngIf="settings.showEntryField && persons.controls.entry.value === true"
-                    fxLayoutGap="5px grid" fxFlex="100" style="background-color: #ffffff" class="item mat-toolbar">
+                <div fxLayout="row wrap" *ngIf="settings.showEntryField && persons.controls.entry.value === true" fxLayoutGap="5px grid" fxFlex="100" style="background-color: #ffffff" class="item mat-toolbar">
                     <div fxLayoutAlign="center center" fxFlex="100" fxLayout="column"
                         class="item mat-toolbar mat-primary">
                         Objetos maquinas herramientas o equipos con que ingresa
@@ -299,7 +296,8 @@
                 </div>
                 <br><br>
             </ng-container>
-        </div>
+
+        </div>  <!-- End to Dynamic Form -->
     </div>
 
 </div>

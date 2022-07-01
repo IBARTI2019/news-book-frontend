@@ -38,11 +38,12 @@ export class GenericTableComponent implements OnInit, AfterViewChecked {
   @Input()
   /** Ocultar los filtros */
   showFilters = false;
-
+  
   @Input()
   /** Mostrar los filtro */
   showFilter?: boolean;
-
+  
+  
   @Input()
   /** Columnas de la tabla */
   columns: DTColumn[] = [];
@@ -83,7 +84,7 @@ export class GenericTableComponent implements OnInit, AfterViewChecked {
   @Input()
   /** Texto por defecto en columnas vacías */
   textDefault = 'N/A';
-
+  
   @Input()
   /** Imagen por defecto si la columna imagen es nula */
   imgDefault = '/assets/images/material-default.jpg';
@@ -689,5 +690,12 @@ export class GenericTableComponent implements OnInit, AfterViewChecked {
 
   renderRows(){
     this.tablaMaster.renderRows()
+  }
+  deletefila(row: any): void {
+    const index = this.dataSource.indexOf(row, 0);
+    if (index > -1) {
+      this.dataSource.splice(index, 1);
+    }
+    this.renderRows();
   }
 }
