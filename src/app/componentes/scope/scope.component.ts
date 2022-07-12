@@ -58,6 +58,7 @@ export class ScopeComponent implements OnInit, OnChanges, AfterViewChecked {
   @Input() personsArr: Person[] = [];
   @Input() scopeArr: Scope[] = SCOPE_ARR_DEAFAULT;
   @Input() fGRoot!: FormGroup;
+  @Input() pos: number = 0;
   @Input() readOnly: boolean = true;
   fPerson!: FormGroup;
   @Output() isValid: EventEmitter<boolean> = new EventEmitter<boolean>();
@@ -222,9 +223,18 @@ export class ScopeComponent implements OnInit, OnChanges, AfterViewChecked {
         }); */
   }
 
-  removeSubLine(index: number) {
-    this.fScope.removeAt(index);
-    this.table.refresh({}, this.fScope.controls);
+  removeSubLine(serial: string) {
+    let exist = false;
+    console.log(serial)
+    for (var index = 0; index < this.fScope.controls.length; index++) {
+      let serialaux = this.fScope.controls[index].value.item;
+      if (serial===serialaux) {
+         this.pos =index;
+      }
+    }
+   
+    this.fScope.removeAt(this.pos);
+    
   }
   getPerson(identification_number: string) {
     let index = this.personsArr.findIndex(v => v.identification_number == identification_number);

@@ -26,6 +26,9 @@ import { UserService } from 'app/services/user.service';
 })
 
 export class GenericTableComponent implements OnInit, AfterViewChecked {
+  removeRow(arg0: any) {
+    throw new Error('Method not implemented.');
+  }
 
   @Input()
   /* Campos a filtrar */
@@ -226,6 +229,7 @@ export class GenericTableComponent implements OnInit, AfterViewChecked {
   private sort: any;
 
   @ViewChild(MatTable) tablaMaster!: MatTable<any>;
+  selectedRows: any;
 
   @ViewChild(MatPaginator) set matPaginator(mp: MatPaginator) {
     this.paginator = mp;

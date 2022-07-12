@@ -20,14 +20,14 @@
                     </div>
                 </form>
             </div>
- <div fxFlex fxLayout="row wrap" fxLayoutGap="1px grid"> 
-      <div fxFlex="{{ settings.percentage }}" fxLayout="row wrap"  *ngFor="let fVehicle of fVehicles.controls; index as i;" fxLayoutGap="1px">
+ <div fxFlex fxLayout="row wrap" fxLayoutGap="1px grid" > 
+      <div fxFlex="{{ settings.percentage }}" fxLayout="row wrap"   fxLayoutGap="1px" *ngFor="let fVehicle of fVehicles.controls; index as i;" >
             <ng-container [formGroup]="fVehicle" > 
                      
-                    <ng-template #templateOpciones let-column="column" let-item="item" let-i="i">
+                    <ng-template #templateOpciones let-column="column" let-item="item" let-i="i" >
                       <ng-container [formGroup]="item"> 
                           <button mat-raised-button type="button">
-                            <mat-icon (click)="removeVehicle(i)">delete_sweep</mat-icon>
+                            <mat-icon (click)="removeVehicle(item.controls.license_plate.value)">delete_sweep</mat-icon>
                           </button>
                        </ng-container> 
                       
@@ -357,12 +357,11 @@
                        </div> <!--0-->   
                     </ng-container><!-- conatiner ng1--> 
                 </ng-template><!-- Fin del Bloque Collapsed -->
-             
-              <br><br> 
-              <app-generic-table     [openHoverCollapsed]="true" [hidden]="fVehicle.value.length===0" fxFlex="100" [columns]="columnsVehiculos" [showFilter]="false" [btnRefresh]="false" 
+            
+              <app-generic-table  [hidden]="fVehicles.value.length === 0"  [openHoverCollapsed]="true"  fxFlex="100" [columns]="columnsVehiculos" [showFilter]="false" [btnRefresh]="false" 
                 [is_paged]="false" [templateCollapsed]="{template:templateC}" [templates]="{opciones: templateOpciones, idplaca: templatePlaca, idnombre: templateNombre,idtipop: templatePropietario, idtipom: templateMovimiento,  idhora: templateHora,  idheq: templateHerramienta,idprotocolo: templateProtocolo}" #tableVehiculos>
               </app-generic-table>  
-
+            
             </ng-container>
            
         </div> <!-- nro 3-->            

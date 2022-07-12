@@ -71,4 +71,5 @@ tr.example-element-row:not(.example-expanded-row):active {
   opacity: 0.5;
 }
 
-.hide { display: none; }
+.hide { 
+  visibility: none; }

@@ -11,6 +11,7 @@ import { GenericTableComponent } from '../generic-table/generic-table.component'
 import {DataSource} from '@angular/cdk/collections';
 import {Observable, ReplaySubject} from 'rxjs';
 import { Text } from '@angular/compiler';
+import { PlaceholderMapper } from '@angular/compiler/src/i18n/serializers/serializer';
 
 
 
@@ -152,19 +153,22 @@ export class VehiclesComponent implements OnInit,OnChanges,AfterViewChecked {
   dataSourceC = new DataSourceCarga(this.dataToDisplayC);
   dataSource= new Array (new DataSourceV(this.dataToDisplay));
   
+  
   constructor(private fB: FormBuilder, 
     private toastr: ToastrService, public dialog: MatDialog, private router: Router,
     private route: ActivatedRoute) {
   }
   
   ngAfterViewChecked(): void {
-    this.table.refresh({}, this.fVehicles.controls);
+    
     for (var index = 0; index < this.fVehicles.controls.length; index++) {
       this.dataSource[index].setData(this.fVehicles.controls[index].get('materials')?.value.value);
       
     }
-     
-  
+    if (this.fVehicles.controls.length>0) {
+      this.table.refresh({}, this.fVehicles.controls);
+      
+    }
   }
   ngOnInit(): void {
     this.columnsVehiculos = [];
@@ -315,8 +319,8 @@ export class VehiclesComponent implements OnInit,OnChanges,AfterViewChecked {
     
     if(!this.readOnly){
       this.table.refresh({}, this.fVehicles.controls);
-      this.dataSource= new Array (new DataSourceV(this.dataToDisplay),new DataSourceV(this.dataToDisplay),new DataSourceV(this.dataToDisplay));
-    }
+      
+       }
    
   }
 
@@ -408,26 +412,18 @@ export class VehiclesComponent implements OnInit,OnChanges,AfterViewChecked {
     });
     
   }
-  removeVehicle(index_v:number): void {
-
+  removeVehicle(placa:string): void {
     let exist = false;
-    console.log(index_v)
-    let index = this.vehiclesArr.findIndex(v => v.license_plate == this.vehiclesCurrent.license_plate);
-    if (index > -1)
-      this.vehiclesCurrent = { ...this.vehiclesArr[index] };
-      exist = this.fVehicles.value.find((v: any) => {
-      return v.license_plate === this.vehiclesCurrent.license_plate;
-    });
-    if (exist) {
-      this.fVehicles.removeAt(index);
-      this.toastr.error(`La placa ${this.vehiclesCurrent.license_plate} eliminada con exito`);
-      return;
-    } 
+    for (var index = 0; index < this.fVehicles.controls.length; index++) {
+      let placaaux = this.fVehicles.controls[index].value.license_plate;
+      if (placa===placaaux) {
+         this.pos =index;
+      }
+    }
+    this.fVehicles.removeAt(this.pos);  
 
   }
-  onRowClicked(row:any) {
-    console.log('Row clicked: ', row);
-}
+  
 
 }
 

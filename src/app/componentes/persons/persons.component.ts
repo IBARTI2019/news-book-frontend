@@ -188,7 +188,7 @@ export class PersonsComponent implements OnInit {
   }
 
   removePerson(index: number) {
-    
+    console.log(index)
     this.fPersons.removeAt(index);
   }
 }
