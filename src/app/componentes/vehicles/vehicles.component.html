@@ -200,8 +200,8 @@
                         </div>  
 
                         <div fxFlex fxLayout="row wrap" fxLayoutGap="1px grid" >
-                            <ng-container [formGroup]="item"> 
-                               <table  mat-table [dataSource]="dataSource[0]">
+                            <ng-container [formGroup]="item" *ngFor="let fVehicle of fVehicles.controls; index as i;" > 
+                               <table  mat-table [dataSource]="dataSource[i]" *ngIf="item.controls.license_plate.value===fVehicle.controls.license_plate.value">
                                    <!---ition Column -->
                                    <ng-container matColumnDef="description">
                                        <th mat-header-cell *matHeaderCellDef>Descripcion</th>
@@ -357,11 +357,12 @@
                        </div> <!--0-->   
                     </ng-container><!-- conatiner ng1--> 
                 </ng-template><!-- Fin del Bloque Collapsed -->
-            
-              <app-generic-table  [hidden]="fVehicles.value.length === 0"  [openHoverCollapsed]="true"  fxFlex="100" [columns]="columnsVehiculos" [showFilter]="false" [btnRefresh]="false" 
-                [is_paged]="false" [templateCollapsed]="{template:templateC}" [templates]="{opciones: templateOpciones, idplaca: templatePlaca, idnombre: templateNombre,idtipop: templatePropietario, idtipom: templateMovimiento,  idhora: templateHora,  idheq: templateHerramienta,idprotocolo: templateProtocolo}" #tableVehiculos>
-              </app-generic-table>  
-            
+              
+                <app-generic-table  [hidden]="fVehicle.value.length === 0"  [openHoverCollapsed]="true"  fxFlex="100" [columns]="columnsVehiculos" [showFilter]="false" [btnRefresh]="false" 
+                    [is_paged]="false" [templateCollapsed]="{template:templateC}" [templates]="{opciones: templateOpciones, idplaca: templatePlaca, idnombre: templateNombre,idtipop: templatePropietario, idtipom: templateMovimiento,  idhora: templateHora,  idheq: templateHerramienta,idprotocolo: templateProtocolo}" #tableVehiculos>
+                </app-generic-table>  
+              
+              
             </ng-container>
            
         </div> <!-- nro 3-->            

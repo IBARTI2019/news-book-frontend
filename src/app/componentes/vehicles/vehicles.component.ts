@@ -151,7 +151,7 @@ export class VehiclesComponent implements OnInit,OnChanges,AfterViewChecked {
   dataToDisplayC = [...ELEMENT_CARGA];
   datadisplayaux=[...ELEMENT_DATA];
   dataSourceC = new DataSourceCarga(this.dataToDisplayC);
-  dataSource= new Array (new DataSourceV(this.dataToDisplay));
+  dataSource= Array (new DataSourceV(this.dataToDisplay));
   
   
   constructor(private fB: FormBuilder, 
@@ -160,13 +160,17 @@ export class VehiclesComponent implements OnInit,OnChanges,AfterViewChecked {
   }
   
   ngAfterViewChecked(): void {
-    
+    if (this.fVehicles.controls.length>0) {
     for (var index = 0; index < this.fVehicles.controls.length; index++) {
       this.dataSource[index].setData(this.fVehicles.controls[index].get('materials')?.value.value);
       
     }
+     }
     if (this.fVehicles.controls.length>0) {
       this.table.refresh({}, this.fVehicles.controls);
+      if (this.dataSource.length<10){
+          this.dataSource.push(new DataSourceV(this.dataToDisplay))
+       }
       
     }
   }
@@ -316,8 +320,7 @@ export class VehiclesComponent implements OnInit,OnChanges,AfterViewChecked {
     this.vehiclesCurrent = { ...{ id: "", license_plate: "" } };
     
     this.listVehiculos = [...this.fVehicles.value];
-    
-    if(!this.readOnly){
+     if(!this.readOnly){
       this.table.refresh({}, this.fVehicles.controls);
       
        }
@@ -413,15 +416,15 @@ export class VehiclesComponent implements OnInit,OnChanges,AfterViewChecked {
     
   }
   removeVehicle(placa:string): void {
-    let exist = false;
+    
     for (var index = 0; index < this.fVehicles.controls.length; index++) {
       let placaaux = this.fVehicles.controls[index].value.license_plate;
       if (placa===placaaux) {
          this.pos =index;
       }
     }
-    this.fVehicles.removeAt(this.pos);  
-
+    this.fVehicles.removeAt(this.pos);
+    this.table.refresh({}, this.fVehicles.controls);
   }
   
 

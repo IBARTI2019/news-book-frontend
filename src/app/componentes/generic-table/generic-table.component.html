@@ -44,7 +44,7 @@
         <mat-spinner></mat-spinner>
     </div>
     <div class="mat-elevation-z6">
-        <table mat-table matSort [hidden]="cargando" multiTemplateDataRows matTableResponsive [dataSource]="dataSource">
+        <table mat-table matSort [hidden]="dataSource.data.length===0" multiTemplateDataRows matTableResponsive [dataSource]="dataSource">
             <ng-container *ngFor="let column of columns; index as i;"
                 [cdkColumnDef]="column.dataAttribute || column.attribute">
                 <th mat-header-cell *cdkHeaderCellDef mat-sort-header>
