@@ -140,6 +140,7 @@ export class ScopeComponent implements OnInit, OnChanges, AfterViewChecked {
     });
 
     this.scopeArrSelected.forEach((v) => {
+      
       this.addFG(v);
     });
 
@@ -149,7 +150,9 @@ export class ScopeComponent implements OnInit, OnChanges, AfterViewChecked {
 
     this.fGscope.valueChanges.subscribe((values) => {
       this.scopeCurrent = values.scope;
+      console.log('Cubano'+ this.scopeCurrent)
     });
+   
   }
 
   ngOnChanges(change: SimpleChanges): void {
@@ -214,6 +217,7 @@ export class ScopeComponent implements OnInit, OnChanges, AfterViewChecked {
   }
 
   addSubLine() {
+    
     this.addFG(this.scopeCurrent);
     /*     this.fScope.value.forEach((v: any, index: number) => {
           const found = this.fGscope.value.scope.some((s: Scope) => {
@@ -252,8 +256,7 @@ export class ScopeComponent implements OnInit, OnChanges, AfterViewChecked {
       this.fScope.get("descripcion")!.setValue('');
     }
   }
-  
-  
+   
 
   createMaterial() {
     const dialogRef = this.dialog.open(CreateAndEditMaterialComponent, {

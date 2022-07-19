@@ -15,7 +15,7 @@ import { DemoMaterialModule } from 'app/demo-material-module';
 //import { VehiclesComponent } from 'app/componentes/vehicles/vehicles.component';
 //import { VehicleComponent } from 'app/componentes/vehicle/vehicle.component';
 import { PersonsComponent } from 'app/componentes/persons/persons.component';
-import { PersonComponent } from 'app/componentes/person/person.component';
+//import { PersonComponent } from 'app/componentes/person/person.component';
 import { RoundComponent } from 'app/componentes/round/round.component';
 
 @NgModule({
@@ -29,7 +29,8 @@ import { RoundComponent } from 'app/componentes/round/round.component';
     //VehiclesComponent,
     //VehicleComponent,
     PersonsComponent,
-    PersonComponent,
+    //PersonxComponent,
+    //PersonComponent,
     RoundComponent
   ],
   exports: [
@@ -42,7 +43,8 @@ import { RoundComponent } from 'app/componentes/round/round.component';
     //VehiclesComponent,
     //VehicleComponent,
     PersonsComponent,
-    PersonComponent,
+    //PersonxComponent,
+    //PersonComponent,
     RoundComponent
   ],
   imports: [

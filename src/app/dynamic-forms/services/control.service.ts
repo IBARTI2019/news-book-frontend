@@ -27,8 +27,12 @@ export class ControlService {
             : new FormArray([]);
           break;
         case "person":
-          group[question.key] = this.newFormPerson(question);
+          group[question.key] = question.required
+          ? new FormArray([], Validators.required)
+          : new FormArray([]);
           break;
+          //group[question.key] = this.newFormPerson(question);
+          //break;
         case "vehicles":
           group[question.key] = question.required
             ? new FormArray([], Validators.required)
@@ -38,7 +42,7 @@ export class ControlService {
           group[question.key] = question.required
           ? new FormArray([], Validators.required)
           : new FormArray([]);
-        break;
+          break;
         case "round":
           group[question.key] = this.newFormRound(question);
           break;

@@ -1,10 +1,17 @@
-import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { Component, EventEmitter, Input, OnChanges, OnInit, AfterViewChecked, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { FormGroup, FormArray, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { Scope, ScopeSettings } from 'app/interfaces';
+import { Person, PersonsSettings, TypePeople } from 'app/interfaces';
 import { MatDialog } from '@angular/material/dialog';
-import { CreateAndEditPersonComponent } from 'app/modules/maestro/person/create-and-edit-person/create-and-edit-person.component';
-import { PersonsSettings, Person, TypePeople } from 'app/interfaces';
+import { CreateAndEditMaterialComponent } from 'app/modules/maestro/materials/create-and-edit-material/create-and-edit-material.component';
 import { TypePeopleService } from 'app/services/type-people.service';
+import { takeUntil } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
+import { DTColumn } from '../generic-table/interface';
+import { GenericTableComponent } from '../generic-table/generic-table.component';
+import {DataSource} from '@angular/cdk/collections';
+import {Observable, ReplaySubject} from 'rxjs';
+
 const OWNER_TYPES = [
   {
     id: "employee",
@@ -33,7 +40,50 @@ const MOVEMENT_TYPES = [
     text: "Salida",
   }
 ];
+const HEALTH_CONDITIONS = [
+  {
+    id: "good",
+    text: "Buena",
+  },
+  {
+    id: "average",
+    text: "Regular",
+  },
+  {
+    id: "bad",
+    text: "Mala",
+  },
+];
+export interface PeriodicElement {
+  description: string;
+  mark: string;
+  model: string;
+  color: string;
+  serial: string;
+  year: string;
+  license_plate:string;
+  
+}
+const ELEMENT_DATA: PeriodicElement[] = [];
+class DataSourceV extends DataSource<PeriodicElement> {
+  private _dataStream = new ReplaySubject<PeriodicElement[]>();
 
+  constructor(initialData: PeriodicElement[]) {
+    super();
+    this.setData(initialData);
+  }
+
+  connect(): Observable<PeriodicElement[]> {
+    return this._dataStream;
+  }
+
+  disconnect() {}
+
+  setData(data: PeriodicElement[]) {
+    this._dataStream.next(data);
+  }
+}
+const PERSON_ARR_DEAFAULT: Person[] = [];
 export const PERSONS_LIST_DEFAULT: PersonsSettings = {
   percentage: 100,
   showTokenField: true,
@@ -47,47 +97,164 @@ export const PERSONS_LIST_DEFAULT: PersonsSettings = {
   showVaccinationCardNumberField: true,
   showButtonNew:true
 };
-
+export const SCOPE_LIST_DEFAULT: ScopeSettings = {
+  percentage: 100,
+  showItemField: true,
+  showTokenField: true,
+  showNameField: true,
+  showHealthConditionField: true,
+  showObservationField: true,
+  showAmountField: true,
+};
 
 @Component({
   selector: 'app-person',
   templateUrl: './person.component.html',
   styleUrls: ['./person.component.css']
 })
-export class PersonComponent implements OnInit {
+export class PersonComponent implements OnInit, OnChanges, AfterViewChecked {
   tp: string = '';
   @Input() id: string = '';
   @Input() value: any = null;
-  @Input() settings: PersonsSettings = PERSONS_LIST_DEFAULT;
+  @Input() settings: PersonsSettings  =PERSONS_LIST_DEFAULT;
+  @Input() scopeArrSelected:  Person[] = [];
   @Input() personsArr: Person[] = [];
+  @Input() scopeArr: Person[] = PERSON_ARR_DEAFAULT;
   @Input() fGRoot!: FormGroup;
+  @Input() pos: number = 0;
+  @Input() readOnly: boolean = true;
   fPerson!: FormGroup;
-  @Input() readOnly: boolean = false;
-
   @Output() isValid: EventEmitter<boolean> = new EventEmitter<boolean>();
-  ownerTypes = [...OWNER_TYPES];
+  columnsScope: DTColumn[] = [];
+     
+  fScope: FormArray = new FormArray([]);
+  healthConditions = [...HEALTH_CONDITIONS];
+  fGscope = new FormGroup({});
   movementTypes = [...MOVEMENT_TYPES];
+  defaultValues = { ...SCOPE_LIST_DEFAULT }
+  scopeCurrent: any = { amount: 0 };
   personTypes: TypePeople[] = [];
+  ownerTypes = [...OWNER_TYPES];
   isInstitution: boolean = false;
- 
-  personCurrent: Person = { id: "", identification_number: "" };
-  defaultValues = { ...PERSONS_LIST_DEFAULT };
-  personCurrentseg: any = { description:"" ,cedula: "", nombres:"",apellidos:"", observacion:"",year: "", license_plate: "" };
+  router: any;
+  listFilter: Scope[] | undefined = [];
+  listScope: any[] = [];
   materialCurrent: any = { description: "", mark: "", model: "", color: "", serial: "", year: "", license_plate: "" }
  
-  constructor(private toastr: ToastrService, private typePersonService: TypePeopleService,public dialog: MatDialog) { }
+  @ViewChild("tableScope") table!: GenericTableComponent;
+  displayedColumns: string[] = ['description', 'mark', 'model', 'color','serial','year', 'license_plate','star'];
+  dataToDisplay = [...ELEMENT_DATA];
+  datadisplayaux=[...ELEMENT_DATA];
+  dataSource= Array (new DataSourceV(this.dataToDisplay));
   
+  constructor(private toastr: ToastrService,private fB: FormBuilder,public dialog: MatDialog,private typePersonService: TypePeopleService) { }
 
-  ngOnInit(): void {
-    this.typePersonService.list({ not_paginator: true }).subscribe(data => {
-      this.personTypes = data;
-    });
-    if (this.fGRoot && this.id && this.fGRoot.get(this.id)) {
-      this.fPerson = this.fGRoot.get(this.id) as FormGroup;
+  ngAfterViewChecked(): void {
+    console.log(this.fScope.controls);
+    this.table.refresh({}, this.fScope.controls);
+    if (this.fScope.controls.length>0) {
+      this.table.refresh({}, this.fScope.controls);
+      if (this.dataSource.length<10){
+          this.dataSource.push(new DataSourceV(this.dataToDisplay))
+       }
+      
     }
   }
 
+  ngOnInit(): void {
+    this.columnsScope = [];
+    if(this.settings.showTokenField)
+      this.columnsScope.push(
+        {
+          attribute: "identification_number",
+          header: "Cedula",
+          template: "item" 
+        },
+      );
+    if(this.settings.showTokenField)
+      this.columnsScope.push({
+          attribute: "full_name",
+          header: "Nombres y Apellidos",
+          template: "code"
+        });
+    if(this.settings.showTypePersonField)
+      this.columnsScope.push({
+        attribute: "type_person",
+        header: "Tipo Persona",
+        template: "name"
+      },);
+    if(this.settings.showMovementTypeField)
+      this.columnsScope.push({
+        attribute: "movement_type",
+        header: "Tipo de movimiento",
+        template: "movimiento"
+      },);
+      if(this.settings.showHourField)
+      this.columnsScope.push({
+        attribute: "hour",
+        header: "Hora",
+        template: "thora"
+      },);
+      if(this.settings.showHourField)
+        this.columnsScope.push({
+          attribute: "reason_visit",
+          header: "Motivo de la Visita",
+          template: "tvisita"
+        },);
+      if(this.settings.showEntryField)
+        this.columnsScope.push({
+          attribute:"entry",
+          header: "Ingreso de Herramienta o equipo",
+          template: "therramienta"
+        },);  
+     if(this.settings.showProtocolField)
+        this.columnsScope.push({
+          attribute:"protocol",
+          header: "Cumplió Protocolo COVID 19",
+          template: "tprotocolo"
+        },);  
+    if(this.settings.showVaccinationCardNumberField)
+        this.columnsScope.push({
+          attribute:"vaccination_card_number",
+          header: "Nro. de tarjeta de Vacunación",
+          template: "tvacuna"
+        },);  
+    if(!this.readOnly)
+      this.columnsScope.push({
+        attribute: "id",
+        header: "",
+        template: "opciones"
+      });
+      this.typePersonService.list({ not_paginator: true }).subscribe(data => {
+        this.personTypes = data;
+        
+      });
+    if (this.fGRoot && this.id && this.fGRoot.get(this.id)) {
+      this.fScope = this.fGRoot.get(this.id) as FormArray;
+    }
+
+    this.fScope.statusChanges.subscribe((currentStatus) => {
+      this.isValid.emit(currentStatus === "VALID" ? true : false);
+    });
+
+    this.scopeArrSelected.forEach((v) => {
+      
+      this.addFG(v);
+    });
+
+    this.fGscope = this.fB.group({
+      scope: [this.scopeArrSelected.map((v) => v)],
+    });
+
+    this.fGscope.valueChanges.subscribe((values) => {
+      this.scopeCurrent = values.scope;
+      
+    });
+   
+  }
+
   ngOnChanges(change: SimpleChanges): void {
+    
     if (change.settings && change.settings.firstChange) {
       this.settings = change.settings.currentValue || {
         ...PERSONS_LIST_DEFAULT,
@@ -97,11 +264,57 @@ export class PersonComponent implements OnInit {
         ...PERSONS_LIST_DEFAULT,
       }
     }
+    
   }
 
-
-  addMaterial(i: number) {
+  addFG(v: Person): void {
+    const fG = this.fB.group({
+      identification_number: [
+        v.identification_number || "",
+        this.settings.showTokenField && Validators.required,
+      ],
+      full_name: [
+        v.full_name || "",
+        this.settings.showNameField && Validators.required,
+      ],
+      type_person: [
+        v.type_person || null,
+        this.settings.showTypePersonField && Validators.required,
+      ],
+      reason_visit: [
+        v.reason_visit || null,
+        this.settings.showReasonVisitField && Validators.required,
+      ],
+      movement_type: [
+        v.movement_type || null,
+        this.settings.showMovementTypeField && Validators.required,
+      ],
+      entry: [
+        v.entry || false,
+        this.settings.showEntryField && Validators.required,
+      ],
+      hour: [
+        v.hour || '',
+        this.settings.showHourField && Validators.required,
+      ],
+      protocol: [
+        v.protocol || false,
+        this.settings.showProtocolField && Validators.required,
+      ],
+      materials: new FormControl({ value: v.materials?.value || [] }),
+      vaccination_card_number: [
+        v.vaccination_card_number || "",
+        this.settings.showVaccinationCardNumberField && Validators.required,
+      ],
+    });
+    this.fScope.push(fG);
+    this.listScope = [...this.fScope.value];
+    if(!this.readOnly)
+      this.table.refresh({}, this.fScope.controls);
+  }
+  addMaterial(i: number,j: number) {
     let error: boolean = false;
+   
     Object.keys(this.materialCurrent).forEach((key: string = 'description') => {
       if (error)
         return;
@@ -111,57 +324,75 @@ export class PersonComponent implements OnInit {
       }
     });
     if (error) return;
-    this.fPerson.get('materials')?.value.value.push({ ...this.materialCurrent });
+
+    const randomElementIndex = j ;
+    ELEMENT_DATA[randomElementIndex]={ ...this.materialCurrent }
+    this.pos=this.fScope.controls.length -1;
+    this.dataToDisplay = [...this.dataToDisplay, ELEMENT_DATA[randomElementIndex]];
+    this.dataSource[this.pos].setData(this.dataToDisplay);
+    this.fScope.controls[this.pos].get('materials')?.value.value.push({ ... this.materialCurrent });
     this.materialCurrent = { ...{ description: "", mark: "", model: "", color: "", serial: "", year: "", license_plate: "" } };
-  }
-  // addpersonaseg(i: number) {
-  //   let error: boolean = false;
-  //   Object.keys(this.personCurrentseg).forEach((key: string = 'description') => {
-  //     if (error)
-  //       return;
-  //     if (!this.personCurrentseg[key]) {
-  //       this.toastr.error("Debe llenar todos los campos para registrar una Persona de Instituccion");
-  //       error = true;
-  //     }
-  //   });
-  //   if (error) return;
-  //   this.fPerson.get('institucciones')?.value.value.push({ ...this.personCurrentseg });
-  //   this.personCurrentseg = { ...{ description: "", cedula: "", nombres: "", apellidos: "", observacion: "",year: "", license_plate: "" } };
-  // }
-  removerpersonasI(index_persona: number): void {
-    this.fPerson.get('institucciones')?.value.value.splice(index_persona, 1);
-  }
-  removeMaterial(index_material: number): void {
-    this.fPerson.get('materials')?.value.value.splice(index_material, 1);
+    
   }
 
-  getPerson(identification_number: string) {
-   /// console.log('PERSONA', identification_number, 'array',this.personsArr);
-    let index = this.personsArr.findIndex(v => v.doc_ident == identification_number);
-    if (index > -1) {
-      this.fPerson.get("full_name")!.setValue(this.personsArr[index].full_name);
-      this.tp =  String(this.personsArr[index].type_person);
-    console.log(this.tp);
+  removeMaterial(index_form: number,index_material: number): void {
+    if (index_material> -1) {
+      this.pos=this.fScope.controls.length -1;
+      this.datadisplayaux= this.dataToDisplay.splice(index_material,1);
+      this.dataSource[this.pos].setData(this.dataToDisplay);
+      this.fScope.controls[this.pos].get('materials')?.value.value.splice(index_material,1);
     }
   }
+  addSubLine() {
+    
+    this.addFG(this.scopeCurrent);
+    /*     this.fScope.value.forEach((v: any, index: number) => {
+          const found = this.fGscope.value.scope.some((s: Scope) => {
+            return v.code === s.code;
+          });
+          if (!found) this.fScope.removeAt(index);
+        }); */
+  }
 
-  createPersona() {
-    const dialogRef = this.dialog.open(CreateAndEditPersonComponent, {
+  removeSubLine(serial: string) {
+    let exist = false;
+    console.log(`OJo${serial}`)
+    for (var index = 0; index < this.fScope.controls.length; index++) {
+      let serialaux = this.fScope.controls[index].value.item;
+      if (serial===serialaux) {
+         this.pos =index;
+      }
+    }
+   
+    this.fScope.removeAt(this.pos);
+    
+  }
+  getPerson(identification_number: string) {
+    let index = this.personsArr.findIndex(v => v.identification_number == identification_number);
+    if (index > -1) {
+      this.fPerson.get("full_name")!.setValue(this.personsArr[index].full_name);
+    }
+  }
+  
+   
+
+  createMaterial() {
+    const dialogRef = this.dialog.open(CreateAndEditMaterialComponent, {
       data: {
         modal: true
       },
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('Dialog Result:', result );
-      if (result?.doc_ident) {
-        this.personsArr.push(result);
-        this.fPerson.get("identification_number")!.setValue(result.doc_ident);
-        this.getPerson(result.doc_ident);
+    
+      if (result?.code) {
+        result['name'] = result.description;
+        this.scopeArr.push(result);
+        
       }
     });
+    
   }
-  
   check(value:boolean){
     if(value){
       this.fPerson.controls["instituccion"].setValue('');
@@ -180,6 +411,5 @@ export class PersonComponent implements OnInit {
       this.isInstitution = false;
     }
   }
-
-
+ 
 }

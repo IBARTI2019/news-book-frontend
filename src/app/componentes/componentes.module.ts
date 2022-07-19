@@ -41,7 +41,8 @@ import { DemoMaterialModule } from 'app/demo-material-module';
 import { ScopeComponent } from 'app/componentes/scope/scope.component';
 import { VehiclesComponent} from 'app/componentes/vehicles/vehicles.component';
 import { VehicleComponent} from 'app/componentes/vehicle/vehicle.component';
-import { creatematherComponent } from  'app/componentes/vehicles/vehiclesmaterialesherramientas/vehiclesmaterialesherramientas.component'
+import { PersonComponent } from 'app/componentes/person/person.component'
+
 
 export const entryComponentes = [
   ConfirmDialogComponent,
@@ -67,7 +68,7 @@ export const entryComponentes = [
     ScopeComponent,
     VehiclesComponent,
     VehicleComponent,
-    creatematherComponent
+    PersonComponent,
      ],
   exports: [
     GenericTableComponent,
@@ -84,7 +85,7 @@ export const entryComponentes = [
     ScopeComponent,
     VehiclesComponent,
     VehicleComponent,
-    creatematherComponent
+    PersonComponent,
   ],
   imports: [
     CommonModule,

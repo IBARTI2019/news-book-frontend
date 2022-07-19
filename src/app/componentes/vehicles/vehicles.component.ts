@@ -3,15 +3,13 @@ import { FormGroup, FormArray, FormBuilder, Validators, FormControl } from '@ang
 import { MatDialog } from '@angular/material/dialog';
 import { Vehicle, VehiclesSettings } from 'app/interfaces';
 import { CreateAndEditVehicleComponent } from 'app/modules/maestro/vehicle/create-and-edit-vehicle/create-and-edit-vehicle.component';
-import { creatematherComponent } from  'app/componentes/vehicles/vehiclesmaterialesherramientas/vehiclesmaterialesherramientas.component'
 import { ToastrService } from 'ngx-toastr';
 import { ActivatedRoute, Router } from "@angular/router";
 import { DTColumn } from '../generic-table/interface';
 import { GenericTableComponent } from '../generic-table/generic-table.component';
 import {DataSource} from '@angular/cdk/collections';
 import {Observable, ReplaySubject} from 'rxjs';
-import { Text } from '@angular/compiler';
-import { PlaceholderMapper } from '@angular/compiler/src/i18n/serializers/serializer';
+
 
 
 
@@ -160,6 +158,7 @@ export class VehiclesComponent implements OnInit,OnChanges,AfterViewChecked {
   }
   
   ngAfterViewChecked(): void {
+   
     if (this.fVehicles.controls.length>0) {
     for (var index = 0; index < this.fVehicles.controls.length; index++) {
       this.dataSource[index].setData(this.fVehicles.controls[index].get('materials')?.value.value);
@@ -235,6 +234,7 @@ export class VehiclesComponent implements OnInit,OnChanges,AfterViewChecked {
 
     if (this.fGRoot && this.id && this.fGRoot.get(this.id)) {
       this.fVehicles = this.fGRoot.get(this.id) as FormArray;
+      
     }
 
     this.fVehicles.statusChanges.subscribe((currentStatus) => {
@@ -397,24 +397,7 @@ export class VehiclesComponent implements OnInit,OnChanges,AfterViewChecked {
       }
     });
   }
-  createmather() {
-    const dialogRef = this.dialog.open(creatematherComponent, {
-      data: { materialCurrenAux: this.materiaprueba}
-      
-    });
-    
-    dialogRef.afterClosed().subscribe(data => {
-      console.log(`Dialog Policia: ${data}`);
-      if (data) {
-         this.materiaprueba=data;
-         this.materialo=data;
-         this.materialCurrent=data;
-         console.log(this.materialCurrent)
-            
-      }
-    });
-    
-  }
+  
   removeVehicle(placa:string): void {
     
     for (var index = 0; index < this.fVehicles.controls.length; index++) {

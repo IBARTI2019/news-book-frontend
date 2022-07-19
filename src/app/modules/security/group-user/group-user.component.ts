@@ -8,7 +8,7 @@ import { UserGroupService } from '../../../services/user-group.service'
 import { ToastrService } from 'ngx-toastr';
 import { HttpErrorResponse } from '@angular/common/http';
 import { GroupUserEditComponent } from './group-user-edit/group-user-edit.component';
-import { MatDialog, MatDialogRef} from '@angular/material/dialog';
+import { MatDialog} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-group-user',
@@ -51,7 +51,7 @@ export class GroupUserComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       this.table.refresh();
-      
+      console.log(`Dialog result: ${result}`);
     });
   }
   delete(group: GroupUser) {
