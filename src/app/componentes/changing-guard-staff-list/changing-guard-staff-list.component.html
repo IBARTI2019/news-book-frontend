@@ -32,17 +32,7 @@
   </div>
   <div fxFlex="{{ settings.percentage }}" fxLayout="row" style="height: 50px">
     <form fxFlex="{{ settings.percentage }}" [formGroup]="fGStaff">
-<!--       <mat-form-field fxFlex="1 0 30%" appearance="fill" style="background-color: #ffffff;" *ngIf="!readOnly">
-        <mat-label>Personal</mat-label>
-        <mat-select #staffRef formControlName="staff" multiple>
-          <mat-option *ngFor="let staffItem of staffArr" [value]="staffItem">
-            {{staffItem?.cod_ficha}} - {{ staffItem?.name_and_surname }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field> -->
-
-      <!-- Select nuevo -->
-
+      
       <mat-form-field  fxFlex="1 0 30%" appearance="fill" style="background-color: #ffffff;" *ngIf="!readOnly">
         <mat-select #staffRef formControlName="staff" multiple placeholder="Personal">
           <mat-option *ngIf="!readOnly">
@@ -58,32 +48,33 @@
     </form>
   </div>
   <div fxFlex fxLayout="row wrap" style="background-color: black;" fxLayoutGap="1px grid">
-    <div fxFlex="1 1 100%" fxLayout="row" style="height: 50px" fxLayoutGap="1px">
-      <div *ngIf="settings.showTokenField" fxLayoutAlign="center center" fxFlex="2 0 18%" fxLayout="row"
+           
+    <div fxFlex="1 1 100%" fxLayout="row" style="height: 50px" fxLayoutGap="1px" >
+      <div *ngIf="settings.showTokenField" fxLayoutAlign="center center" fxFlex="2 0 18%" fxLayout="column"
         class="item mat-toolbar mat-primary">
         Ficha
       </div>
-      <div *ngIf="settings.showNameField" fxLayoutAlign="center center" fxFlex="3 0 25%" fxLayout="row"
+      <div *ngIf="settings.showNameField" fxLayoutAlign="center center" fxFlex="3 0 25%" fxLayout="column"
         class="item mat-toolbar mat-primary">
         Nombre y Apellido
       </div>
-      <div *ngIf="settings.showProtocolField" fxLayoutAlign="center center" fxFlex="1 1 11%" fxLayout="row"
+      <div *ngIf="settings.showProtocolField" fxLayoutAlign="center center" fxFlex="1 1 11%" fxLayout="column"
         style="text-overflow: ellipsis" class="item mat-toolbar mat-primary">
         Cumplió Protocolo
       </div>
-      <div *ngIf="settings.showHealthConditionField" fxLayoutAlign="center center" fxFlex="1 1 11%" fxLayout="row"
+      <div *ngIf="settings.showHealthConditionField" fxLayoutAlign="center center" fxFlex="1 1 11%" fxLayout="column"
         class="item mat-toolbar mat-primary">
         Estado de Salud
       </div>
-      <div *ngIf="settings.showCheckInField" fxLayoutAlign="center center" fxFlex="1 1 11%" fxLayout="row"
+      <div *ngIf="settings.showCheckInField" fxLayoutAlign="center center" fxFlex="1 1 11%" fxLayout="column"
         class="item mat-toolbar mat-primary">
         Hora de Llegada
       </div>
-      <div *ngIf="settings.showGuardStatusField" fxLayoutAlign="center center" fxFlex="1 1 13%" fxLayout="row"
+      <div *ngIf="settings.showGuardStatusField" fxLayoutAlign="center center" fxFlex="1 1 13%" fxLayout="column"
         class="item mat-toolbar mat-primary">
         Estado de su Guardia
       </div>
-      <div *ngIf="settings.showCheckOutField" fxLayoutAlign="center center" fxFlex="1 1 11%" fxLayout="row"
+      <div *ngIf="settings.showCheckOutField" fxLayoutAlign="center center" fxFlex="1 1 11%" fxLayout="column"
         class="item mat-toolbar mat-primary">
         Hora de Salida
       </div>
@@ -160,6 +151,6 @@
           </mat-error>
         </div>
       </ng-container>
-    </div>
+    </div><!-- End to Dynamic Form -->
   </div>
 </div>

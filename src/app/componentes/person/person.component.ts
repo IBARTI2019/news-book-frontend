@@ -3,7 +3,7 @@ import { FormGroup, FormArray, FormBuilder, Validators, FormControl } from '@ang
 import { Scope, ScopeSettings } from 'app/interfaces';
 import { Person, PersonsSettings, TypePeople } from 'app/interfaces';
 import { MatDialog } from '@angular/material/dialog';
-import { CreateAndEditMaterialComponent } from 'app/modules/maestro/materials/create-and-edit-material/create-and-edit-material.component';
+import { CreateAndEditPersonComponent } from 'app/modules/maestro/person/create-and-edit-person/create-and-edit-person.component';
 import { TypePeopleService } from 'app/services/type-people.service';
 import { takeUntil } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
@@ -370,44 +370,35 @@ export class PersonComponent implements OnInit, OnChanges, AfterViewChecked {
   getPerson(identification_number: string) {
     let index = this.personsArr.findIndex(v => v.identification_number == identification_number);
     if (index > -1) {
-      this.fPerson.get("full_name")!.setValue(this.personsArr[index].full_name);
+      this.fScope.get("full_name")!.setValue(this.personsArr[index].full_name);
     }
   }
   
    
 
-  createMaterial() {
-    const dialogRef = this.dialog.open(CreateAndEditMaterialComponent, {
+  createPersona() {
+    const dialogRef = this.dialog.open(CreateAndEditPersonComponent, {
       data: {
         modal: true
       },
     });
 
     dialogRef.afterClosed().subscribe(result => {
-    
-      if (result?.code) {
-        result['name'] = result.description;
-        this.scopeArr.push(result);
-        
+      console.log(`Dialog result: ${result}`);
+      if (result?.identification_number) {
+        this.scopeCurrent.identification_number= result.identification_number;
+        this.personsArr.push(result);
+        this.addSubLine();
       }
     });
-    
   }
   check(value:boolean){
     if(value){
-      this.fPerson.controls["instituccion"].setValue('');
-      this.fPerson.controls["observacion"].setValue('');
-      this.fPerson.controls["name_recibe"].setValue('');
-      this.fPerson.controls["ident_recibe"].setValue('');
-      this.fPerson.controls["cargo_recibe"].setValue('');
+     
       this.isInstitution = true;
      
     }else{
-      this.fPerson.controls["instituccion"].setValue('-');
-      this.fPerson.controls["observacion"].setValue('-');
-      this.fPerson.controls["name_recibe"].setValue('-');
-      this.fPerson.controls["ident_recibe"].setValue('-');
-      this.fPerson.controls["cargo_recibe"].setValue('-');
+      
       this.isInstitution = false;
     }
   }

@@ -1,9 +1,35 @@
-import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component, EventEmitter, Input, OnChanges, OnInit, AfterViewChecked, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { FormGroup, FormArray, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { Scope, ScopeSettings } from 'app/interfaces';
 import { Person, PersonsSettings, TypePeople } from 'app/interfaces';
+import { MatDialog } from '@angular/material/dialog';
+import { CreateAndEditPersonComponent } from 'app/modules/maestro/person/create-and-edit-person/create-and-edit-person.component';
 import { TypePeopleService } from 'app/services/type-people.service';
+import { takeUntil } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
+import { DTColumn } from '../generic-table/interface';
+import { GenericTableComponent } from '../generic-table/generic-table.component';
+import {DataSource} from '@angular/cdk/collections';
+import {Observable, ReplaySubject} from 'rxjs';
 
+const OWNER_TYPES = [
+  {
+    id: "employee",
+    text: "Trabajador",
+  },
+  {
+    id: "visitor",
+    text: "Visitante",
+  },
+  {
+    id: "cargo_vehicle",
+    text: "Vehículo de carga",
+  },
+  {
+    id: "Instituccion",
+    text: "Instiruccion",
+  },
+];
 const MOVEMENT_TYPES = [
   {
     id: "employee",
@@ -14,7 +40,50 @@ const MOVEMENT_TYPES = [
     text: "Salida",
   }
 ];
+const HEALTH_CONDITIONS = [
+  {
+    id: "good",
+    text: "Buena",
+  },
+  {
+    id: "average",
+    text: "Regular",
+  },
+  {
+    id: "bad",
+    text: "Mala",
+  },
+];
+export interface PeriodicElement {
+  description: string;
+  mark: string;
+  model: string;
+  color: string;
+  serial: string;
+  year: string;
+  license_plate:string;
+  
+}
+const ELEMENT_DATA: PeriodicElement[] = [];
+class DataSourceV extends DataSource<PeriodicElement> {
+  private _dataStream = new ReplaySubject<PeriodicElement[]>();
 
+  constructor(initialData: PeriodicElement[]) {
+    super();
+    this.setData(initialData);
+  }
+
+  connect(): Observable<PeriodicElement[]> {
+    return this._dataStream;
+  }
+
+  disconnect() {}
+
+  setData(data: PeriodicElement[]) {
+    this._dataStream.next(data);
+  }
+}
+const PERSON_ARR_DEAFAULT: Person[] = [];
 export const PERSONS_LIST_DEFAULT: PersonsSettings = {
   percentage: 100,
   showTokenField: true,
@@ -23,74 +92,169 @@ export const PERSONS_LIST_DEFAULT: PersonsSettings = {
   showReasonVisitField: true,
   showHourField: true,
   showEntryField: true,
-  showProtocolField: true
+  showProtocolField: true,
+  showTypePersonField:true,
+  showVaccinationCardNumberField: true,
+  showButtonNew:true
 };
-
+export const SCOPE_LIST_DEFAULT: ScopeSettings = {
+  percentage: 100,
+  showItemField: true,
+  showTokenField: true,
+  showNameField: true,
+  showHealthConditionField: true,
+  showObservationField: true,
+  showAmountField: true,
+};
 
 @Component({
   selector: 'app-persons',
   templateUrl: './persons.component.html',
   styleUrls: ['./persons.component.css']
 })
-export class PersonsComponent implements OnInit {
+export class PersonsComponent implements OnInit, OnChanges, AfterViewChecked {
+  tp: string = '';
   @Input() id: string = '';
   @Input() value: any = null;
-  @Input() settings: PersonsSettings = PERSONS_LIST_DEFAULT;
-  @Input() personsArrSelected: Person[] = [];
+  @Input() settings: PersonsSettings  =PERSONS_LIST_DEFAULT;
+  @Input() scopeArrSelected:  Person[] = [];
   @Input() personsArr: Person[] = [];
+  @Input() scopeArr: Person[] = PERSON_ARR_DEAFAULT;
   @Input() fGRoot!: FormGroup;
-  @Input() readOnly: boolean = false;
-
+  @Input() pos: number = 0;
+  @Input() readOnly: boolean = true;
+  fPerson!: FormGroup;
   @Output() isValid: EventEmitter<boolean> = new EventEmitter<boolean>();
-
-  fPersons: FormArray = new FormArray([]);
-  fGPersons = new FormGroup({});
+  columnsScope: DTColumn[] = [];
+     
+  fScope: FormArray = new FormArray([]);
+  healthConditions = [...HEALTH_CONDITIONS];
+  fGscope = new FormGroup({});
   movementTypes = [...MOVEMENT_TYPES];
+  defaultValues = { ...SCOPE_LIST_DEFAULT }
+  scopeCurrent: any = { amount: 0 };
   personTypes: TypePeople[] = [];
-  defaultValues = { ...PERSONS_LIST_DEFAULT }
-  personCurrent: Person = { id: "", identification_number: "" };
+  ownerTypes = [...OWNER_TYPES];
+  isInstitution: boolean = false;
+  router: any;
+  listFilter: Scope[] | undefined = [];
+  listScope: any[] = [];
   materialCurrent: any = { description: "", mark: "", model: "", color: "", serial: "", year: "", license_plate: "" }
-  constructor(private fB: FormBuilder, private toastr: ToastrService, private typePersonService: TypePeopleService) { }
+ 
+  @ViewChild("tableScope") table!: GenericTableComponent;
+  displayedColumns: string[] = ['description', 'mark', 'model', 'color','serial','year', 'license_plate','star'];
+  dataToDisplay = [...ELEMENT_DATA];
+  datadisplayaux=[...ELEMENT_DATA];
+  dataSource= Array (new DataSourceV(this.dataToDisplay));
+  
+  constructor(private toastr: ToastrService,private fB: FormBuilder,public dialog: MatDialog,private typePersonService: TypePeopleService) { }
+
+  ngAfterViewChecked(): void {
+    console.log(`POlcia${this.fScope.controls}`);
+    this.table.refresh({}, this.fScope.controls);
+    if (this.fScope.controls.length>0) {
+      this.table.refresh({}, this.fScope.controls);
+      if (this.dataSource.length<10){
+          this.dataSource.push(new DataSourceV(this.dataToDisplay))
+       }
+      
+    }
+  }
 
   ngOnInit(): void {
-    this.typePersonService.list({ not_paginator: true }).subscribe(data => {
-      this.personTypes = data;
-    });
+    this.columnsScope = [];
+    if(this.settings.showTokenField)
+      this.columnsScope.push(
+        {
+          attribute: "identification_number",
+          header: "Cedula",
+          template: "item" 
+        },
+      );
+    if(this.settings.showTokenField)
+      this.columnsScope.push({
+          attribute: "full_name",
+          header: "Nombres y Apellidos",
+          template: "code"
+        });
+    if(this.settings.showTypePersonField)
+      this.columnsScope.push({
+        attribute: "type_person",
+        header: "Tipo Persona",
+        template: "name"
+      },);
+    if(this.settings.showMovementTypeField)
+      this.columnsScope.push({
+        attribute: "movement_type",
+        header: "Tipo de movimiento",
+        template: "movimiento"
+      },);
+      if(this.settings.showHourField)
+      this.columnsScope.push({
+        attribute: "hour",
+        header: "Hora",
+        template: "thora"
+      },);
+      if(this.settings.showHourField)
+        this.columnsScope.push({
+          attribute: "reason_visit",
+          header: "Motivo de la Visita",
+          template: "tvisita"
+        },);
+      if(this.settings.showEntryField)
+        this.columnsScope.push({
+          attribute:"entry",
+          header: "Ingreso de Herramienta o equipo",
+          template: "therramienta"
+        },);  
+     if(this.settings.showProtocolField)
+        this.columnsScope.push({
+          attribute:"protocol",
+          header: "Cumplió Protocolo COVID 19",
+          template: "tprotocolo"
+        },);  
+    if(this.settings.showVaccinationCardNumberField)
+        this.columnsScope.push({
+          attribute:"vaccination_card_number",
+          header: "Nro. de tarjeta de Vacunación",
+          template: "tvacuna"
+        },);  
+    if(!this.readOnly)
+      this.columnsScope.push({
+        attribute: "id",
+        header: "",
+        template: "opciones"
+      });
+      this.typePersonService.list({ not_paginator: true }).subscribe(data => {
+        this.personTypes = data;
+        
+      });
     if (this.fGRoot && this.id && this.fGRoot.get(this.id)) {
-      this.fPersons = this.fGRoot.get(this.id) as FormArray;
+      this.fScope = this.fGRoot.get(this.id) as FormArray;
     }
 
-    this.fPersons.statusChanges.subscribe((currentStatus) => {
+    this.fScope.statusChanges.subscribe((currentStatus) => {
       this.isValid.emit(currentStatus === "VALID" ? true : false);
     });
-    this.personsArrSelected.forEach((v) => {
+
+    this.scopeArrSelected.forEach((v) => {
+      
       this.addFG(v);
     });
 
-    this.fGPersons = this.fB.group({
-      Persons: [this.personsArrSelected.map((v) => v)],
+    this.fGscope = this.fB.group({
+      scope: [this.scopeArrSelected.map((v) => v)],
     });
-    this.fGPersons.valueChanges.subscribe((values) => {
-      values.Persons.forEach((s: Person) => {
-        let found = null;
-        if (this.fPersons.value) {
-          found = this.fPersons.value.some((v: any) => {
-            return v.identification_number === s.identification_number;
-          });
-        }
-        if (!found) this.addFG(s);
-      });
-      this.fPersons.value.forEach((v: any, index: number) => {
-        const found = values.Persons.some((s: Person) => {
-          return v.identification_number === s.identification_number;
-        });
-        if (!found) this.fPersons.removeAt(index);
-      });
-      this.personCurrent = values.person;
+
+    this.fGscope.valueChanges.subscribe((values) => {
+      this.scopeCurrent = values.scope;
+      
     });
+   
   }
 
   ngOnChanges(change: SimpleChanges): void {
+    
     if (change.settings && change.settings.firstChange) {
       this.settings = change.settings.currentValue || {
         ...PERSONS_LIST_DEFAULT,
@@ -100,8 +264,8 @@ export class PersonsComponent implements OnInit {
         ...PERSONS_LIST_DEFAULT,
       }
     }
+    
   }
-
 
   addFG(v: Person): void {
     const fG = this.fB.group({
@@ -143,12 +307,14 @@ export class PersonsComponent implements OnInit {
         this.settings.showVaccinationCardNumberField && Validators.required,
       ],
     });
-    this.fPersons.push(fG);
-    this.personCurrent = { ...{ id: "", identification_number: "" } };
+    this.fScope.push(fG);
+    this.listScope = [...this.fScope.value];
+    if(!this.readOnly)
+      this.table.refresh({}, this.fScope.controls);
   }
-
-  addMaterial(i: number) {
+  addMaterial(i: number,j: number) {
     let error: boolean = false;
+   
     Object.keys(this.materialCurrent).forEach((key: string = 'description') => {
       if (error)
         return;
@@ -158,37 +324,83 @@ export class PersonsComponent implements OnInit {
       }
     });
     if (error) return;
-    this.fPersons.controls[i].get('materials')?.value.value.push({ ...this.materialCurrent });
+
+    const randomElementIndex = j ;
+    ELEMENT_DATA[randomElementIndex]={ ...this.materialCurrent }
+    this.pos=this.fScope.controls.length -1;
+    this.dataToDisplay = [...this.dataToDisplay, ELEMENT_DATA[randomElementIndex]];
+    this.dataSource[this.pos].setData(this.dataToDisplay);
+    this.fScope.controls[this.pos].get('materials')?.value.value.push({ ... this.materialCurrent });
     this.materialCurrent = { ...{ description: "", mark: "", model: "", color: "", serial: "", year: "", license_plate: "" } };
-    /*     let _materials_currents = this.fPersons.controls[i].get('materials')?.value.value || []
-        let _materials = _materials_currents.push(this.materialCurrent);
-        let f = this.fPersons.controls[i].patchValue({
-          materials: _materials
+    
+  }
+
+  removeMaterial(index_form: number,index_material: number): void {
+    if (index_material> -1) {
+      this.pos=this.fScope.controls.length -1;
+      this.datadisplayaux= this.dataToDisplay.splice(index_material,1);
+      this.dataSource[this.pos].setData(this.dataToDisplay);
+      this.fScope.controls[this.pos].get('materials')?.value.value.splice(index_material,1);
+    }
+  }
+  addSubLine() {
+    
+    this.addFG(this.scopeCurrent);
+    /*     this.fScope.value.forEach((v: any, index: number) => {
+          const found = this.fGscope.value.scope.some((s: Scope) => {
+            return v.code === s.code;
+          });
+          if (!found) this.fScope.removeAt(index);
         }); */
   }
 
-  removeMaterial(index_form: number, index_material: number): void {
-    this.fPersons.controls[index_form].get('materials')?.value.value.splice(index_material, 1);
-  }
-
-  addPerson() {
+  removeSubLine(serial: string) {
     let exist = false;
-    let index = this.personsArr.findIndex(v => v.identification_number == this.personCurrent.identification_number);
-    if (index > -1)
-      this.personCurrent = { ...this.personsArr[index] };
-    exist = this.fPersons.value.find((v: any) => {
-      return v.identification_number === this.personCurrent.identification_number;
-    });
-    if (exist) {
-      this.toastr.error(`La persona con número de identificación ${this.personCurrent.identification_number} ya fue registrada`);
-      return;
-    } else {
-      this.addFG(this.personCurrent);
+    console.log(`OJo${serial}`)
+    for (var index = 0; index < this.fScope.controls.length; index++) {
+      let serialaux = this.fScope.controls[index].value.item;
+      if (serial===serialaux) {
+         this.pos =index;
+      }
+    }
+   
+    this.fScope.removeAt(this.pos);
+    
+  }
+  getPerson(identification_number: string) {
+    let index = this.personsArr.findIndex(v => v.identification_number == identification_number);
+    if (index > -1) {
+      this.fScope.get("full_name")!.setValue(this.personsArr[index].full_name);
     }
   }
+  
+   
 
-  removePerson(index: number) {
-    console.log(index)
-    this.fPersons.removeAt(index);
+  createPersona() {
+    const dialogRef = this.dialog.open(CreateAndEditPersonComponent, {
+      data: {
+        modal: true
+      },
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+      if (result?.identification_number) {
+        this.scopeCurrent.identification_number= result.identification_number;
+        this.personsArr.push(result);
+        this.addSubLine();
+      }
+    });
   }
+  check(value:boolean){
+    if(value){
+     
+      this.isInstitution = true;
+     
+    }else{
+      
+      this.isInstitution = false;
+    }
+  }
+ 
 }

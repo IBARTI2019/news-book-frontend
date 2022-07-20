@@ -150,7 +150,7 @@ export class ScopeComponent implements OnInit, OnChanges, AfterViewChecked {
 
     this.fGscope.valueChanges.subscribe((values) => {
       this.scopeCurrent = values.scope;
-      console.log('Cubano'+ this.scopeCurrent)
+      
     });
    
   }

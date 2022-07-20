@@ -42,7 +42,7 @@ import { ScopeComponent } from 'app/componentes/scope/scope.component';
 import { VehiclesComponent} from 'app/componentes/vehicles/vehicles.component';
 import { VehicleComponent} from 'app/componentes/vehicle/vehicle.component';
 import { PersonComponent } from 'app/componentes/person/person.component'
-
+import { PersonsComponent } from 'app/componentes/persons/persons.component';
 
 export const entryComponentes = [
   ConfirmDialogComponent,
@@ -69,6 +69,7 @@ export const entryComponentes = [
     VehiclesComponent,
     VehicleComponent,
     PersonComponent,
+    PersonsComponent,
      ],
   exports: [
     GenericTableComponent,
@@ -86,6 +87,7 @@ export const entryComponentes = [
     VehiclesComponent,
     VehicleComponent,
     PersonComponent,
+    PersonsComponent,
   ],
   imports: [
     CommonModule,
