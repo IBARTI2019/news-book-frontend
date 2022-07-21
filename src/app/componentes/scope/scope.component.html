@@ -48,8 +48,8 @@
         <ng-template #templateOpciones let-column="column" let-item="item" let-i="i">
             <div fxFlex="1 1 5%" fxLayoutAlign="center center" fxLayout="column" style="background-color: #ffffff"
                class="item" *ngIf="!readOnly">
-               <button mat-raised-button type="button">
-                  <mat-icon (click)="removeSubLine(item.controls.item.value)">delete_sweep</mat-icon>
+               <button mat-raised-button type="button" (click)="removeSubLine(item.controls.index.value)">
+                  <mat-icon>delete_sweep</mat-icon>
                 </button>
             </div>
         </ng-template>

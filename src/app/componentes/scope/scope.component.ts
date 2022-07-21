@@ -186,6 +186,7 @@ export class ScopeComponent implements OnInit, OnChanges, AfterViewChecked {
 
   addFG(v: Scope): void {
     const fG = this.fB.group({
+      index: v.index || 0,
       item: [
         v.item || ""
       ],
@@ -217,7 +218,7 @@ export class ScopeComponent implements OnInit, OnChanges, AfterViewChecked {
   }
 
   addSubLine() {
-    
+    this.scopeCurrent["index"] = this.fScope.length;
     this.addFG(this.scopeCurrent);
     /*     this.fScope.value.forEach((v: any, index: number) => {
           const found = this.fGscope.value.scope.some((s: Scope) => {
@@ -227,18 +228,10 @@ export class ScopeComponent implements OnInit, OnChanges, AfterViewChecked {
         }); */
   }
 
-  removeSubLine(serial: string) {
+  removeSubLine(index: number) {
     let exist = false;
-    console.log(serial)
-    for (var index = 0; index < this.fScope.controls.length; index++) {
-      let serialaux = this.fScope.controls[index].value.item;
-      if (serial===serialaux) {
-         this.pos =index;
-      }
-    }
-   
-    this.fScope.removeAt(this.pos);
-    
+    let pos = this.fScope.controls.findIndex((s) => s.value.index == index)
+    this.fScope.removeAt(pos);
   }
   getPerson(identification_number: string) {
     let index = this.personsArr.findIndex(v => v.identification_number == identification_number);

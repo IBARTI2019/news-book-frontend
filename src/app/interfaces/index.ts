@@ -69,6 +69,7 @@ export interface Material {
 }
 
 export interface Vehicle {
+  index?: number;
   id: string;
   license_plate: string;
   owner_full_name?: string;
@@ -293,6 +294,7 @@ export interface Staff extends PlannedStaff {
 }
 
 export interface Scope {
+  index?: number;
   item?: string;
   code?: string;
   description?: string;

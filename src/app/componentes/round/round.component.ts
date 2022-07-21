@@ -35,7 +35,7 @@ export class RoundComponent implements OnInit {
   @Output() isValid: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   defaultValues = { ...ROUNDS_LIST_DEFAULT }
-  RoundsCurrent: Round = { number: "", hour_start: "", hour_end: "", observation: ""};
+  RoundsCurrent: Round = { number: "", hour_start: "", hour_end: "", observation: "",reason: ""};
   @ViewChild("tableRonda") table!: GenericTableComponent;
  
   constructor(private toastr: ToastrService,private fB: FormBuilder) { }
@@ -103,6 +103,24 @@ export class RoundComponent implements OnInit {
         this.RoundsCurrent = values.round;
         
       });
+      this.fRound.valueChanges.subscribe((values) => {
+        values.round.forEach((s: Round) => {
+          let found = null;
+          if (this.fRound.value) {
+            found = this.fRound.value.some((v: any) => {
+              return v.number === s.number;
+            });
+          }
+          if (!found) this.addFG(s);
+        });
+        this.fRound.value.forEach((v: any, index: number) => {
+          const found = values.vehicles.some((s: Round) => {
+            return v.number === s.number;
+          });
+          if (!found) this.fR.removeAt(index);
+        });
+        this.RoundsCurrent= values.round;
+      });
      
   }
   addFG(v: Round): void {
@@ -123,9 +141,16 @@ export class RoundComponent implements OnInit {
         v.observation || "",
         this.settings.showObservationField && Validators.required,
       ],
-      
+      reason: [
+        v.reason || "",
+        this.settings.showReasonField && Validators.required,
+      ],
     });
     this.fR.push(fG);
+    this.RoundsCurrent= { ... { number: "", hour_start: "", hour_end: "", observation: "",reason: ""} };
+   
+    if(!this.readOnly)
+      this.table.refresh({}, this.fR.controls);
   }
   
   ngOnChanges(change: SimpleChanges): void {
@@ -140,26 +165,31 @@ export class RoundComponent implements OnInit {
     }
   }
   addSubLine() {
-    
-    this.addFG(this.RoundsCurrent);
-    /*     this.fScope.value.forEach((v: any, index: number) => {
-          const found = this.fGscope.value.scope.some((s: Scope) => {
-            return v.code === s.code;
-          });
-          if (!found) this.fScope.removeAt(index);
-        }); */
-  }
-  removeremoveRound(serial: number) {
     let exist = false;
-    console.log(`OJo${serial}`)
+    let index = this.RoundsArr.findIndex(v => v.number == this.RoundsCurrent.number);
+    if (index > -1)
+      this.RoundsCurrent= { ...this.RoundsArr[index] };
+    exist = this.fR.value.find((v: any) => {
+      return v.number === this.RoundsCurrent.number;
+    });
+    if (exist) {
+      this.toastr.error(`La Ronda  ${this.RoundsCurrent.number} ya fue registrada`);
+      return;
+    } else {
+      this.addFG(this.RoundsCurrent);
+    }
+   
+  }
+  removerRound(ronda: number) {
     for (var index = 0; index < this.fR.controls.length; index++) {
-      let serialaux = this.fR.controls[index].value.number;
-      if (serial===serialaux) {
+      let placaaux = this.fR.controls[index].value.number;
+      if (ronda===placaaux) {
          this.pos =index;
       }
     }
-   
+
     this.fR.removeAt(this.pos);
+    this.table.refresh({}, this.fR.controls);
     
   }
 }

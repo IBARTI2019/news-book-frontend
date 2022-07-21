@@ -26,8 +26,8 @@
                      
                     <ng-template #templateOpciones let-column="column" let-item="item" let-i="i" >
                       <ng-container [formGroup]="item"> 
-                          <button mat-raised-button type="button">
-                            <mat-icon (click)="removeVehicle(item.controls.license_plate.value)">delete_sweep</mat-icon>
+                          <button mat-raised-button type="button"(click)="removeVehicle(item.controls.index.value)">
+                            <mat-icon >delete_sweep</mat-icon>
                           </button>
                        </ng-container> 
                       
@@ -190,9 +190,9 @@
                           
                             <div *ngIf="!readOnly"  fxFlex="1 1 10%" fxLayout="column">
                                 
-                                    <button mat-raised-button type="button">
+                                    <button mat-raised-button type="button" (click)="addMaterial(v,j)">
                                         
-                                        <mat-icon (click)="addMaterial(v,j)">add_shopping_cart</mat-icon>
+                                        <mat-icon >add_shopping_cart</mat-icon>
                                       </button>
                                     
                                 
@@ -201,7 +201,7 @@
 
                         <div fxFlex fxLayout="row wrap" fxLayoutGap="1px grid" >
                             <ng-container [formGroup]="item" *ngFor="let fVehicle of fVehicles.controls; index as i;" > 
-                               <table  mat-table [dataSource]="dataSource[i]" *ngIf="item.controls.license_plate.value===fVehicle.controls.license_plate.value">
+                               <table style="width: 100% !important;"  mat-table [dataSource]="dataSource[i]" *ngIf="item.controls.license_plate.value===fVehicle.controls.license_plate.value">
                                    <!---ition Column -->
                                    <ng-container matColumnDef="description">
                                        <th mat-header-cell *matHeaderCellDef>Descripcion</th>

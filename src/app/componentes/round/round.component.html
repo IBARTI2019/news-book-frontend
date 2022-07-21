@@ -1,7 +1,8 @@
 <div fxFlex="{{ settings?.percentage || defaultValues.percentage}}" fxLayoutGap="40px" fxLayout="column" style="padding-top: 10px; padding-bottom: 10px;">
     <div fxFlex="{{ settings.percentage }}" fxLayout="row" style="height: 50px">
-        <form fxFlex="{{ settings.percentage }}" [formGroup]="fRound">
+        <form fxFlex="{{ settings.percentage }}" [formGroup]="fRound" >
            <div fxFlex fxLayout="row wrap" fxLayoutGap="5px grid">
+            
             <mat-form-field fxFlex="1 0 30%" appearance="fill" *ngIf="!readOnly">
                 <mat-label>Nro Ronda</mat-label>
                 <input type="number" matInput placeholder="Ronda" [(ngModel)]="RoundsCurrent.number"
@@ -25,7 +26,7 @@
             <ng-template #templateOpciones let-column="column" let-item="item" let-i="i" >
                 <ng-container [formGroup]="item"> 
                     <button mat-raised-button type="button">
-                      <mat-icon (click)="removeRound(item.controls.number)">delete_sweep</mat-icon>
+                      <mat-icon (click)="removerRound(item.controls.number.value)">delete_sweep</mat-icon>
                     </button>
                  </ng-container>
               </ng-template> 
@@ -76,15 +77,40 @@
                             </mat-error>
                         </mat-form-field>  
                     </ng-container>
-            </ng-template>
+                </ng-template>
+                <ng-template #templateC let-column="column" let-item="item" let-i="i">
+                    <ng-container [formGroup]="item"> 
+                           <div fxLayout="row wrap" fxLayoutGap="5px grid" fxFlex="100" style="background-color: #ffffff" class="item mat-toolbar">
+                              <div fxLayoutAlign="center center" fxFlex="100" fxLayout="column"
+                                style="margin-bottom: 5px; margin-top:10px;" class="item mat-toolbar mat-primary">
+                                Motivo de incumplimiento de ronda
+                               </div>
+                               <div fxLayoutAlign="center center" fxFlex="100" fxLayout="column">
+                                    <mat-form-field appearance="fill">
+                                        <mat-label>Motivo de incumplimiento de ronda</mat-label>
+                                            <input type="text" matInput formControlName="reason" placeholder="Motivo de incumplimiento de ronda"
+                                            [readonly]="readOnly" />
+                                        <mat-error *ngIf="item.controls.reason.hasError('required')">
+                                            EL motivo de incumplimiento de ronda es <strong>requerido</strong>
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div> 
+                            </div>     
+                             
+                        
+                    </ng-container>
+                </ng-template>
             <!-- Fin de los Templates -->
             
             <!-- Begin Table-->
-            <app-generic-table  [hidden]="fR.value.length===0"  fxFlex="100" [columns]="columnsR" [showFilter]="false" [btnRefresh]="false" 
-                 [is_paged]="false"  [templates]="{opciones: templateOpciones, idronda: templateRonda,idhorainicio:templateHorainicio,idhorafinal:templateHorafinal,idperimetro:templateObservacionperimetral}" #tableRonda>
+            <app-generic-table  [hidden]="fR.value.length===0" [openHoverCollapsed]="true" fxFlex="100" [columns]="columnsR" [showFilter]="false" [btnRefresh]="false" 
+                 [is_paged]="false"   [templateCollapsed]="{template:templateC}" [templates]="{opciones: templateOpciones, idronda: templateRonda,idhorainicio:templateHorainicio,idhorafinal:templateHorafinal,idperimetro:templateObservacionperimetral}" #tableRonda>
             </app-generic-table>  
             <!-- end Table -->
             
+           
         </div>
+        
     </div>
+    
 </div>

@@ -283,6 +283,7 @@ export class VehiclesComponent implements OnInit,OnChanges,AfterViewChecked {
 
   addFG(v: Vehicle): void {
     const fG = this.fB.group({
+      index: v.index || 0,
       license_plate: [
         v.license_plate || "",
         this.settings.showTokenField && Validators.required,
@@ -371,6 +372,7 @@ export class VehiclesComponent implements OnInit,OnChanges,AfterViewChecked {
       this.toastr.error(`La placa ${this.vehiclesCurrent.license_plate} ya fue registrada`);
       return;
     } else {
+      this.vehiclesCurrent["index"] = this.fVehicles.length;
       this.addFG(this.vehiclesCurrent);
     }
     /*     this.fVehicles.value.forEach((v: any, index: number) => {
@@ -398,16 +400,9 @@ export class VehiclesComponent implements OnInit,OnChanges,AfterViewChecked {
     });
   }
   
-  removeVehicle(placa:string): void {
-    
-    for (var index = 0; index < this.fVehicles.controls.length; index++) {
-      let placaaux = this.fVehicles.controls[index].value.license_plate;
-      if (placa===placaaux) {
-         this.pos =index;
-      }
-    }
-    this.fVehicles.removeAt(this.pos);
-    this.table.refresh({}, this.fVehicles.controls);
+  removeVehicle(index:number): void {
+    let pos = this.fVehicles.controls.findIndex((s) => s.value.index == index)
+    this.fVehicles.removeAt(pos);;
   }
   
 
