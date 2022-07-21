@@ -43,7 +43,8 @@ import { VehiclesComponent} from 'app/componentes/vehicles/vehicles.component';
 import { VehicleComponent} from 'app/componentes/vehicle/vehicle.component';
 import { PersonComponent } from 'app/componentes/person/person.component'
 import { PersonsComponent } from 'app/componentes/persons/persons.component';
-
+import { ChangingGuardStaffListComponent } from 'app/componentes/changing-guard-staff-list/changing-guard-staff-list.component';
+import { RoundComponent } from 'app/componentes/round/round.component'
 export const entryComponentes = [
   ConfirmDialogComponent,
   ValidateOesvicaTokenComponent,
@@ -70,6 +71,8 @@ export const entryComponentes = [
     VehicleComponent,
     PersonComponent,
     PersonsComponent,
+    ChangingGuardStaffListComponent,
+    RoundComponent,
      ],
   exports: [
     GenericTableComponent,
@@ -88,6 +91,8 @@ export const entryComponentes = [
     VehicleComponent,
     PersonComponent,
     PersonsComponent,
+    ChangingGuardStaffListComponent,
+    RoundComponent,
   ],
   imports: [
     CommonModule,

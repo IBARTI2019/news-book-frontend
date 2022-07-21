@@ -17,6 +17,8 @@ import {
 } from "app/interfaces";
 import { ReplaySubject, Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
+import { DTColumn } from '../generic-table/interface';
+import { GenericTableComponent } from '../generic-table/generic-table.component';
 
 const HEALTH_CONDITIONS = [
   {
@@ -94,18 +96,82 @@ export class ChangingGuardStaffListComponent implements OnInit, OnChanges {
   @Input() staffArr: PlannedStaff[] = [];
   @Input() fGRoot!: FormGroup;
   @Input() readOnly: boolean = false;
-
+  @Input() pos: number = 0;
   @Output() isValid: EventEmitter<boolean> = new EventEmitter<boolean>();
-
+  columnsG: DTColumn[] = [];
   fA: FormArray = new FormArray([]);
   healthConditions = [...HEALTH_CONDITIONS];
   fGStaff = new FormGroup({});
   defaultValues = { ...CHANGING_GUARD_STAFF_LIST_DEFAULT }
   listFilter: PlannedStaff[] | undefined = [];
-
+  @ViewChild("tableP") table!: GenericTableComponent;
+ 
   constructor(private fB: FormBuilder) { }
-
+  ngAfterViewChecked(): void {
+      
+    if (this.fA.controls.length>0) {
+      this.table.refresh({}, this.fA.controls);
+            
+    }
+  }
   ngOnInit(): void {
+    this.columnsG = [];
+    if(this.settings.showTokenField)
+      this.columnsG.push(
+        {
+          attribute:"cod_ficha",
+          header: "Ficha",
+          template: "idficha" 
+        },
+      );
+    if(this.settings.showNameField)
+      this.columnsG.push({
+          attribute: "name_and_surname",
+          header:"Nombres y apellidos",
+          template: "idnombre"
+        });
+    if(this.settings.showProtocolField)
+      this.columnsG.push({
+        attribute:"protocol",
+        header: "Cumplio protocolo",
+        template: "idprotocolo"
+      },);
+    if(this.settings.showHealthConditionField)
+      this.columnsG.push({
+        attribute:"health_condition",
+        header: "Estado de salud",
+        template: "idsalud"
+      });
+
+    
+      if(this.settings.guardStatus)
+      this.columnsG.push({
+        attribute: "guard_status",
+        header: "Estatu de la guardia",
+        template: "idestatu"
+      });
+      if(this.settings.showCheckInField)
+      this.columnsG.push({
+        attribute: "check_in",
+        header: "Hora de llegada",
+        template: "idhorallegada"
+      });
+    if(this.settings.showCheckOutField)
+      this.columnsG.push({
+        attribute: "check_out",
+        header: "Hora de salida",
+        template: "idhorasalida"
+      });
+     
+
+
+    if(!this.readOnly)
+      this.columnsG.push({
+        attribute: "id",
+        header: "",
+        template: "opciones"
+      });
+   
 
 
     if (this.fGRoot && this.id && this.fGRoot.get(this.id)) {
@@ -233,4 +299,16 @@ export class ChangingGuardStaffListComponent implements OnInit, OnChanges {
     }
 
   }
-}
+  removeItems(codficha: string) {
+    for (var index = 0; index < this.fA.controls.length; index++) {
+      let fichaauxx = this.fA.controls[index].value.cod_ficha;
+      if (codficha===fichaauxx) {
+         this.pos =index;
+      }
+    }
+    this.fA.removeAt(this.pos);
+    this.table.refresh({}, this.fA.controls);
+  }
+       
+  }
+

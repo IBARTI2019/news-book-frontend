@@ -72,4 +72,4 @@ tr.example-element-row:not(.example-expanded-row):active {
 }
 
 .hide { 
-  visibility: none; }
+  display:none; }

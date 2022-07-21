@@ -1,90 +1,90 @@
-<div fxFlex="{{ settings?.percentage || defaultValues.percentage}}" fxLayoutGap="40px" fxLayout="column"
-    style="padding-top: 10px; padding-bottom: 10px;">
-    <div fxFlex fxLayout="row wrap" fxLayoutGap="1px grid">
-        <div fxFlex="1 2 100%" fxLayout="row" style="height: 50px" fxLayoutGap="1px">
-            <div *ngIf="settings.showNumberField" fxLayoutAlign="center center" fxFlex="2 0 15%" fxLayout="row"
-                class="item mat-toolbar mat-primary">
-                Nro. de la ronda
-            </div>
-            <div *ngIf="settings.showHourStartField" fxLayoutAlign="center center" fxFlex="2 0 20%" fxLayout="row"
-                class="item mat-toolbar mat-primary">
-                Hora de inicio
-            </div>
-            <div *ngIf="settings.showHourEndField" fxLayoutAlign="center center" fxFlex="2 0 20%" fxLayout="row"
-                class="item mat-toolbar mat-primary">
-                Hora de finalización
-            </div>
-            <div *ngIf="settings.showObservationField" fxLayoutAlign="center center" fxFlex="1 1 40%" fxLayout="row"
-                class="item mat-toolbar mat-primary">
-                Observación del estatus perimetral
-            </div>
-        </div>
-        <!-- Begin to Dynamic Form -->
-        <form fxFlex="{{ settings.percentage }}" [formGroup]="fRound" fxLayout="row wrad" fxLayoutGap="1px">
-            <div *ngIf="settings.showNumberField" fxLayoutAlign="center center" fxFlex="2 0 15%" fxLayout="column"
-                style="background-color: #ffffff" class="item">
-                <mat-form-field appearance="fill">
-                    <mat-label>Nro. de la ronda</mat-label>
-                    <input type="text" matInput formControlName="number" placeholder="" [readonly]="readOnly" />
-                    <mat-error *ngIf="fRound.controls.number.hasError('required')">
-                        El nro. de la ronda es <strong>requerido</strong>
-                    </mat-error>
-                </mat-form-field>
-            </div>
-            <div *ngIf="settings.showHourStartField" fxLayoutAlign="center center" fxFlex="2 0 20%" fxLayout="column"
-                style="background-color: #ffffff" class="item">
-                <ngx-timepicker-field #hour_startP [format]="24" [defaultTime]="'00:00'" [toggleIcon]="icon_hour_start"
-                    formControlName="hour_start" [disabled]="readOnly">
-                </ngx-timepicker-field>
-                <ng-template #icon_hour_start>
-                    <mat-icon aria-hidden="false">schedule</mat-icon>
-                </ng-template>
-                <mat-error *ngIf="fRound.controls.hour_start.hasError('required')">
-                    La hora de inicio es <strong>requerida</strong>
-                </mat-error>
-            </div>
-            <div *ngIf="settings.showHourEndField" fxLayoutAlign="center center" fxFlex="2 0 20%" fxLayout="column"
-                style="background-color: #ffffff" class="item">
-                <ngx-timepicker-field #hour_endP [format]="24" [defaultTime]="'00:00'" [toggleIcon]="icon_hour_end"
-                    formControlName="hour_end" [disabled]="readOnly">
-                </ngx-timepicker-field>
-                <ng-template #icon_hour_end>
-                    <mat-icon aria-hidden="false">schedule</mat-icon>
-                </ng-template>
-                <mat-error *ngIf="fRound.controls.hour_end.hasError('required')">
-                    La hora de finalización es <strong>requerida</strong>
-                </mat-error>
-            </div>
-            <div *ngIf="settings.showObservationField" fxLayoutAlign="center center" fxFlex="1 1 40%" fxLayout="column"
-                style="background-color: #ffffff" class="item">
-                <mat-form-field appearance="fill">
-                    <mat-label>Observación del estatus perimetral</mat-label>
-                    <input type="text" matInput formControlName="observation"
-                        placeholder="Observación del estatus perimetral" [readonly]="readOnly" />
-                    <mat-error *ngIf="fRound.controls.observation.hasError('required')">
-                        La observación del estatus perimetral es <strong>requerida</strong>
-                    </mat-error>
-                </mat-form-field>
-            </div>
-            <div fxFlex="100%" fxLayout="row" style="height: 50px" fxLayoutGap="1px" *ngIf="settings.showReasonField">
-                <div *ngIf="settings.showReasonField" fxLayoutAlign="center center" fxFlex="10-%" fxLayout="row"
-                    class="item mat-toolbar mat-primary">
-                    Motivo de incumplimiento de ronda
-                </div>
-            </div>
-            <div fxLayoutAlign="center center" fxFlex="1 1 100%" fxLayout="column" style="background-color: #ffffff"
-                class="item">
-                <mat-form-field appearance="fill">
-                    <mat-label>Motivo de incumplimiento de ronda</mat-label>
-                    <input type="text" matInput formControlName="reason" placeholder="Motivo de incumplimiento de ronda"
-                        [readonly]="readOnly" />
-                    <mat-error *ngIf="fRound.controls.reason.hasError('required')">
-                        EL motivo de incumplimiento de ronda es <strong>requerido</strong>
-                    </mat-error>
-                </mat-form-field>
-            </div>
+<div fxFlex="{{ settings?.percentage || defaultValues.percentage}}" fxLayoutGap="40px" fxLayout="column" style="padding-top: 10px; padding-bottom: 10px;">
+    <div fxFlex="{{ settings.percentage }}" fxLayout="row" style="height: 50px">
+        <form fxFlex="{{ settings.percentage }}" [formGroup]="fRound">
+           <div fxFlex fxLayout="row wrap" fxLayoutGap="5px grid">
+            <mat-form-field fxFlex="1 0 30%" appearance="fill" *ngIf="!readOnly">
+                <mat-label>Nro Ronda</mat-label>
+                <input type="number" matInput placeholder="Ronda" [(ngModel)]="RoundsCurrent.number"
+                    [ngModelOptions]="{standalone: true}" />
+            </mat-form-field>
+            <div>
+                <button mat-raised-button fxFlex="1 0 10%" style="height: 50px" (click)="addSubLine()" *ngIf="!readOnly"
+                    type="button">
+                    Agregar
+                </button>
+            </div>  
+            
+          </div>
         </form>
-        <br><br>
     </div>
 
+    <div class="d-flex flex-wrap">
+        <!-- Begin to Dynamic Form -->
+        <div fxFlex="{{ settings.percentage }}" fxLayout="row"  fxLayoutGap="1px">
+               <!-- Inicio Templates -->
+            <ng-template #templateOpciones let-column="column" let-item="item" let-i="i" >
+                <ng-container [formGroup]="item"> 
+                    <button mat-raised-button type="button">
+                      <mat-icon (click)="removeRound(item.controls.number)">delete_sweep</mat-icon>
+                    </button>
+                 </ng-container>
+              </ng-template> 
+              <ng-template #templateRonda let-column="column" let-item="item" let-i="i">
+                <ng-container [formGroup]="item"> 
+                    <mat-form-field appearance="fill">
+                        <input type="text" matInput formControlName="number" placeholder="" [readonly]="readOnly" />
+                         <mat-error *ngIf="item.controls.number.hasError('required')">
+                             El nro. de la ronda es <strong>requerido</strong>
+                         </mat-error>
+                     </mat-form-field>
+               </ng-container>
+              </ng-template>
+                <ng-template #templateHorainicio let-column="column" let-item="item" let-i="i">
+                    <ng-container [formGroup]="item"> 
+                        <ngx-timepicker-field #hour_startP [format]="24" [defaultTime]="'00:00'" [toggleIcon]="icon_hour_start"
+                            formControlName="hour_start" [disabled]="readOnly">
+                        </ngx-timepicker-field>
+                        <ng-template #icon_hour_start>
+                            <mat-icon aria-hidden="false">schedule</mat-icon>
+                        </ng-template>
+                        <mat-error *ngIf="item.controls.hour_start.hasError('required')">
+                                 La hora de inicio es <strong>requerida</strong>
+                        </mat-error>
+                    </ng-container>
+                </ng-template>
+                <ng-template #templateHorafinal let-column="column" let-item="item" let-i="i">
+                        <ng-container [formGroup]="item"> 
+                            <ngx-timepicker-field #hour_endP [format]="24" [defaultTime]="'00:00'" [toggleIcon]="icon_hour_end"
+                                    formControlName="hour_end" [disabled]="readOnly">
+                            </ngx-timepicker-field>
+                            <ng-template #icon_hour_end>
+                                <mat-icon aria-hidden="false">schedule</mat-icon>
+                            </ng-template>
+                            <mat-error *ngIf="item.controls.hour_end.hasError('required')">
+                                    La hora de finalización es <strong>requerida</strong>
+                            </mat-error>
+                        </ng-container>
+                </ng-template>
+                <ng-template #templateObservacionperimetral let-column="column" let-item="item" let-i="i">
+                    <ng-container [formGroup]="item"> 
+                        <mat-form-field appearance="fill">
+                            <mat-label>Observación del estatus perimetral</mat-label>
+                            <input type="text" matInput formControlName="observation"
+                                placeholder="Observación del estatus perimetral" [readonly]="readOnly" />
+                            <mat-error *ngIf="item.controls.observation.hasError('required')">
+                                La observación del estatus perimetral es <strong>requerida</strong>
+                            </mat-error>
+                        </mat-form-field>  
+                    </ng-container>
+            </ng-template>
+            <!-- Fin de los Templates -->
+            
+            <!-- Begin Table-->
+            <app-generic-table  [hidden]="fR.value.length===0"  fxFlex="100" [columns]="columnsR" [showFilter]="false" [btnRefresh]="false" 
+                 [is_paged]="false"  [templates]="{opciones: templateOpciones, idronda: templateRonda,idhorainicio:templateHorainicio,idhorafinal:templateHorafinal,idperimetro:templateObservacionperimetral}" #tableRonda>
+            </app-generic-table>  
+            <!-- end Table -->
+            
+        </div>
+    </div>
 </div>

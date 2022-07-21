@@ -44,8 +44,11 @@ export class ControlService {
           : new FormArray([]);
           break;
         case "round":
-          group[question.key] = this.newFormRound(question);
+          group[question.key] = question.required
+          ? new FormArray([], Validators.required)
+          : new FormArray([]);
           break;
+         
         case "selection":
           group[question.key] = question.required
           ? new FormControl(question.value || "", Validators.required)

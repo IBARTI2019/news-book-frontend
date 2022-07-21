@@ -150,14 +150,14 @@
             <div fxLayoutAlign="center center" fxFlex="100" fxLayout="column" class="item mat-toolbar mat-primary">
                 Personal de la Instituccion (Datos de la Instituccion) 
             </div>
-            <div fxLayoutAlign="center center" class="item" fxFlex="2 1 40%" fxLayout="row">
+            <div fxLayoutAlign="center center" class="item" fxFlex="2 1 40%" fxLayout="column">
                 <mat-form-field appearance="fill">
                     <mat-label>Insituccion</mat-label>
                     <input type="text" matInput placeholder="Descripción" formControlName="instituccion" [readonly]="readOnly"
                         />
                 </mat-form-field>
             </div>
-            <div  fxLayoutAlign="center center" class="item" fxFlex="3 1 30%" fxLayout="row">
+            <div  fxLayoutAlign="center center" class="item" fxFlex="3 1 30%" fxLayout="column">
                 <mat-form-field appearance="fill">
                     <mat-label>observacion</mat-label>
                     <input type="text" matInput placeholder="Observacion" formControlName="observacion" [readonly]="readOnly"
@@ -165,26 +165,26 @@
                 </mat-form-field>
             </div>
 
-            <div fxLayoutAlign="center center" fxFlex="100" fxLayout="row" class="item mat-toolbar mat-primary">
+            <div fxLayoutAlign="center center" fxFlex="100" fxLayout="column" class="item mat-toolbar mat-primary">
                 Personal que autoriza la entrada
             </div>
            
             
-            <div  fxLayoutAlign="center center" class="item" fxFlex="2 1 40%" fxLayout="row">
+            <div  fxLayoutAlign="center center" class="item" fxFlex="2 1 40%" fxLayout="column">
                 <mat-form-field appearance="fill">
                     <mat-label>Nombres y Apellidos</mat-label>
                     <input type="text" matInput placeholder="Nombres y Apellidos"  formControlName="name_recibe" [readonly]="readOnly"
                         />
                 </mat-form-field>
             </div>
-            <div  fxLayoutAlign="center center" class="item" fxFlex="2 1 30%" fxLayout="row">
+            <div  fxLayoutAlign="center center" class="item" fxFlex="2 1 30%" fxLayout="column">
                 <mat-form-field appearance="fill">
                     <mat-label>Cedula</mat-label>
                     <input type="text" matInput placeholder="Cedula"  formControlName="ident_recibe" [readonly]="readOnly"
                         />
                 </mat-form-field>
             </div>
-            <div  fxLayoutAlign="center center" class="item" fxFlex="2 1 30%" fxLayout="row">
+            <div  fxLayoutAlign="center center" class="item" fxFlex="2 1 30%" fxLayout="column">
                 <mat-form-field appearance="fill">
                     <mat-label>Cargo</mat-label>
                     <input type="text" matInput placeholder="Cargo"  formControlName="cargo_recibe" [readonly]="readOnly"
