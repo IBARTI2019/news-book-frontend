@@ -174,13 +174,13 @@ export class PersonsComponent implements OnInit, OnChanges, AfterViewChecked {
     if(this.settings.showTokenField)
       this.columnsScope.push({
           attribute: "full_name",
-          header: "Nombres y Apellidos",
+          header: "Nombres y apellidos",
           template: "code"
         });
     if(this.settings.showTypePersonField)
       this.columnsScope.push({
         attribute: "type_person",
-        header: "Tipo Persona",
+        header: "Tipo persona",
         template: "name"
       },);
     if(this.settings.showMovementTypeField)
@@ -204,19 +204,19 @@ export class PersonsComponent implements OnInit, OnChanges, AfterViewChecked {
       if(this.settings.showEntryField)
         this.columnsScope.push({
           attribute:"entry",
-          header: "Ingreso de Herramienta o equipo",
+          header: "Ingreso de herramienta o equipo",
           template: "therramienta"
         },);  
      if(this.settings.showProtocolField)
         this.columnsScope.push({
           attribute:"protocol",
-          header: "Cumplió Protocolo COVID 19",
+          header: "Cumplió protocolo covid 19",
           template: "tprotocolo"
         },);  
     if(this.settings.showVaccinationCardNumberField)
         this.columnsScope.push({
           attribute:"vaccination_card_number",
-          header: "Nro. de tarjeta de Vacunación",
+          header: "Nro. de tarjeta de vacunación",
           template: "tvacuna"
         },);  
     if(!this.readOnly)

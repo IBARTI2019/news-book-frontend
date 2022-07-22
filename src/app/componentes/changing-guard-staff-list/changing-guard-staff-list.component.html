@@ -74,7 +74,7 @@
        <ng-template #templateNombre let-column="column" let-item="item" let-i="i">
           <ng-container [formGroup]="staff"> 
                 <mat-form-field appearance="fill">
-                    <mat-label>Nombre y Apellido</mat-label>
+                    <mat-label>Nombre y apellido</mat-label>
                     <input type="text" matInput formControlName="name_and_surname" placeholder="Nombre Completo"
                       [readonly]="true" />
                     <mat-error *ngIf="staff.controls.name_and_surname.hasError('required')">
