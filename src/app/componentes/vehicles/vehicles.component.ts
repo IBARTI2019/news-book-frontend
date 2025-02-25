@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormGroup, FormArray, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { Vehicle, VehiclesSettings } from 'app/interfaces';
-import { CreateAndEditVehicleComponent } from 'app/modules/maestro/vehicle/create-and-edit-vehicle/create-and-edit-vehicle.component';
+import { Vehicle, VehiclesSettings } from '../../interfaces';
+import { CreateAndEditVehicleComponent } from '../../modules/maestro/vehicle/create-and-edit-vehicle/create-and-edit-vehicle.component';
 import { ToastrService } from 'ngx-toastr';
 
 const OWNER_TYPES = [

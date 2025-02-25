@@ -1,11 +1,13 @@
 <div fxFlex="{{ settings?.percentage || defaultValues.percentage}}" fxLayoutGap="40px" fxLayout="column"
     style="padding-top: 10px; padding-bottom: 10px;">
-    <div fxFlex fxLayout="row wrap" fxLayoutGap="1px grid"><div fxLayoutAlign="end center" fxFlex="100%" fxLayout="row" *ngIf="!readOnly" style="margin: 10px;">
-        <!-- fxFlex="1 0 10%" -->
-        <button *ngIf="settings.showButtonNew"  mat-raised-button color="primary" (click)="createPersona()" type="button">
-            Nuevo
-        </button>
-    </div>
+    <div fxFlex fxLayout="row wrap" fxLayoutGap="1px grid">
+        <div fxLayoutAlign="end center" fxFlex="100%" fxLayout="row" *ngIf="!readOnly" style="margin: 10px;">
+            <!-- fxFlex="1 0 10%" -->
+            <button *ngIf="settings.showButtonNew" mat-raised-button color="primary" (click)="createPersona()"
+                type="button">
+                Nuevo
+            </button>
+        </div>
 
         <div fxFlex="1 2 100%" fxLayout="row" style="height: 50px" fxLayoutGap="1px">
             <div *ngIf="settings.showTokenField" fxLayoutAlign="center center" fxFlex="2 0 11%" fxLayout="row"
@@ -32,9 +34,13 @@
                 class="item mat-toolbar mat-primary">
                 Motivo de Visita
             </div>
+            <div *ngIf="settings.showPlaceOfReceptionField" fxLayoutAlign="center center" fxFlex="1 1 15%"
+                fxLayout="row" class="item mat-toolbar mat-primary">
+                Lugar de recibimiento
+            </div>
             <div *ngIf="settings.showEntryField" fxLayoutAlign="center center" fxFlex="1 1 6%" fxLayout="row"
                 class="item mat-toolbar mat-primary">
-                Ingreso de herramienta o equipo
+                Ingreso de Herramienta, Vehículo o Equipo
             </div>
             <div *ngIf="settings.showProtocolField" fxLayoutAlign="center center" fxFlex="1 1 6%" fxLayout="row"
                 class="item mat-toolbar mat-primary">
@@ -71,8 +77,10 @@
             </div>
             <div *ngIf="settings.showTypePersonField" fxLayoutAlign="center center" fxFlex="1 1 11%" fxLayout="column"
                 style="background-color: #ffffff" class="item">
-                <mat-radio-group style="margin: 15px 0" formControlName="type_person" [disabled]="readOnly" [(ngModel)]="tp">
-                    <mat-radio-button *ngFor="let mT of personTypes" style="margin: 5px" [value]="mT.id" (click)="check(mT.is_institution)">{{
+                <mat-radio-group style="margin: 15px 0" formControlName="type_person" [disabled]="readOnly"
+                    [(ngModel)]="tp">
+                    <mat-radio-button *ngFor="let mT of personTypes" style="margin: 5px" [value]="mT.id"
+                        (click)="check(mT)">{{
                         mT.description}}
                     </mat-radio-button>
                 </mat-radio-group>
@@ -114,6 +122,17 @@
                     </mat-error>
                 </mat-form-field>
             </div>
+            <div *ngIf="settings.showPlaceOfReceptionField" fxLayoutAlign="center center" fxFlex="1 1 15%"
+                fxLayout="column" style="background-color: #ffffff" class="item">
+                <mat-form-field appearance="fill">
+                    <mat-label>Lugar de recibimiento</mat-label>
+                    <input type="text" matInput formControlName="place_of_reception" placeholder="Lugar de recibimiento"
+                        [readonly]="readOnly" />
+                    <mat-error *ngIf="fPerson.controls.place_of_reception.hasError('required')">
+                        El lugar de recibimiento es <strong>requerido</strong>
+                    </mat-error>
+                </mat-form-field>
+            </div>
             <div *ngIf="settings.showEntryField" fxLayoutAlign="center center" fxFlex="1 1 6%" fxLayout="column"
                 style="background-color: #ffffff" class="item">
                 <mat-slide-toggle formControlName="entry" #entryST [disabled]="readOnly">{{
@@ -143,24 +162,25 @@
                     </mat-error>
                 </mat-form-field>
             </div>
+
             <!-- Begin to Institucion -->
-            <div fxLayout="row wrap" *ngIf="settings.showTypePersonField && isInstitution"
-                fxLayoutGap="5px grid" fxFlex="100" style="background-color: #ffffff" class="item mat-toolbar">
+            <div fxLayout="row wrap" *ngIf="settings.showTypePersonField && isInstitution" fxLayoutGap="5px grid"
+                fxFlex="100" style="background-color: #ffffff" class="item mat-toolbar">
                 <div fxLayoutAlign="center center" fxFlex="100" fxLayout="column" class="item mat-toolbar mat-primary">
-                    Personal de la Instituccion (Datos de la Instituccion) 
+                    Personal de la Instituccion (Datos de la Instituccion)
                 </div>
                 <div fxLayoutAlign="center center" class="item" fxFlex="2 1 40%" fxLayout="column">
                     <mat-form-field appearance="fill">
                         <mat-label>Insituccion</mat-label>
-                        <input type="text" matInput placeholder="Descripción" formControlName="instituccion" [readonly]="readOnly"
-                            />
+                        <input type="text" matInput placeholder="Descripción" formControlName="instituccion"
+                            [readonly]="readOnly" />
                     </mat-form-field>
                 </div>
-                <div  fxLayoutAlign="center center" class="item" fxFlex="3 1 30%" fxLayout="column">
+                <div fxLayoutAlign="center center" class="item" fxFlex="3 1 30%" fxLayout="column">
                     <mat-form-field appearance="fill">
                         <mat-label>observacion</mat-label>
-                        <input type="text" matInput placeholder="Observacion" formControlName="observacion" [readonly]="readOnly"
-                            />
+                        <input type="text" matInput placeholder="Observacion" formControlName="observacion"
+                            [readonly]="readOnly" />
                     </mat-form-field>
                 </div>
 
@@ -174,26 +194,26 @@
                             [ngModelOptions]="{standalone: true}" />
                     </mat-form-field>
                 </div> -->
-     
-                <div  fxLayoutAlign="center center" class="item" fxFlex="2 1 40%" fxLayout="column">
+
+                <div fxLayoutAlign="center center" class="item" fxFlex="2 1 40%" fxLayout="column">
                     <mat-form-field appearance="fill">
                         <mat-label>Nombres y Apellidos</mat-label>
-                        <input type="text" matInput placeholder="Nombres y Apellidos"  formControlName="name_recibe" [readonly]="readOnly"
-                            />
+                        <input type="text" matInput placeholder="Nombres y Apellidos" formControlName="name_recibe"
+                            [readonly]="readOnly" />
                     </mat-form-field>
                 </div>
-                <div  fxLayoutAlign="center center" class="item" fxFlex="2 1 30%" fxLayout="column">
+                <div fxLayoutAlign="center center" class="item" fxFlex="2 1 30%" fxLayout="column">
                     <mat-form-field appearance="fill">
                         <mat-label>Cedula</mat-label>
-                        <input type="text" matInput placeholder="Cedula"  formControlName="ident_recibe" [readonly]="readOnly"
-                            />
+                        <input type="text" matInput placeholder="Cedula" formControlName="ident_recibe"
+                            [readonly]="readOnly" />
                     </mat-form-field>
                 </div>
-                <div  fxLayoutAlign="center center" class="item" fxFlex="2 1 30%" fxLayout="column">
+                <div fxLayoutAlign="center center" class="item" fxFlex="2 1 30%" fxLayout="column">
                     <mat-form-field appearance="fill">
                         <mat-label>Cargo</mat-label>
-                        <input type="text" matInput placeholder="Cargo"  formControlName="cargo_recibe" [readonly]="readOnly"
-                            />
+                        <input type="text" matInput placeholder="Cargo" formControlName="cargo_recibe"
+                            [readonly]="readOnly" />
                     </mat-form-field>
                 </div>
                 <!-- <div *ngIf="!readOnly" fxLayoutAlign="center center" class="item" fxFlex="1 1 10%" fxLayout="column">
@@ -282,8 +302,28 @@
                     </div>
                 </div> -->
             </div>
-         
             <!-- End block to Institucion -->
+
+            <!-- Begin to Institucion -->
+            <div fxLayout="row wrap" *ngIf="settings.showTypePersonField && requiresCompanyData" fxLayoutGap="5px grid"
+                fxFlex="100" style="background-color: #ffffff" class="item mat-toolbar">
+
+                <div fxLayoutAlign="center center" class="item" fxFlex="2 1 50%" fxLayout="column">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Nombre de la empresa</mat-label>
+                        <input type="text" matInput placeholder="Nombre de la empresa" formControlName="company_name"
+                            [readonly]="readOnly" />
+                    </mat-form-field>
+                </div>
+                <div fxLayoutAlign="center center" class="item" fxFlex="2 1 50%" fxLayout="column">
+                    <mat-form-field appearance="fill">
+                        <mat-label>RIF</mat-label>
+                        <input type="text" matInput placeholder="RIF" formControlName="rif" [readonly]="readOnly" />
+                    </mat-form-field>
+                </div>
+            </div>
+            <!-- End block to Contractor -->
+
             <div fxLayout="row wrap" *ngIf="settings.showEntryField && fPerson.controls.entry.value === true"
                 fxLayoutGap="5px grid" fxFlex="100" style="background-color: #ffffff" class="item mat-toolbar">
                 <div fxLayoutAlign="center center" fxFlex="100" fxLayout="column" class="item mat-toolbar mat-primary">
@@ -411,8 +451,8 @@
                     </div>
                 </div>
             </div>
-                                   
-      
+
+
         </form>
         <br><br>
     </div>

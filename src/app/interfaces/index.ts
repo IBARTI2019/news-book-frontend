@@ -71,6 +71,7 @@ export interface Material {
 export interface Vehicle {
   id: string;
   license_plate: string;
+  model?: string;
   owner_full_name?: string;
   is_active?: string;
   protocol?: boolean;
@@ -87,7 +88,8 @@ export interface TypePeople {
   description: string;
   priority: string;
   is_active: string;
-  is_institution:string;
+  is_institution: boolean;
+  requires_company_data: boolean;
 }
 
 export interface Person {
@@ -282,6 +284,7 @@ export interface PlannedStaff {
   cod_ficha: string;
   identification_card: string;
   name_and_surname: string;
+  phone: string;
 }
 
 export interface Staff extends PlannedStaff {
@@ -314,12 +317,13 @@ export interface StaffReceivingTheGuardSettings {
   percentage?: number;
   showTokenField?: boolean;
   showNameField?: boolean;
+  showPhone?: boolean;
   showProtocolField?: boolean;
   showHealthConditionField?: boolean;
   showCheckInField?: boolean;
   showCheckOutField?: boolean;
   showGuardStatusField?: boolean;
-  showButtonNew?:boolean;
+  showButtonNew?: boolean;
 }
 
 export interface SelectionSettings {
@@ -335,7 +339,7 @@ export interface ScopeSettings {
   showAmountField?: boolean;
   showHealthConditionField?: boolean;
   showObservationField?: boolean;
-  showButtonNew?:boolean;
+  showButtonNew?: boolean;
 }
 
 export interface QuestionBaseParams {
@@ -385,6 +389,7 @@ export interface Point {
 export interface VehiclesSettings {
   percentage?: number;
   showTokenField?: boolean;
+  showModelField?: boolean;
   showNameField?: boolean;
   showOwnerTypeField?: boolean;
   showMovementTypeField?: boolean;
@@ -410,11 +415,12 @@ export interface PersonsSettings {
   showMovementTypeField?: boolean;
   showHourField?: boolean;
   showReasonVisitField?: boolean;
+  showPlaceOfReceptionField?: boolean;
   showEntryField?: boolean;
   showProtocolField?: boolean;
   showTypePersonField?: boolean;
   showVaccinationCardNumberField?: boolean;
-  showButtonNew?:boolean;
+  showButtonNew?: boolean;
 }
 
 
@@ -441,4 +447,9 @@ export interface Domain {
   domain?: string;
   tenant?: Client;
   tenant_id?: number;
+}
+
+
+export interface AttachedFileSettings {
+  percentage?: number;
 }

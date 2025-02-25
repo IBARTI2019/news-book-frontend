@@ -39,6 +39,7 @@ const MOVEMENT_TYPES = [
 export const VEHICLES_LIST_DEFAULT: VehiclesSettings = {
   percentage: 100,
   showTokenField: true,
+  showModelField: true,
   showNameField: true,
   showOwnerTypeField: true,
   showMovementTypeField: true,
@@ -67,7 +68,7 @@ export class VehicleComponent implements OnInit {
   ownerTypes = [...OWNER_TYPES];
   movementTypes = [...MOVEMENT_TYPES];
   defaultValues = { ...VEHICLES_LIST_DEFAULT }
-  vehiclesCurrent: Vehicle = { id: "", license_plate: "" };
+  vehiclesCurrent: Vehicle = { id: "", license_plate: "", model: "" };
   materialCurrent: any = { description: "", mark: "", model: "", color: "", serial: "", year: "", license_plate: "" }
 
   constructor(private toastr: ToastrService, public dialog: MatDialog) { }

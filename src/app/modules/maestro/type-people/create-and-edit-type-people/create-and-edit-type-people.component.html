@@ -1,5 +1,6 @@
 <mat-card>
-    <app-card-header modulo="Tipos de Personas" menu="{{ update ? 'Actualizar Tipo de Persona' : 'Crear Tipo de Persona' }}">
+    <app-card-header modulo="Tipos de Personas"
+        menu="{{ update ? 'Actualizar Tipo de Persona' : 'Crear Tipo de Persona' }}">
     </app-card-header>
     <mat-card-content>
         <form [formGroup]="fg" fxLayout="column" fxLayoutGap="5px" (ngSubmit)="onSubmit()" #formRol>
@@ -13,7 +14,7 @@
                     <input matInput placeholder="Prioridad" formControlName="priority">
                 </mat-form-field>
             </div>
-           
+
             <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="5px">
                 <div fxFlex="50">
                     <mat-slide-toggle formControlName="is_active">Status</mat-slide-toggle>
@@ -22,6 +23,10 @@
             <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="5px">
                 <div fxFlex="50">
                     <mat-slide-toggle formControlName="is_institution">Es Instituccion?</mat-slide-toggle>
+                </div>
+                <div fxFlex="50">
+                    <mat-slide-toggle formControlName="requires_company_data">Requiere datos de
+                        empresa?</mat-slide-toggle>
                 </div>
             </div>
             <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="end">

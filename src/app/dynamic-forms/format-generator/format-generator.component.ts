@@ -170,11 +170,12 @@ export class FormatGeneratorComponent implements OnInit {
             showTypePersonField: true,
             showMovementTypeField: true,
             showReasonVisitField: true,
+            showPlaceOfReceptionField: true,
             showHourField: true,
             showEntryField: true,
             showProtocolField: true,
             showVaccinationCardNumberField: true,
-            showButtonNew:true
+            showButtonNew: true
           }
         }
 
@@ -190,7 +191,6 @@ export class FormatGeneratorComponent implements OnInit {
             showReasonField: true
           }
         }
-
       } else {
         _element = element
       }
@@ -254,10 +254,10 @@ export class FormatGeneratorComponent implements OnInit {
     this.typeNew = await this.typeNewService.get(event.value).toPromise();
     if (typeof this.typeNew.template == "object") {
       this.typeNew.template = [];
-    }else{
-      try{
+    } else {
+      try {
         this.typeNew.template = JSON.parse(this.typeNew.template);
-      }catch{}
+      } catch { }
     }
     this.generatePreview();
   }

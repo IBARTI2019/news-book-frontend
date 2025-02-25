@@ -40,12 +40,13 @@ export const PERSONS_LIST_DEFAULT: PersonsSettings = {
   showNameField: true,
   showMovementTypeField: true,
   showReasonVisitField: true,
+  showPlaceOfReceptionField: true,
   showHourField: true,
   showEntryField: true,
   showProtocolField: true,
-  showTypePersonField:true,
+  showTypePersonField: true,
   showVaccinationCardNumberField: true,
-  showButtonNew:true
+  showButtonNew: true
 };
 
 
@@ -61,7 +62,7 @@ export class PersonComponent implements OnInit {
   @Input() settings: PersonsSettings = PERSONS_LIST_DEFAULT;
   @Input() personsArr: Person[] = [];
   @Input() fGRoot!: FormGroup;
-  fPerson!: FormGroup;
+  fPerson!: any;
   @Input() readOnly: boolean = false;
 
   @Output() isValid: EventEmitter<boolean> = new EventEmitter<boolean>();
@@ -69,21 +70,23 @@ export class PersonComponent implements OnInit {
   movementTypes = [...MOVEMENT_TYPES];
   personTypes: TypePeople[] = [];
   isInstitution: boolean = false;
- 
+  requiresCompanyData: boolean = false;
+
   personCurrent: Person = { id: "", identification_number: "" };
   defaultValues = { ...PERSONS_LIST_DEFAULT };
-  personCurrentseg: any = { description:"" ,cedula: "", nombres:"",apellidos:"", observacion:"",year: "", license_plate: "" };
+  personCurrentseg: any = { description: "", cedula: "", nombres: "", apellidos: "", observacion: "", year: "", license_plate: "" };
   materialCurrent: any = { description: "", mark: "", model: "", color: "", serial: "", year: "", license_plate: "" }
- 
-  constructor(private toastr: ToastrService, private typePersonService: TypePeopleService,public dialog: MatDialog) { }
-  
+
+  constructor(private toastr: ToastrService, private typePersonService: TypePeopleService, public dialog: MatDialog) { }
+
 
   ngOnInit(): void {
+
     this.typePersonService.list({ not_paginator: true }).subscribe(data => {
       this.personTypes = data;
     });
     if (this.fGRoot && this.id && this.fGRoot.get(this.id)) {
-      this.fPerson = this.fGRoot.get(this.id) as FormGroup;
+      this.fPerson = this.fGRoot.get(this.id);
     }
   }
 
@@ -136,12 +139,12 @@ export class PersonComponent implements OnInit {
   }
 
   getPerson(identification_number: string) {
-   /// console.log('PERSONA', identification_number, 'array',this.personsArr);
+    /// console.log('PERSONA', identification_number, 'array',this.personsArr);
     let index = this.personsArr.findIndex(v => v.doc_ident == identification_number);
     if (index > -1) {
       this.fPerson.get("full_name")!.setValue(this.personsArr[index].full_name);
-      this.tp =  String(this.personsArr[index].type_person);
-    console.log(this.tp);
+      this.tp = String(this.personsArr[index].type_person);
+      console.log(this.tp);
     }
   }
 
@@ -153,7 +156,7 @@ export class PersonComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('Dialog ojo result:', result );
+      console.log('Dialog ojo result:', result);
       if (result?.doc_ident) {
         this.personsArr.push(result);
         this.fPerson.get("identification_number")!.setValue(result.doc_ident);
@@ -161,23 +164,32 @@ export class PersonComponent implements OnInit {
       }
     });
   }
-  
-  check(value:boolean){
-    if(value){
+
+  check(value: any) {
+    if (value.is_institution) {
       this.fPerson.controls["instituccion"].setValue('');
       this.fPerson.controls["observacion"].setValue('');
       this.fPerson.controls["name_recibe"].setValue('');
       this.fPerson.controls["ident_recibe"].setValue('');
       this.fPerson.controls["cargo_recibe"].setValue('');
       this.isInstitution = true;
-     
-    }else{
+    } else {
       this.fPerson.controls["instituccion"].setValue('-');
       this.fPerson.controls["observacion"].setValue('-');
       this.fPerson.controls["name_recibe"].setValue('-');
       this.fPerson.controls["ident_recibe"].setValue('-');
       this.fPerson.controls["cargo_recibe"].setValue('-');
       this.isInstitution = false;
+    }
+
+    if (value.requires_company_data) {
+      this.fPerson.controls["company_name"].setValue('');
+      this.fPerson.controls["rif"].setValue('');
+      this.requiresCompanyData = true;
+    } else {
+      this.fPerson.controls["company_name"].setValue('-');
+      this.fPerson.controls["rif"].setValue('-');
+      this.requiresCompanyData = false;
     }
   }
 

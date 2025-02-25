@@ -9,7 +9,7 @@ import { ValidateOesvicaTokenComponent } from "../validate-oesvica-token/validat
   styleUrls: ["./new-container.component.css"],
 })
 export class NewContainerComponent implements OnInit {
-  @Input() srcNew = "assets/images/users/1.jpg";
+  @Input() srcNew = "/assets/images/news/default.jpg";
   @Input() description = "No me la pasaste manco";
   @Input() altNew = "ke c llo";
   @Input() template = "";

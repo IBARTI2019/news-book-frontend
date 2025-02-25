@@ -33,28 +33,7 @@ const HEALTH_CONDITIONS = [
   },
 ];
 
-const STAFF_ARR_DEAFAULT: PlannedStaff[] = [
-  {
-    cod_ficha: "1234567890",
-    name_and_surname: "Hemny Sibrian",
-    identification_card: "4354554354",
-  },
-  {
-    cod_ficha: "0987654321",
-    name_and_surname: "Alejandro Fabrega",
-    identification_card: "3454353454",
-  },
-  {
-    cod_ficha: "4321567890",
-    name_and_surname: "Yonathan Aviles",
-    identification_card: "4565465465",
-  },
-  {
-    cod_ficha: "1567890234",
-    name_and_surname: "Eliezer García",
-    identification_card: "879767868",
-  },
-];
+const STAFF_ARR_DEAFAULT: PlannedStaff[] = [];
 
 export const CHANGING_GUARD_STAFF_LIST_DEFAULT: StaffReceivingTheGuardSettings = {
   testing: false,
@@ -76,7 +55,7 @@ export const CHANGING_GUARD_STAFF_LIST_DEFAULT: StaffReceivingTheGuardSettings =
 })
 export class ChangingGuardStaffListComponent implements OnInit, OnChanges {
   //@ViewChild("staffRef") staffRef!: MatSelect;
- // @ViewChild('staffRef', { static: true }) staffRef!: MatSelect;
+  // @ViewChild('staffRef', { static: true }) staffRef!: MatSelect;
 
   public MultiFilterCtrl: FormControl = new FormControl();
 
@@ -106,7 +85,7 @@ export class ChangingGuardStaffListComponent implements OnInit, OnChanges {
   constructor(private fB: FormBuilder) { }
 
   ngOnInit(): void {
-
+    console.log(this.settings);
 
     if (this.fGRoot && this.id && this.fGRoot.get(this.id)) {
       this.fA = this.fGRoot.get(this.id) as FormArray;
@@ -191,6 +170,10 @@ export class ChangingGuardStaffListComponent implements OnInit, OnChanges {
       name_and_surname: [
         v.name_and_surname || "",
         this.settings.showNameField && Validators.required,
+      ],
+      phone: [
+        v.phone || "",
+        this.settings.showPhone && Validators.required,
       ],
       protocol: [
         v.protocol || false,

@@ -27,6 +27,9 @@
     <app-round [id]="question.key" *ngSwitchCase="'round'" [readOnly]="readOnly" [fGRoot]="form"
       [settings]="question.settings">
     </app-round>
+
+    <app-attached-file [id]="question.key" *ngSwitchCase="'attachedFile'" [readOnly]="readOnly" [fGRoot]="form"
+    [settings]="question.settings" [label]="question.label"></app-attached-file>
     <!-- <ng-template #hour *ngSwitchCase="'hour'">
       <mat-icon aria-hidden=" false" aria-label="Horario">schedule</mat-icon>
     </ng-template> -->

@@ -1,4 +1,4 @@
-import { Person, PersonsSettings, QuestionBaseParams, RoundSettings, ScopeSettings, SelectionSettings, StaffReceivingTheGuardSettings, VehiclesSettings } from "app/interfaces";
+import { AttachedFileSettings, Person, PersonsSettings, QuestionBaseParams, RoundSettings, ScopeSettings, SelectionSettings, StaffReceivingTheGuardSettings, VehiclesSettings } from "../../interfaces";
 
 export class QuestionBase {
   value?: any;
@@ -316,3 +316,18 @@ export class Round extends QuestionBase {
       this.settings = options.settings;
   }
 }
+
+export class AttachedFile extends QuestionBase {
+  controlType = "attachedFile";
+  settings?: AttachedFileSettings = {
+    percentage: 100,
+  };
+
+  constructor(options: QuestionBaseParams, public service: any) {
+    super(options, service)
+    if (options.settings)
+      this.settings = options.settings;
+  }
+}
+
+

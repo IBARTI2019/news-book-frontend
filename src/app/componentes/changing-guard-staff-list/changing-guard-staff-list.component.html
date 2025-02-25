@@ -32,7 +32,7 @@
   </div>
   <div fxFlex="{{ settings.percentage }}" fxLayout="row" style="height: 50px">
     <form fxFlex="{{ settings.percentage }}" [formGroup]="fGStaff">
-<!--       <mat-form-field fxFlex="1 0 30%" appearance="fill" style="background-color: #ffffff;" *ngIf="!readOnly">
+      <!--       <mat-form-field fxFlex="1 0 30%" appearance="fill" style="background-color: #ffffff;" *ngIf="!readOnly">
         <mat-label>Personal</mat-label>
         <mat-select #staffRef formControlName="staff" multiple>
           <mat-option *ngFor="let staffItem of staffArr" [value]="staffItem">
@@ -43,12 +43,12 @@
 
       <!-- Select nuevo -->
 
-      <mat-form-field  fxFlex="1 0 30%" appearance="fill" style="background-color: #ffffff;" *ngIf="!readOnly">
+      <mat-form-field fxFlex="1 0 30%" appearance="fill" style="background-color: #ffffff;" *ngIf="!readOnly">
         <mat-select #staffRef formControlName="staff" multiple placeholder="Personal">
           <mat-option *ngIf="!readOnly">
-            <ngx-mat-select-search [formControl]="MultiFilterCtrl"  [placeholderLabel]="'Buscar...'"
-            [noEntriesFoundLabel]="'No Encontrado'"></ngx-mat-select-search>
-         </mat-option>
+            <ngx-mat-select-search [formControl]="MultiFilterCtrl" [placeholderLabel]="'Buscar...'"
+              [noEntriesFoundLabel]="'No Encontrado'"></ngx-mat-select-search>
+          </mat-option>
           <mat-option *ngFor="let staffItem of listFilter" [value]="staffItem">
             {{staffItem?.cod_ficha}} - {{ staffItem?.name_and_surname }}
           </mat-option>
@@ -66,6 +66,10 @@
       <div *ngIf="settings.showNameField" fxLayoutAlign="center center" fxFlex="3 0 25%" fxLayout="row"
         class="item mat-toolbar mat-primary">
         Nombre y Apellido
+      </div>
+      <div *ngIf="settings.showPhone" fxLayoutAlign="center center" fxFlex="3 0 25%" fxLayout="row"
+        class="item mat-toolbar mat-primary">
+        Teléfono
       </div>
       <div *ngIf="settings.showProtocolField" fxLayoutAlign="center center" fxFlex="1 1 11%" fxLayout="row"
         style="text-overflow: ellipsis" class="item mat-toolbar mat-primary">
@@ -109,6 +113,16 @@
               [readonly]="true" />
             <mat-error *ngIf="staff.controls.name_and_surname.hasError('required')">
               El nombre es <strong>requerido</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div *ngIf="settings.showPhone" fxLayoutAlign="center center" fxFlex="3 0 25%" fxLayout="row"
+          style="background-color: #ffffff" class="item">
+          <mat-form-field appearance="fill">
+            <mat-label>Teléfono</mat-label>
+            <input type="text" matInput formControlName="phone" placeholder="Teléfono" [readonly]="true" />
+            <mat-error *ngIf="staff.controls.phone.hasError('required')">
+              El teléfono es <strong>requerido</strong>
             </mat-error>
           </mat-form-field>
         </div>

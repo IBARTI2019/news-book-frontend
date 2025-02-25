@@ -38,11 +38,10 @@ export class ViewNewComponent implements OnInit {
     this.newService.get(this.id).subscribe(
       (_new: New) => {
         this._new = _new;
-        try{
+        try {
           this._new.template = JSON.parse(this._new.template);
-        }catch(e){
+        } catch (e) {
           this._new.template = []
-          console.log(e);
         }
         this.generateControls(this._new.template);
       },

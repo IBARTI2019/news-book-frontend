@@ -2,10 +2,10 @@ import { HttpErrorResponse } from "@angular/common/http";
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { QuestionBase } from "app/dynamic-forms/classes";
-import { QuestionService } from "app/dynamic-forms/services/question.service";
+import { QuestionService } from "../../../../dynamic-forms/services/question.service";
 import { New, TemplateTypeNew, TypeNew } from "app/interfaces";
 import { IbartiService } from "app/services/ibarti.service";
-import { NewService } from "app/services/new.service";
+import { NewService } from "../../../../services/new.service";
 import { TypeNewService } from "app/services/type-new.service";
 import { TemplateNew } from "environments/environment";
 import { ToastrService } from "ngx-toastr";
@@ -160,9 +160,9 @@ export class CreateAndEditNewComponent implements OnInit {
       (data) => {
         this.toastr.success("Novedad creada con éxito.");
         this.submitted = false;
-        this.deleteStorageItem(this.template.id)
-        this.deleteStorageItem('id_user')
-        this.router.navigate(["new"]);
+        // this.deleteStorageItem(this.template.id)
+        // this.deleteStorageItem('id_user')
+        // this.router.navigate(["new"]);
       },
       (error: HttpErrorResponse) => {
         this.toastr.error(

@@ -41,12 +41,17 @@ export class TypePeopleComponent implements OnInit {
         type: "bool",
       },
       {
+        dataAttribute: "requires_company_data",
+        header: "Requiere datos de empresa",
+        type: "bool",
+      },
+      {
         dataAttribute: "is_active",
         attribute: "Status",
         header: "Activo",
         type: "bool",
       },
-    
+
       {
         attribute: "id",
         header: "Opciones",

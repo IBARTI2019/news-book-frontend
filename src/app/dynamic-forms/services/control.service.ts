@@ -23,7 +23,7 @@ export class ControlService {
           break;
         case "persons":
           group[question.key] = question.required
-           ? new FormArray([], Validators.required)
+            ? new FormArray([], Validators.required)
             : new FormArray([]);
           break;
         case "person":
@@ -42,9 +42,12 @@ export class ControlService {
           break;
         case "selection":
           group[question.key] = question.required
-          ? new FormControl(question.value || "", Validators.required)
-          : new FormControl(question.value || "");
+            ? new FormControl(question.value || "", Validators.required)
+            : new FormControl(question.value || "");
           break
+        case "attachedFile":
+          group[question.key] = this.newFormAttachedFile(question);
+          break;
         default:
           group[question.key] = question.required
             ? new FormControl(question.value || "", Validators.required)
@@ -112,6 +115,10 @@ export class ControlService {
         question.value.reason_visit || null,
         question.settings.showReasonVisitField && Validators.required,
       ],
+      place_of_reception: [
+        question.value.place_of_reception || null,
+        question.settings.showPlaceOfReceptionField && Validators.required,
+      ],
       movement_type: [
         question.value.movement_type || null,
         question.settings.showMovementTypeField && Validators.required,
@@ -136,7 +143,7 @@ export class ControlService {
         question.value.observacion || '',
         question.settings.showTypePersonField && Validators.required,
       ],
-  
+
       ident_recibe: [
         question.value.ident_recibe || '',
         question.settings.showTypePersonField && Validators.required,
@@ -147,6 +154,14 @@ export class ControlService {
       ],
       cargo_recibe: [
         question.value.cargo_recibe || '',
+        question.settings.showTypePersonField && Validators.required,
+      ],
+      company_name: [
+        question.value.company_name || '',
+        question.settings.showTypePersonField && Validators.required,
+      ],
+      rif: [
+        question.value.rif || '',
         question.settings.showTypePersonField && Validators.required,
       ],
       // institucciones: new FormControl({ value: question.value.institucciones?.value || {} }),
@@ -185,4 +200,14 @@ export class ControlService {
     return form;
   }
 
+  public newFormAttachedFile(question: QuestionBase) {
+    const form = this.fB.group({
+      attachedFiles: [
+        question.value
+      ]
+    });
+    return form;
+  }
+
+  
 }

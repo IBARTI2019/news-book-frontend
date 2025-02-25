@@ -16,8 +16,8 @@ export class DynamicControlsComponent implements OnInit {
   @ViewChild('autosize') autosize!: CdkTextareaAutosize;
 
   constructor(private _ngZone: NgZone) { }
-  ngOnInit() {
-  }
+
+  ngOnInit() { }
 
   get isValid() {
     return this.form.controls[this.question.key].valid;

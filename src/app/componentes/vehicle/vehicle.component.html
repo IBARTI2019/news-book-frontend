@@ -12,6 +12,10 @@
                 class="item mat-toolbar mat-primary">
                 Placa
             </div>
+            <div *ngIf="settings.showModelField" fxLayoutAlign="center center" fxFlex="2 0 15%" fxLayout="row"
+                class="item mat-toolbar mat-primary">
+                Modelo
+            </div>
             <div *ngIf="settings.showNameField" fxLayoutAlign="center center" fxFlex="3 0 15%" fxLayout="row"
                 class="item mat-toolbar mat-primary">
                 Nombre y Apellido
@@ -47,6 +51,16 @@
                         (keyup)="getVehicle($event.target.value)" [readonly]="readOnly" />
                     <mat-error *ngIf="fVehicle.controls.license_plate.hasError('required')">
                         La placa es <strong>requerida</strong>
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div *ngIf="settings.showModelField" fxLayoutAlign="center center" fxFlex="2 0 15%" fxLayout="column"
+                style="background-color: #ffffff" class="item">
+                <mat-form-field appearance="fill">
+                    <mat-label>Modelo</mat-label>
+                    <input type="text" matInput formControlName="model" placeholder="" [readonly]="readOnly" />
+                    <mat-error *ngIf="fVehicle.controls.model.hasError('required')">
+                        El modelo es <strong>requerido</strong>
                     </mat-error>
                 </mat-form-field>
             </div>
@@ -240,7 +254,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <div fxLayout="row wrap"
                 *ngIf="settings.showEntryField && fVehicle.controls.owner_type.value === 'cargo_vehicle'"
                 fxLayoutGap="5px grid" fxFlex="100" style="background-color: #ffffff;" class="item mat-toolbar">
@@ -322,7 +336,7 @@
                 </div>
             </div>
 
-            
+
         </form>
         <br><br>
     </div>

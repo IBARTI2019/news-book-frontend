@@ -464,9 +464,9 @@ export class GenericTableComponent implements OnInit, AfterViewChecked {
     if (this.data.results && isColumn && index != undefined && index >= 0) {
       const fireEvent = e.type !== 'input';
       let control;
-      if(e.target){
+      if (e.target) {
         control = e.target;
-      }else{
+      } else {
         // control = e.source?._elementRef?.nativeElement;
         control = e.source;
       }
@@ -542,7 +542,6 @@ export class GenericTableComponent implements OnInit, AfterViewChecked {
           this.filterTimeController = setTimeout(() => this.refresh(), 1500);
         }
       } else if (fireEvent) {
-        debugger;
         if (control.value || control.value === 0) {
           if (column)
             this.serviceMethodParams[column] = control.value;

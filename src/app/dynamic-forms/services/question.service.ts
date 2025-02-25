@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { QuestionBase, DropdownQuestion, TextboxQuestion, StaffReceivingTheGuard, Title, StaffOesvica, SystemDate, SystemHour, BookScope, Amount, Point, formerGuard, FreeText, SelectionQuestion, Vehicles, Vehicle, Persons, PersonQuestion, Round } from '../classes';
+import { QuestionBase, DropdownQuestion, TextboxQuestion, StaffReceivingTheGuard, Title, StaffOesvica, SystemDate, SystemHour, BookScope, Amount, Point, formerGuard, FreeText, SelectionQuestion, Vehicles, Vehicle, Persons, PersonQuestion, Round, AttachedFile } from '../classes';
 import { of } from 'rxjs';
 import { API } from '../../utils/api';
 import { HttpClient } from '@angular/common/http';
@@ -335,6 +335,20 @@ export class QuestionService extends API<any> {
               key: `${d.code}_${index}`,
               code: d.code,
               label: d.label || 'Ejecución de ronda',
+              required: d.required,
+              form_field: false,
+              percentage_per_row: Number(d.percentage_per_row) || 100,
+              settings: d.settings,
+            }, null)
+          );
+          break;
+        case 'ATTACHED_FILE':
+          questions.push(
+            new AttachedFile({
+              value: d.value || '',
+              key: `${d.code}_${index}`,
+              code: d.code,
+              label: d.label || 'Arrastra y suelta archivos aquí o',
               required: d.required,
               form_field: false,
               percentage_per_row: Number(d.percentage_per_row) || 100,

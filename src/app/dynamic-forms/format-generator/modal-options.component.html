@@ -23,7 +23,7 @@
         <input matInput tabindex="1" [(ngModel)]="selection_current" />
       </mat-form-field>
       <button mat-raised-button style="height: 50px" (click)="addSelection()">
-        Agregar 
+        Agregar
       </button>
       <br>
       <mat-list role="list" fxFlex="100">
@@ -39,7 +39,7 @@
         }}</mat-slide-toggle>
     </div>
 
- 
+
   </div>
 
 </ng-container>
@@ -82,6 +82,12 @@
       <p>Mostrar la columna <strong>Nombre</strong></p>
       <mat-slide-toggle [(ngModel)]="data.element.settings.showNameField" ngDefaultControl>{{
         data.element.settings.showNameField ? "SI" : "NO"
+        }}</mat-slide-toggle>
+    </div>
+    <div *ngIf="data.element.code !== 'SUB_LINE'">
+      <p>Mostrar la columna <strong>Teléfono</strong></p>
+      <mat-slide-toggle [(ngModel)]="data.element.settings.showPhone" ngDefaultControl>{{
+        data.element.settings.showPhone ? "SI" : "NO"
         }}</mat-slide-toggle>
     </div>
     <div *ngIf="data.element.code === 'SUB_LINE'">
@@ -186,7 +192,7 @@
       <mat-label>Porcentaje en fila</mat-label>
       <input matInput tabindex="1" [(ngModel)]="data.element.settings.percentage" />
     </mat-form-field>
-    <div >
+    <div>
       <p>Mostrar el <strong>Boton Nuevo</strong></p>
       <mat-slide-toggle [(ngModel)]="data.element.settings.showButtonNew" ngDefaultControl>{{
         data.element.settings.showButtonNew ? "SI" : "NO"
@@ -217,9 +223,15 @@
         }}</mat-slide-toggle>
     </div>
     <div>
-      <p>Mostrar la columna <strong>Ingreso de Motivo de Visita</strong></p>
+      <p>Mostrar la columna <strong>Motivo de Visita</strong></p>
       <mat-slide-toggle [(ngModel)]="data.element.settings.showReasonVisitField" ngDefaultControl>{{
         data.element.settings.showReasonVisitField ? "SI" : "NO"
+        }}</mat-slide-toggle>
+    </div>
+    <div>
+      <p>Mostrar la columna <strong>Lugar de recibimiento</strong></p>
+      <mat-slide-toggle [(ngModel)]="data.element.settings.showPlaceOfReceptionField" ngDefaultControl>{{
+        data.element.settings.showPlaceOfReceptionField ? "SI" : "NO"
         }}</mat-slide-toggle>
     </div>
     <div>
