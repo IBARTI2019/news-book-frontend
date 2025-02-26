@@ -35,7 +35,7 @@ export class ControlService {
             : new FormArray([]);
           break;
         case "vehicle":
-          group[question.key] = this.newFormVahicle(question);
+          group[question.key] = this.newFormVehicle(question);
           break;
         case "round":
           group[question.key] = this.newFormRound(question);
@@ -58,12 +58,16 @@ export class ControlService {
     return new FormGroup(group);
   }
 
-  public newFormVahicle(question: QuestionBase) {
+  public newFormVehicle(question: QuestionBase) {
     const form = this.fB.group(
       {
         license_plate: [
           question.value.license_plate || "",
           question.settings.showTokenField && Validators.required,
+        ],
+        model: [
+          question.value.model || "",
+          question.settings.showModelField && Validators.required,
         ],
         owner_full_name: [
           question.value.owner_full_name || "",
@@ -92,6 +96,9 @@ export class ControlService {
         materials: new FormControl({ value: question.value?.materials?.value || [] }),
         cargo_vehicle: [
           question.value.cargo_vehicle || { trailer_plate: "", loaded: false, seal_number: "", document_number: "", sealed: false, loading_review: false }
+        ],
+        additional_staff: [
+          question.value.additional_staff || 'NO'
         ],
       });
     return form;
@@ -122,6 +129,10 @@ export class ControlService {
       movement_type: [
         question.value.movement_type || null,
         question.settings.showMovementTypeField && Validators.required,
+      ],
+      accompany_visitor: [
+        question.value.accompany_visitor || null,
+        question.settings.showAccompanyVisitor && Validators.required,
       ],
       entry: [
         question.value.entry || false,
@@ -160,6 +171,10 @@ export class ControlService {
         question.value.company_name || '',
         question.settings.showTypePersonField && Validators.required,
       ],
+      guide_number: [
+        question.value.guide_number || '',
+        question.settings.showTypePersonField && Validators.required,
+      ],
       rif: [
         question.value.rif || '',
         question.settings.showTypePersonField && Validators.required,
@@ -169,6 +184,10 @@ export class ControlService {
       vaccination_card_number: [
         question.value.vaccination_card_number || "",
         question.settings.showVaccinationCardNumberField && Validators.required,
+      ],
+      assigned_card_number: [
+        question.value.assigned_card_number || "",
+        question.settings.showAssignedCardNumberField && Validators.required,
       ],
     });
     return form;

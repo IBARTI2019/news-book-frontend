@@ -46,6 +46,7 @@ export const PERSONS_LIST_DEFAULT: PersonsSettings = {
   showProtocolField: true,
   showTypePersonField: true,
   showVaccinationCardNumberField: true,
+  showAssignedCardNumberField: true,
   showButtonNew: true
 };
 
@@ -71,7 +72,8 @@ export class PersonComponent implements OnInit {
   personTypes: TypePeople[] = [];
   isInstitution: boolean = false;
   requiresCompanyData: boolean = false;
-
+  requiresGuideNumber: boolean = false;
+  
   personCurrent: Person = { id: "", identification_number: "" };
   defaultValues = { ...PERSONS_LIST_DEFAULT };
   personCurrentseg: any = { description: "", cedula: "", nombres: "", apellidos: "", observacion: "", year: "", license_plate: "" };
@@ -190,6 +192,14 @@ export class PersonComponent implements OnInit {
       this.fPerson.controls["company_name"].setValue('-');
       this.fPerson.controls["rif"].setValue('-');
       this.requiresCompanyData = false;
+    }
+
+    if (value.requires_guide_number) {
+      this.fPerson.controls["guide_number"].setValue('');
+      this.requiresGuideNumber = true;
+    } else {
+      this.fPerson.controls["guide_number"].setValue('-');
+      this.requiresGuideNumber = false;
     }
   }
 

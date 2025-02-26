@@ -23,19 +23,23 @@
     </div>
     <div fxFlex fxLayout="row wrap" fxLayoutGap="1px grid">
         <div fxFlex="1 2 100%" fxLayout="row" style="height: 50px" fxLayoutGap="1px">
-            <div *ngIf="settings.showTokenField" fxLayoutAlign="center center" fxFlex="2 0 15%" fxLayout="row"
+            <div *ngIf="settings.showTokenField" fxLayoutAlign="center center" fxFlex="2 0 10%" fxLayout="row"
                 class="item mat-toolbar mat-primary">
                 Placa
+            </div>
+            <div *ngIf="settings.showModelField" fxLayoutAlign="center center" fxFlex="2 0 10%" fxLayout="row"
+                class="item mat-toolbar mat-primary">
+                Modelo
             </div>
             <div *ngIf="settings.showNameField" fxLayoutAlign="center center" fxFlex="3 0 15%" fxLayout="row"
                 class="item mat-toolbar mat-primary">
                 Nombre y Apellido
             </div>
-            <div *ngIf="settings.showOwnerTypeField" fxLayoutAlign="center center" fxFlex="1 1 15%" fxLayout="row"
+            <div *ngIf="settings.showOwnerTypeField" fxLayoutAlign="center center" fxFlex="1 1 10%" fxLayout="row"
                 class="item mat-toolbar mat-primary">
                 Tipo de propietario
             </div>
-            <div *ngIf="settings.showMovementTypeField" fxLayoutAlign="center center" fxFlex="1 1 15%" fxLayout="row"
+            <div *ngIf="settings.showMovementTypeField" fxLayoutAlign="center center" fxFlex="1 1 10%" fxLayout="row"
                 class="item mat-toolbar mat-primary">
                 Tipo de movimiento
             </div>
@@ -59,13 +63,23 @@
         <div fxFlex="{{ settings.percentage }}" fxLayout="row wrad"
             *ngFor="let vehicles of fVehicles.controls; index as i;" fxLayoutGap="1px">
             <ng-container [formGroup]="vehicles">
-                <div *ngIf="settings.showTokenField" fxLayoutAlign="center center" fxFlex="2 0 15%" fxLayout="column"
+                <div *ngIf="settings.showTokenField" fxLayoutAlign="center center" fxFlex="2 0 10%" fxLayout="column"
                     style="background-color: #ffffff" class="item">
                     <mat-form-field appearance="fill">
                         <mat-label>Placa</mat-label>
                         <input type="text" matInput formControlName="license_plate" placeholder="" [readonly]="true" />
                         <mat-error *ngIf="vehicles.controls.license_plate.hasError('required')">
                             La placa es <strong>requerida</strong>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div *ngIf="settings.showModelField" fxLayoutAlign="center center" fxFlex="2 0 10%" fxLayout="column"
+                    style="background-color: #ffffff" class="item">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Modelo</mat-label>
+                        <input type="text" matInput formControlName="model" placeholder="Modelo"/>
+                        <mat-error *ngIf="vehicles.controls.model.hasError('required')">
+                            El modelo es <strong>requerida</strong>
                         </mat-error>
                     </mat-form-field>
                 </div>
@@ -80,23 +94,31 @@
                         </mat-error>
                     </mat-form-field>
                 </div>
-                <div *ngIf="settings.showOwnerTypeField" fxLayoutAlign="center center" fxFlex="1 1 15%"
+                <div *ngIf="settings.showOwnerTypeField" fxLayoutAlign="center center" fxFlex="1 1 10%"
                     fxLayout="column" style="background-color: #ffffff" class="item">
+                  
                     <mat-radio-group style="margin: 15px 0" formControlName="owner_type" [disabled]="readOnly">
-                        <mat-radio-button *ngFor="let oT of ownerTypes" style="margin: 5px" [value]="oT.id">{{
-                            oT.text }}
-                        </mat-radio-button>
+                        <ng-container *ngFor="let oT of ownerTypes">
+                            <mat-radio-button [value]="oT.id">{{
+                                oT.text }}
+                            </mat-radio-button>
+                            <br>
+                        </ng-container>
                     </mat-radio-group>
+
                     <mat-error *ngIf="vehicles.controls.owner_type.hasError('required')">
                         El tipo de Propietario es <strong>requerido</strong>
                     </mat-error>
                 </div>
-                <div *ngIf="settings.showMovementTypeField" fxLayoutAlign="center center" fxFlex="1 1 15%"
+                <div *ngIf="settings.showMovementTypeField" fxLayoutAlign="center center" fxFlex="1 1 10%"
                     fxLayout="column" style="background-color: #ffffff" class="item">
                     <mat-radio-group style="margin: 15px 0" formControlName="movement_type" [disabled]="readOnly">
-                        <mat-radio-button *ngFor="let mT of movementTypes" style="margin: 5px" [value]="mT.id">{{
-                            mT.text }}
-                        </mat-radio-button>
+                        <ng-container *ngFor="let mT of movementTypes">
+                            <mat-radio-button [value]="mT.id">{{
+                                mT.text }}
+                            </mat-radio-button>
+                            <br>
+                        </ng-container>
                     </mat-radio-group>
                     <mat-error *ngIf="vehicles.controls.movement_type.hasError('required')">
                         El tipo de movimiento es <strong>requerido</strong>

@@ -2,3 +2,10 @@
     font: bold;
     padding: 10px;
   }
+
+  .custom-radio-button {
+    margin: 5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

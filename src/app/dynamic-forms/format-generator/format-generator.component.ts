@@ -151,6 +151,7 @@ export class FormatGeneratorComponent implements OnInit {
           settings: element.settings || {
             percentage: 100,
             showTokenField: true,
+            showModelField: true,
             showNameField: true,
             showOwnerTypeField: true,
             showMovementTypeField: true,
@@ -169,12 +170,14 @@ export class FormatGeneratorComponent implements OnInit {
             showNameField: true,
             showTypePersonField: true,
             showMovementTypeField: true,
+            showAccompanyVisitor: true,
             showReasonVisitField: true,
             showPlaceOfReceptionField: true,
             showHourField: true,
             showEntryField: true,
             showProtocolField: true,
             showVaccinationCardNumberField: true,
+            showAssignedCardNumberField: true,
             showButtonNew: true
           }
         }

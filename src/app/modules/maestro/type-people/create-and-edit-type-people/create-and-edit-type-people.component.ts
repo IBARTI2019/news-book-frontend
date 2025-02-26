@@ -2,7 +2,7 @@ import { HttpErrorResponse } from "@angular/common/http";
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
-import { TypePeople } from "app/interfaces";
+import { TypePeople } from "../../../../interfaces";
 import { ToastrService } from "ngx-toastr";
 import { TypePeopleService } from "../../../../services/type-people.service";
 
@@ -35,6 +35,7 @@ export class CreateAndEditTypePeopleComponent implements OnInit {
         is_active: [true, Validators.required],
         is_institution: [false, Validators.required],
         requires_company_data: [false, Validators.required],
+        requires_guide_number: [false, Validators.required]
       },
       {}
     );
@@ -83,6 +84,7 @@ export class CreateAndEditTypePeopleComponent implements OnInit {
         this.fg.get("is_active")!.setValue(data.is_active);
         this.fg.get("is_institution")!.setValue(data.is_institution);
         this.fg.get("requires_company_data")!.setValue(data.requires_company_data);
+        this.fg.get("requires_guide_number")!.setValue(data.requires_guide_number);
       },
       (error: HttpErrorResponse) => {
         this.toastr.error(

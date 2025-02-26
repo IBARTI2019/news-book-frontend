@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Person, PersonsSettings, TypePeople } from 'app/interfaces';
+import { Person, PersonsSettings, TypePeople } from '../../interfaces';
 import { TypePeopleService } from 'app/services/type-people.service';
 import { ToastrService } from 'ngx-toastr';
 
@@ -20,6 +20,7 @@ export const PERSONS_LIST_DEFAULT: PersonsSettings = {
   showTokenField: true,
   showNameField: true,
   showMovementTypeField: true,
+  showAccompanyVisitor: true,
   showReasonVisitField: true,
   showHourField: true,
   showEntryField: true,
@@ -125,6 +126,10 @@ export class PersonsComponent implements OnInit {
         v.movement_type || null,
         this.settings.showMovementTypeField && Validators.required,
       ],
+      accompany_visitor: [
+        v.accompany_visitor || null,
+        this.settings.showAccompanyVisitor && Validators.required,
+      ],
       entry: [
         v.entry || false,
         this.settings.showEntryField && Validators.required,
@@ -141,6 +146,10 @@ export class PersonsComponent implements OnInit {
       vaccination_card_number: [
         v.vaccination_card_number || "",
         this.settings.showVaccinationCardNumberField && Validators.required,
+      ],
+      assigned_card_number: [
+        v.assigned_card_number || "",
+        this.settings.showAssignedCardNumberField && Validators.required,
       ],
     });
     this.fPersons.push(fG);

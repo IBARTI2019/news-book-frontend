@@ -14,7 +14,7 @@ import {
   PlannedStaff,
   Staff,
   StaffReceivingTheGuardSettings,
-} from "app/interfaces";
+} from "../../interfaces";
 import { ReplaySubject, Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 
@@ -171,8 +171,8 @@ export class ChangingGuardStaffListComponent implements OnInit, OnChanges {
         v.name_and_surname || "",
         this.settings.showNameField && Validators.required,
       ],
-      phone: [
-        v.phone || "",
+      telefono: [
+        v.telefono || "",
         this.settings.showPhone && Validators.required,
       ],
       protocol: [

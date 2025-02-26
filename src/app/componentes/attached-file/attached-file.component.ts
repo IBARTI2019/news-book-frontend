@@ -20,7 +20,6 @@ export class AttachedFileComponent implements OnInit, OnDestroy {
   @Input() readOnly: boolean = false;
 
   files: { file: File, url: SafeUrl }[] = []; // Almacena el archivo y su URL temporal
-  @Input() urlFiles: { name: string, url: string }[] = [];
 
   @Input() fGRoot!: FormGroup;
   fAttachedFile!: FormGroup;
@@ -32,6 +31,7 @@ export class AttachedFileComponent implements OnInit, OnDestroy {
 
     if (this.fGRoot && this.id && this.fGRoot.get(this.id)) {
       this.fAttachedFile = this.fGRoot.get(this.id) as FormGroup;
+      debugger;
     }
   }
 
@@ -50,15 +50,15 @@ export class AttachedFileComponent implements OnInit, OnDestroy {
   }
 
   // Función para eliminar un archivo seleccionado
-  removeSelectedFile(index: number) {
+  async removeSelectedFile(index: number) {
     if (index >= 0 && index < this.files.length) {
       URL.revokeObjectURL(this.files[index].url as string); // Liberar la URL temporal
       this.files.splice(index, 1); // Eliminar el archivo de la lista
-      this.updateFormControl(); // Actualizar el control del formulario
+      await this.updateFormControl(); // Actualizar el control del formulario
     }
   }
 
-  onFileSelected(event: any) {
+  async onFileSelected(event: any) {
     const selectedFiles = event.target.files;
     if (selectedFiles) {
       for (let i = 0; i < selectedFiles.length; i++) {
@@ -66,11 +66,11 @@ export class AttachedFileComponent implements OnInit, OnDestroy {
         const url = this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(file)); // Marca la URL como segura
         this.files.push({ file, url });
       }
-      this.updateFormControl(); 
+      await this.updateFormControl(); 
     }
   }
 
-  onDrop(event: DragEvent) {
+  async onDrop(event: DragEvent) {
     event.preventDefault();
     const files = event.dataTransfer?.files;
     if (files) {
@@ -79,16 +79,42 @@ export class AttachedFileComponent implements OnInit, OnDestroy {
         const url = this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(file)); // Marca la URL como segura
         this.files.push({ file, url });
       }
-      this.updateFormControl(); 
+      await this.updateFormControl(); 
     }
   }
 
   // Función para actualizar el control del formulario
-  updateFormControl() {
-    const files = this.files.map(f => f.file); // Obtener solo los archivos (sin las URLs)
-    this.fAttachedFile.get('attachedFiles')?.setValue(files); // Actualizar el control
-  }
+  async updateFormControl() {
+    try {
+      // Convertir los archivos a Base64
+      const filesBase64 = await Promise.all(
+        this.files.map(async (file) => {
+          const base64 = await this.fileToBase64(file.file);
+          return {
+            name: file.file.name,
+            type: file.file.type,
+            base64: base64.split(',')[1] // Eliminar el prefijo "data:*/*;base64,"
+          };
+        })
+      );
   
+      // Actualizar el control del formulario con los archivos en Base64
+      this.fAttachedFile.get('attachedFiles')?.setValue(filesBase64);
+    } catch (error) {
+      console.error('Error al convertir archivos a Base64:', error);
+    }
+  }
+
+  // Función para convertir un archivo a Base64
+  fileToBase64(file: File): Promise<string> {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file); // Convierte el archivo a Base64
+      reader.onload = () => resolve(reader.result as string);
+      reader.onerror = (error) => reject(error);
+    });
+  }
+    
   onDragOver(event: DragEvent) {
     event.preventDefault();
   }

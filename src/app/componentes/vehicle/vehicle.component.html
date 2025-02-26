@@ -20,11 +20,11 @@
                 class="item mat-toolbar mat-primary">
                 Nombre y Apellido
             </div>
-            <div *ngIf="settings.showOwnerTypeField" fxLayoutAlign="center center" fxFlex="1 1 15%" fxLayout="row"
+            <div *ngIf="settings.showOwnerTypeField" fxLayoutAlign="center center" fxFlex="1 1 10%" fxLayout="row"
                 class="item mat-toolbar mat-primary">
                 Tipo de propietario
             </div>
-            <div *ngIf="settings.showMovementTypeField" fxLayoutAlign="center center" fxFlex="1 1 15%" fxLayout="row"
+            <div *ngIf="settings.showMovementTypeField" fxLayoutAlign="center center" fxFlex="1 1 10%" fxLayout="row"
                 class="item mat-toolbar mat-primary">
                 Tipo de movimiento
             </div>
@@ -75,23 +75,29 @@
                     </mat-error>
                 </mat-form-field>
             </div>
-            <div *ngIf="settings.showOwnerTypeField" fxLayoutAlign="center center" fxFlex="1 1 15%" fxLayout="column"
+            <div *ngIf="settings.showOwnerTypeField" fxLayoutAlign="center center" fxFlex="1 1 10%" fxLayout="column"
                 style="background-color: #ffffff" class="item">
                 <mat-radio-group style="margin: 15px 0" formControlName="owner_type" [disabled]="readOnly">
-                    <mat-radio-button *ngFor="let oT of ownerTypes" style="margin: 5px" [value]="oT.id">{{
+                    <ng-container *ngFor="let oT of ownerTypes">
+                    <mat-radio-button [value]="oT.id">{{
                         oT.text }}
                     </mat-radio-button>
+                    <br>
+                    </ng-container>
                 </mat-radio-group>
                 <mat-error *ngIf="fVehicle.controls.owner_type.hasError('required')">
                     El tipo de Propietario es <strong>requerido</strong>
                 </mat-error>
             </div>
-            <div *ngIf="settings.showMovementTypeField" fxLayoutAlign="center center" fxFlex="1 1 15%" fxLayout="column"
+            <div *ngIf="settings.showMovementTypeField" fxLayoutAlign="center center" fxFlex="1 1 10%" fxLayout="column"
                 style="background-color: #ffffff" class="item">
                 <mat-radio-group style="margin: 15px 0" formControlName="movement_type" [disabled]="readOnly">
-                    <mat-radio-button *ngFor="let mT of movementTypes" style="margin: 5px" [value]="mT.id">{{
-                        mT.text }}
-                    </mat-radio-button>
+                    <ng-container *ngFor="let mT of movementTypes">
+                        <mat-radio-button [value]="mT.id">{{
+                            mT.text }}
+                        </mat-radio-button>
+                        <br>
+                    </ng-container>
                 </mat-radio-group>
                 <mat-error *ngIf="fVehicle.controls.movement_type.hasError('required')">
                     El tipo de movimiento es <strong>requerido</strong>
@@ -335,10 +341,10 @@
                     </div>
                 </div>
             </div>
-
+            
 
         </form>
         <br><br>
     </div>
-
+    
 </div>

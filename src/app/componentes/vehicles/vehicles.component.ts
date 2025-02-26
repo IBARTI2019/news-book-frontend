@@ -39,6 +39,7 @@ const MOVEMENT_TYPES = [
 export const VEHICLES_LIST_DEFAULT: VehiclesSettings = {
   percentage: 100,
   showTokenField: true,
+  showModelField: true,
   showNameField: true,
   showOwnerTypeField: true,
   showMovementTypeField: true,
@@ -68,7 +69,7 @@ export class VehiclesComponent implements OnInit {
   ownerTypes = [...OWNER_TYPES];
   movementTypes = [...MOVEMENT_TYPES];
   defaultValues = { ...VEHICLES_LIST_DEFAULT }
-  vehiclesCurrent: Vehicle = { id: "", license_plate: "" };
+  vehiclesCurrent: Vehicle = { id: "", license_plate: "", additional_staff: 'NO' };
   materialCurrent: any = { description: "", mark: "", model: "", color: "", serial: "", year: "", license_plate: "" }
   constructor(private fB: FormBuilder, private toastr: ToastrService, public dialog: MatDialog) {
   }
@@ -127,6 +128,10 @@ export class VehiclesComponent implements OnInit {
         v.license_plate || "",
         this.settings.showTokenField && Validators.required,
       ],
+      model: [
+        v.model || "",
+        this.settings.showModelField && Validators.required,
+      ],
       owner_full_name: [
         v.owner_full_name || "",
         this.settings.showNameField && Validators.required,
@@ -157,7 +162,7 @@ export class VehiclesComponent implements OnInit {
       ],
     });
     this.fVehicles.push(fG);
-    this.vehiclesCurrent = { ...{ id: "", license_plate: "" } };
+    this.vehiclesCurrent = { ...{ id: "", license_plate: "", additional_staff: "NO" } };
   }
 
   addMaterial(i: number) {

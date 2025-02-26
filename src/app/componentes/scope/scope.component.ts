@@ -22,6 +22,10 @@ const HEALTH_CONDITIONS = [
     id: "bad",
     text: "Mala",
   },
+  {
+    id: "not_in_service",
+    text: "No se encuentra en el servicio",
+  },
 ];
 
 const SCOPE_ARR_DEAFAULT: Scope[] = [];

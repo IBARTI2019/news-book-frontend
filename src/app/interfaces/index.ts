@@ -81,6 +81,7 @@ export interface Vehicle {
   owner_type?: string;
   materials?: { value: any[] };
   cargo_vehicle?: any;
+  additional_staff: 'SI' | 'NO';
 }
 
 export interface TypePeople {
@@ -90,6 +91,7 @@ export interface TypePeople {
   is_active: string;
   is_institution: boolean;
   requires_company_data: boolean;
+  requires_guide_number: boolean;
 }
 
 export interface Person {
@@ -115,6 +117,8 @@ export interface Person {
   materials?: { value: any[] };
   entry?: boolean;
   vaccination_card_number?: string;
+  assigned_card_number?: string;
+  accompany_visitor?: string;
 }
 
 export interface TypeNew {
@@ -284,7 +288,7 @@ export interface PlannedStaff {
   cod_ficha: string;
   identification_card: string;
   name_and_surname: string;
-  phone: string;
+  telefono: string;
 }
 
 export interface Staff extends PlannedStaff {
@@ -413,6 +417,7 @@ export interface PersonsSettings {
   showTokenField?: boolean;
   showNameField?: boolean;
   showMovementTypeField?: boolean;
+  showAccompanyVisitor?: boolean;
   showHourField?: boolean;
   showReasonVisitField?: boolean;
   showPlaceOfReceptionField?: boolean;
@@ -420,6 +425,7 @@ export interface PersonsSettings {
   showProtocolField?: boolean;
   showTypePersonField?: boolean;
   showVaccinationCardNumberField?: boolean;
+  showAssignedCardNumberField?: boolean;
   showButtonNew?: boolean;
 }
 

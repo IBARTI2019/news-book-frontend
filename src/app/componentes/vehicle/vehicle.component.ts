@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { Vehicle, VehiclesSettings } from 'app/interfaces';
-import { CreateAndEditVehicleComponent } from 'app/modules/maestro/vehicle/create-and-edit-vehicle/create-and-edit-vehicle.component';
+import { Vehicle, VehiclesSettings } from '../../interfaces';
+import { CreateAndEditVehicleComponent } from '../../modules/maestro/vehicle/create-and-edit-vehicle/create-and-edit-vehicle.component';
 import { ToastrService } from 'ngx-toastr';
 
 const OWNER_TYPES = [
@@ -16,7 +16,7 @@ const OWNER_TYPES = [
   },
   {
     id: "cargo_vehicle",
-    text: "Vehículo de cargao",
+    text: "Vehículo de carga",
   },
   {
     id: "Instituccion",
@@ -68,7 +68,7 @@ export class VehicleComponent implements OnInit {
   ownerTypes = [...OWNER_TYPES];
   movementTypes = [...MOVEMENT_TYPES];
   defaultValues = { ...VEHICLES_LIST_DEFAULT }
-  vehiclesCurrent: Vehicle = { id: "", license_plate: "", model: "" };
+  vehiclesCurrent: Vehicle = { id: "", license_plate: "", model: "", additional_staff: 'NO' };
   materialCurrent: any = { description: "", mark: "", model: "", color: "", serial: "", year: "", license_plate: "" }
 
   constructor(private toastr: ToastrService, public dialog: MatDialog) { }

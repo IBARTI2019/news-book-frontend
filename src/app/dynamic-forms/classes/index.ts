@@ -228,6 +228,7 @@ export class Vehicles extends QuestionBase {
   settings?: VehiclesSettings = {
     percentage: 100,
     showTokenField: true,
+    showModelField: true,
     showNameField: true,
     showOwnerTypeField: true,
     showMovementTypeField: true,
@@ -249,6 +250,7 @@ export class Vehicle extends QuestionBase {
   settings?: VehiclesSettings = {
     percentage: 100,
     showTokenField: true,
+    showModelField: true,
     showNameField: true,
     showOwnerTypeField: true,
     showMovementTypeField: true,
@@ -271,12 +273,14 @@ export class PersonQuestion extends QuestionBase {
     showTokenField: true,
     showNameField: true,
     showMovementTypeField: true,
+    showAccompanyVisitor: true,
     showHourField: true,
     showReasonVisitField: true,
     showEntryField: true,
     showProtocolField: true,
     showTypePersonField: true,
     showVaccinationCardNumberField: true,
+    showAssignedCardNumberField: true,
     showButtonNew:true
   };
 

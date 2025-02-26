@@ -148,6 +148,18 @@
       <input matInput tabindex="1" [(ngModel)]="data.element.settings.percentage" />
     </mat-form-field>
     <div>
+      <p>Mostrar la columna <strong>Placa</strong></p>
+      <mat-slide-toggle [(ngModel)]="data.element.settings.showTokenField" ngDefaultControl>{{
+        data.element.settings.showTokenField ? "SI" : "NO"
+        }}</mat-slide-toggle>
+    </div>
+    <div>
+      <p>Mostrar la columna <strong>Modelo</strong></p>
+      <mat-slide-toggle [(ngModel)]="data.element.settings.showModelField" ngDefaultControl>{{
+        data.element.settings.showModelField ? "SI" : "NO"
+        }}</mat-slide-toggle>
+    </div>
+    <div>
       <p>Mostrar la columna <strong>Nombre y Apellido</strong></p>
       <mat-slide-toggle [(ngModel)]="data.element.settings.showNameField" ngDefaultControl>{{
         data.element.settings.showNameField ? "SI" : "NO"
@@ -217,6 +229,12 @@
         }}</mat-slide-toggle>
     </div>
     <div>
+      <p>Mostrar la columna <strong>Acompaño a visitante</strong></p>
+      <mat-slide-toggle [(ngModel)]="data.element.settings.showAccompanyVisitor" ngDefaultControl>{{
+        data.element.settings.showAccompanyVisitor ? "SI" : "NO"
+        }}</mat-slide-toggle>
+    </div>
+    <div>
       <p>Mostrar la columna <strong>Hora</strong></p>
       <mat-slide-toggle [(ngModel)]="data.element.settings.showHourField" ngDefaultControl>{{
         data.element.settings.showHourField ? "SI" : "NO"
@@ -250,6 +268,12 @@
       <p>Mostrar la columna <strong>Nro. de tarjeta de vacunación</strong></p>
       <mat-slide-toggle [(ngModel)]="data.element.settings.showVaccinationCardNumberField" ngDefaultControl>{{
         data.element.settings.showVaccinationCardNumberField ? "SI" : "NO"
+        }}</mat-slide-toggle>
+    </div>
+    <div>
+      <p>Mostrar la columna <strong>Nro. de carnet asignado</strong></p>
+      <mat-slide-toggle [(ngModel)]="data.element.settings.showAssignedCardNumberField" ngDefaultControl>{{
+        data.element.settings.showAssignedCardNumberField ? "SI" : "NO"
         }}</mat-slide-toggle>
     </div>
   </div>

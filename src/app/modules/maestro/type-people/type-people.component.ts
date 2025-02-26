@@ -46,6 +46,11 @@ export class TypePeopleComponent implements OnInit {
         type: "bool",
       },
       {
+        dataAttribute: "requires_guide_number",
+        header: "Requiere numero de guía o factura",
+        type: "bool",
+      },
+      {
         dataAttribute: "is_active",
         attribute: "Status",
         header: "Activo",

@@ -154,8 +154,9 @@ export class CreateAndEditNewComponent implements OnInit {
   save(data: any) {
     this.currentNew.info = data;
     try{
-    this.currentNew.template = JSON.parse(this.currentNew.template);
-    }catch {}
+      this.currentNew.template = JSON.parse(this.currentNew.template);
+    } catch { }
+    
     this.newService.add(this.currentNew).subscribe(
       (data) => {
         this.toastr.success("Novedad creada con éxito.");
