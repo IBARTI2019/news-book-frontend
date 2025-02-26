@@ -5,11 +5,18 @@
       <label [for]="'file-input-'+id" class="file-input-label">Selecciona archivos</label>
       <input [id]="'file-input-'+id" type="file" (change)="onFileSelected($event)" multiple />
     </div>
+    <!-- Botón para capturar imagen desde la cámara -->
+    <div class="camera-section">
+        <button (click)="openCamera()" class="camera-button" *ngIf="!isCameraOpen">Capturar desde la cámara</button>
+        <button (click)="closeCamera()" class="camera-close-button" *ngIf="isCameraOpen">Cerrar la cámara</button>
+        <video #videoElement autoplay class="camera-preview" *ngIf="isCameraOpen"></video>
+        <button (click)="captureImage()" class="capture-button" *ngIf="isCameraOpen">Capturar imagen</button>
+    </div>
   
     <!-- Lista de archivos seleccionados -->
     <div class="file-list" *ngIf="files.length > 0 && !readOnly">
         <ul>
-            <li *ngFor="let file of files">
+            <li *ngFor="let file of files; let i = index">
                 <div *ngIf="isImage(file?.file?.name); else otherFile">
                     <img [src]="file?.url" [alt]="file?.file?.name" class="file-preview" />
                 </div>

@@ -160,6 +160,9 @@ export class VehiclesComponent implements OnInit {
       cargo_vehicle: [
         v.cargo_vehicle || { trailer_plate: "", loaded: false, seal_number: "", document_number: "", sealed: false, loading_review: false }
       ],
+      department: [
+        v.department || ""
+      ],
     });
     this.fVehicles.push(fG);
     this.vehiclesCurrent = { ...{ id: "", license_plate: "" } };

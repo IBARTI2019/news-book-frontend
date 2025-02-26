@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
+import { Component, ElementRef, Input, OnDestroy, OnInit, SimpleChanges, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { AttachedFileSettings } from '../../interfaces';
 import { FormBuilder, FormGroup } from '@angular/forms';
@@ -13,7 +13,8 @@ export const ATTACHED_FILE_DEFAULT: AttachedFileSettings = {
   styleUrls: ['./attached-file.component.css']
 })
 export class AttachedFileComponent implements OnInit, OnDestroy {
-  
+  @ViewChild('videoElement') videoElement!: ElementRef<HTMLVideoElement>; // Referencia al elemento de video
+
   @Input() id: string = '';
   @Input() label!: string;
   @Input() settings: AttachedFileSettings = ATTACHED_FILE_DEFAULT;
@@ -25,14 +26,64 @@ export class AttachedFileComponent implements OnInit, OnDestroy {
   fAttachedFile!: FormGroup;
   defaultValues = { ...ATTACHED_FILE_DEFAULT };
 
-  constructor(private fB: FormBuilder, private sanitizer: DomSanitizer) { }
+  isCameraOpen = false; // Estado de la cámara
+  mediaStream: MediaStream | null = null;
+
+
+  constructor(private fB: FormBuilder, private sanitizer: DomSanitizer,  private cdr: ChangeDetectorRef ) { }
   
   ngOnInit(): void {
 
     if (this.fGRoot && this.id && this.fGRoot.get(this.id)) {
       this.fAttachedFile = this.fGRoot.get(this.id) as FormGroup;
-      debugger;
     }
+  }
+
+   // Función para abrir la cámara
+   async openCamera() {
+    try {
+      this.isCameraOpen = true;
+      this.mediaStream = await navigator.mediaDevices.getUserMedia({ video: true });
+      this.videoElement.nativeElement.srcObject = this.mediaStream;
+    } catch (error) {
+      console.error('Error al acceder a la cámara:', error);
+      alert('No se pudo acceder a la cámara. Asegúrate de permitir el acceso.');
+    }
+  }
+
+  // Función para capturar una imagen desde la cámara
+  async captureImage() {
+    const video = this.videoElement.nativeElement;
+    const canvas = document.createElement('canvas');
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+    const context = canvas.getContext('2d');
+
+    if (context) {
+      context.drawImage(video, 0, 0, canvas.width, canvas.height);
+      canvas.toBlob(async (blob) => {
+        if (blob) {
+          const file = new File([blob], 'captured-image.png', { type: 'image/png' });
+          const url = this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(file));
+          this.files.push({ file, url });
+          await this.updateFormControl(); // Convertir a Base64 y actualizar el control
+
+          // Forzar la detección de cambios
+          this.cdr.detectChanges();
+        }
+      }, 'image/png');
+    }
+
+    this.closeCamera(); // Cerrar la cámara después de capturar la imagen
+  }
+
+  // Función para cerrar la cámara
+  closeCamera() {
+    if (this.mediaStream) {
+      this.mediaStream.getTracks().forEach(track => track.stop()); // Detener el stream de la cámara
+      this.mediaStream = null;
+    }
+    this.isCameraOpen = false;
   }
 
   // Función para verificar si una URL es una imagen
@@ -52,7 +103,7 @@ export class AttachedFileComponent implements OnInit, OnDestroy {
   // Función para eliminar un archivo seleccionado
   async removeSelectedFile(index: number) {
     if (index >= 0 && index < this.files.length) {
-      URL.revokeObjectURL(this.files[index].url as string); // Liberar la URL temporal
+      URL.revokeObjectURL(this.files[index]?.url as string); // Liberar la URL temporal
       this.files.splice(index, 1); // Eliminar el archivo de la lista
       await this.updateFormControl(); // Actualizar el control del formulario
     }
@@ -133,6 +184,7 @@ export class AttachedFileComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    this.closeCamera(); // Cerrar la cámara al destruir el componente
     // Liberar las URLs temporales
     this.files.forEach(file => URL.revokeObjectURL(file.url as string));
   }

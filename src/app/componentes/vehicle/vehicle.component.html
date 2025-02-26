@@ -133,6 +133,15 @@
                     Este campo es <strong>requerido</strong>
                 </mat-error>
             </div>
+
+            <div fxLayout="row wrap" *ngIf="fVehicle.controls.owner_type.value === 'employee'" fxFlex="50%">
+                <mat-form-field appearance="fill">
+                    <mat-label>A que departamento pertenece?</mat-label>
+                    <input type="text" matInput formControlName="department" placeholder="A que departamento pertenece?"
+                        [readonly]="readOnly" />
+                </mat-form-field>
+            </div>
+
             <div fxLayout="row wrap" *ngIf="settings.showEntryField && fVehicle.controls.entry.value === true"
                 fxLayoutGap="5px grid" fxFlex="100" style="background-color: #ffffff" class="item mat-toolbar">
                 <div fxLayoutAlign="center center" fxFlex="100" fxLayout="column" class="item mat-toolbar mat-primary">
@@ -341,10 +350,7 @@
                     </div>
                 </div>
             </div>
-            
-
         </form>
         <br><br>
     </div>
-    
 </div>
