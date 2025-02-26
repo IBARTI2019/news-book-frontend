@@ -69,7 +69,7 @@ export class VehiclesComponent implements OnInit {
   ownerTypes = [...OWNER_TYPES];
   movementTypes = [...MOVEMENT_TYPES];
   defaultValues = { ...VEHICLES_LIST_DEFAULT }
-  vehiclesCurrent: Vehicle = { id: "", license_plate: "", additional_staff: 'NO' };
+  vehiclesCurrent: Vehicle = { id: "", license_plate: "" };
   materialCurrent: any = { description: "", mark: "", model: "", color: "", serial: "", year: "", license_plate: "" }
   constructor(private fB: FormBuilder, private toastr: ToastrService, public dialog: MatDialog) {
   }
@@ -162,7 +162,7 @@ export class VehiclesComponent implements OnInit {
       ],
     });
     this.fVehicles.push(fG);
-    this.vehiclesCurrent = { ...{ id: "", license_plate: "", additional_staff: "NO" } };
+    this.vehiclesCurrent = { ...{ id: "", license_plate: "" } };
   }
 
   addMaterial(i: number) {

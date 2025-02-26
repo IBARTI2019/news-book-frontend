@@ -97,9 +97,6 @@ export class ControlService {
         cargo_vehicle: [
           question.value.cargo_vehicle || { trailer_plate: "", loaded: false, seal_number: "", document_number: "", sealed: false, loading_review: false }
         ],
-        additional_staff: [
-          question.value.additional_staff || 'NO'
-        ],
       });
     return form;
   }

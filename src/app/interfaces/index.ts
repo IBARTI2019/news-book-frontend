@@ -81,7 +81,6 @@ export interface Vehicle {
   owner_type?: string;
   materials?: { value: any[] };
   cargo_vehicle?: any;
-  additional_staff: 'SI' | 'NO';
 }
 
 export interface TypePeople {
