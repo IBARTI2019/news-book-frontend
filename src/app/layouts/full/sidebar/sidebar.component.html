@@ -32,7 +32,7 @@
 </div>
 <mat-nav-list dense>
   <ng-template [ngxPermissionsOnly]="['ADMIN']">
-    <mat-expansion-panel [class.mat-elevation-z0]="true" *ngIf="isSchemaPublic" dense>
+    <mat-expansion-panel [class.mat-elevation-z0]="true" *ngIf="isSchemaPublic()" dense>
       <mat-expansion-panel-header>
         <mat-icon aria-hidden="false" aria-label="Home Icon">home</mat-icon>
         Clientes
@@ -245,7 +245,7 @@
       </ng-template>
     </mat-expansion-panel>
   </ng-template>
-  <ng-template [ngxPermissionsOnly]="['ADMIN']">
+  <ng-template [ngxPermissionsOnly]="['ADMIN']" *ngIf="isSchemaPublic()">
     <mat-expansion-panel [class.mat-elevation-z0]="true" dense>
       <mat-expansion-panel-header>
         <mat-icon aria-hidden="false" aria-label="Formats">assignment</mat-icon>
