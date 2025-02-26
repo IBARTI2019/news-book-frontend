@@ -48,6 +48,9 @@ export class ControlService {
         case "attachedFile":
           group[question.key] = this.newFormAttachedFile(question);
           break;
+        case "errata":
+          group[question.key] = this.newFormErrata(question);
+          break;
         default:
           group[question.key] = question.required
             ? new FormControl(question.value || "", Validators.required)
@@ -222,8 +225,24 @@ export class ControlService {
   public newFormAttachedFile(question: QuestionBase) {
     const form = this.fB.group({
       attachedFiles: [
-        question.value
+        question.value.attachedFiles
       ]
+    });
+    return form;
+  }
+
+  public newFormErrata(question: QuestionBase) {
+    const form = this.fB.group({
+      errata: [
+        question.value.errata ?? "NO",
+        Validators.required
+      ],
+      observation_errata: [
+        question.value.observation_errata ?? ""
+      ],
+      edited: [
+        question.value.edited ?? false
+      ],
     });
     return form;
   }

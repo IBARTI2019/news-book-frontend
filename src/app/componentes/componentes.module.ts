@@ -39,6 +39,7 @@ import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { NewHeaderComponent } from './new-header/new-header.component';
 import { DemoMaterialModule } from '../demo-material-module';
 import { AttachedFileComponent } from './attached-file/attached-file.component';
+import { ErrataComponent } from './errata/errata.component';
 
 export const entryComponentes = [
   ConfirmDialogComponent,
@@ -61,7 +62,8 @@ export const entryComponentes = [
     DynamicFormComponent,
     DynamicControlsComponent,
     NewHeaderComponent,
-    AttachedFileComponent
+    AttachedFileComponent,
+    ErrataComponent
   ],
   exports: [
     GenericTableComponent,
@@ -75,7 +77,8 @@ export const entryComponentes = [
     DynamicFormComponent,
     DynamicControlsComponent,
     NewHeaderComponent,
-    AttachedFileComponent
+    AttachedFileComponent,
+    ErrataComponent
   ],
   imports: [
     CommonModule,

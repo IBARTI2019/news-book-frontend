@@ -61,7 +61,7 @@
             </div>
         </div>
         <!-- Begin to Dynamic Form -->
-        <form fxFlex="{{ settings.percentage }}" [formGroup]="fPerson" fxLayout="row wrad" fxLayoutGap="1px">
+        <form fxFlex="{{ settings.percentage }}" [formGroup]="fPerson" fxLayout="row wrap" fxLayoutGap="1px">
             <div *ngIf="settings.showTokenField" fxLayoutAlign="center center" fxFlex="1 1 6%" fxLayout="column"
                 style="background-color: #ffffff" class="item">
                 <mat-form-field appearance="fill" style="max-width: 140px !important;">

@@ -28,7 +28,7 @@ export class AttachedFileComponent implements OnInit, OnDestroy {
 
   isCameraOpen = false; // Estado de la cámara
   mediaStream: MediaStream | null = null;
-
+  openningCamera = false;
 
   constructor(private fB: FormBuilder, private sanitizer: DomSanitizer,  private cdr: ChangeDetectorRef ) { }
   
@@ -40,7 +40,8 @@ export class AttachedFileComponent implements OnInit, OnDestroy {
   }
 
    // Función para abrir la cámara
-   async openCamera() {
+  async openCamera() {
+     this.openningCamera = true
     try {
       this.isCameraOpen = true;
       this.mediaStream = await navigator.mediaDevices.getUserMedia({ video: true });
@@ -49,6 +50,7 @@ export class AttachedFileComponent implements OnInit, OnDestroy {
       console.error('Error al acceder a la cámara:', error);
       alert('No se pudo acceder a la cámara. Asegúrate de permitir el acceso.');
     }
+    this.openningCamera = false
   }
 
   // Función para capturar una imagen desde la cámara

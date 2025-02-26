@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { QuestionBase, DropdownQuestion, TextboxQuestion, StaffReceivingTheGuard, Title, StaffOesvica, SystemDate, SystemHour, BookScope, Amount, Point, formerGuard, FreeText, SelectionQuestion, Vehicles, Vehicle, Persons, PersonQuestion, Round, AttachedFile } from '../classes';
+import { QuestionBase, DropdownQuestion, TextboxQuestion, StaffReceivingTheGuard, Title, StaffOesvica, SystemDate, SystemHour, BookScope, Amount, Point, formerGuard, FreeText, SelectionQuestion, Vehicles, Vehicle, Persons, PersonQuestion, Round, AttachedFile, Errata } from '../classes';
 import { of } from 'rxjs';
 import { API } from '../../utils/api';
 import { HttpClient } from '@angular/common/http';
@@ -356,6 +356,20 @@ export class QuestionService extends API<any> {
             }, null)
           );
           break;
+        case 'ERRATA':
+          questions.push(
+            new Errata({
+              value: d.value || '',
+              key: `${d.code}_${index}`,
+              code: d.code,
+              label: d.label || 'Fe de errata',
+              required: d.required,
+              form_field: false,
+              percentage_per_row: Number(d.percentage_per_row) || 100,
+              settings: d.settings,
+            }, null)
+          );
+            break;
         default:
           break;
       }

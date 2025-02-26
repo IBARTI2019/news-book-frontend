@@ -1,4 +1,4 @@
-import { AttachedFileSettings, Person, PersonsSettings, QuestionBaseParams, RoundSettings, ScopeSettings, SelectionSettings, StaffReceivingTheGuardSettings, VehiclesSettings } from "../../interfaces";
+import { AttachedFileSettings, ErrataSettings, Person, PersonsSettings, QuestionBaseParams, RoundSettings, ScopeSettings, SelectionSettings, StaffReceivingTheGuardSettings, VehiclesSettings } from "../../interfaces";
 
 export class QuestionBase {
   value?: any;
@@ -334,4 +334,16 @@ export class AttachedFile extends QuestionBase {
   }
 }
 
+export class Errata extends QuestionBase {
+  controlType = "errata";
+  settings?: ErrataSettings = {
+    percentage: 100,
+  };
+
+  constructor(options: QuestionBaseParams, public service: any) {
+    super(options, service)
+    if (options.settings)
+      this.settings = options.settings;
+  }
+}
 

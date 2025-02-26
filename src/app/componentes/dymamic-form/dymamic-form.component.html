@@ -5,7 +5,7 @@
     <div fxLayout="row wrap" fxLayout.xs="column">
       <ng-container *ngFor="let question of questions">
         <div fxLayout="column" [fxFlex]="question.percentage_per_row ? question.percentage_per_row : 100">
-          <app-dynamic-controls [question]="question" [form]="form" [readOnly]="readOnly" style="padding: 5px;">
+          <app-dynamic-controls [question]="question" [form]="form" [readOnly]="readOnly" style="padding: 5px;" (onEditedChangeErrata)="onSubmit()">
           </app-dynamic-controls>
         </div>
       </ng-container>

@@ -67,17 +67,6 @@ export class CreateAndEditNewComponent implements OnInit {
     this.currentNew.type_news = this.idTN;
     this.typeNewService.get(this.idTN).subscribe(
       (typeNew: TypeNew) => {
-        /*         if (typeNew) {
-                  this.template = TemplatesNew.filter(
-                    (currentTemplate) => currentTemplate.name === typeNew.template
-                  )[0];
-                  if (this.template) {
-                    this.templateUrl = this.template.url;
-                    this.currentNew.id = typeNew.id;
-                  }
-                } 
-        this.setShowCorrespondent();
-        */
         try{
           this.currentNew.template = JSON.parse(typeNew.template);
         }catch(e){
@@ -87,7 +76,6 @@ export class CreateAndEditNewComponent implements OnInit {
         this.generateControls(this.currentNew.template !== 'object' ? this.currentNew.template : [])
       },
       (error: HttpErrorResponse) => {
-        this.setShowCorrespondent();
         this.toastr.error(
           error.error.message || "No se pudo obtener el tipo de novedad."
         );
@@ -113,44 +101,6 @@ export class CreateAndEditNewComponent implements OnInit {
     this.generating = false
   }
 
-  setShowCorrespondent() {
-    /*   switch (this.templateUrl) {
-        case "template-one":
-          this.showOne = true;
-          break;
-        case "template-two":
-          this.showTwo = true;
-          break;
-        case "template-three":
-          this.showThree = true;
-          break;
-        case "template-four":
-          this.showFour = true;
-          break;
-        case "template-five":
-          this.showFive = true;
-          break;
-        case "template-six":
-          this.showSix = true;
-          break;
-        case "template-seven":
-          this.showSeven = true;
-          break;
-        case "template-eight":
-          this.showEight = true;
-          break;
-        default:
-          this.showNotFound = true;
-      } 
-    */
-  }
-
-  onSubmit(data: object) {
-    this.currentNew = { ...data, ...this.currentNew };
-    this.submitted = true;
-    this.update ? this.updateNew(data) : this.save(data);
-  }
-
   save(data: any) {
     this.currentNew.info = data;
     try{
@@ -161,30 +111,13 @@ export class CreateAndEditNewComponent implements OnInit {
       (data) => {
         this.toastr.success("Novedad creada con éxito.");
         this.submitted = false;
-        // this.deleteStorageItem(this.template.id)
-        // this.deleteStorageItem('id_user')
-        // this.router.navigate(["new"]);
-      },
-      (error: HttpErrorResponse) => {
-        this.toastr.error(
-          error.error.message || "No se pudo crear la Novedad."
-        );
-      }
-    );
-  }
-
-  updateNew(data: object) {
-    this.newService.update(this.id, this.currentNew).subscribe(
-      (data) => {
-        this.toastr.success("La Novedad se actualizo correctamente.");
-        this.submitted = false;
         this.deleteStorageItem(this.template.id)
         this.deleteStorageItem('id_user')
         this.router.navigate(["new"]);
       },
       (error: HttpErrorResponse) => {
         this.toastr.error(
-          error.error.message || "No se pudo actualizar la Novedad."
+          error.error.message || "No se pudo crear la Novedad."
         );
       }
     );

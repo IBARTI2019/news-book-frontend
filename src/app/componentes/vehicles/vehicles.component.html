@@ -60,7 +60,7 @@
             </div>
         </div>
         <!-- Begin to Dynamic Form -->
-        <div fxFlex="{{ settings.percentage }}" fxLayout="row wrad"
+        <div fxFlex="{{ settings.percentage }}" fxLayout="row wrap"
             *ngFor="let vehicles of fVehicles.controls; index as i;" fxLayoutGap="1px">
             <ng-container [formGroup]="vehicles">
                 <div *ngIf="settings.showTokenField" fxLayoutAlign="center center" fxFlex="2 0 10%" fxLayout="column"

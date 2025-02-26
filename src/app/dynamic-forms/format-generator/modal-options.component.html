@@ -5,11 +5,11 @@
       <mat-label>Porcentaje en fila</mat-label>
       <input matInput tabindex="1" [(ngModel)]="data.element.percentage_per_row" />
     </mat-form-field>
-    <mat-form-field>
+    <mat-form-field *ngIf="data.element?.code != 'ERRATA' && data.element?.code != 'ATTACHED_FILE'">
       <mat-label>Valor por defecto</mat-label>
       <input matInput tabindex="1" [(ngModel)]="data.element.value" />
     </mat-form-field>
-    <mat-form-field *ngIf="data.element?.code != 'TITLE'">
+    <mat-form-field *ngIf="data.element?.code != 'TITLE' && data.element?.code != 'ERRATA'">
       <mat-label>Etiqueta</mat-label>
       <input matInput tabindex="1" [(ngModel)]="data.element.label" />
     </mat-form-field>
@@ -32,7 +32,7 @@
         </mat-list-item>
       </mat-list>
     </div>
-    <div *ngIf="data.element?.code != 'TITLE'">
+    <div *ngIf="data.element?.code != 'TITLE' && data.element?.code != 'ERRATA'">
       <p>Requerido</p>
       <mat-slide-toggle [(ngModel)]="data.element.required" ngDefaultControl>{{
         data.element.required ? "SI" : "NO"

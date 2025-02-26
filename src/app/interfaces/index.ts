@@ -459,3 +459,7 @@ export interface Domain {
 export interface AttachedFileSettings {
   percentage?: number;
 }
+
+export interface ErrataSettings {
+  percentage?: number;
+}
