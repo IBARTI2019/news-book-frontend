@@ -6,7 +6,7 @@
 export const environment = {
   production: false,
   // API: 'https://api-news.ibartisoftware.com.ve/api',
-  API: 'http://localhost:8000/api',
+  API: 'http://194.163.161.64:8000/api',
   cryptPass: 'SoyElMasCapo(PeroEnDisminutivo)$k&'
 };
 
