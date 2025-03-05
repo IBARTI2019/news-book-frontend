@@ -3,7 +3,7 @@
         <tr fxFlex="1 0 100%" fxLayout="row" fxLayoutAlign="space-around">
             <th fxLayout="column" fxFlex="33%"><img src="assets/images/oesvica.jfif" alt=""></th>
             <th fxLayout="column" fxFlex="33%" align="center">
-                <h1>{{new?.type_news_display?.description || new?.description}}</h1>
+                <h2>{{new?.type_news_display?.description || new?.description}}</h2>
             </th>
             <th fxLayout="column" fxFlex="33%" align="left" *ngIf="readOnly === true" >Fecha: {{new?.created | date}} <br> Hora: {{new?.created |
                 date:'shortTime'}}</th>
