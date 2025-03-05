@@ -331,6 +331,7 @@ export class AttachedFile extends QuestionBase {
     super(options, service)
     if (options.settings)
       this.settings = options.settings;
+    this.label = options.label || "Arrastra y suelta archivos aquí o";
   }
 }
 
