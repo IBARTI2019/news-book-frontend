@@ -2,3 +2,31 @@
 @import '@angular/material/prebuilt-themes/indigo-pink.css';
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+ngx-timepicker-field {
+    transform: scale(0.75); /* Escala el componente al 80% de su tamaño original */
+  }
+  
+  /* Ajustar el tamaño de los elementos internos */
+  .ngx-timepicker {
+    font-size: 12px; /* Reducir el tamaño de la fuente */
+  }
+  
+  .timepicker__header {
+    padding: 6px; /* Reducir el padding */
+  }
+  
+  .timepicker__body {
+    padding: 6px; /* Reducir el padding */
+  }
+  
+  .timepicker__button {
+    width: 20px; /* Reducir el tamaño de los botones */
+    height: 20px;
+  }
+  
+  .timepicker__input {
+    width: 30px; /* Reducir el ancho de los inputs */
+    font-size: 12px; /* Reducir el tamaño de la fuente */
+  }
