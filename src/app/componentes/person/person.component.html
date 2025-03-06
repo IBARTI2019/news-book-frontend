@@ -30,7 +30,7 @@
                 class="item mat-toolbar mat-primary">
                 Acompaño al visitante
             </div>
-            
+
             <div *ngIf="settings.showHourField" fxLayoutAlign="center center" fxFlex="1 1 11%" fxLayout="row"
                 class="item mat-toolbar mat-primary">
                 Hora
@@ -86,11 +86,9 @@
             </div>
             <div *ngIf="settings.showTypePersonField" fxLayoutAlign="center center" fxFlex="1 1 9%" fxLayout="column"
                 style="background-color: #ffffff" class="item">
-                <mat-radio-group style="margin: 15px 0" formControlName="type_person" [disabled]="readOnly"
-                    [(ngModel)]="tp">
+                <mat-radio-group style="margin: 15px 0" formControlName="type_person" [disabled]="readOnly">
                     <ng-container *ngFor="let mT of personTypes">
-                        <mat-radio-button  style="margin: 5px" [value]="mT.id"
-                            (click)="check(mT)">{{
+                        <mat-radio-button style="margin: 5px" [value]="mT.id" (click)="check(mT)">{{
                             mT.description}}
                         </mat-radio-button>
                         <br>
@@ -103,7 +101,7 @@
             <div *ngIf="settings.showMovementTypeField" fxLayoutAlign="center center" fxFlex="1 1 6%" fxLayout="column"
                 style="background-color: #ffffff" class="item">
                 <mat-radio-group style="margin: 15px 0" formControlName="movement_type" [disabled]="readOnly">
-                    <ng-container *ngFor="let mT of movementTypes" >
+                    <ng-container *ngFor="let mT of movementTypes">
                         <mat-radio-button style="margin: 5px" [value]="mT.id">{{
                             mT.text }}
                         </mat-radio-button>
@@ -362,17 +360,17 @@
             <!-- End block to Contractor -->
 
             <!-- Begin to Guide Number -->
-                <div fxLayout="row wrap" *ngIf="settings.showTypePersonField && requiresGuideNumber" fxLayoutGap="5px grid"
+            <div fxLayout="row wrap" *ngIf="settings.showTypePersonField && requiresGuideNumber" fxLayoutGap="5px grid"
                 fxFlex="100" style="background-color: #ffffff" class="item mat-toolbar">
 
-                    <div fxLayoutAlign="center center" class="item" fxFlex="2 1 50%" fxLayout="column">
-                        <mat-form-field appearance="fill">
-                            <mat-label>Número de guía o factura</mat-label>
-                            <input type="text" matInput placeholder="Número de guía o factura" formControlName="guide_number"
-                                [readonly]="readOnly" />
-                        </mat-form-field>
-                    </div>
+                <div fxLayoutAlign="center center" class="item" fxFlex="2 1 50%" fxLayout="column">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Número de guía o factura</mat-label>
+                        <input type="text" matInput placeholder="Número de guía o factura"
+                            formControlName="guide_number" [readonly]="readOnly" />
+                    </mat-form-field>
                 </div>
+            </div>
             <!-- End block to Guide Number -->
 
             <div fxLayout="row wrap" *ngIf="settings.showEntryField && fPerson.controls.entry.value === true"
