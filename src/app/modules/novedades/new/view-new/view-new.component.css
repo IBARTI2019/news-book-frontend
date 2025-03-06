@@ -1,0 +1,37 @@
+.link-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    background-color: #f5f5f5;
+    margin: 10px 0;
+  }
+  
+  /* Texto del enlace */
+  .link-text {
+    margin: 0;
+    font-size: 16px;
+    color: #333;
+    word-break: break-all; /* Para evitar que el texto se desborde */
+  }
+  
+  /* Contenedor de botones */
+  .button-container {
+    display: flex;
+    gap: 8px; /* Espacio entre los botones */
+  }
+  
+  /* Estilos para los botones */
+  button[mat-icon-button] {
+    transition: background-color 0.3s ease;
+  }
+  
+  button[mat-icon-button]:hover {
+    background-color: rgba(63, 81, 181, 0.1); /* Efecto hover */
+  }
+  
+  button[mat-icon-button]:active {
+    background-color: rgba(63, 81, 181, 0.2); /* Efecto al hacer clic */
+  }

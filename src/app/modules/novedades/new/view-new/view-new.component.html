@@ -8,6 +8,18 @@
                 <app-dymamic-form *ngIf="!generating" [questions]="controls$ | async" [readOnly]="true"
                     [info]="_new.info" [new]="_new" (onSaveChange)="updateNew($event)">
                 </app-dymamic-form>
+
+                <div *ngIf="_new" class="link-container">
+                    <p class="link-text">{{ _new.link }}</p>
+                    <div class="button-container">
+                      <button mat-icon-button type="button" (click)="openLink()" matTooltip="Abrir enlace">
+                        <mat-icon inline="true">open_in_new</mat-icon>
+                      </button>
+                      <button mat-icon-button type="button" (click)="copyLink()" matTooltip="Copiar enlace">
+                        <mat-icon inline="true">link</mat-icon>
+                      </button>
+                    </div>
+                  </div>
             </mat-card-content>
         </mat-card>
     </div>
