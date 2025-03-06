@@ -2,10 +2,11 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Client} from 'app/interfaces';
+import { Client, TypeNew} from '../../../../interfaces';
 import { ClientsService } from 'app/services/clients.service';
 import { ToastrService } from 'ngx-toastr';
 import * as moment from "moment";
+import { TypeNewService } from '../../../../services/type-new.service';
 
 @Component({
   selector: 'app-create-and-edit-clientes',
@@ -20,10 +21,13 @@ export class CreateAndEditClientescomponent implements OnInit {
   routeState: any;
   redirectTo = "";
   guardando = false;
+  typesNews: TypeNew[] = [];
+
   constructor(
     private clientesService: ClientsService,
     private fb: FormBuilder,
     private toastr: ToastrService,
+    public typeNewService: TypeNewService,
     private router: Router,
     private route: ActivatedRoute
   ) {
@@ -34,7 +38,7 @@ export class CreateAndEditClientescomponent implements OnInit {
   ngOnInit() {
     this.id = this.route.snapshot.params.id;
     this.redirectTo = this.routeState.redirectTo || ""
-
+    this.getTypeNews();
     this.fg = this.fb.group(
       {
         schema_name: ["", Validators.required],
@@ -42,6 +46,7 @@ export class CreateAndEditClientescomponent implements OnInit {
         email: ["", Validators.required],
         paid_until: [""],
         on_trial: [true, Validators.required],
+        type_news: [[]],
       },
       {}
     );
@@ -49,6 +54,14 @@ export class CreateAndEditClientescomponent implements OnInit {
       this.update = true;
       this.getCliente();
     }
+  }
+
+  getTypeNews() {
+    this.typeNewService.list({ not_paginator: true}).subscribe(data => {
+      this.typesNews = data;
+    }, error => {
+      this.toastr.error(error.error.message || 'Error al obtener los tipos de novedades');
+    })
   }
 
   onSubmit() {
@@ -90,6 +103,7 @@ export class CreateAndEditClientescomponent implements OnInit {
       this.fg.get("email")!.setValue(data.email);
       this.fg.get("paid_until")!.setValue(data.paid_until);
       this.fg.get("on_trial")!.setValue(data.on_trial);
+      this.fg.get("type_news")!.setValue(data.type_news);
     },
       (error: HttpErrorResponse) => {
         this.toastr.error(error.error.message || 'Error al obtener el Cliente');

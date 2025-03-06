@@ -30,7 +30,7 @@ export class SelectNewComponent implements OnInit {
     this.isSuperUser = await this.sessionService.isSuperUser()
     this.isStaff = await this.sessionService.isStaff()
     this.deleteStorageItem('id_user')
-    this.typeNewService.list({ not_paginator: true }).subscribe(
+    this.typeNewService.list({ not_paginator: true, filtered: true }).subscribe(
       (typeNewsResponse: TypeNew[]) => {
         this.typeNews = [...typeNewsResponse];
       },

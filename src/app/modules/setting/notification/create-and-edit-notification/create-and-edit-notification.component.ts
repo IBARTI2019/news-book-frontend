@@ -225,7 +225,7 @@ export class CreateAndEditNotificationComponent implements OnInit {
   }
 
   getTypeNews() {
-    this.typeNewService.list({ not_paginator: true }).subscribe((response: TypeNew[]) => {
+    this.typeNewService.list({ not_paginator: true, filtered: true }).subscribe((response: TypeNew[]) => {
       this.listTypeNew = [...response];
     });
   }

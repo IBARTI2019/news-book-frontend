@@ -160,7 +160,7 @@
         <mat-icon aria-hidden="false" aria-label="News">fiber_new</mat-icon>
         Novedades
       </mat-expansion-panel-header>
-      <ng-template [ngxPermissionsOnly]="['ADMIN']">
+      <ng-template [ngxPermissionsOnly]="['ADMIN']" *ngIf="isSchemaPublic()">
         <mat-nav-list dense>
           <a mat-list-item [routerLink]="['type-new']">
             <span>

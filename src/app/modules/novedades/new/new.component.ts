@@ -49,7 +49,7 @@ export class NewComponent implements OnInit {
   showCheck = () => true;
 
   ngOnInit() {
-    this.typeNewService.list({ not_paginator: true, query: `{id, description}` }).subscribe((data: TypeNew[]) => {
+    this.typeNewService.list({ not_paginator: true, query: `{id, description}`, filtered: true }).subscribe((data: TypeNew[]) => {
       this.filters[1] = {
         ...{
           type: 'select',

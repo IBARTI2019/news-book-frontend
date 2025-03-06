@@ -445,6 +445,7 @@ export interface Client {
   email?: string;
   paid_until?: string;
   on_trial?: boolean;
+  type_news?: string[];
 }
 
 
