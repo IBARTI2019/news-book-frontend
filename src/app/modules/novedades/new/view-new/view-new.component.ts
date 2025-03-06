@@ -2,7 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { QuestionBase } from '../../../../dynamic-forms/classes';
 import { QuestionService } from '../../../../dynamic-forms/services/question.service';
-import { TemplateTypeNew, New } from 'app/interfaces';
+import { TemplateTypeNew, New } from '../../../../interfaces';
 import { NewService } from '../../../../services/new.service';
 import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
@@ -79,5 +79,18 @@ export class ViewNewComponent implements OnInit {
         );
       }
     ).add(() => this.submitted = false);
+  }
+
+  openLink() {
+    window.open(this._new.link!, '_blank');
+  }
+
+  copyLink() {
+    navigator.clipboard.writeText(this._new.link!).then(() => {
+      this.toastr.success("Enlace copiado al portapapeles");
+    }).catch(err => {
+      this.toastr.error("Error al copiar el enlace");
+      console.error('Error al copiar el enlace: ', err);
+    });
   }
 }

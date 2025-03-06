@@ -153,6 +153,7 @@ export interface New {
   created_by?: string;
   template?: TemplateTypeNew[] | any;
   client?: any;
+  link?: string;
 }
 
 export interface TemplateOne {

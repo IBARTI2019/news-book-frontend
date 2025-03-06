@@ -41,7 +41,7 @@
         <mat-label [attr.for]="question.key">{{ question.label }}</mat-label>
       </legend>
       <div class="row">
-        <mat-radio-group [formControlName]="question.key" [readonly]="readOnly">
+        <mat-radio-group [formControlName]="question.key" [disabled]="readOnly">
           <mat-radio-button *ngFor="let opt of question.options" style="margin: 5px" [value]="opt.key">{{ opt.value |
             titlecase }}
           </mat-radio-button>
