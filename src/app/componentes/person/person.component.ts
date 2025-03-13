@@ -86,10 +86,17 @@ export class PersonComponent implements OnInit {
 
     this.typePersonService.list({ not_paginator: true }).subscribe(data => {
       this.personTypes = data;
+      if (this.fGRoot && this.id && this.fGRoot.get(this.id)) {
+        this.fPerson = this.fGRoot.get(this.id);
+        if (this.readOnly) {
+          let tpId = this.fPerson.get("type_person").value;
+          let typePerson = this.personTypes.find(tp => tp.id == tpId);
+          if (typePerson)
+            this.check(typePerson);
+        }
+      }
     });
-    if (this.fGRoot && this.id && this.fGRoot.get(this.id)) {
-      this.fPerson = this.fGRoot.get(this.id);
-    }
+
   }
 
   ngOnChanges(change: SimpleChanges): void {
@@ -146,7 +153,10 @@ export class PersonComponent implements OnInit {
     if (index > -1) {
       this.fPerson.get("full_name")!.setValue(this.personsArr[index].full_name);
       this.tp = String(this.personsArr[index].type_person);
-      console.log(this.tp);
+      this.fPerson.get("type_person")!.setValue(this.tp);
+      let typePerson = this.personTypes.find(tp => tp.id == this.tp);
+      if (typePerson)
+        this.check(typePerson);
     }
   }
 
@@ -168,40 +178,47 @@ export class PersonComponent implements OnInit {
   }
 
   check(value: any) {
-    if (value.is_institution) {
-      this.fPerson.controls["instituccion"].setValue('');
-      this.fPerson.controls["observacion"].setValue('');
-      this.fPerson.controls["name_recibe"].setValue('');
-      this.fPerson.controls["ident_recibe"].setValue('');
-      this.fPerson.controls["cargo_recibe"].setValue('');
-      this.isInstitution = true;
-    } else {
+    if (!this.readOnly) {
       this.fPerson.controls["instituccion"].setValue('-');
       this.fPerson.controls["observacion"].setValue('-');
       this.fPerson.controls["name_recibe"].setValue('-');
       this.fPerson.controls["ident_recibe"].setValue('-');
       this.fPerson.controls["cargo_recibe"].setValue('-');
+      this.fPerson.controls["company_name"].setValue('-');
+      this.fPerson.controls["rif"].setValue('-');
+      this.fPerson.controls["guide_number"].setValue('-');
+    }
+
+    if (value.is_institution) {
+      if (!this.readOnly) {
+        this.fPerson.controls["instituccion"].setValue('');
+        this.fPerson.controls["observacion"].setValue('');
+        this.fPerson.controls["name_recibe"].setValue('');
+        this.fPerson.controls["ident_recibe"].setValue('');
+        this.fPerson.controls["cargo_recibe"].setValue('');
+      }
+      this.isInstitution = true;
+    } else {
       this.isInstitution = false;
     }
 
     if (value.requires_company_data) {
-      this.fPerson.controls["company_name"].setValue('');
-      this.fPerson.controls["rif"].setValue('');
+      if (!this.readOnly) {
+        this.fPerson.controls["company_name"].setValue('');
+        this.fPerson.controls["rif"].setValue('');
+      }
       this.requiresCompanyData = true;
     } else {
-      this.fPerson.controls["company_name"].setValue('-');
-      this.fPerson.controls["rif"].setValue('-');
       this.requiresCompanyData = false;
     }
 
     if (value.requires_guide_number) {
-      this.fPerson.controls["guide_number"].setValue('');
+      if (!this.readOnly) {
+        this.fPerson.controls["guide_number"].setValue('');
+      }
       this.requiresGuideNumber = true;
     } else {
-      this.fPerson.controls["guide_number"].setValue('-');
       this.requiresGuideNumber = false;
     }
   }
-
-
 }

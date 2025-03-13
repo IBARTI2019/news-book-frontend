@@ -1,6 +1,6 @@
 <div fxFlex="{{ settings?.percentage || defaultValues.percentage}}" fxLayoutGap="40px" fxLayout="column"
     style="padding-top: 10px; padding-bottom: 10px;">
-    <div fxFlex fxLayout="row wrap" fxLayoutGap="1px grid">
+    <div fxFlex fxLayout="row wrap" fxLayoutGap="1px grid" *ngIf="fPerson">
         <div fxLayoutAlign="end center" fxFlex="100%" fxLayout="row" *ngIf="!readOnly" style="margin: 10px;">
             <!-- fxFlex="1 0 10%" -->
             <button *ngIf="settings.showButtonNew" mat-raised-button color="primary" (click)="createPersona()"
