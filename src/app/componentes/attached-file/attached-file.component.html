@@ -1,4 +1,4 @@
-<div [fxFlex]="settings?.percentage || defaultValues.percentage" fxLayoutGap="40px" fxLayout="column" class="file-upload-container">
+<div [fxFlex]="settings?.percentage || defaultValues.percentage" *ngIf="!readOnly || (readOnly && fAttachedFile.get('attachedFiles')?.value?.length > 0)" fxLayoutGap="40px" fxLayout="column" class="file-upload-container">
     <!-- Drag and Drop Area -->
     <div class="drop-area" (drop)="onDrop($event)" (dragover)="onDragOver($event)" *ngIf="!readOnly">
       {{ label }}
