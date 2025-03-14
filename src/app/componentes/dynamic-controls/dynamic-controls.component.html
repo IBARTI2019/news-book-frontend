@@ -7,7 +7,7 @@
       [staffArrSelected]="question.value || []">
     </app-changing-guard-staff-list>
     <ngx-timepicker-field #hour [format]="24" *ngSwitchCase="'hour'" [defaultTime]="'06:00'"
-      [formControlName]="question.key" [id]="question.key" [readonly]="readOnly">
+      [formControlName]="question.key" [id]="question.key" [disabled]="readOnly">
     </ngx-timepicker-field>
     <app-scope [id]="question.key" *ngSwitchCase="'scope'" [readOnly]="readOnly" [fGRoot]="form"
       [scopeArrSelected]="question.value || []" [scopeArr]="question.options" [settings]="question.settings">
