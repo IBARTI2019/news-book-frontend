@@ -233,10 +233,6 @@ export class ControlService {
 
   public newFormErrata(question: QuestionBase) {
     const form = this.fB.group({
-      errata: [
-        question.value.errata ?? "NO",
-        Validators.required
-      ],
       observation_errata: [
         question.value.observation_errata ?? ""
       ],

@@ -1,24 +1,13 @@
 <div [fxFlex]="settings?.percentage || defaultValues.percentage" fxLayoutGap="40px" fxLayout="column" class="file-upload-container">
     <form fxFlex="{{ settings.percentage }}" [formGroup]="fErrata" fxLayout="row wrap" fxLayoutGap="1px">
-    <fieldset *ngIf="!readOnly">
-        <legend>
-          <mat-label [attr.for]="id+'errata'">Fe de errata</mat-label>
-        </legend>
-        <div class="row">
-          <mat-radio-group formControlName="errata" [readonly]="readOnly" [id]="id+'errata'">
-            <mat-radio-button style="margin: 5px" value="SI">SI</mat-radio-button>
-            <mat-radio-button style="margin: 5px" value="NO">NO</mat-radio-button>
-          </mat-radio-group>
-        </div>
-      </fieldset>
 
-      <mat-form-field appearance="fill" *ngIf="fErrata.get('errata')?.value == 'SI'">
+      <mat-form-field appearance="fill" *ngIf="readOnly">
         <mat-label [attr.for]="id+'observation'">Observación (Fe de errata)</mat-label>
         <textarea matInput placeholder="Observación (Fe de errata)" cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1"
         cdkAutosizeMaxRows="10" formControlName="observation_errata" [readonly]="readOnly && fErrata.get('edited')?.value" [id]="id+'observation'"></textarea>
         </mat-form-field>
 
-        <button mat-raised-button color="primary" type="button" *ngIf="fErrata.get('errata')?.value == 'SI' && !fErrata.get('edited')?.value && readOnly"
+        <button mat-raised-button color="primary" type="button" *ngIf="!fErrata.get('edited')?.value && readOnly"
         (click)="onEdited()">
             Guardar
         </button>
