@@ -281,8 +281,9 @@ export interface TemplateTypeNew {
   value?: string;
   maximum_characters?: number;
   options?: { key: string; value: string }[];
-  settings?: StaffReceivingTheGuardSettings | ScopeSettings;
+  settings?: StaffReceivingTheGuardSettings | ScopeSettings | any;
   person?: any;
+  showScope?: boolean;
 }
 
 export interface PlannedStaff {
@@ -345,6 +346,7 @@ export interface ScopeSettings {
   showHealthConditionField?: boolean;
   showObservationField?: boolean;
   showButtonNew?: boolean;
+  showScope?: boolean;
 }
 
 export interface QuestionBaseParams {
@@ -373,6 +375,7 @@ export interface QuestionBaseParams {
   maximum_characters?: number;
   settings?: StaffReceivingTheGuardSettings;
   person?: any;
+  showScope?: boolean;
 }
 
 export interface Book {

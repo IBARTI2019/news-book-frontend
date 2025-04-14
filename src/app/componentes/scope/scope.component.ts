@@ -38,6 +38,7 @@ export const SCOPE_LIST_DEFAULT: ScopeSettings = {
   showHealthConditionField: true,
   showObservationField: true,
   showAmountField: true,
+  showScope: true
 };
 
 @Component({

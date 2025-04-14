@@ -108,6 +108,12 @@
         data.element.settings.showObservationField ? "SI" : "NO"
         }}</mat-slide-toggle>
     </div>
+    <div *ngIf="data.element.code === 'SUB_LINE'">
+      <p>Mostrar datos del alcance</p>
+      <mat-slide-toggle [(ngModel)]="data.element.settings.showScope" ngDefaultControl>{{
+        data.element.settings.showScope ? "SI" : "NO"
+        }}</mat-slide-toggle>
+    </div>
     <div *ngIf="data.element.code !== 'SUB_LINE'">
       <p>Mostrar la columna <strong>Cumplió Protocolo</strong></p>
       <mat-slide-toggle [(ngModel)]="data.element.settings.showProtocolField" ngDefaultControl>{{

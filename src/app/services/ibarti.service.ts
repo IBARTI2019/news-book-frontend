@@ -21,8 +21,8 @@ export class IbartiService extends API<any> {
         return this.http.get(this.URL + 'oesvica_staff/', {});
     }
 
-    public sub_line_scope() {
-        return this.http.get(this.URL + 'sub_line_scope/', {});
+    public sub_line_scope(params: any) {
+        return this.http.get(this.URL + 'sub_line_scope/', {params});
     }
 
     public location_current() {

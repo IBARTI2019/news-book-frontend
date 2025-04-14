@@ -141,6 +141,7 @@ export class FormatGeneratorComponent implements OnInit {
             showTokenField: true,
             showNameField: true,
             showAmountField: true,
+            showScope: true,
             showHealthConditionField: true,
             showObservationField: true
           }
@@ -210,6 +211,9 @@ export class FormatGeneratorComponent implements OnInit {
       .afterClosed()
       .subscribe((result: { element: TemplateTypeNew; index: number }) => {
         if (result) {
+          if (result.element.settings?.showScope) {
+            result.element.showScope = result.element.settings.showScope;
+          }
           if (result.element.settings?.percentage) {
             result.element.percentage_per_row = result.element.settings.percentage
           }

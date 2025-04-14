@@ -23,6 +23,7 @@ export class QuestionBase {
   applies_security_protocol?: boolean;
   form_field: boolean | undefined = true;
   percentage_per_row: number;
+  showScope?: boolean;
   maximum_characters: number;
   settings?: any;
   persons?: Person[];
@@ -41,6 +42,7 @@ export class QuestionBase {
     this.options = options.options || [];
     this.value = options.value || '';
     this.percentage_per_row = options.percentage_per_row || 100;
+    this.showScope = options.showScope || false;
     this.maximum_characters = options.maximum_characters || 255;
     if (
       options.code === "staffReceivingTheGuard" ||
@@ -55,7 +57,7 @@ export class QuestionBase {
         this.options = data;
       });
     } else if (options.code === "SUB_LINE") {
-      this.service.sub_line_scope({ not_paginator: true }).subscribe((data: any) => {
+      this.service.sub_line_scope({ not_paginator: true, show_scope: options.showScope }).subscribe((data: any) => {
         this.options = data;
       });
     } else if (options.code === "OESVICA_STAFF") {
@@ -138,6 +140,7 @@ export class BookScope extends QuestionBase {
     showNameField: true,
     showHealthConditionField: true,
     showAmountField: true,
+    showScope: true,
     showObservationField: true
   };
 
@@ -281,7 +284,7 @@ export class PersonQuestion extends QuestionBase {
     showTypePersonField: true,
     showVaccinationCardNumberField: true,
     showAssignedCardNumberField: true,
-    showButtonNew:true
+    showButtonNew: true
   };
 
   constructor(options: QuestionBaseParams, public service: any) {
