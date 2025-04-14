@@ -29,10 +29,10 @@
     </app-round>
 
     <app-attached-file [id]="question.key" *ngSwitchCase="'attachedFile'" [readOnly]="readOnly" [fGRoot]="form"
-    [settings]="question.settings" [label]="question.label"></app-attached-file>
+      [settings]="question.settings" [label]="question.label"></app-attached-file>
 
     <app-errata [id]="question.key" *ngSwitchCase="'errata'" [readOnly]="readOnly" [fGRoot]="form"
-    [settings]="question.settings" (onEditedChange)="onEditedErrata()"></app-errata>
+      [settings]="question.settings" (onEditedChange)="onEditedErrata()"></app-errata>
     <!-- <ng-template #hour *ngSwitchCase="'hour'">
       <mat-icon aria-hidden=" false" aria-label="Horario">schedule</mat-icon>
     </ng-template> -->
