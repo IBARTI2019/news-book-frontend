@@ -116,10 +116,10 @@ export class QuestionService extends API<any> {
                 label: d?.person?.label || 'Persona',
                 required: d?.person?.required,
                 form_field: false,
-                percentage_per_row: Number(d?.person?.percentage_per_row) || 100,
+                percentage_per_row: Number(d?.percentage_per_row) || 100,
                 settings: d?.person?.settings,
               }, this.personService),
-              percentage_per_row: Number(d?.person?.percentage_per_row) || 100,
+              percentage_per_row: Number(d?.percentage_per_row) || 100,
               form_field: false
             }, null),
           )
