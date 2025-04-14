@@ -20,7 +20,7 @@
                         [noEntriesFoundLabel]="'No Encontrado'"></ngx-mat-select-search>
                      </mat-option>
                       <mat-option *ngFor="let scopeItem of listFilter" [value]="scopeItem">
-                        {{ scopeItem?.name }}
+                        {{ scopeItem?.name }}  {{scopeItem.item}}
                       </mat-option>
                     </mat-select>
                   </mat-form-field>
