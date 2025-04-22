@@ -30,7 +30,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
   onSaveChange = new EventEmitter();
   form!: FormGroup;
   payLoad = "";
-  submitted = false;
+  @Input() submitted = false;
   constructor(private qcs: ControlService) { }
 
   ngOnChanges(change: SimpleChanges): void {

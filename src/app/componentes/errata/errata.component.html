@@ -1,4 +1,4 @@
-<div [fxFlex]="settings?.percentage || defaultValues.percentage" fxLayoutGap="40px" fxLayout="column" class="file-upload-container">
+<div *ngIf="fErrata" [fxFlex]="settings?.percentage || defaultValues.percentage" fxLayoutGap="40px" fxLayout="column" class="file-upload-container">
     <form fxFlex="{{ settings.percentage }}" [formGroup]="fErrata" fxLayout="row wrap" fxLayoutGap="1px">
 
       <mat-form-field appearance="fill" *ngIf="readOnly">

@@ -1,151 +1,249 @@
-<div fxFlex="{{ settings?.percentage || defaultValues.percentage}}" fxLayoutGap="40px" fxLayout="column"
-    style="padding-top: 10px; padding-bottom: 10px;">
-    <div fxFlex="{{ settings.percentage }}" fxLayout="row" style="height: 50px">
-        <form fxFlex="{{ settings.percentage }}" [formGroup]="fGscope">
-            <div fxFlex fxLayout="row wrap" fxLayoutGap="5px grid">
+<div fxFlex="{{ settings?.percentage || defaultValues.percentage}}" fxLayout="column" style="padding: 10px 0;">
+    <!-- Barra de búsqueda/agregar -->
+    <form fxFlex="{{ settings.percentage }}" [formGroup]="fGscope">
+        <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="15px" style="margin-bottom: 15px;">
+            <mat-form-field fxFlex="1 1 50%" fxFlex.lt-sm="100%" appearance="fill" *ngIf="!readOnly">
+                <mat-select #scopeRef formControlName="scope" placeholder="Materiales">
+                    <mat-option *ngIf="!readOnly">
+                        <ngx-mat-select-search [formControl]="MultiFilterCtrl" [placeholderLabel]="'Buscar...'"
+                            [noEntriesFoundLabel]="'No Encontrado'"></ngx-mat-select-search>
+                    </mat-option>
+                    <mat-option *ngFor="let scopeItem of listFilter" [value]="scopeItem">
+                        {{ scopeItem?.name }} {{scopeItem.item}}
+                    </mat-option>
+                </mat-select>
+                <mat-error *ngIf="fGscope.get('scope')?.hasError('required')">
+                    Selección de materiales es <strong>requerida</strong>
+                </mat-error>
+            </mat-form-field>
 
-<!--                 <mat-form-field fxFlex="1 0 30%" appearance="fill" style="background-color: #ffffff;" *ngIf="!readOnly">
-                    <mat-label>Sub Linea</mat-label>
-                    <mat-select #scopeRef formControlName="scope" >
-                        <mat-option *ngFor="let scopeItem of listFilter" [value]="scopeItem">
-                            {{ scopeItem?.name }}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field> -->
+            <mat-form-field fxFlex="1 1 20%" fxFlex.lt-sm="100%" appearance="fill" *ngIf="!readOnly">
+                <mat-label>Cantidad</mat-label>
+                <input type="number" matInput placeholder="Cantidad" [(ngModel)]="scopeCurrent.amount"
+                    [ngModelOptions]="{standalone: true}" style="width: 100%" min="0" />
+                <mat-error *ngIf="fGscope.get('amount')?.hasError('required')">
+                    Cantidad es <strong>requerida</strong>
+                </mat-error>
+                <mat-error *ngIf="fGscope.get('amount')?.hasError('min')">
+                    La cantidad mínima es 1
+                </mat-error>
+            </mat-form-field>
 
-                <mat-form-field  fxFlex="1 0 30%" appearance="fill" style="background-color: #ffffff;" *ngIf="!readOnly">
-                    <mat-select #scopeRef formControlName="scope" placeholder="Materiales">
-                      <mat-option *ngIf="!readOnly">
-                        <ngx-mat-select-search [formControl]="MultiFilterCtrl"  [placeholderLabel]="'Buscar...'"
-                        [noEntriesFoundLabel]="'No Encontrado'"></ngx-mat-select-search>
-                     </mat-option>
-                      <mat-option *ngFor="let scopeItem of listFilter" [value]="scopeItem">
-                        {{ scopeItem?.name }}  {{scopeItem.item}}
-                      </mat-option>
-                    </mat-select>
-                  </mat-form-field>
-
-                <mat-form-field fxFlex="1 0 30%" appearance="fill" *ngIf="!readOnly">
-                    <mat-label>Cantidad</mat-label>
-                    <input type="number" matInput placeholder="Cantidad" [(ngModel)]="scopeCurrent.amount"
-                        [ngModelOptions]="{standalone: true}" />
-                </mat-form-field>
-                <div>
-                    <button mat-raised-button fxFlex="1 0 10%" style="height: 50px" (click)="addSubLine()" *ngIf="!readOnly"
-                        type="button">
-                        Agregar
-                    </button>
-                </div>
-                <div> 
-                    <button mat-raised-button fxFlex="1 1 10%" style="height: 50px" (click)="createMaterial()" *ngIf="!readOnly"
-                    type="button"> 
+            <div fxLayout="row" fxLayoutGap="10px" fxFlex="1 1 30%" fxFlex.lt-sm="100%">
+                <button mat-raised-button fxFlex="50" (click)="addSubLine()" style="height: 50px" *ngIf="!readOnly"
+                    type="button">
+                    Agregar
+                </button>
+                <button mat-raised-button fxFlex="50" (click)="createMaterial()" style="height: 50px" *ngIf="!readOnly"
+                    type="button">
                     Nuevo
-                    </button>
-                </div>
-            </div>
-        </form>
-    </div>
-    <div fxFlex fxLayout="row wrap" style="background-color: black;" fxLayoutGap="1px grid">
-        <div fxFlex="1 1 100%" fxLayout="row" style="height: 50px" fxLayoutGap="1px">
-            <div *ngIf="settings.showItemField" fxLayoutAlign="center center" fxFlex="1 0 17%" fxLayout="row"
-                class="item mat-toolbar mat-primary">
-                Serial
-            </div>
-            <div *ngIf="settings.showTokenField" fxLayoutAlign="center center" fxFlex="2 0 15%" fxLayout="row"
-                class="item mat-toolbar mat-primary">
-                Código
-            </div>
-            <div *ngIf="settings.showNameField" fxLayoutAlign="center center" fxFlex="3 0 23%" fxLayout="row"
-                class="item mat-toolbar mat-primary">
-                Nombre
-            </div>
-            <div *ngIf="settings.showAmountField" fxLayoutAlign="center center" fxFlex="1 1 5%" fxLayout="row"
-                style="text-overflow: ellipsis" class="item mat-toolbar mat-primary">
-                Cant.
-            </div>
-            <div *ngIf="settings.showHealthConditionField" fxLayoutAlign="center center" fxFlex="1 1 20%" fxLayout="row"
-                class="item mat-toolbar mat-primary">
-                Estado
-            </div>
-            <div *ngIf="settings.showObservationField" fxLayoutAlign="center center" fxFlex="1 1 20%" fxLayout="row"
-                class="item mat-toolbar mat-primary">
-                Observación
-            </div>
-            <div fxLayoutAlign="center center" fxFlex="1 1 5%" fxLayout="row" class="item mat-toolbar mat-primary"
-                *ngIf="!readOnly">
+                </button>
             </div>
         </div>
-        <!-- Begin to Dynamic Form -->
-        <div fxFlex="{{ settings.percentage }}" fxLayout="row" *ngFor="let scope of fScope.controls; index as i;"
-            fxLayoutGap="1px">
-            <ng-container [formGroup]="scope">
-                <div *ngIf="settings.showItemField" fxLayoutAlign="center center" fxFlex="1 0 17%" fxLayout="row"
-                    style="background-color: #ffffff" class="item">
-                    <mat-form-field appearance="fill">
-                        <mat-label>Serial</mat-label>
-                        <input type="text" matInput formControlName="item" placeholder="1234567890" />
-                        <mat-error *ngIf="scope.controls.item.hasError('required')">
-                            Serial es <strong>requerido</strong>
-                        </mat-error>
-                    </mat-form-field>
+        <div fxShow="gt-sm" fxHide.lt-md>
+            <!-- Contenedor de tabla -->
+            <div class="table-container">
+                <!-- Encabezados -->
+                <div fxLayout="row" fxLayoutGap="1px" class="header-row">
+                    <div *ngIf="settings.showItemField" fxFlex="1 0 17%" class="header-cell mat-toolbar mat-primary">
+                        Serial
+                    </div>
+                    <div *ngIf="settings.showTokenField" fxFlex="2 0 15%" class="header-cell mat-toolbar mat-primary">
+                        Código
+                    </div>
+                    <div *ngIf="settings.showNameField" fxFlex="3 0 23%" class="header-cell mat-toolbar mat-primary">
+                        Nombre
+                    </div>
+                    <div *ngIf="settings.showAmountField" fxFlex="1 1 5%" class="header-cell mat-toolbar mat-primary">
+                        Cant.
+                    </div>
+                    <div *ngIf="settings.showHealthConditionField" fxFlex="1 1 20%"
+                        class="header-cell mat-toolbar mat-primary">
+                        Estado
+                    </div>
+                    <div *ngIf="settings.showObservationField" fxFlex="1 1 20%"
+                        class="header-cell mat-toolbar mat-primary">
+                        Observación
+                    </div>
+                    <div fxFlex="1 1 5%" class="header-cell mat-toolbar mat-primary" *ngIf="!readOnly"></div>
                 </div>
-                <div *ngIf="settings.showTokenField" fxLayoutAlign="center center" fxFlex="2 0 15%" fxLayout="row"
-                    style="background-color: #ffffff" class="item">
-                    <mat-form-field appearance="fill">
-                        <mat-label>Cod.</mat-label>
-                        <input type="text" matInput formControlName="code" placeholder="1234567890" [readonly]="true" />
-                        <mat-error *ngIf="scope.controls.code.hasError('required')">
-                            Código es <strong>requerido</strong>
-                        </mat-error>
-                    </mat-form-field>
+
+                <!-- Items -->
+                <div fxLayout="column" fxLayoutGap="1px">
+                    <ng-container *ngFor="let scope of fScope.controls; index as i;">
+                        <div [formGroup]="scope" fxLayout="row" fxLayoutGap="1px" class="item-row">
+                            <div *ngIf="settings.showItemField" fxFlex="1 0 17%" class="item-cell">
+                                <mat-form-field appearance="fill" fxFlex="100">
+                                    <input type="text" matInput formControlName="item" placeholder="Serial" />
+                                    <mat-error *ngIf="scope.get('item')?.hasError('required')" class="error-message">
+                                        Serial es <strong>requerido</strong>
+                                    </mat-error>
+                                    <mat-error *ngIf="scope.get('item')?.hasError('minlength')">
+                                        Mínimo {{scope.get('item')?.errors?.minlength.requiredLength}} caracteres
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+
+                            <div *ngIf="settings.showTokenField" fxFlex="2 0 15%" class="item-cell">
+                                <mat-form-field appearance="fill" fxFlex="100">
+                                    <input type="text" matInput formControlName="code" placeholder="Código"
+                                        [readonly]="true" />
+                                    <mat-error *ngIf="scope.get('code')?.hasError('required')">
+                                        Código es <strong>requerido</strong>
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+
+                            <div *ngIf="settings.showNameField" fxFlex="3 0 23%" class="item-cell">
+                                <mat-form-field appearance="fill" fxFlex="100">
+                                    <input type="text" matInput formControlName="name" placeholder="Descripción"
+                                        [readonly]="true" />
+                                    <mat-error *ngIf="scope.get('name')?.hasError('required')">
+                                        Descripción es <strong>requerida</strong>
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+
+                            <div *ngIf="settings.showAmountField" fxFlex="1 1 5%" class="item-cell">
+                                <mat-form-field appearance="fill" fxFlex="100">
+                                    <input type="number" matInput formControlName="amount" placeholder="Cantidad"
+                                        min="0" />
+                                    <mat-error *ngIf="scope.get('amount')?.hasError('required')" class="small-error">
+                                        Requerido
+                                    </mat-error>
+                                    <mat-error *ngIf="scope.get('amount')?.hasError('min')" class="small-error">
+                                        Mínimo 0
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+
+                            <div *ngIf="settings.showHealthConditionField" fxFlex="1 1 20%" class="item-cell">
+                                <mat-radio-group formControlName="health_condition" fxLayout="row" fxLayoutGap="10px" [disabled]="readOnly">
+                                    <mat-radio-button *ngFor="let hC of healthConditions" [value]="hC.id">
+                                        {{ hC.text }}
+                                    </mat-radio-button>
+                                </mat-radio-group>
+                                <mat-error *ngIf="scope.get('health_condition')?.hasError('required')"
+                                    style="display: block; margin-top: 5px;">
+                                    Estado es <strong>requerido</strong>
+                                </mat-error>
+                            </div>
+
+                            <div *ngIf="settings.showObservationField" fxFlex="1 1 20%" class="item-cell">
+                                <mat-form-field fxFlex="100">
+                                    <textarea matInput placeholder="Observación"
+                                        formControlName="observation"></textarea>
+                                    <mat-error *ngIf="scope.get('observation')?.hasError('required')">
+                                        Observación es <strong>requerida</strong>
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+
+                            <div fxFlex="1 1 5%" class="item-cell" *ngIf="!readOnly">
+                                <button mat-icon-button (click)="removeSubLine(i)">
+                                    <mat-icon>delete</mat-icon>
+                                </button>
+                            </div>
+                        </div>
+                    </ng-container>
                 </div>
-                <div *ngIf="settings.showNameField" fxLayoutAlign="center center" fxFlex="3 0 23%" fxLayout="row"
-                    style="background-color: #ffffff" class="item">
-                    <mat-form-field appearance="fill">
-                        <mat-label>Descripción</mat-label>
-                        <input type="text" matInput formControlName="name" placeholder="Nombre Completo"
-                            [readonly]="true" />
-                        <mat-error *ngIf="scope.controls.name.hasError('required')">
-                            El nombre es <strong>requerido</strong>
-                        </mat-error>
-                    </mat-form-field>
-                </div>
-                <div *ngIf="settings.showAmountField" fxLayoutAlign="center center" fxFlex="1 1 5%" fxLayout="row"
-                    style="background-color: #ffffff" class="item">
-                    <input type="number" matInput formControlName="amount" placeholder="Cantidad" />
-                    <mat-error *ngIf="scope.controls.amount.hasError('required')">
-                        Este campo es <strong>requerido</strong>
-                    </mat-error>
-                </div>
-                <div *ngIf="settings.showHealthConditionField" fxLayoutAlign="center center" fxFlex="1 1 20%"
-                    fxLayout="column" style="background-color: #ffffff;" class="item">
-                    <mat-radio-group style="margin: 15px 0" formControlName="health_condition">
-                        <ng-container *ngFor="let hC of healthConditions">
-                            <mat-radio-button class="custom-radio-button" [value]="hC.id">
-                                {{ hC.text }}
-                            </mat-radio-button>
-                            <br>
-                        </ng-container>
-                    </mat-radio-group>
-                    <mat-error *ngIf="scope.controls.health_condition.hasError('required')">
-                        El estado de salud es <strong>requerido</strong>
-                    </mat-error>
-                </div>
-                <div *ngIf="settings.showObservationField" fxLayoutAlign="center center" fxFlex="1 1 20%"
-                    fxLayout="column" style="background-color: #ffffff" class="item">
-                    <mat-form-field>
-                        <textarea matInput cdkAutosizeMinRows="3" placeholder="Observación"
-                            formControlName="observation">
-                        </textarea>
-                    </mat-form-field>
-                </div>
-                <div fxFlex="1 1 5%" fxLayoutAlign="center center" fxLayout="column" style="background-color: #ffffff"
-                    class="item" *ngIf="!readOnly">
-                    <button mat-raised-button type="button" (click)="addSubLine()">
-                        <mat-icon (click)="removeSubLine(i)">delete_sweep</mat-icon>
-                    </button>
-                </div>
-            </ng-container>
+            </div>
         </div>
-    </div>
+        <div fxShow.lt-md fxHide="gt-sm">
+            <!-- Versión móvil (fuera de la tabla) -->
+            <div fxLayout="column" fxLayoutGap="10px" fxShow.lt-md fxHide.gt-md>
+                <ng-container *ngFor="let scope of fScope.controls; index as i;">
+                    <div [formGroup]="scope" class="mobile-card">
+                        <div fxLayout="row" fxLayoutGap="10px" *ngIf="settings.showItemField">
+                            <div fxFlex="30%" class="mobile-label">Serial:</div>
+                            <div fxFlex="70%">
+                                <mat-form-field appearance="fill" fxFlex="100">
+                                    <input type="text" matInput formControlName="item" placeholder="1234567890" />
+                                    <mat-error *ngIf="scope.get('item')?.hasError('required')">
+                                        Serial es <strong>requerido</strong>
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div fxLayout="row" fxLayoutGap="10px" *ngIf="settings.showTokenField">
+                            <div fxFlex="30%" class="mobile-label">Código:</div>
+                            <div fxFlex="70%">
+                                <mat-form-field appearance="fill" fxFlex="100">
+                                    <input type="text" matInput formControlName="code" placeholder="1234567890"
+                                        [readonly]="true" />
+                                    <mat-error *ngIf="scope.get('code')?.hasError('required')">
+                                        Código es <strong>requerido</strong>
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div fxLayout="row" fxLayoutGap="10px" *ngIf="settings.showNameField">
+                            <div fxFlex="30%" class="mobile-label">Descripción:</div>
+                            <div fxFlex="70%">
+                                <mat-form-field appearance="fill" fxFlex="100">
+                                    <input type="text" matInput formControlName="name" placeholder="Nombre Completo"
+                                        [readonly]="true" />
+                                    <mat-error *ngIf="scope.get('name')?.hasError('required')">
+                                        Descripción es <strong>requerida</strong>
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div fxLayout="row" fxLayoutGap="10px" *ngIf="settings.showAmountField">
+                            <div fxFlex="30%" class="mobile-label">Cantidad:</div>
+                            <div fxFlex="70%">
+                                <mat-form-field appearance="fill" fxFlex="100">
+                                    <input type="number" matInput formControlName="amount" placeholder="Cantidad"
+                                        min="0" />
+                                    <mat-error *ngIf="scope.get('amount')?.hasError('required')">
+                                        Requerido
+                                    </mat-error>
+                                    <mat-error *ngIf="scope.get('amount')?.hasError('min')">
+                                        Mínimo 0
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div fxLayout="row" fxLayoutGap="10px" *ngIf="settings.showHealthConditionField">
+                            <div fxFlex="30%" class="mobile-label">Estado:</div>
+                            <div fxFlex="70%">
+                                <mat-radio-group formControlName="health_condition" fxLayout="column" [disabled]="readOnly">
+                                    <mat-radio-button *ngFor="let hC of healthConditions" [value]="hC.id">
+                                        {{ hC.text }}
+                                    </mat-radio-button>
+                                </mat-radio-group>
+                                <div *ngIf="scope.get('health_condition')?.hasError('required')"
+                                    style="color: #f44336; font-size: 12px; margin-top: 5px;">
+                                    Estado es <strong>requerido</strong>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div fxLayout="row" fxLayoutGap="10px" *ngIf="settings.showObservationField">
+                            <div fxFlex="30%" class="mobile-label">Observación:</div>
+                            <div fxFlex="70%">
+                                <mat-form-field fxFlex="100">
+                                    <textarea matInput placeholder="Observación"
+                                        formControlName="observation"></textarea>
+                                    <mat-error *ngIf="scope.get('observation')?.hasError('required')">
+                                        Observación es <strong>requerida</strong>
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div *ngIf="!readOnly" style="text-align: right; margin-top: 10px;">
+                            <button mat-raised-button color="warn" (click)="removeSubLine(i)">
+                                <mat-icon>delete</mat-icon> Eliminar
+                            </button>
+                        </div>
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+    </form>
 </div>

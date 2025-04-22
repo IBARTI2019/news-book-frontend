@@ -5,7 +5,7 @@
       </app-card-header>
       <mat-card-content>
         <app-dymamic-form *ngIf="!generating" [questions]="controls$ | async" [client]="client"
-          (onSaveChange)="save($event)">
+          (onSaveChange)="save($event)" [submitted]="submitted">
         </app-dymamic-form>
       </mat-card-content>
     </mat-card>

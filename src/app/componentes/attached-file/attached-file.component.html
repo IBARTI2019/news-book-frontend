@@ -1,57 +1,82 @@
-<div [fxFlex]="settings?.percentage || defaultValues.percentage" *ngIf="!readOnly || (readOnly && fAttachedFile.get('attachedFiles')?.value?.length > 0)" fxLayoutGap="40px" fxLayout="column" class="file-upload-container">
+<div [fxFlex]="settings?.percentage || defaultValues.percentage"
+    *ngIf="!readOnly || (readOnly && fAttachedFile.get('attachedFiles')?.value?.length > 0)" fxLayout="column"
+    fxLayoutGap="20px" class="file-upload-container">
+
     <!-- Drag and Drop Area -->
-    <div class="drop-area" (drop)="onDrop($event)" (dragover)="onDragOver($event)" *ngIf="!readOnly">
-      {{ label }}
-      <label [for]="'file-input-'+id" class="file-input-label">Selecciona archivos</label>
-      <input [id]="'file-input-'+id" type="file" (change)="onFileSelected($event)" multiple />
+    <div class="drop-area" (drop)="onDrop($event)" (dragover)="onDragOver($event)" (dragleave)="onDragLeave($event)"
+        [class.active]="isDragActive" *ngIf="!readOnly" fxLayout="column" fxLayoutAlign="center center"
+        fxLayoutGap="15px">
+        <mat-icon class="upload-icon">cloud_upload</mat-icon>
+        <h3>{{ label }}</h3>
+        <button mat-raised-button type="button" color="primary" (click)="fileInput.click()" class="file-input-button">
+            <mat-icon>attach_file</mat-icon> Seleccionar archivos
+        </button>
+        <input #fileInput type="file" (change)="onFileSelected($event)" multiple style="display: none;" />
     </div>
-    <!-- Botón para capturar imagen desde la cámara -->
-    <div class="camera-section">
-        <button (click)="openCamera()" class="camera-button" *ngIf="!isCameraOpen && !readOnly">Capturar desde la cámara</button>
-        <button (click)="closeCamera()" class="camera-close-button" *ngIf="isCameraOpen && !openningCamera">Cerrar la cámara</button>
-        <video #videoElement autoplay class="camera-preview" *ngIf="isCameraOpen"></video>
-        <button (click)="captureImage()" class="capture-button" *ngIf="isCameraOpen && !openningCamera">Capturar imagen</button>
-    </div>
-  
-    <!-- Lista de archivos seleccionados -->
-    <div class="file-list" *ngIf="files.length > 0 && !readOnly">
-        <ul>
-            <li *ngFor="let file of files; let i = index">
-                <div *ngIf="isImage(file?.file?.name); else otherFile">
-                    <img [src]="file?.url" [alt]="file?.file?.name" class="file-preview" />
+
+    <!-- Camera Section -->
+    <div class="camera-section" *ngIf="!readOnly">
+        <button mat-raised-button type="button" color="accent" (click)="openCamera()" *ngIf="!isCameraOpen">
+            <mat-icon>camera_alt</mat-icon> Capturar desde cámara
+        </button>
+
+        <div *ngIf="isCameraOpen" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="15px">
+            <video #videoElement autoplay class="camera-preview"></video>
+            <div fxLayout="row" fxLayoutGap="15px">
+                <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="15px">
+                    <button mat-icon-button (click)="switchCamera()" [disabled]="!isMultipleCameras">
+                        <mat-icon>flip_camera_android</mat-icon>
+                    </button>
+                    <span>Usar cámara {{ usingFrontCamera ? 'frontal' : 'trasera' }}</span>
                 </div>
-                <ng-template #otherFile>
-                    <div *ngIf="isPdf(file?.url); else defaultFile">
-                        <embed [src]="file?.url" type="application/pdf" width="100%" height="500px" />
-                    </div>
-                    <a [href]="file?.url" target="_blank">{{ file?.file?.name }}</a>
-                </ng-template>
-                <button mat-icon-button color="danger" type="button" (click)="removeSelectedFile(i)" >
-                    <mat-icon>delete_sweep</mat-icon>
+                <button mat-raised-button type="button" color="warn" (click)="closeCamera()">
+                    <mat-icon>close</mat-icon> Cancelar
                 </button>
-            </li>
-        </ul>
+                <button mat-raised-button type="button" color="primary" (click)="captureImage()">
+                    <mat-icon>camera</mat-icon> Capturar
+                </button>
+            </div>
+        </div>
     </div>
-  
-    <!-- Mostrar archivos desde URLs -->
+
+    <!-- Preview Section -->
+    <div class="preview-section" *ngIf="files.length > 0 && !readOnly">
+        <div *ngFor="let file of files; let i = index">
+            <div *ngIf="isImage(file.file.name)" class="preview-container">
+                <img [src]="file.url" [alt]="file.file.name" class="file-preview" />
+            </div>
+            <div *ngIf="isPdf(file.file.name)" class="preview-container">
+                <embed [src]="file.url" type="application/pdf" class="pdf-preview" />
+            </div>
+            <button mat-icon-button color="warn" (click)="removeSelectedFile(i)">
+                <mat-icon>delete</mat-icon>
+            </button>
+        </div>
+    </div>
+
+    <!-- Readonly Files -->
     <div class="url-files" *ngIf="fAttachedFile.get('attachedFiles')?.value?.length > 0 && readOnly">
-        <ul>
-            <li *ngFor="let file of fAttachedFile.get('attachedFiles').value; let i = index">
-              <div *ngIf="isImage(file.name); else otherFile">
-                <!-- Mostrar la imagen en Base64 -->
-                <img [src]="'data:' + file.type + ';base64,' + file.base64" [alt]="file.name" class="file-preview" />
-                <br>
-                <a [href]="'data:' + file.type + ';base64,' + file.base64" [download]="file.name">{{ file.name }}</a>
-              </div>
-              <ng-template #otherFile>
-                <!-- Mostrar un enlace para archivos que no son imágenes -->
-                <div *ngIf="isPdf(file.name); else defaultFile">
-                    <embed [src]="'data:' + file.type + ';base64,' + file.base64" type="application/pdf" width="100%" height="500px" />
+        <h4>Archivos adjuntos:</h4>
+        <mat-list>
+            <mat-list-item *ngFor="let file of fAttachedFile.get('attachedFiles').value; let i = index" fxLayout="row"
+                fxLayoutAlign="space-between center">
+                <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
+                    <mat-icon>{{ getFileIcon(file.name) }}</mat-icon>
+                    <a [href]="'data:' + file.type + ';base64,' + file.base64" [download]="file.name" target="_blank">
+                        {{ file.name }}
+                    </a>
                 </div>
-                <br>
-                <a [href]="'data:' + file.type + ';base64,' + file.base64" [download]="file.name">{{ file.name }}</a>
-              </ng-template>
-            </li>
-        </ul>
+            </mat-list-item>
+        </mat-list>
+
+        <div *ngFor="let file of fAttachedFile.get('attachedFiles').value">
+            <div *ngIf="isImage(file.name)" class="preview-container">
+                <img [src]="'data:' + file.type + ';base64,' + file.base64" [alt]="file.name" class="file-preview" />
+            </div>
+            <div *ngIf="isPdf(file.name)" class="preview-container">
+                <embed [src]="'data:' + file.type + ';base64,' + file.base64" type="application/pdf"
+                    class="pdf-preview" />
+            </div>
+        </div>
     </div>
 </div>

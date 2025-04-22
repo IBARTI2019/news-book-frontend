@@ -234,7 +234,6 @@ export class QuestionService extends API<any> {
           )
           break;
         case 'SUB_LINE':
-          debugger;
           questions.push(
             new BookScope({
               value: d.value || '',

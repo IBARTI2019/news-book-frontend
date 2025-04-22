@@ -18,7 +18,7 @@ export class ErrataComponent implements OnInit {
   @Input() settings: ErrataSettings = ERRATA_DEFAULT;
   @Input() readOnly: boolean = false;
   @Output() onEditedChange = new EventEmitter();
-  fErrata!: FormGroup;
+  fErrata?: FormGroup;
   defaultValues = { ...ERRATA_DEFAULT };
   
   constructor() { }
@@ -30,7 +30,7 @@ export class ErrataComponent implements OnInit {
   }
 
   onEdited() {
-    this.fErrata.controls['edited'].setValue(true);
+    this.fErrata?.controls['edited'].setValue(true);
     this.onEditedChange.emit();
   }
 

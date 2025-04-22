@@ -11,7 +11,7 @@
       </ng-container>
     </div>
     <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="end" fxLayoutGap="5" *ngIf="withSaved && !readOnly">
-      <button mat-raised-button color="primary" type="submit" [disabled]="!form.valid">
+      <button mat-raised-button color="primary" type="submit" [disabled]="!form.valid || submitted">
         Guardar
       </button>
     </div>

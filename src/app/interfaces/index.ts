@@ -119,6 +119,9 @@ export interface Person {
   vaccination_card_number?: string;
   assigned_card_number?: string;
   accompany_visitor?: string;
+
+  company?: string;
+  rif?: string;
 }
 
 export interface TypeNew {

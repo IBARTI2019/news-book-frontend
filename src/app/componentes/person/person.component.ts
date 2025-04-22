@@ -154,6 +154,8 @@ export class PersonComponent implements OnInit {
       this.fPerson.get("full_name")!.setValue(this.personsArr[index].full_name);
       this.tp = String(this.personsArr[index].type_person);
       this.fPerson.get("type_person")!.setValue(this.tp);
+      this.fPerson.get("company_name")!.setValue(this.personsArr[index].company);
+      this.fPerson.get("rif")!.setValue(this.personsArr[index].rif);
       let typePerson = this.personTypes.find(tp => tp.id == this.tp);
       if (typePerson)
         this.check(typePerson);
@@ -184,8 +186,8 @@ export class PersonComponent implements OnInit {
       this.fPerson.controls["name_recibe"].setValue('-');
       this.fPerson.controls["ident_recibe"].setValue('-');
       this.fPerson.controls["cargo_recibe"].setValue('-');
-      this.fPerson.controls["company_name"].setValue('-');
-      this.fPerson.controls["rif"].setValue('-');
+      // this.fPerson.controls["company_name"].setValue('-');
+      // this.fPerson.controls["rif"].setValue('-');
       this.fPerson.controls["guide_number"].setValue('-');
     }
 
@@ -203,10 +205,10 @@ export class PersonComponent implements OnInit {
     }
 
     if (value.requires_company_data) {
-      if (!this.readOnly) {
-        this.fPerson.controls["company_name"].setValue('');
-        this.fPerson.controls["rif"].setValue('');
-      }
+      // if (!this.readOnly) {
+      //   this.fPerson.controls["company_name"].setValue('');
+      //   this.fPerson.controls["rif"].setValue('');
+      // }
       this.requiresCompanyData = true;
     } else {
       this.requiresCompanyData = false;
