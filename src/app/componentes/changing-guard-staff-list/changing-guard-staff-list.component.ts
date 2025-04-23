@@ -171,7 +171,6 @@ export class ChangingGuardStaffListComponent implements OnInit, OnChanges {
       ],
       telefono: [
         v.telefono || "",
-        this.settings.showPhone && Validators.required,
       ],
       protocol: [
         v.protocol || false,
