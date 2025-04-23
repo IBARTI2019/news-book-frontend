@@ -5,11 +5,9 @@ import {
   OnChanges,
   OnInit,
   Output,
-  SimpleChanges,
-  ViewChild,
+  SimpleChanges
 } from "@angular/core";
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
-import { MatSelect } from "@angular/material/select";
 import {
   PlannedStaff,
   Staff,
@@ -173,7 +171,6 @@ export class ChangingGuardStaffListComponent implements OnInit, OnChanges {
       ],
       telefono: [
         v.telefono || "",
-        this.settings.showPhone && Validators.required,
       ],
       protocol: [
         v.protocol || false,

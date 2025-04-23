@@ -243,6 +243,7 @@ export class QuestionService extends API<any> {
               required: d.required,
               form_field: false,
               percentage_per_row: Number(d.percentage_per_row) || 100,
+              showScope: d.showScope,
               settings: d.settings,
             }, this.ibartiService)
           )

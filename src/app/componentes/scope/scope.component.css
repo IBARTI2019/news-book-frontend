@@ -1,11 +1,209 @@
-.item {
-    font: bold;
+/* Estilos base para móvil (mobile first) */
+.mobile-card {
+  background-color: #ffffff;
+  border-radius: 4px;
+  padding: 15px;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2),
+    0 1px 1px 0 rgba(0, 0, 0, 0.14),
+    0 1px 3px 0 rgba(0, 0, 0, 0.12);
+}
+
+.item-cell {
+  min-width: 0;
+  /* Crucial para permitir el shrinking */
+  overflow: hidden;
+  /* Previene desbordamientos */
+}
+
+.item-cell mat-form-field {
+  width: 100%;
+}
+
+.mat-form-field-infix {
+  width: auto !important;
+  /* Permite flexibilidad */
+  min-width: 0 !important;
+  /* Elimina el mínimo ancho por defecto */
+  border-top: 0;
+  /* Opcional: ajuste estético */
+}
+
+.mat-form-field-flex {
+  display: flex;
+  align-items: center;
+}
+
+.mat-form-field-wrapper {
+  padding-bottom: 0;
+  /* Reduce espacio extra */
+}
+
+/* Radio buttons ajustados */
+.mat-radio-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* Textarea observaciones */
+.item-cell[fxFlex="1 1 20%"] textarea {
+  min-height: 60px;
+  resize: vertical;
+  width: 100%;
+}
+
+.mobile-label {
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  color: rgba(0, 0, 0, 0.87);
+}
+
+/* Ocultar versión desktop en móvil */
+.table-container,
+.header-row,
+.item-row {
+  display: none;
+}
+
+/* Mostrar versión móvil solo en pantallas pequeñas */
+[fxShow.lt-md] {
+  display: block;
+}
+
+/* Versión desktop (md en adelante) */
+@media (min-width: 960px) {
+  .table-container {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+  }
+
+  .header-row {
+    display: flex;
+    min-width: 800px;
+    background-color: #3f51b5;
+    /* Color primario de Material */
+    color: white;
+  }
+
+  .item-row {
+    display: flex;
+    min-width: 800px;
+    width: 100%;
+  }
+
+  .header-cell,
+  .item-cell {
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+  }
+
+  .header-cell {
+    justify-content: center;
+    font-weight: 500;
+  }
+
+  /* Ocultar versión móvil en desktop */
+  [fxShow.lt-md] {
+    display: none !important;
+  }
+
+  /* Asegurar que los mat-form-field ocupen todo el espacio */
+  .item-cell mat-form-field {
+    width: 100%;
+  }
+
+  /* Estilos para los botones de acción */
+  .item-cell button[mat-icon-button] {
+    color: #3f51b5;
+  }
+}
+
+/* Ajustes para tablets (600px - 959px) */
+@media (max-width: 959px) and (min-width: 600px) {
+  .mobile-card {
+    padding: 12px;
+  }
+
+  .mobile-card mat-form-field {
+    width: 100%;
+  }
+
+  .mobile-label {
+    font-size: 14px;
+  }
+}
+
+/* Ajustes para móviles pequeños (hasta 599px) */
+@media (max-width: 599px) {
+  .mobile-card {
     padding: 10px;
   }
 
-  .custom-radio-button {
-    margin: 5px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+  mat-radio-button {
+    display: block;
+    margin: 5px 0;
+  }
+
+  .mobile-label {
+    font-size: 13px;
+  }
+
+  button[mat-raised-button] {
+    width: 100%;
+    margin-top: 8px;
+  }
+}
+
+/* Estilos específicos para los headers con clases de Angular Material */
+.header-cell.mat-toolbar.mat-primary {
+  padding: 0 10px;
+  min-height: 48px;
+}
+
+/* Ajustes para los inputs en móvil */
+.mobile-card mat-form-field {
+  width: 100%;
+  font-size: 14px;
+}
+
+/* Estilos para mensajes de error */
+.mat-error {
+  display: block;
+  font-size: 12px;
+  margin-top: 5px;
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.error-message {
+  white-space: normal;
+}
+
+.small-error {
+  font-size: 10px;
+  line-height: 1.1;
+  white-space: normal;
+}
+
+/* Ajustes para la versión móvil */
+.mobile-card .mat-error {
+  font-size: 11px;
+  white-space: normal;
+}
+
+/* Espacio adicional para formularios */
+.mat-form-field {
+  margin-bottom: 1.25em;
+}
+
+/* Ajuste para radio buttons */
+.item-cell .mat-radio-group~.mat-error {
+  margin-left: 10px;
 }

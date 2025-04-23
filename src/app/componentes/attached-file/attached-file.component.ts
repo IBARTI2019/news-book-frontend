@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnDestroy, OnInit, SimpleChanges, ViewChild, ChangeDetectorRef } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { AttachedFileSettings } from '../../interfaces';
 import { FormBuilder, FormGroup } from '@angular/forms';
@@ -13,48 +13,84 @@ export const ATTACHED_FILE_DEFAULT: AttachedFileSettings = {
   styleUrls: ['./attached-file.component.css']
 })
 export class AttachedFileComponent implements OnInit, OnDestroy {
-  @ViewChild('videoElement') videoElement!: ElementRef<HTMLVideoElement>; // Referencia al elemento de video
+  @ViewChild('videoElement') videoElement!: ElementRef<HTMLVideoElement>;
+  @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
 
   @Input() id: string = '';
-  @Input() label!: string;
+  @Input() label: string = 'Subir archivos';
   @Input() settings: AttachedFileSettings = ATTACHED_FILE_DEFAULT;
   @Input() readOnly: boolean = false;
 
-  files: { file: File, url: SafeUrl }[] = []; // Almacena el archivo y su URL temporal
+  files: { file: File, url: SafeUrl }[] = [];
+  isDragActive = false;
 
   @Input() fGRoot!: FormGroup;
   fAttachedFile!: FormGroup;
   defaultValues = { ...ATTACHED_FILE_DEFAULT };
 
-  isCameraOpen = false; // Estado de la cámara
+  isCameraOpen = false;
   mediaStream: MediaStream | null = null;
-  openningCamera = false;
+  usingFrontCamera = true;
+  isMultipleCameras = false;
+  availableCameras: MediaDeviceInfo[] = [];
 
-  constructor(private fB: FormBuilder, private sanitizer: DomSanitizer,  private cdr: ChangeDetectorRef ) { }
-  
-  ngOnInit(): void {
+  constructor(
+    private fB: FormBuilder,
+    private sanitizer: DomSanitizer,
+    private cdr: ChangeDetectorRef
+  ) { }
 
+  ngOnInit() {
     if (this.fGRoot && this.id && this.fGRoot.get(this.id)) {
       this.fAttachedFile = this.fGRoot.get(this.id) as FormGroup;
     }
+    this.detectCameras();
   }
 
-   // Función para abrir la cámara
+  getFileIcon(filename: string): string {
+    if (this.isImage(filename)) return 'image';
+    if (this.isPdf(filename)) return 'picture_as_pdf';
+    return 'insert_drive_file';
+  }
+
+  async detectCameras() {
+    try {
+      const devices = await navigator.mediaDevices.enumerateDevices();
+      this.availableCameras = devices.filter(device => device.kind === 'videoinput');
+      this.isMultipleCameras = this.availableCameras.length > 1;
+    } catch (error) {
+      console.error('Error al detectar cámaras:', error);
+      this.isMultipleCameras = false;
+    }
+  }
+
   async openCamera() {
-     this.openningCamera = true
     try {
       this.isCameraOpen = true;
-      this.mediaStream = await navigator.mediaDevices.getUserMedia({ video: true });
+      const constraints = {
+        video: {
+          facingMode: this.usingFrontCamera ? 'user' : 'environment',
+          width: { ideal: 1280 },
+          height: { ideal: 720 }
+        }
+      };
+      this.mediaStream = await navigator.mediaDevices.getUserMedia(constraints);
       this.videoElement.nativeElement.srcObject = this.mediaStream;
     } catch (error) {
       console.error('Error al acceder a la cámara:', error);
-      alert('No se pudo acceder a la cámara. Asegúrate de permitir el acceso.');
+      this.isCameraOpen = false;
     }
-    this.openningCamera = false
   }
 
-  // Función para capturar una imagen desde la cámara
-  async captureImage() {
+  async switchCamera() {
+    if (!this.isMultipleCameras) return;
+
+    this.usingFrontCamera = !this.usingFrontCamera;
+    this.closeCamera();
+    await this.openCamera();
+  }
+
+  captureImage() {
     const video = this.videoElement.nativeElement;
     const canvas = document.createElement('canvas');
     canvas.width = video.videoWidth;
@@ -63,131 +99,112 @@ export class AttachedFileComponent implements OnInit, OnDestroy {
 
     if (context) {
       context.drawImage(video, 0, 0, canvas.width, canvas.height);
-      canvas.toBlob(async (blob) => {
+      canvas.toBlob(blob => {
         if (blob) {
-          const file = new File([blob], 'captured-image.png', { type: 'image/png' });
+          const file = new File([blob], `captura-${new Date().getTime()}.png`, { type: 'image/png' });
           const url = this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(file));
           this.files.push({ file, url });
-          await this.updateFormControl(); // Convertir a Base64 y actualizar el control
-
-          // Forzar la detección de cambios
           this.cdr.detectChanges();
+          this.updateFormControl();
         }
       }, 'image/png');
     }
 
-    this.closeCamera(); // Cerrar la cámara después de capturar la imagen
+    this.closeCamera();
   }
 
-  // Función para cerrar la cámara
   closeCamera() {
     if (this.mediaStream) {
-      this.mediaStream.getTracks().forEach(track => track.stop()); // Detener el stream de la cámara
+      this.mediaStream.getTracks().forEach(track => track.stop());
       this.mediaStream = null;
     }
     this.isCameraOpen = false;
   }
 
-  // Función para verificar si una URL es una imagen
-  isImage(url: string): boolean {
-    return /\.(jpeg|jpg|gif|png|webp|bmp|svg)$/i.test(url);
+  isImage(filename: string): boolean {
+    return /\.(jpe?g|png|gif|bmp|webp|svg)$/i.test(filename);
   }
 
-  isPdf(url: string): boolean {
-    return /\.pdf$/i.test(url);
+  isPdf(filename: string): boolean {
+    return /\.pdf$/i.test(filename);
   }
 
-  // Función para generar una URL de un archivo
-  getFileUrl(file: File): string {
-    return URL.createObjectURL(file);
-  }
-
-  // Función para eliminar un archivo seleccionado
-  async removeSelectedFile(index: number) {
-    if (index >= 0 && index < this.files.length) {
-      URL.revokeObjectURL(this.files[index]?.url as string); // Liberar la URL temporal
-      this.files.splice(index, 1); // Eliminar el archivo de la lista
-      await this.updateFormControl(); // Actualizar el control del formulario
-    }
-  }
-
-  async onFileSelected(event: any) {
-    const selectedFiles = event.target.files;
-    if (selectedFiles) {
-      for (let i = 0; i < selectedFiles.length; i++) {
-        const file = selectedFiles[i];
-        const url = this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(file)); // Marca la URL como segura
+  onFileSelected(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      for (let i = 0; i < input.files.length; i++) {
+        const file = input.files[i];
+        const url = this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(file));
         this.files.push({ file, url });
       }
-      await this.updateFormControl(); 
+      this.updateFormControl();
+      input.value = ''; // Reset input para permitir seleccionar el mismo archivo otra vez
     }
   }
 
-  async onDrop(event: DragEvent) {
+  onDrop(event: DragEvent) {
     event.preventDefault();
-    const files = event.dataTransfer?.files;
-    if (files) {
-      for (let i = 0; i < files.length; i++) {
-        const file = files[i];
-        const url = this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(file)); // Marca la URL como segura
+    this.isDragActive = false;
+
+    if (event.dataTransfer?.files) {
+      for (let i = 0; i < event.dataTransfer.files.length; i++) {
+        const file = event.dataTransfer.files[i];
+        const url = this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(file));
         this.files.push({ file, url });
       }
-      await this.updateFormControl(); 
+      this.updateFormControl();
     }
   }
 
-  // Función para actualizar el control del formulario
+  onDragOver(event: DragEvent) {
+    event.preventDefault();
+    this.isDragActive = true;
+  }
+
+  onDragLeave(event: DragEvent) {
+    event.preventDefault();
+    this.isDragActive = false;
+  }
+
+  removeSelectedFile(index: number) {
+    if (index >= 0 && index < this.files.length) {
+      URL.revokeObjectURL(this.files[index].url as string);
+      this.files.splice(index, 1);
+      this.cdr.detectChanges();
+      this.updateFormControl();
+    }
+  }
+
   async updateFormControl() {
     try {
-      // Convertir los archivos a Base64
       const filesBase64 = await Promise.all(
-        this.files.map(async (file) => {
+        this.files.map(async file => {
           const base64 = await this.fileToBase64(file.file);
           return {
             name: file.file.name,
             type: file.file.type,
-            base64: base64.split(',')[1] // Eliminar el prefijo "data:*/*;base64,"
+            base64: base64.split(',')[1]
           };
         })
       );
-  
-      // Actualizar el control del formulario con los archivos en Base64
+
       this.fAttachedFile.get('attachedFiles')?.setValue(filesBase64);
     } catch (error) {
-      console.error('Error al convertir archivos a Base64:', error);
+      console.error('Error converting files to Base64:', error);
     }
   }
 
-  // Función para convertir un archivo a Base64
   fileToBase64(file: File): Promise<string> {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
-      reader.readAsDataURL(file); // Convierte el archivo a Base64
+      reader.readAsDataURL(file);
       reader.onload = () => resolve(reader.result as string);
-      reader.onerror = (error) => reject(error);
+      reader.onerror = error => reject(error);
     });
-  }
-    
-  onDragOver(event: DragEvent) {
-    event.preventDefault();
-  }
-
-
-  ngOnChanges(change: SimpleChanges): void {
-    if (change.settings && change.settings.firstChange) {
-      this.settings = change.settings.currentValue || {
-        ...ATTACHED_FILE_DEFAULT,
-      }
-    } else if (change.settings && !change.settings.currentValue) {
-      this.settings = {
-        ...ATTACHED_FILE_DEFAULT,
-      }
-    }
   }
 
   ngOnDestroy() {
-    this.closeCamera(); // Cerrar la cámara al destruir el componente
-    // Liberar las URLs temporales
+    this.closeCamera();
     this.files.forEach(file => URL.revokeObjectURL(file.url as string));
   }
 }

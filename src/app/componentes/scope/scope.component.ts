@@ -38,6 +38,7 @@ export const SCOPE_LIST_DEFAULT: ScopeSettings = {
   showHealthConditionField: true,
   showObservationField: true,
   showAmountField: true,
+  showScope: true
 };
 
 @Component({
@@ -47,7 +48,7 @@ export const SCOPE_LIST_DEFAULT: ScopeSettings = {
 })
 export class ScopeComponent implements OnInit, OnChanges {
 
-  public MultiFilterCtrl: FormControl = new FormControl();
+  public MultiFilterCtrl: FormControl = new FormControl('');
 
   protected _onDestroy = new Subject<void>();
   public filteredMulti: ReplaySubject<any[]> = new ReplaySubject<any[]>(
@@ -65,7 +66,7 @@ export class ScopeComponent implements OnInit, OnChanges {
   fPerson!: FormGroup;
   @Output() isValid: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-     
+
   fScope: FormArray = new FormArray([]);
   healthConditions = [...HEALTH_CONDITIONS];
   fGscope = new FormGroup({});
@@ -74,10 +75,10 @@ export class ScopeComponent implements OnInit, OnChanges {
   router: any;
   listFilter: Scope[] | undefined = [];
 
-  constructor(private fB: FormBuilder,public dialog: MatDialog, private ibartiService: IbartiService) { }
+  constructor(private fB: FormBuilder, public dialog: MatDialog, private ibartiService: IbartiService) { }
 
   ngOnInit(): void {
-    
+
     if (this.fGRoot && this.id && this.fGRoot.get(this.id)) {
       this.fScope = this.fGRoot.get(this.id) as FormArray;
     }
@@ -100,7 +101,7 @@ export class ScopeComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(change: SimpleChanges): void {
-    if(this.scopeArr)
+    if (this.scopeArr)
       this.listFilter = [... this.scopeArr];
 
     if (change.settings && change.settings.firstChange) {
@@ -114,24 +115,24 @@ export class ScopeComponent implements OnInit, OnChanges {
     }
 
     this.MultiFilterCtrl.valueChanges
-    .pipe(takeUntil(this._onDestroy))
-    .subscribe(() => {
-      //this.filterBanksMulti();
-      let search = this.MultiFilterCtrl.value;
-      if (search) {
-        let a = this.searchFilter(search);
-        this.listFilter = a;
-      } else {
-        this.listFilter = [...this.scopeArr];
-      }
+      .pipe(takeUntil(this._onDestroy))
+      .subscribe(() => {
+        //this.filterBanksMulti();
+        let search = this.MultiFilterCtrl.value;
+        if (search) {
+          let a = this.searchFilter(search);
+          this.listFilter = a;
+        } else {
+          this.listFilter = [...this.scopeArr];
+        }
 
-    });
+      });
   }
 
   addFG(v: Scope): void {
     const fG = this.fB.group({
       item: [
-        v.item || ""
+        { value: v.item || "", disabled: this.readOnly }
       ],
       code: [
         v.code || "",
@@ -142,7 +143,7 @@ export class ScopeComponent implements OnInit, OnChanges {
         this.settings.showNameField && Validators.required,
       ],
       amount: [
-        v.amount,
+        { value: v.amount, disabled: this.readOnly },
         this.settings.showAmountField && Validators.required,
       ],
       health_condition: [
@@ -150,8 +151,7 @@ export class ScopeComponent implements OnInit, OnChanges {
         this.settings.showHealthConditionField && Validators.required,
       ],
       observation: [
-        v.observation || '',
-        this.settings.showObservationField && Validators.required,
+        { value: v.observation || '', disabled: this.readOnly }
       ],
     });
     this.fScope.push(fG);
@@ -176,7 +176,7 @@ export class ScopeComponent implements OnInit, OnChanges {
       this.fPerson.get("full_name")!.setValue(this.personsArr[index].full_name);
     }
   }
-  
+
   getmaterial(cod_material: string) {
     console.log(cod_material)
     let index = this.scopeArr.findIndex(z => z.code == cod_material);
@@ -186,8 +186,8 @@ export class ScopeComponent implements OnInit, OnChanges {
       this.fScope.get("descripcion")!.setValue('');
     }
   }
-  
-  
+
+
 
   createMaterial() {
     const dialogRef = this.dialog.open(CreateAndEditMaterialComponent, {
@@ -196,27 +196,27 @@ export class ScopeComponent implements OnInit, OnChanges {
       },
     });
     dialogRef.afterClosed().subscribe(result => {
-    
+
       if (result?.code) {
         result['name'] = result.description;
         this.scopeArr.push(result);
-        this.listFilter=this.scopeArr;
+        this.listFilter = this.scopeArr;
       }
     });
-    
+
   }
 
   searchFilter(search: string) { //Funcion de filtro de buscador
     if (search) {
       if (search.length > 2) {
         const results = this.scopeArr.filter(element => {
-         
+
           const regex = new RegExp(search, "gi");
           const comparison = regex.test(element.name)
-         // const comparison1 = regex.test(element.name_and_surname)
-        
+          // const comparison1 = regex.test(element.name_and_surname)
+
           if (comparison) {
-           
+
             return element;
           }
         });
@@ -226,5 +226,10 @@ export class ScopeComponent implements OnInit, OnChanges {
       }
     }
 
+  }
+
+  ngOnDestroy() {
+    this._onDestroy.next();
+    this._onDestroy.complete();
   }
 }

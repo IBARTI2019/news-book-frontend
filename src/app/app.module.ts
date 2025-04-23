@@ -65,7 +65,10 @@ const getPermissionsFromLocalStorage = () => {
     BrowserAnimationsModule,
     DemoMaterialModule,
     FormsModule,
-    FlexLayoutModule,
+    FlexLayoutModule.withConfig({
+      useColumnBasisZero: false,
+      printWithBreakpoints: ['md', 'lt-lg', 'lt-xl', 'gt-sm', 'gt-xs']
+    }),
     HttpClientModule,
     SharedModule,
     ToastrModule.forRoot(),

@@ -1,7 +1,125 @@
-.item {
-    font: bold;
-    /*padding: 10px;*/
-    font-size: 11px;
-    line-height: 1.5em; 
+/* Estilos base para móvil (mobile first) */
+.mobile-card {
+  background-color: #ffffff;
+  border-radius: 4px;
+  padding: 15px;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2),
+    0 1px 1px 0 rgba(0, 0, 0, 0.14),
+    0 1px 3px 0 rgba(0, 0, 0, 0.12);
+}
+
+.mobile-label {
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  color: rgba(0, 0, 0, 0.87);
+}
+
+/* Estilos para la tabla en desktop */
+.table-container {
+  display: none;
+  width: 100%;
+  overflow-x: auto;
+}
+
+.header-row {
+  display: none;
+  min-width: 800px;
+  background-color: #3f51b5;
+  color: white;
+}
+
+.item-row {
+  display: none;
+  min-width: 800px;
+  width: 100%;
+}
+
+.header-cell,
+.item-cell {
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.header-cell {
+  justify-content: center;
+  font-weight: 500;
+}
+
+.item-cell mat-form-field {
+  width: 100%;
+}
+
+/* Mostrar/ocultar según tamaño de pantalla */
+[fxShow.lt-md] {
+  display: block;
+}
+
+@media (min-width: 960px) {
+
+  .table-container,
+  .header-row,
+  .item-row {
+    display: flex;
   }
-  
+
+  [fxShow.lt-md] {
+    display: none !important;
+  }
+}
+
+/* Ajustes para tablets */
+@media (max-width: 959px) and (min-width: 600px) {
+  .mobile-card {
+    padding: 12px;
+  }
+
+  .mobile-label {
+    font-size: 14px;
+  }
+}
+
+/* Ajustes para móviles pequeños */
+@media (max-width: 599px) {
+  .mobile-card {
+    padding: 10px;
+  }
+
+  .mobile-label {
+    font-size: 13px;
+  }
+
+  button[mat-raised-button] {
+    width: 100%;
+    margin-top: 8px;
+  }
+}
+
+/* Estilos para los headers */
+.header-cell.mat-toolbar.mat-primary {
+  padding: 0 10px;
+  min-height: 48px;
+}
+
+/* Estilos para mensajes de error */
+.mat-error {
+  display: block;
+  font-size: 12px;
+  margin-top: 5px;
+  line-height: 1.2;
+}
+
+/* Radio buttons ajustados */
+.mat-radio-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* Estilos para el timepicker */
+ngx-timepicker-field {
+  width: 100%;
+}

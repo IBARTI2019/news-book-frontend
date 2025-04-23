@@ -50,9 +50,11 @@ export class CreateAndEditPersonComponent implements OnInit {
         name: ["", Validators.required],
         last_name: ["", Validators.required],
         doc_ident: ["", Validators.required],
-        phone: ["", Validators.required],
-        mobile: ["", Validators.required],
+        phone: [""],
+        mobile: [""],
         type_person: ["", Validators.required],
+        company: [""],
+        rif: [""],
         is_active: [true, Validators.required],
       },
       {}
@@ -62,6 +64,8 @@ export class CreateAndEditPersonComponent implements OnInit {
       this.getPerson();
     }
   }
+
+  requiredCompanyData = (typeId: string) => this.listap.find(t => t.id == typeId)?.requires_company_data;
 
   onSubmit() {
     this.submitted = true;
@@ -111,6 +115,8 @@ export class CreateAndEditPersonComponent implements OnInit {
       this.fg.get("phone")!.setValue(data.phone);
       this.fg.get("mobile")!.setValue(data.mobile);
       this.fg.get("type_person")!.setValue(data.type_person);
+      this.fg.get("company")!.setValue(data.company);
+      this.fg.get("rif")!.setValue(data.rif);
     });
   }
 

@@ -102,6 +102,7 @@ export class CreateAndEditNewComponent implements OnInit {
   }
 
   save(data: any) {
+    this.submitted = true;
     this.currentNew.info = data;
     try{
       this.currentNew.template = JSON.parse(this.currentNew.template);
@@ -120,6 +121,6 @@ export class CreateAndEditNewComponent implements OnInit {
           error.error.message || "No se pudo crear la Novedad."
         );
       }
-    );
+    ).add(() => this.submitted = false);
   }
 }
