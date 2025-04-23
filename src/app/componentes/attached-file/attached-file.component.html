@@ -24,7 +24,7 @@
             <video #videoElement autoplay class="camera-preview"></video>
             <div fxLayout="row" fxLayoutGap="15px">
                 <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="15px">
-                    <button mat-icon-button (click)="switchCamera()" [disabled]="!isMultipleCameras">
+                    <button  type="button" mat-icon-button (click)="switchCamera()" [disabled]="!isMultipleCameras">
                         <mat-icon>flip_camera_android</mat-icon>
                     </button>
                     <span>Usar cámara {{ usingFrontCamera ? 'frontal' : 'trasera' }}</span>
