@@ -211,7 +211,7 @@ export class FormatGeneratorComponent implements OnInit {
       .afterClosed()
       .subscribe((result: { element: TemplateTypeNew; index: number }) => {
         if (result) {
-          if (result.element.settings?.showScope) {
+          if (result.element.settings?.showScope || result.element.settings?.showScope == false) {
             result.element.showScope = result.element.settings.showScope;
           }
           if (result.element.settings?.percentage) {
