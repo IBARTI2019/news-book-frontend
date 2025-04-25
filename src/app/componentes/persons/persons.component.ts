@@ -83,7 +83,7 @@ export class PersonsComponent implements OnInit {
   addPersonForm(person: Person): void {
     const formGroup = this.fb.group({
       identification_number: [
-        person.identification_number || '',
+        person.identification_number || person.doc_ident || '',
         this.settings.showTokenField ? Validators.required : null
       ],
       full_name: [
@@ -127,9 +127,8 @@ export class PersonsComponent implements OnInit {
       this.toastr.error(`La persona con cédula ${this.personCurrent.identification_number} ya existe`);
       return;
     }
-
     const personFromList = this.personsArr.find(p =>
-      p.identification_number === this.personCurrent.identification_number);
+      p.identification_number === this.personCurrent.identification_number || p.doc_ident === this.personCurrent.identification_number);
 
     if (personFromList) {
       this.addPersonForm(personFromList);
