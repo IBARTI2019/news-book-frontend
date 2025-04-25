@@ -144,6 +144,12 @@
         data.element.settings.showGuardStatusField ? "SI" : "NO"
         }}</mat-slide-toggle>
     </div>
+    <div>
+      <p>Requerido</p>
+      <mat-slide-toggle [(ngModel)]="data.element.required" ngDefaultControl>{{
+        data.element.required ? "SI" : "NO"
+        }}</mat-slide-toggle>
+    </div>
   </div>
 </ng-container>
 
