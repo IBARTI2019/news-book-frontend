@@ -16,10 +16,10 @@
                     [disabled]="!personCurrent.identification_number" color="primary">
                     <mat-icon>person_add</mat-icon> Agregar
                 </button>
-                <button mat-raised-button fxFlex="50" (click)="searchPerson()" style="height: 50px" *ngIf="!readOnly"
+                <!-- <button mat-raised-button fxFlex="50" (click)="searchPerson()" style="height: 50px" *ngIf="!readOnly"
                     color="accent">
                     <mat-icon>search</mat-icon> Buscar
-                </button>
+                </button> -->
             </div>
         </div>
     </form>
@@ -27,7 +27,7 @@
     <!-- Versión desktop -->
     <div fxShow="gt-sm" fxHide.lt-md>
         <!-- Contenedor de tabla -->
-        <div class="table-container">
+        <div class="table-container" fxLayout="column" >
             <!-- Encabezados -->
             <div fxLayout="row" fxLayoutGap="1px" class="header-row">
                 <div *ngIf="settings.showTokenField" fxFlex="1 0 15%" class="header-cell mat-toolbar mat-primary">
