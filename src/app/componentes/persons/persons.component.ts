@@ -1,8 +1,10 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Person, PersonsSettings, TypePeople } from '../../interfaces';
+import { CreateAndEditPersonComponent } from 'app/modules/maestro/person/create-and-edit-person/create-and-edit-person.component';
 import { TypePeopleService } from 'app/services/type-people.service';
 import { ToastrService } from 'ngx-toastr';
+import { MatDialog } from '@angular/material/dialog';
 
 const MOVEMENT_TYPES = [
   { id: "employee", text: "Entrada" },
@@ -50,7 +52,8 @@ export class PersonsComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private toastr: ToastrService,
-    private typePersonService: TypePeopleService
+    private typePersonService: TypePeopleService,
+    public dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
@@ -77,6 +80,23 @@ export class PersonsComponent implements OnInit {
 
     this.fGPersons = this.fb.group({
       identification_number: ['', Validators.required]
+    });
+  }
+
+  createPerson() {
+    const dialogRef = this.dialog.open(CreateAndEditPersonComponent, {
+      data: {
+        modal: true
+      },
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('Dialog ojo result:', result);
+      if (result?.doc_ident) {
+        this.personsArr.push(result);
+        this.personCurrent.identification_number = result.doc_ident;
+        this.addPerson();
+      }
     });
   }
 
