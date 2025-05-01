@@ -27,7 +27,7 @@
                 [cdkDropListConnectedTo]="[todoList]" class="example-list example-boundary"
                 (cdkDropListDropped)="drop($event)">
                 <div *ngFor="let d of this.typeNew.template; let index = index;" class="example-custom-placeholder">
-                    <mat-chip cdkDrag cdkDragBoundary=".example-boundary">{{d?.code_display}}</mat-chip>
+                    <mat-chip cdkDrag cdkDragBoundary=".example-boundary">{{d?.code_display}}  ({{d?.label || d?.value}})</mat-chip>
                     <mat-icon (click)="openDialog(d, index)">edit</mat-icon>
                     <mat-icon (click)="deleteControl(d, index)">delete</mat-icon>
                 </div>
