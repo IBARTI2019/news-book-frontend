@@ -49,8 +49,20 @@
   font-weight: 500;
 }
 
+.item-cell {
+  background-color: #ffffff;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  min-height: 60px;
+}
+
 .item-cell mat-form-field {
   width: 100%;
+}
+
+.item-cell mat-slide-toggle {
+  margin: 0 auto;
 }
 
 /* Mostrar/ocultar según tamaño de pantalla */
@@ -106,10 +118,10 @@
 
 /* Estilos para mensajes de error */
 .mat-error {
-  display: block;
   font-size: 12px;
   margin-top: 5px;
-  line-height: 1.2;
+  display: block;
+  text-align: center;
 }
 
 /* Radio buttons ajustados */
