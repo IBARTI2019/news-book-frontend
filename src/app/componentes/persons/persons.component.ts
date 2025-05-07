@@ -22,6 +22,7 @@ export const PERSONS_LIST_DEFAULT: PersonsSettings = {
   showHourField: true,
   showEntryField: true,
   showProtocolField: true,
+  showPlaceOfReceptionField: true,
   showVaccinationCardNumberField: true,
   showAssignedCardNumberField: true
 };
@@ -126,11 +127,29 @@ export class PersonsComponent implements OnInit {
         person.reason_visit || null,
         this.settings.showReasonVisitField ? Validators.required : null
       ],
-      entry: [person.entry || false],
-      protocol: [person.protocol || false],
+      place_of_reception: [
+        person.place_of_reception || null,
+        this.settings.showPlaceOfReceptionField ? Validators.required : null
+      ],
+      entry: [
+        person.entry || false,
+        this.settings.showEntryField ? Validators.required : null
+      ],
+      protocol: [
+        person.protocol || false,
+        this.settings.showProtocolField ? Validators.required : null
+      ],
+      vaccination_card_number: [
+        person.vaccination_card_number || null,
+        this.settings.showVaccinationCardNumberField ? Validators.required : null
+      ],
+      assigned_card_number: [
+        person.assigned_card_number || null,
+        this.settings.showAssignedCardNumberField ? Validators.required : null
+      ],
       materials: new FormControl({ value: person.materials?.value || [] })
     });
-
+  
     this.fPersons.push(formGroup);
   }
 

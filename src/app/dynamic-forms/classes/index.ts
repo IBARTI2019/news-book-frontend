@@ -282,6 +282,7 @@ export class PersonQuestion extends QuestionBase {
     showEntryField: true,
     showProtocolField: true,
     showTypePersonField: true,
+    showPlaceOfReceptionField: true,
     showVaccinationCardNumberField: true,
     showAssignedCardNumberField: true,
     showButtonNew: true

@@ -16,8 +16,8 @@
                     [disabled]="!personCurrent.identification_number" color="primary">
                     <mat-icon>person_add</mat-icon> Agregar
                 </button>
-                <button *ngIf="settings.showButtonNew" style="height: 50px" mat-raised-button color="primary" (click)="createPerson()"
-                    type="button">
+                <button *ngIf="settings.showButtonNew" style="height: 50px" mat-raised-button color="primary"
+                    (click)="createPerson()" type="button">
                     Nuevo
                 </button>
                 <!-- <button mat-raised-button fxFlex="50" (click)="searchPerson()" style="height: 50px" *ngIf="!readOnly"
@@ -51,7 +51,27 @@
                     Hora
                 </div>
                 <div *ngIf="settings.showReasonVisitField" fxFlex="1 1 15%" class="header-cell mat-toolbar mat-primary">
-                    Motivo
+                    Motivo de Visita
+                </div>
+                <div *ngIf="settings.showPlaceOfReceptionField" fxLayoutAlign="center center" fxFlex="1 1 15%"
+                    fxLayout="row" class="item mat-toolbar mat-primary">
+                    Lugar de recibimiento
+                </div>
+                <div *ngIf="settings.showEntryField" fxLayoutAlign="center center" fxFlex="1 1 6%" fxLayout="row"
+                    class="item mat-toolbar mat-primary">
+                    Ingreso de Herramienta, Vehículo o Equipo
+                </div>
+                <div *ngIf="settings.showProtocolField" fxLayoutAlign="center center" fxFlex="1 1 6%" fxLayout="row"
+                    class="item mat-toolbar mat-primary">
+                    Cumplió Protocolo COVID 19
+                </div>
+                <div *ngIf="settings.showVaccinationCardNumberField" fxLayoutAlign="center center" fxFlex="1 1 6%"
+                    fxLayout="row" class="item mat-toolbar mat-primary">
+                    Nro. de tarjeta de Vacunación
+                </div>
+                <div *ngIf="settings.showAssignedCardNumberField" fxLayoutAlign="center center" fxFlex="1 1 6%"
+                    fxLayout="row" class="item mat-toolbar mat-primary">
+                    Nro. de carnet asignado
                 </div>
                 <div fxFlex="1 1 5%" class="header-cell mat-toolbar mat-primary" *ngIf="!readOnly"></div>
             </div>
@@ -123,7 +143,61 @@
                                 </mat-error>
                             </mat-form-field>
                         </div>
+                        <div *ngIf="settings.showPlaceOfReceptionField" fxFlex="1 1 15%" class="item-cell"
+                            fxLayoutAlign="center center">
+                            <mat-form-field appearance="fill" fxFlex="90">
+                                <mat-label>Lugar de recibimiento</mat-label>
+                                <input type="text" matInput formControlName="place_of_reception"
+                                    [readonly]="readOnly" />
+                                <mat-error *ngIf="person.get('place_of_reception')?.hasError('required')">
+                                    El lugar de recibimiento es <strong>requerido</strong>
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
 
+                        <div *ngIf="settings.showEntryField" fxFlex="1 1 6%" class="item-cell"
+                            fxLayoutAlign="center center">
+                            <mat-slide-toggle formControlName="entry" #entryST [disabled]="readOnly">
+                                {{ entryST.checked ? "SI" : "NO" }}
+                            </mat-slide-toggle>
+                            <mat-error *ngIf="person.get('entry')?.hasError('required')" style="margin-top: 5px;">
+                                El ingreso es <strong>requerido</strong>
+                            </mat-error>
+                        </div>
+
+                        <div *ngIf="settings.showProtocolField" fxFlex="1 1 6%" class="item-cell"
+                            fxLayoutAlign="center center">
+                            <mat-slide-toggle formControlName="protocol" #protocolST [disabled]="readOnly">
+                                {{ protocolST.checked ? "SI" : "NO" }}
+                            </mat-slide-toggle>
+                            <mat-error *ngIf="person.get('protocol')?.hasError('required')" style="margin-top: 5px;">
+                                Este campo es <strong>requerido</strong>
+                            </mat-error>
+                        </div>
+
+                        <div *ngIf="settings.showVaccinationCardNumberField" fxFlex="1 1 6%" class="item-cell"
+                            fxLayoutAlign="center center">
+                            <mat-form-field appearance="fill" fxFlex="90">
+                                <mat-label>Nro. de tarjeta de Vacunación</mat-label>
+                                <input type="text" matInput formControlName="vaccination_card_number"
+                                    [readonly]="readOnly" />
+                                <mat-error *ngIf="person.get('vaccination_card_number')?.hasError('required')">
+                                    El nro. de tarjeta de vacunación es <strong>requerido</strong>
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+
+                        <div *ngIf="settings.showAssignedCardNumberField" fxFlex="1 1 6%" class="item-cell"
+                            fxLayoutAlign="center center">
+                            <mat-form-field appearance="fill" fxFlex="90">
+                                <mat-label>Nro. de carnet asignado</mat-label>
+                                <input type="text" matInput formControlName="assigned_card_number"
+                                    [readonly]="readOnly" />
+                                <mat-error *ngIf="person.get('assigned_card_number')?.hasError('required')">
+                                    El nro. de carnet asignado es <strong>requerido</strong>
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
                         <div fxFlex="1 1 5%" class="item-cell" *ngIf="!readOnly">
                             <button mat-icon-button (click)="removePerson(i)">
                                 <mat-icon>delete</mat-icon>
@@ -221,6 +295,66 @@
                                 <textarea matInput formControlName="reason_visit" [readonly]="readOnly"></textarea>
                                 <mat-error *ngIf="person.get('reason_visit')?.hasError('required')">
                                     Motivo es <strong>requerido</strong>
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <div fxLayout="row" fxLayoutGap="10px" *ngIf="settings.showPlaceOfReceptionField">
+                        <div fxFlex="30%" class="mobile-label">Lugar de recibimiento:</div>
+                        <div fxFlex="70%">
+                            <mat-form-field appearance="fill">
+                                <mat-label>Lugar de recibimiento</mat-label>
+                                <input type="text" matInput formControlName="place_of_reception"
+                                    placeholder="Lugar de recibimiento" [readonly]="readOnly" />
+                                <mat-error *ngIf="person.get('place_of_reception')?.hasError('required')">
+                                    El lugar de recibimiento es <strong>requerido</strong>
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <div fxLayout="row" fxLayoutGap="10px" *ngIf="settings.showEntryField">
+                        <div fxFlex="30%" class="mobile-label">Ingreso de Herramienta o Equipo:</div>
+                        <div fxFlex="70%">
+                            <mat-slide-toggle formControlName="entry" #entryST [disabled]="readOnly">{{
+                                entryST.checked ? "SI" : "NO"
+                                }}</mat-slide-toggle>
+                        </div>
+                    </div>
+
+                    <div fxLayout="row" fxLayoutGap="10px" *ngIf="settings.showProtocolField">
+                        <div fxFlex="30%" class="mobile-label">Cumplió protocolo:</div>
+                        <div fxFlex="70%">
+                            <mat-slide-toggle formControlName="protocol" #protocolST [disabled]="readOnly">{{
+                                protocolST.checked ? "SI" : "NO"
+                                }}</mat-slide-toggle>
+                            <mat-error *ngIf="person.get('protocol')?.hasError('required')">
+                                Este campo es <strong>requerido</strong>
+                            </mat-error>
+                        </div>
+                    </div>
+                    <div fxLayout="row" fxLayoutGap="10px" *ngIf="settings.showVaccinationCardNumberField">
+                        <div fxFlex="30%" class="mobile-label">Nro. de tarjeta de Vacunación</div>
+                        <div fxFlex="70%">
+                            <mat-form-field appearance="fill">
+                                <input type="text" matInput formControlName="vaccination_card_number" placeholder=""
+                                    [readonly]="readOnly" />
+                                <mat-error *ngIf="person.get('vaccination_card_number')?.hasError('required')">
+                                    El nro. de tarjeta de vacunación es <strong>requerido</strong>
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <div fxLayout="row" fxLayoutGap="10px" *ngIf="settings.showAssignedCardNumberField">
+                        <div fxFlex="30%" class="mobile-label">Nro. de carnet de asignado</div>
+                        <div fxFlex="70%">
+                            <mat-form-field appearance="fill">
+                                <input type="text" matInput formControlName="assigned_card_number" placeholder=""
+                                    [readonly]="readOnly" />
+                                <mat-error *ngIf="person.get('assigned_card_number')?.hasError('required')">
+                                    El nro. de carnet de asignado es <strong>requerido</strong>
                                 </mat-error>
                             </mat-form-field>
                         </div>

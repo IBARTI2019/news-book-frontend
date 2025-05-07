@@ -119,7 +119,8 @@ export interface Person {
   vaccination_card_number?: string;
   assigned_card_number?: string;
   accompany_visitor?: string;
-
+  place_of_reception?: string;
+  
   company?: string;
   rif?: string;
 }
