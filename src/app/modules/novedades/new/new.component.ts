@@ -37,6 +37,8 @@ export class NewComponent implements OnInit {
       type: 'callable',
     },
   };
+  params = {query: "{id, number, type_news_display {id, code, description}, employee, created}"}
+
   constructor(
     public newService: NewService,
     private sessionService: SessionService,
