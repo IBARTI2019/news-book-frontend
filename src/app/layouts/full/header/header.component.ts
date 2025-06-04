@@ -31,5 +31,6 @@ export class AppHeaderComponent implements OnInit {
   setBook(book: Book) {
     this.select_book = book;
     setLocalStorage(API.BOOK, book.id);
+    window.location.reload();
   }
 }
