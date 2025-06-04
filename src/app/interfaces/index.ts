@@ -123,6 +123,9 @@ export interface Person {
   
   company?: string;
   rif?: string;
+
+  blacklist?: boolean;
+  blacklist_reason?: string;
 }
 
 export interface TypeNew {

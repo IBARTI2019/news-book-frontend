@@ -4,7 +4,7 @@
     <mat-card-content>
         <form [formGroup]="fg" fxLayout="column" fxLayoutGap="5px" (ngSubmit)="onSubmit()" #formRol>
             <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="5px">
-               <!-- <mat-form-field>
+                <!-- <mat-form-field>
                     <mat-label>Codigo</mat-label>
                     <input matInput placeholder="Codigo" formControlName="code">
                 </mat-form-field>-->
@@ -12,6 +12,15 @@
                     <mat-label>Cedula</mat-label>
                     <input matInput placeholder="Cedula" formControlName="doc_ident">
                 </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Tipo</mat-label>
+                    <mat-select formControlName="type_person">
+                        <mat-option *ngFor="let type of listap" [value]="type.id">{{ type.description | titlecase }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="5px">
                 <mat-form-field>
                     <mat-label>Nombres</mat-label>
                     <input matInput placeholder="Nombres" formControlName="name">
@@ -23,13 +32,7 @@
             </div>
 
             <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="5px">
-                <mat-form-field>
-                    <mat-label>Tipo</mat-label>
-                    <mat-select formControlName="type_person">
-                        <mat-option *ngFor="let type of listap" [value]="type.id">{{ type.description | titlecase }}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
+
                 <mat-form-field>
                     <mat-label>Telefono Habitacion</mat-label>
                     <input matInput placeholder="Telefono hab" formControlName="phone">
@@ -61,12 +64,27 @@
                     <mat-label>RIF</mat-label>
                     <input matInput placeholder="RIF" formControlName="rif">
                 </mat-form-field>
+           
+            </div>
+            <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="5px">
                 <div fxFlex="50">
                     <mat-slide-toggle formControlName="is_active">Activo</mat-slide-toggle>
                 </div>
+                <div fxFlex="50">
+                    <mat-slide-toggle formControlName="blacklist">Lista Negra</mat-slide-toggle>
+                </div>
             </div>
-            <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="end">
-                <button mat-raised-button type="button" [mat-dialog-close]="true">Cerrar</button>
+            <br>
+            <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="5px">
+                <mat-form-field *ngIf="fg.controls.blacklist.value">
+                    <mat-label>Motivo de lista negra</mat-label>
+                    <textarea matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1"
+                        cdkAutosizeMaxRows="10" formControlName="blacklist_reason"></textarea>
+                </mat-form-field>
+
+            </div>
+            <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="5px" fxLayoutAlign="end">
+                <button mat-raised-button type="button" [mat-dialog-close]="updated">Cerrar</button>
                 <button mat-raised-button color="primary" type="submit">{{ update ? 'Actualizar' : 'Crear' }}</button>
             </div>
         </form>

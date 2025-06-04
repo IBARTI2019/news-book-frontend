@@ -69,6 +69,12 @@ export class PersonComponent implements OnInit {
         type: "bool"
       },
       {
+        header: "Lista Negra",
+        dataAttribute: "blacklist",
+        attribute: "blacklist",
+        type: "bool"
+      },
+      {
         attribute: "id",
         header: "Opciones",
         template: "opciones",
@@ -105,6 +111,8 @@ export class PersonComponent implements OnInit {
 
   showModalPerson(id?: string) {
     const dialogRef = this.dialog.open(CreateAndEditPersonComponent, {
+      minWidth: '400px',
+      width: '650px',
       data: {
         id: id
       },
@@ -112,7 +120,9 @@ export class PersonComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
-      
+      if (result) {
+        this.table.refresh();
+      }
     });
   }
 }
