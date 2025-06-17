@@ -5,6 +5,7 @@ import { CreateAndEditPersonComponent } from 'app/modules/maestro/person/create-
 import { PersonsSettings, Person, TypePeople } from 'app/interfaces';
 import { TypePeopleService } from 'app/services/type-people.service';
 import { ToastrService } from 'ngx-toastr';
+import { BlacklistAlertComponent } from '../blacklist-alert/blacklist-alert.component';
 const OWNER_TYPES = [
   {
     id: "employee",
@@ -73,7 +74,7 @@ export class PersonComponent implements OnInit {
   isInstitution: boolean = false;
   requiresCompanyData: boolean = false;
   requiresGuideNumber: boolean = false;
-  
+
   personCurrent: Person = { id: "", identification_number: "" };
   defaultValues = { ...PERSONS_LIST_DEFAULT };
   personCurrentseg: any = { description: "", cedula: "", nombres: "", apellidos: "", observacion: "", year: "", license_plate: "" };
@@ -151,17 +152,33 @@ export class PersonComponent implements OnInit {
     /// console.log('PERSONA', identification_number, 'array',this.personsArr);
     let index = this.personsArr.findIndex(v => v.doc_ident == identification_number);
     if (index > -1) {
-      this.fPerson.get("full_name")!.setValue(this.personsArr[index].full_name);
-      this.tp = String(this.personsArr[index].type_person);
-      this.fPerson.get("type_person")!.setValue(this.tp);
-      this.fPerson.get("company_name")!.setValue(this.personsArr[index].company);
-      this.fPerson.get("rif")!.setValue(this.personsArr[index].rif);
-      let typePerson = this.personTypes.find(tp => tp.id == this.tp);
-      if (typePerson)
-        this.check(typePerson);
+      if (this.personsArr[index].blacklist == true) {
+        debugger;
+        this.showBlacklistAlert(this.personsArr[index])
+        this.fPerson.get("identification_number")!.setValue("");
+      } else {
+        this.fPerson.get("full_name")!.setValue(this.personsArr[index].full_name);
+        this.tp = String(this.personsArr[index].type_person);
+        this.fPerson.get("type_person")!.setValue(this.tp);
+        this.fPerson.get("company_name")!.setValue(this.personsArr[index].company);
+        this.fPerson.get("rif")!.setValue(this.personsArr[index].rif);
+        let typePerson = this.personTypes.find(tp => tp.id == this.tp);
+        if (typePerson)
+          this.check(typePerson);
+      }
     }
   }
 
+  private showBlacklistAlert(person: Person): void {
+    this.dialog.open(BlacklistAlertComponent, {
+      width: '450px',
+      disableClose: true, // Obliga al usuario a hacer clic en el botón
+      autoFocus: false,
+      panelClass: 'blacklist-dialog',
+      data: { person }
+    });
+  }
+  
   createPersona() {
     const dialogRef = this.dialog.open(CreateAndEditPersonComponent, {
       data: {
