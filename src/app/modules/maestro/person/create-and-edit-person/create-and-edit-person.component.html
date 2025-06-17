@@ -81,7 +81,22 @@
                     <textarea matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1"
                         cdkAutosizeMaxRows="10" formControlName="blacklist_reason"></textarea>
                 </mat-form-field>
-
+            </div>
+            <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="5px">
+                <div fxFlex="100">
+                    <mat-form-field *ngIf="requiredCompanyData(fg.controls.type_person.value)">
+                        <mat-label>Lugar de recibimiento</mat-label>
+                        <input matInput placeholder="Lugar de recibimiento" formControlName="default_visit_location">
+                    </mat-form-field>
+        
+                </div>
+                <div fxFlex="100">
+                    <mat-form-field *ngIf="fg.controls.blacklist.value">
+                        <mat-label>Motivo de visita</mat-label>
+                        <textarea matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1"
+                            cdkAutosizeMaxRows="10" formControlName="default_visit_reason"></textarea>
+                    </mat-form-field>
+                </div>
             </div>
             <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="5px" fxLayoutAlign="end">
                 <button mat-raised-button type="button" [mat-dialog-close]="updated">Cerrar</button>

@@ -126,6 +126,9 @@ export interface Person {
 
   blacklist?: boolean;
   blacklist_reason?: string;
+
+  default_visit_location?: string;
+  default_visit_reason?: string;
 }
 
 export interface TypeNew {
