@@ -37,7 +37,7 @@ export class NewComponent implements OnInit {
       type: 'callable',
     },
   };
-  params = {query: "{id, number, type_news_display {id, code, description}, employee, created}"}
+  params = { query: "{id, number, type_news_display {id, code, description}, employee, created, contains_attached_files}" }
 
   constructor(
     public newService: NewService,
@@ -82,15 +82,16 @@ export class NewComponent implements OnInit {
         header: "Fecha de Creación",
         type: "date"
       },
-          /*   {
-              attribute: "info",
-              header: "Data",
-              template: 'info'
-            }, */
+      {
+        attribute: "contains_attached_files",
+        header: "Contiene adjuntos",
+        type: "bool"
+      },
       {
         attribute: "id",
         header: "Opciones",
         template: "opciones",
+        hideFilter: true
       },
     ];
   }
