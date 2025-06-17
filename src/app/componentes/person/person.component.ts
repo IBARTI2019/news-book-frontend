@@ -153,7 +153,6 @@ export class PersonComponent implements OnInit {
     let index = this.personsArr.findIndex(v => v.doc_ident == identification_number);
     if (index > -1) {
       if (this.personsArr[index].blacklist == true) {
-        debugger;
         this.showBlacklistAlert(this.personsArr[index])
         this.fPerson.get("identification_number")!.setValue("");
       } else {
@@ -162,6 +161,9 @@ export class PersonComponent implements OnInit {
         this.fPerson.get("type_person")!.setValue(this.tp);
         this.fPerson.get("company_name")!.setValue(this.personsArr[index].company);
         this.fPerson.get("rif")!.setValue(this.personsArr[index].rif);
+        this.fPerson.get("reason_visit").setValue(this.personsArr[index].default_visit_reason);
+        this.fPerson.get("place_of_reception").setValue(this.personsArr[index].default_visit_location);
+
         let typePerson = this.personTypes.find(tp => tp.id == this.tp);
         if (typePerson)
           this.check(typePerson);
@@ -178,7 +180,7 @@ export class PersonComponent implements OnInit {
       data: { person }
     });
   }
-  
+
   createPersona() {
     const dialogRef = this.dialog.open(CreateAndEditPersonComponent, {
       data: {

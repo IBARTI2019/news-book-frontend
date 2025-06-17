@@ -64,6 +64,8 @@ export class CreateAndEditPersonComponent implements OnInit {
         is_active: [true],
         blacklist: [false],
         blacklist_reason: [""],
+        default_visit_location: [""],
+        default_visit_reason: [""],
       },
       {}
     );
@@ -131,6 +133,9 @@ export class CreateAndEditPersonComponent implements OnInit {
 
       this.fg.get("blacklist")!.setValue(data.blacklist);
       this.fg.get("blacklist_reason")!.setValue(data.blacklist_reason);
+
+      this.fg.get("default_visit_location")!.setValue(data.default_visit_location);
+      this.fg.get("default_visit_reason")!.setValue(data.default_visit_reason);
     });
   }
 
