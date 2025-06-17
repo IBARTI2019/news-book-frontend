@@ -40,6 +40,7 @@ import { NewHeaderComponent } from './new-header/new-header.component';
 import { DemoMaterialModule } from '../demo-material-module';
 import { AttachedFileComponent } from './attached-file/attached-file.component';
 import { ErrataComponent } from './errata/errata.component';
+import { BlacklistAlertComponent } from './blacklist-alert/blacklist-alert.component';
 
 export const entryComponentes = [
   ConfirmDialogComponent,
@@ -63,7 +64,8 @@ export const entryComponentes = [
     DynamicControlsComponent,
     NewHeaderComponent,
     AttachedFileComponent,
-    ErrataComponent
+    ErrataComponent,
+    BlacklistAlertComponent
   ],
   exports: [
     GenericTableComponent,

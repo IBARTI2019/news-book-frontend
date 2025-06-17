@@ -1,0 +1,48 @@
+.warning-title {
+    color: #d32f2f;
+    display: flex;
+    align-items: center;
+    background-color: #ffebee;
+    padding: 16px 24px;
+    margin: 0 -24px 16px -24px !important;
+}
+
+.warning-icon {
+    color: #d32f2f;
+    margin-right: 12px;
+    font-size: 28px;
+}
+
+.warning-content {
+    color: #5f2120;
+}
+
+.warning-card {
+    border-left: 4px solid #d32f2f;
+    background-color: #fff3e0;
+    margin: 16px 0;
+}
+
+.reason-text {
+    font-size: 16px;
+    font-weight: 500;
+    color: #d32f2f;
+    padding: 8px;
+}
+
+.alert-footer {
+    display: flex;
+    align-items: center;
+    color: #d32f2f;
+    font-weight: 500;
+    margin-top: 16px;
+}
+
+.alert-footer mat-icon {
+    margin-right: 8px;
+}
+
+button[color="warn"] {
+    font-weight: bold;
+    letter-spacing: 0.5px;
+}

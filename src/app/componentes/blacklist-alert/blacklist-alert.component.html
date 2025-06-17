@@ -1,0 +1,32 @@
+<h1 mat-dialog-title class="warning-title">
+    <mat-icon class="warning-icon">warning</mat-icon>
+    ¡USUARIO EN LISTA NEGRA!
+  </h1>
+  
+  <div mat-dialog-content class="warning-content">
+    <div class="warning-message">
+      <p>La persona {{data.person.full_name}} ({{data.person.doc_ident}}) esta <strong>BLOQUEADA</strong> en el sistema.</p>
+      <p>No puede realizar ninguna operación.</p>
+    </div>
+  
+    <mat-card class="warning-card">
+      <mat-card-header>
+        <mat-card-title>Motivo del bloqueo:</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p class="reason-text">{{data.person.blacklist_reason}}</p>
+      </mat-card-content>
+    </mat-card>
+  
+    <div class="alert-footer">
+      <mat-icon>error_outline</mat-icon>
+      <span>Contacte al administrador del sistema</span>
+    </div>
+  </div>
+  
+  <div mat-dialog-actions align="end">
+    <button mat-raised-button color="warn" mat-dialog-close cdkFocusInitial>
+      <mat-icon>check_circle</mat-icon>
+      ENTENDIDO
+    </button>
+  </div>

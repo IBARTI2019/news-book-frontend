@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from "@angular/common/http";
-import { Component, OnInit,Inject } from "@angular/core";
+import { Component, OnInit, Inject, ViewChild, NgZone } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { ToastrService } from "ngx-toastr";
@@ -7,6 +7,8 @@ import { Person, TypePeople } from "../../../../interfaces";
 import { PersonService } from "../../../../services/person.service";
 import { TypePeopleService } from "../../../../services/type-people.service";
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
+import { CdkTextareaAutosize } from "@angular/cdk/text-field";
+import { take } from "rxjs/operators";
 export interface DialogData {
   id: string;
   redirect: boolean;
@@ -24,6 +26,8 @@ export class CreateAndEditPersonComponent implements OnInit {
   routeState: any;
   redirectTo = "";
   id: string = "";
+  @ViewChild('autosize') autosize!: CdkTextareaAutosize;
+  updated = false;
 
   constructor(
     private personService: PersonService,
@@ -31,8 +35,9 @@ export class CreateAndEditPersonComponent implements OnInit {
     private fb: FormBuilder,
     private toastr: ToastrService,
     private router: Router,
-    private route: ActivatedRoute ,
+    private route: ActivatedRoute,
     public dialogRef: MatDialogRef<CreateAndEditPersonComponent>,
+    private _ngZone: NgZone,
     @Inject(MAT_DIALOG_DATA) public data?: DialogData,
   ) {
     this.fg = this.fb.group({});
@@ -40,6 +45,7 @@ export class CreateAndEditPersonComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.updated = false;
     this.id = this.data?.id || ''; //this.route.snapshot.params.id;
     this.redirectTo = this.routeState.redirectTo || ""
     this.typePeopleService.list({ not_paginator: true }).subscribe((data: TypePeople[]) => {
@@ -55,7 +61,9 @@ export class CreateAndEditPersonComponent implements OnInit {
         type_person: ["", Validators.required],
         company: [""],
         rif: [""],
-        is_active: [true, Validators.required],
+        is_active: [true],
+        blacklist: [false],
+        blacklist_reason: [""],
       },
       {}
     );
@@ -63,6 +71,11 @@ export class CreateAndEditPersonComponent implements OnInit {
       this.update = true;
       this.getPerson();
     }
+  }
+
+  triggerResize() {
+    // Wait for changes to be applied, then trigger textarea resize.
+    this._ngZone.onStable.pipe(take(1)).subscribe(() => this.autosize.resizeToFitContent(true));
   }
 
   requiredCompanyData = (typeId: string) => this.listap.find(t => t.id == typeId)?.requires_company_data;
@@ -81,8 +94,6 @@ export class CreateAndEditPersonComponent implements OnInit {
     this.fg.reset();
     if (this.data?.redirect == true)
       this.router.navigate([this.redirectTo || "person"]);
-   
-       
   }
 
   save() {
@@ -117,6 +128,9 @@ export class CreateAndEditPersonComponent implements OnInit {
       this.fg.get("type_person")!.setValue(data.type_person);
       this.fg.get("company")!.setValue(data.company);
       this.fg.get("rif")!.setValue(data.rif);
+
+      this.fg.get("blacklist")!.setValue(data.blacklist);
+      this.fg.get("blacklist_reason")!.setValue(data.blacklist_reason);
     });
   }
 
@@ -124,9 +138,9 @@ export class CreateAndEditPersonComponent implements OnInit {
     this.personService.update(this.id, this.fg.value).subscribe(
       (data) => {
         this.toastr.success("Persona actualizada!");
+        this.updated = true;
         this.submitted = false;
-        this.fg.reset();
-        this.router.navigate(["person"]);
+        this.getPerson();
       },
       (error: HttpErrorResponse) => {
         this.submitted = false;
