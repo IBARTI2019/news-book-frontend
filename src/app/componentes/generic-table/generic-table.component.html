@@ -1,5 +1,5 @@
 <ng-template #defaultTextTemplate let-column="column" let-i="i" let-item="item">
-    {{getRealValue(item, column.dataAttribute  || column.attribute, column.shortUUID) || column.default || textDefault}}
+    {{getRealValue(item, column.dataAttribute || column.attribute, column.shortUUID) || column.default || textDefault}}
 </ng-template>
 
 <ng-template #defaultImgTemplate let-column="column" let-item="item" let-i="i">
@@ -104,55 +104,60 @@
             <ng-container *ngFor="let column of columns; index as idx;"
                 [cdkColumnDef]="column.dataAttribute ? column.dataAttribute + '-filters' : column.attribute + '-filters'">
                 <th mat-header-cell *cdkHeaderCellDef>
-                    <mat-form-field class="row-filter" *ngIf="column.disableFilter !== true && column.type==='bool' &&
+                    <div *ngIf="!column.hideFilter && column.attribute != 'cbColumn'">
+                        <mat-form-field class="row-filter" *ngIf="column.disableFilter !== true && column.type==='bool' &&
                         !column.hideFilter">
-                        <mat-select (selectionChange)="applyFilter2($event, idx, true)" value=""
-                            [name]="'search-' + column.attribute" class="form-control form-control-sm">
-                            <mat-option value="true">SI</mat-option>
-                            <mat-option value="false">NO</mat-option>
-                        </mat-select>
-                    </mat-form-field>
-                    <mat-form-field class="row-filter"
-                        *ngIf="column.disableFilter !== true && filters[idx]?.type === 'select'  && !column.hideFilter">
-                        <mat-select [name]="'search-' + column.attribute" (selectionChange)="applyFilter2($event, idx, true)"
-                            value="" [multiple]="filters[idx]?.multiple">
-                            <mat-option *ngFor="let option of filters[idx].options"
-                                [value]="getRealValue(option, filters[idx].optionValueAttribute || defaultOptionValueAttribute)">
-                                {{getRealValue(option, filters[idx].optionDisplayAttribute ||
-                                defaultOptionDisplayAttribute)}}
-                            </mat-option>
-                        </mat-select>
-                    </mat-form-field>
-                    <mat-form-field class="row-filter"
-                        *ngIf="column.disableFilter !== true && (filters[idx]?.type === 'html' || !filters[idx]) && column.type !== 'bool'  && !column.hideFilter">
-                        <input color="primary" placeholder="filtrar" matInput [type]="filters[idx]?.dataType || 'text'"
-                            [name]="'search-' + column.attribute" (change)="applyFilter2($event, idx, true)" />
-                    </mat-form-field>
-                    <div class="row-filter"
-                        *ngIf="column.disableFilter !== true && filters[idx]?.type === 'range' && filters[idx].dataType === 'number'  && !column.hideFilter">
-                        <mat-form-field>
-                            <input type="number" color="primary" placeholder="min" matInput
-                                [name]="'min_' + column.attribute + '_range-min'" class="form-control form-control-sm"
+                            <mat-select (selectionChange)="applyFilter2($event, idx, true)" value=""
+                                [name]="'search-' + column.attribute" class="form-control form-control-sm">
+                                <mat-option value="">TODOS</mat-option>
+                                <mat-option value="true">SI</mat-option>
+                                <mat-option value="false">NO</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-form-field class="row-filter"
+                            *ngIf="column.disableFilter !== true && filters[idx]?.type === 'select'  && !column.hideFilter">
+                            <mat-select [name]="'search-' + column.attribute"
+                                (selectionChange)="applyFilter2($event, idx, true)" value=""
+                                [multiple]="filters[idx]?.multiple">
+                                <mat-option *ngFor="let option of filters[idx].options"
+                                    [value]="getRealValue(option, filters[idx].optionValueAttribute || defaultOptionValueAttribute)">
+                                    {{getRealValue(option, filters[idx].optionDisplayAttribute ||
+                                    defaultOptionDisplayAttribute)}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-form-field class="row-filter"
+                            *ngIf="column.disableFilter !== true && (filters[idx]?.type === 'html' || !filters[idx]) && column.type !== 'bool'  && !column.hideFilter">
+                            <input color="primary" placeholder="filtrar" matInput
+                                [type]="filters[idx]?.dataType || 'text'" [name]="'search-' + column.attribute"
                                 (change)="applyFilter2($event, idx, true)" />
                         </mat-form-field>
-                        <mat-form-field>
-                            <input type="number" color="primary" placeholder="max" matInput
-                                [name]="'max_' + column.attribute + '_range-max'" class="form-control  form-control-sm"
-                                (change)="applyFilter2($event, idx, true)" />
-                        </mat-form-field>
-                    </div>
-                    <div class="row-filter"
-                        *ngIf="column.disableFilter !== true && filters[idx]?.type === 'range' && filters[idx].dataType === 'date'  && !column.hideFilter">
-                        <mat-form-field>
-                            <input type="date" color="primary" placeholder="desde" matInput
-                                [name]="'min_' + column.attribute + '_date-min'" class="form-control form-control-sm"
-                                (change)="applyFilter2($event, idx, true)" />
-                        </mat-form-field>
-                        <mat-form-field>
-                            <input #dateMax type="date" color="primary" placeholder="hasta" matInput
-                                [name]="'max_' + column.attribute + '_date-max'" class="form-control form-control-sm"
-                                (change)="applyFilter2($event, idx, true)" />
-                        </mat-form-field>
+                        <div class="row-filter"
+                            *ngIf="column.disableFilter !== true && filters[idx]?.type === 'range' && filters[idx].dataType === 'number'  && !column.hideFilter">
+                            <mat-form-field>
+                                <input type="number" color="primary" placeholder="min" matInput
+                                    [name]="'min_' + column.attribute + '_range-min'"
+                                    class="form-control form-control-sm" (change)="applyFilter2($event, idx, true)" />
+                            </mat-form-field>
+                            <mat-form-field>
+                                <input type="number" color="primary" placeholder="max" matInput
+                                    [name]="'max_' + column.attribute + '_range-max'"
+                                    class="form-control  form-control-sm" (change)="applyFilter2($event, idx, true)" />
+                            </mat-form-field>
+                        </div>
+                        <div class="row-filter"
+                            *ngIf="column.disableFilter !== true && filters[idx]?.type === 'range' && filters[idx].dataType === 'date'  && !column.hideFilter">
+                            <mat-form-field>
+                                <input type="date" color="primary" placeholder="desde" matInput
+                                    [name]="'min_' + column.attribute + '_date-min'"
+                                    class="form-control form-control-sm" (change)="applyFilter2($event, idx, true)" />
+                            </mat-form-field>
+                            <mat-form-field>
+                                <input #dateMax type="date" color="primary" placeholder="hasta" matInput
+                                    [name]="'max_' + column.attribute + '_date-max'"
+                                    class="form-control form-control-sm" (change)="applyFilter2($event, idx, true)" />
+                            </mat-form-field>
+                        </div>
                     </div>
                 </th>
             </ng-container>

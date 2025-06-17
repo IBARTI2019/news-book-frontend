@@ -44,6 +44,9 @@ export interface DTColumn {
   /** Define que propiedad del objeto de una columna se mostrará en el excel 
    * (Funciona solo si el atributo objectExcelColumn esta) */
   propertyObjectExcelColumn?: string;
+
+  /** Define si a la columna se le oculta el filtro o no */
+  hideFilter?: boolean;
 }
 
 export interface DTFilterField {
