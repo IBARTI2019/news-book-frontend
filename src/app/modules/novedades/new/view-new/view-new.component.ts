@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { QuestionBase } from '../../../../dynamic-forms/classes';
 import { QuestionService } from '../../../../dynamic-forms/services/question.service';
 import { TemplateTypeNew, New } from '../../../../interfaces';
@@ -8,6 +8,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IbartiService } from 'app/services/ibarti.service';
+import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 
 @Component({
   selector: 'app-view-new',
@@ -23,21 +24,25 @@ export class ViewNewComponent implements OnInit {
   _new: New = { id: "", employee: "" };
   client: any;
   submitted = false;
-
+  loading = true;
+  
   constructor(private newService: NewService,
     private toastr: ToastrService,
     private route: ActivatedRoute,
     private serviceQuestion: QuestionService,
     private ibartiService: IbartiService,
-    private router: Router
+    private router: Router,
+    @Inject(MAT_DIALOG_DATA) public data?: New,
   ) {
   }
 
   ngOnInit(): void {
-    this.id = this.route.snapshot.params.id;
+    // this.id = this.route.snapshot.params.id;
+    this.id = this.data?.id || '';
     this.ibartiService.location_current().subscribe((client) => {
       this.client = client;
     });
+    this.loading = true;
     this.newService.get(this.id).subscribe(
       (_new: New) => {
         this._new = _new;
@@ -47,8 +52,10 @@ export class ViewNewComponent implements OnInit {
           this._new.template = []
         }
         this.generateControls(this._new.template);
+        this.loading = false;
       },
       (error: HttpErrorResponse) => {
+        this.loading = false;
         this.toastr.error(
           error.error.message || "No se pudo obtener el tipo de novedad."
         );

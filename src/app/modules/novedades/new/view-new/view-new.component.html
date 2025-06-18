@@ -1,26 +1,33 @@
-<div fxLayout="row wrap">
-    <div fxFlex.gt-xs="100" fxFlex="100">
-        <mat-card>
-            <app-card-header modulo="Novedades" menu="Ver Novedad" >
-            </app-card-header>
-            <mat-card-content>
-                <app-new-header [client]="client" [new]="_new" [readOnly]="true"></app-new-header>
-                <app-dymamic-form *ngIf="!generating" [questions]="controls$ | async" [readOnly]="true"
-                    [info]="_new.info" [new]="_new" (onSaveChange)="updateNew($event)">
-                </app-dymamic-form>
 
-                <div *ngIf="_new" class="link-container">
-                    <p class="link-text">{{ _new.link }}</p>
-                    <div class="button-container">
-                      <button mat-icon-button type="button" (click)="openLink()" matTooltip="Abrir enlace">
-                        <mat-icon inline="true">open_in_new</mat-icon>
-                      </button>
-                      <button mat-icon-button type="button" (click)="copyLink()" matTooltip="Copiar enlace">
-                        <mat-icon inline="true">link</mat-icon>
-                      </button>
-                    </div>
-                  </div>
-            </mat-card-content>
-        </mat-card>
-    </div>
+<app-spinner *ngIf="loading"></app-spinner>
+<div fxLayout="row wrap"  *ngIf="!loading">
+  <div fxFlex.gt-xs="100" fxFlex="100">
+    <mat-card>
+      <mat-card-content>
+        <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="5px" fxLayoutAlign="end">
+          <button mat-raised-button type="button" [mat-dialog-close]="false">Cerrar</button>
+        </div>
+        <app-new-header [client]="client" [new]="_new" [readOnly]="true"></app-new-header>
+        <app-dymamic-form *ngIf="!generating" [questions]="controls$ | async" [readOnly]="true" [info]="_new.info"
+          [new]="_new" (onSaveChange)="updateNew($event)">
+        </app-dymamic-form>
+
+        <div *ngIf="_new" class="link-container">
+          <p class="link-text">{{ _new.link }}</p>
+          <div class="button-container">
+            <button mat-icon-button type="button" (click)="openLink()" matTooltip="Abrir enlace">
+              <mat-icon inline="true">open_in_new</mat-icon>
+            </button>
+            <button mat-icon-button type="button" (click)="copyLink()" matTooltip="Copiar enlace">
+              <mat-icon inline="true">link</mat-icon>
+            </button>
+          </div>
+        </div>
+        <br>
+        <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="5px" fxLayoutAlign="end">
+          <button mat-raised-button type="button" [mat-dialog-close]="false">Cerrar</button>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
 </div>
