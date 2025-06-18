@@ -10,6 +10,8 @@ import { HttpErrorResponse } from "@angular/common/http";
 import { SessionService } from '../../../services/session.service';
 import { TypeNewService } from "../../../services/type-new.service";
 import { TypePeopleService } from '../../../services/type-people.service';
+import { MatDialog } from "@angular/material/dialog";
+import { ViewNewComponent } from "./view-new/view-new.component";
 
 @Component({
   selector: "app-new",
@@ -53,7 +55,8 @@ export class NewComponent implements OnInit {
     private typePersonService: TypePeopleService,
     private router: Router,
     private dialogService: ConfirmDialogService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    public dialog: MatDialog
   ) { }
 
   showCheck = () => true;
@@ -120,6 +123,24 @@ export class NewComponent implements OnInit {
 
   view(id: string) {
     this.router.navigate(["new/view", id]);
+  }
+
+  showModalViewNew(id?: string) {
+    const dialogRef = this.dialog.open(ViewNewComponent, {
+      minWidth: '600px',
+      width: '100%',
+      height: '96%',
+      data: {
+        id: id
+      },
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+      if (result) {
+        this.table.refresh();
+      }
+    });
   }
 
   delete(localNew: New) {
