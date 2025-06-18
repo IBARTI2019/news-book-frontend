@@ -119,6 +119,7 @@
                             <mat-select [name]="'search-' + column.attribute"
                                 (selectionChange)="applyFilter2($event, idx, true)" value=""
                                 [multiple]="filters[idx]?.multiple">
+                                <mat-option value="" *ngIf="!filters[idx].multiple">TODOS</mat-option>
                                 <mat-option *ngFor="let option of filters[idx].options"
                                     [value]="getRealValue(option, filters[idx].optionValueAttribute || defaultOptionValueAttribute)">
                                     {{getRealValue(option, filters[idx].optionDisplayAttribute ||

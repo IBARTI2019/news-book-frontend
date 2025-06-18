@@ -22,8 +22,14 @@
                             <span>{{ item?.type_news_display?.description}}</span>
                         </div>
                     </ng-template>
+                    <ng-template #templatePersonTypes let-column="column" let-item="item" let-i="i">
+                        <div *ngFor="let detail of item.person_types_details">
+                            <span>{{ detail.descripcion }}</span>
+                        </div>
+                        <div *ngIf="item.person_types_details?.length == 0"><span>N/A</span></div>
+                    </ng-template>
                     <app-generic-table fxFlex="100" [columns]="columns" [showFilter]="true" [service]="newService"
-                        [btnRefresh]="true" [templates]="{opciones: templateOpciones, info: templateInfo, type: templateType}"
+                        [btnRefresh]="true" [templates]="{opciones: templateOpciones, info: templateInfo, type: templateType, personTypes: templatePersonTypes}"
                         [showFilters]="true" [filters]="filters" [serviceMethodParams]="params" #table>
                     </app-generic-table>
                 </div>
