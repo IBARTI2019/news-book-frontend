@@ -154,6 +154,34 @@
       </ng-template>
     </mat-expansion-panel>
   </ng-template>
+  <ng-template [ngxPermissionsOnly]="['ADMIN']">
+    <mat-expansion-panel [class.mat-elevation-z0]="true" dense>
+      <mat-expansion-panel-header>
+        <mat-icon aria-hidden="false" aria-label="News">security</mat-icon>
+        Gestión Accesos
+      </mat-expansion-panel-header>
+      <ng-template [ngxPermissionsOnly]="['ADMIN']">
+        <mat-nav-list dense>
+          <a mat-list-item [routerLink]="['access']">
+            <span>
+              <mat-icon aria-hidden="false" aria-label="Gestión Accesos">security_update_good</mat-icon>
+              Gestión Accesos
+            </span>
+            <span fxFlex></span>
+          </a>
+        </mat-nav-list>
+        <mat-nav-list dense>
+          <a mat-list-item [routerLink]="['access/groups']">
+            <span>
+              <mat-icon aria-hidden="false" aria-label="Grupos">group_add</mat-icon>
+              Grupos
+            </span>
+            <span fxFlex></span>
+          </a>  
+        </mat-nav-list>
+      </ng-template>  
+    </mat-expansion-panel>
+  </ng-template>
   <ng-template [ngxPermissionsOnly]="['ADMIN', 'AUDITOR', 'SUPERVISOR', 'USER']">
     <mat-expansion-panel [class.mat-elevation-z0]="true" dense>
       <mat-expansion-panel-header>

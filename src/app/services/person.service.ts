@@ -14,4 +14,8 @@ export class PersonService extends API<Person> {
     super(http);
   }
 
+  getPersonByIdentification(identification: string) {
+    return this.http.get<Person>(`${this.URL}get-person?identification=${identification}`);
+  }
+
 }

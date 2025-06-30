@@ -132,6 +132,19 @@ export const AppRoutes: Routes = [
               ),
           },
           {
+            path: "access",
+            canLoad: [NgxPermissionsGuard],
+            data: {
+              permissions: {
+                only: [ADMIN, USER, SUPERVISOR],
+              }
+            },
+            loadChildren: () =>
+              import("app/modules/gestion-accesos/gestion-accesos.module").then(
+                (m) => m.GestionAccesosModule
+              ),
+          },
+          {
             path: "listemail",
             canLoad: [NgxPermissionsGuard],
             data: {

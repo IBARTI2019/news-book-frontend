@@ -6,6 +6,7 @@ import { PersonsSettings, Person, TypePeople } from 'app/interfaces';
 import { TypePeopleService } from 'app/services/type-people.service';
 import { ToastrService } from 'ngx-toastr';
 import { BlacklistAlertComponent } from '../blacklist-alert/blacklist-alert.component';
+import { PersonService } from '../../services/person.service';
 const OWNER_TYPES = [
   {
     id: "employee",
@@ -51,7 +52,6 @@ export const PERSONS_LIST_DEFAULT: PersonsSettings = {
   showButtonNew: true
 };
 
-
 @Component({
   selector: 'app-person',
   templateUrl: './person.component.html',
@@ -79,8 +79,9 @@ export class PersonComponent implements OnInit {
   defaultValues = { ...PERSONS_LIST_DEFAULT };
   personCurrentseg: any = { description: "", cedula: "", nombres: "", apellidos: "", observacion: "", year: "", license_plate: "" };
   materialCurrent: any = { description: "", mark: "", model: "", color: "", serial: "", year: "", license_plate: "" }
+  checkPersonTimeController: any = null;
 
-  constructor(private toastr: ToastrService, private typePersonService: TypePeopleService, public dialog: MatDialog) { }
+  constructor(private toastr: ToastrService, private typePersonService: TypePeopleService, private personService: PersonService, public dialog: MatDialog) { }
 
 
   ngOnInit(): void {
@@ -149,26 +150,42 @@ export class PersonComponent implements OnInit {
   }
 
   getPerson(identification_number: string) {
-    /// console.log('PERSONA', identification_number, 'array',this.personsArr);
-    let index = this.personsArr.findIndex(v => v.doc_ident == identification_number);
-    if (index > -1) {
-      if (this.personsArr[index].blacklist == true) {
-        this.showBlacklistAlert(this.personsArr[index])
-        this.fPerson.get("identification_number")!.setValue("");
-      } else {
-        this.fPerson.get("full_name")!.setValue(this.personsArr[index].full_name);
-        this.tp = String(this.personsArr[index].type_person);
+    clearTimeout(this.checkPersonTimeController);
+    this.checkPersonTimeController = setTimeout(() => {
+      this.personService.getPersonByIdentification(identification_number).subscribe((resp: any) => {
+        // Si la persona no existe
+        if (!resp.person) {
+          this.toastr.error(resp.message || 'La persona no existe');
+          this.fPerson.get("identification_number")!.setValue("");
+          return;
+        }
+        // Si está en blacklist
+        if (resp.blacklist) {
+          this.showBlacklistAlert(resp.person);
+          this.fPerson.get("identification_number")!.setValue("");
+          return;
+        }
+        // Si no tiene acceso vigente
+        if (!resp.has_access) {
+          this.showNoAccessAlert(resp.person, resp.message || 'No tiene acceso permitido en este momento', resp.access_list);
+          this.fPerson.get("identification_number")!.setValue("");
+          return;
+        }
+        // Si todo está bien, llenar los datos
+        const data = resp.person;
+        this.fPerson.get("full_name")!.setValue(data.full_name);
+        this.tp = String(data.type_person);
         this.fPerson.get("type_person")!.setValue(this.tp);
-        this.fPerson.get("company_name")!.setValue(this.personsArr[index].company);
-        this.fPerson.get("rif")!.setValue(this.personsArr[index].rif);
-        this.fPerson.get("reason_visit").setValue(this.personsArr[index].default_visit_reason);
-        this.fPerson.get("place_of_reception").setValue(this.personsArr[index].default_visit_location);
+        this.fPerson.get("company_name")!.setValue(data.company);
+        this.fPerson.get("rif")!.setValue(data.rif);
+        this.fPerson.get("reason_visit").setValue(data.default_visit_reason);
+        this.fPerson.get("place_of_reception").setValue(data.default_visit_location);
 
         let typePerson = this.personTypes.find(tp => tp.id == this.tp);
         if (typePerson)
           this.check(typePerson);
-      }
-    }
+      });
+    }, 1100);
   }
 
   private showBlacklistAlert(person: Person): void {
@@ -178,6 +195,16 @@ export class PersonComponent implements OnInit {
       autoFocus: false,
       panelClass: 'blacklist-dialog',
       data: { person }
+    });
+  }
+
+  private showNoAccessAlert(person: any, message: string, access_list: any[]): void {
+    this.dialog.open(BlacklistAlertComponent, {
+      width: '450px',
+      disableClose: true,
+      autoFocus: false,
+      panelClass: 'blacklist-dialog',
+      data: { person, message, noAccess: true, access_list }
     });
   }
 

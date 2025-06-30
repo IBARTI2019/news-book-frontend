@@ -1,0 +1,77 @@
+<h2 mat-dialog-title>{{ data?.title ? 'Editar Acceso' : 'Nuevo Acceso' }}</h2>
+<form [formGroup]="accessForm" (ngSubmit)="onSubmit()" mat-dialog-content fxLayout="column" fxLayoutGap="16px">
+  <mat-form-field appearance="fill" class="full-width">
+    <mat-label>Título</mat-label>
+    <input matInput formControlName="title" required>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" class="full-width">
+    <mat-label>Descripción</mat-label>
+    <textarea matInput formControlName="description"></textarea>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" class="full-width">
+    <mat-label>Tipo de acceso</mat-label>
+    <mat-select formControlName="access_type">
+      <mat-option *ngFor="let tipo of accessTypes" [value]="tipo.value">{{ tipo.label }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" class="full-width" *ngIf="accessForm.get('access_type')?.value === SINGLE">
+      <mat-label>Fecha inicio</mat-label>
+      <input matInput [matDatepicker]="picker" formControlName="date_start">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+
+  
+    <mat-form-field appearance="fill" class="full-width" *ngIf="accessForm.get('access_type')?.value === SINGLE">
+      <mat-label>Fecha fin</mat-label>
+      <input matInput [matDatepicker]="picker" formControlName="date_end">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+
+  <div fxLayout="row wrap" fxLayoutGap="16px" class="horas-row">
+    <mat-form-field appearance="fill" fxFlex="100" fxFlex.gt-sm="45">
+      <mat-label>Hora inicio</mat-label>
+      <input matInput type="time" formControlName ="start_time" required>
+    </mat-form-field>
+    <mat-form-field appearance="fill" fxFlex="100" fxFlex.gt-sm="45">
+      <mat-label>Hora fin</mat-label>
+      <input matInput type="time" formControlName="end_time" required>
+    </mat-form-field>
+  </div>
+
+  <div *ngIf="accessForm.get('access_type')?.value === RECURRING" fxLayout="row wrap" fxLayoutGap="8px">
+    <label fxFlex="100">Días de la semana</label>
+    <mat-checkbox *ngFor="let day of weekDays" 
+                  [formControl]="getWeekDayControl(day.value)"
+                  (change)="onWeekDayChange($event, day.value)">
+      {{ day.label }}
+    </mat-checkbox>
+  </div>
+
+  <mat-form-field appearance="fill" class="full-width">
+    <mat-label>Personas</mat-label>
+    <mat-select formControlName="persons" multiple>
+      <mat-option *ngFor="let person of persons" [value]="person.id">
+        {{ person.name }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" class="full-width">
+    <mat-label>Grupo</mat-label>
+    <mat-select formControlName="group">
+      <mat-option *ngFor="let group of groups" [value]="group.id">
+        {{ group.name }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <div mat-dialog-actions align="end" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="8px">
+    <button mat-button type="button" (click)="onCancel()">Cancelar</button>
+    <button mat-raised-button color="primary" type="submit" [disabled]="!accessForm.valid">Guardar</button>
+  </div>
+</form> 

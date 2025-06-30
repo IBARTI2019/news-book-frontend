@@ -72,3 +72,43 @@ tr.example-element-row:not(.example-expanded-row):active {
 }
 
 .hide { display: none; }
+
+/* Ajuste para que los filtros no desborden la columna */
+tr.mat-header-row th .row-filter,
+tr.mat-header-row th .row-filter mat-form-field,
+tr.mat-header-row th .row-filter input,
+tr.mat-header-row th .row-filter mat-select {
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+tr.mat-header-row th .row-filter mat-form-field {
+  margin: 0;
+}
+
+tr.mat-header-row th .row-filter input {
+  padding: 0 4px;
+}
+
+/* El paginador se desplaza junto con la tabla */
+.example-container {
+  width: 100%;
+  overflow-x: auto;
+  position: relative;
+}
+
+.example-container table {
+  width: 100%;
+}
+
+.example-container .mat-paginator {
+  width: 100%;
+  margin-top: 8px;
+  position: sticky;
+  right: 0;
+  background: white;
+  z-index: 2;
+  display: flex;
+  justify-content: flex-end;
+}
