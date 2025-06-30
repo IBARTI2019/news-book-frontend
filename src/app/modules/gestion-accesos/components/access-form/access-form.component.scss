@@ -1,0 +1,17 @@
+/* Estilos base para el formulario de acceso */ 
+.full-width {
+  width: 100%;
+}
+
+.horas-row {
+  display: flex;
+  gap: 1rem;
+}
+
+mat-form-field {
+  margin-bottom: 1rem;
+}
+
+mat-dialog-actions {
+  margin-top: 1.5rem;
+} 

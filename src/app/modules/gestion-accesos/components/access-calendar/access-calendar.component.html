@@ -1,0 +1,47 @@
+<div fxLayout="row" fxLayoutAlign="space-between center" class="calendar-header">
+  <h2>Calendario de Accesos</h2>
+  <button mat-raised-button color="primary" (click)="openNewAccess()">Nuevo Acceso</button>
+</div>
+
+<div fxLayout="row wrap" fxLayoutGap="16px" class="calendar-filters">
+  <!-- Aquí irán los filtros por persona y grupo -->
+  <mat-form-field appearance="fill" fxFlex="100" fxFlex.gt-sm="200px">
+    <mat-label>Filtrar por persona</mat-label>
+    <input matInput placeholder="Nombre de persona">
+  </mat-form-field>
+  <mat-form-field appearance="fill" fxFlex="100" fxFlex.gt-sm="200px">
+    <mat-label>Filtrar por grupo</mat-label>
+    <input matInput placeholder="Nombre de grupo">
+  </mat-form-field>
+</div>
+
+<div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap="32px" class="calendar-container">
+  <div fxFlex="100" fxFlex.gt-sm="60" style="min-width: 280px;">
+    <mat-calendar [selected]="selectedDate" (selectedChange)="selectDate($event)"></mat-calendar>
+  </div>
+  <div class="event-list" fxFlex="100" fxFlex.gt-sm="40">
+    <h3>Accesos del día</h3>
+    <ng-container *ngIf="accessesOfDay.length; else sinAccesos">
+      <div fxLayout="column" fxLayoutGap="12px">
+        <mat-card *ngFor="let acceso of accessesOfDay" class="acceso-item" style="cursor:pointer;">
+          <div fxLayout="row" fxLayoutAlign="space-between start">
+            <mat-card-content (click)="editAccess(acceso)" fxFlex>
+              <strong>{{ acceso?.title }}</strong>
+              <span *ngIf="acceso?.access_type === RECURRING" class="recurring-badge">(Recurrente)</span>
+              <br>
+              <!-- <span>{{ acceso?.persons_display?.map(p => p.name).join(', ') }} </span> -->
+              <span *ngIf="acceso?.group_display">({{ acceso?.group_display?.name }})</span><br>
+              <span>{{ acceso?.start_time }} - {{ acceso?.end_time }}</span>
+            </mat-card-content>
+            <button mat-icon-button color="warn" (click)="deleteAccess(acceso)" matTooltip="Eliminar acceso">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+        </mat-card>
+      </div>
+    </ng-container>
+    <ng-template #sinAccesos>
+      <p>No hay accesos para este día.</p>
+    </ng-template>
+  </div>
+</div> 

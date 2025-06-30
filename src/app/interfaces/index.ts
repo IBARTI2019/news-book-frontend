@@ -478,3 +478,26 @@ export interface AttachedFileSettings {
 export interface ErrataSettings {
   percentage?: number;
 }
+
+export interface AccessEntryModel {
+  id: number;
+  title: string;
+  description?: string;
+  person: string;
+  group?: string;
+  date_start: Date;
+  date_end: Date;
+  start_time: string;
+  end_time: string;
+  week_days?: string[];
+  access_type?: string;
+  persons_display?: Person[];
+  group_display?: AccessGroupModel;
+}
+
+export interface AccessGroupModel {
+  id: number;
+  name: string;
+  description?: string;
+  persons: number[];
+}

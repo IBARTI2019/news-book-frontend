@@ -1,0 +1,32 @@
+<div fxLayout="column" fxLayoutGap="24px">
+  <div fxLayout="row" fxLayoutAlign="space-between center">
+    <h2>Gestión de Grupos de Acceso</h2>
+    <button mat-raised-button color="primary" (click)="newGroup()">Nuevo Grupo</button>
+  </div>
+
+  <div fxLayout="row wrap" fxLayoutGap="24px">
+    <div fxFlex="100" fxFlex.gt-sm="80">
+      <div fxLayout="row wrap" fxLayoutGap="16px">
+        <mat-card *ngFor="let group of groups" fxFlex="100" fxFlex.gt-sm="45" style="min-width: 260px;">
+          <mat-card-header>
+            <mat-card-title (click)="editGroup(group)">{{ group.name }}</mat-card-title>
+            <mat-card-subtitle (click)="editGroup(group)">{{ group.description }}</mat-card-subtitle>
+            <button mat-icon-button color="warn" (click)="deleteGroup(group)" matTooltip="Eliminar grupo" style="margin-left:auto;">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </mat-card-header>
+          <mat-card-content>
+            <div (click)="editGroup(group)" style="cursor:pointer;">
+              <span *ngIf="group.persons?.length">{{ group.persons.length }} persona(s) asignada(s)</span>
+              <mat-chip-list *ngIf="group.persons?.length" fxLayout="row wrap" fxLayoutGap="4px">
+                <mat-chip *ngFor="let personId of group.persons">
+                  {{ getPersonName(personId) }}
+                </mat-chip>
+              </mat-chip-list>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+</div> 
