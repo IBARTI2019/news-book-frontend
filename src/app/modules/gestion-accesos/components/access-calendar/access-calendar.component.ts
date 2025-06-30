@@ -77,9 +77,13 @@ export class AccessEntriesCalendarComponent implements OnInit {
 
   get accessesOfDay(): AccessEntryModel[] {
     return this.accesses.filter(a => {
+      const selectedDateObj = new Date(this.selectedDate);
+      const startDateObj = new Date(a.date_start);
+      const endDateObj = new Date(a.date_end);
+      
       // Accesos normales (single) que coinciden exactamente con la fecha seleccionada
-      const isSingleAccess = a.access_type === AccessEntryService.SINGLE && new Date(a.date_start).toDateString() >= this.selectedDate.toDateString() &&
-      new Date(a.date_end).toDateString() <= this.selectedDate.toDateString()
+      const isSingleAccess = a.access_type === AccessEntryService.SINGLE
+        && selectedDateObj >= startDateObj && selectedDateObj <= endDateObj;
   
       // Accesos recurrentes que aplican para el día seleccionado
       const isRecurringAccess = a.access_type === AccessEntryService.RECURRING
@@ -91,11 +95,9 @@ export class AccessEntriesCalendarComponent implements OnInit {
   
   // Función para verificar si el día seleccionado coincide con los días de la semana del acceso recurrente
   private matchesWeekDay(weekDays: string[], selectedDate: Date): boolean {
-    if (!weekDays || weekDays.length === 0) return false;
-    
     const dayNames = AccessEntryService.weekDays.map(day => day.value);
-    const currentDay = dayNames[selectedDate.getDay()-1];
-    
+    const dayIndex = selectedDate.getDay();
+    const currentDay = dayNames[dayIndex];
     return weekDays.includes(currentDay);
   }
 
@@ -128,7 +130,7 @@ export class AccessEntriesCalendarComponent implements OnInit {
   }
 
   deleteAccess(access: AccessEntryModel) {
-    const dialogRef = this.dialog.open(ConfirmDialogComponent);
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {data: {title: 'Eliminar acceso', message: '¿Estás seguro de querer eliminar este acceso?', confirmText: 'Eliminar', cancelText: 'Cancelar'}});
     dialogRef.afterClosed().subscribe(confirmed => {
       if (confirmed) {
         this.accessEntryService.deleteAccessEntry(access.id).subscribe(() => this.loadAccesses());

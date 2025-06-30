@@ -11,13 +11,13 @@ export class AccessEntryService extends API<any> {
   public static RECURRING = 'recurrent';
 
   public static weekDays = [
+    { value: 'Sunday', label: 'Domingo' },
     { value: 'Monday', label: 'Lunes' },
     { value: 'Tuesday', label: 'Martes' },
     { value: 'Wednesday', label: 'Miercoles' },
     { value: 'Thursday', label: 'Jueves' },
     { value: 'Friday', label: 'Viernes' },
-    { value: 'Saturday', label: 'Sabado' },
-    { value: 'Sunday', label: 'Domingo' }
+    { value: 'Saturday', label: 'Sabado' }
   ];
     
   constructor(protected http: HttpClient) {

@@ -23,7 +23,8 @@ import { AccessEntryFormComponent } from './components/access-form/access-form.c
 import { AccessGroupsComponent } from './components/access-group/access-group.component';
 import { PersonAccessListComponent } from './components/person-access-list/person-access-list.component';
 import { GroupFormComponent } from './components/group-form/group-form.component';
-
+import { ComponentesModule } from '../../componentes/componentes.module';
+  
 @NgModule({
   declarations: [
     AccessEntriesCalendarComponent,
@@ -31,7 +32,8 @@ import { GroupFormComponent } from './components/group-form/group-form.component
     AccessGroupsComponent,
     PersonAccessListComponent,
     GroupFormComponent,
-    ConfirmDialogComponent
+    ConfirmDialogComponent,
+    PersonAccessListComponent 
   ],
   imports: [
     CommonModule,
@@ -53,6 +55,7 @@ import { GroupFormComponent } from './components/group-form/group-form.component
     MatMenuModule,
     MatTabsModule,
     FlexLayoutModule,
+    ComponentesModule,
     GestionAccesosRoutingModule
   ]
 })

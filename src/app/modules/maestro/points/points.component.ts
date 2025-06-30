@@ -29,15 +29,15 @@ export class PointsComponent implements OnInit {
     this.columns = [
       {
         dataAttribute: "code",
-        attribute: "Código",
+        header: "Código",
       },
       {
         dataAttribute: "name",
-        attribute: "Nombre",
+        header: "Nombre",
       },
       {
         dataAttribute: "is_active",
-        attribute: "Activo",
+        header: "Activo",
         type: "bool"
       },
       {
@@ -50,7 +50,7 @@ export class PointsComponent implements OnInit {
   }
 
   update(id: string) {
-    this.router.navigate(["pints", id]);
+    this.router.navigate(["points", id]);
   }
 
   delete(book: Point) {

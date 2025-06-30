@@ -32,11 +32,11 @@ export class VehicleComponent implements OnInit {
     this.columns = [
       {
         dataAttribute: "license_plate",
-        attribute: "Placa Vehiculo",
+        header: "Placa Vehiculo",
       },
       {
         dataAttribute: "owner_full_name",
-        attribute: "Propietario",
+        header: "Propietario",
       },
       {
         header: "Activo",

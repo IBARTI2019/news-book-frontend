@@ -1,22 +1,22 @@
 <ng-template #defaultTextTemplate let-column="column" let-i="i" let-item="item">
-    {{getRealValue(item, column.dataAttribute || column.attribute, column.shortUUID) || column.default || textDefault}}
+    {{getRealValue(item, column.attribute ||column.dataAttribute, column.shortUUID) || column.default || textDefault}}
 </ng-template>
 
 <ng-template #defaultImgTemplate let-column="column" let-item="item" let-i="i">
     <img alt="imagen" *ngIf="!column.routerLink && column.type === 'img'" height="50" width="50"
-        [src]="getRealValue(item, column.dataAttribute || column.attribute) || column.default || imgDefault">
+        [src]="getRealValue(item, column.attribute || column.dataAttribute) || column.default || imgDefault">
 </ng-template>
 
 <ng-template #defaultBoolTemplate let-column="column" let-item="item" let-i="i">
-    {{siNo(getRealValue(item, column.dataAttribute || column.attribute) || column.default)}}
+    {{siNo(getRealValue(item, column.attribute || column.dataAttribute) || column.default)}}
 </ng-template>
 
 <ng-template #defaultDateTemplate let-column="column" let-item="item" let-i="i">
-    {{getRealValue(item, column.dataAttribute || column.attribute)| date: (column.dateFormat || defaultDateFormat)}}
+    {{getRealValue(item, column.attribute || column.dataAttribute)| date: (column.dateFormat || defaultDateFormat)}}
 </ng-template>
 
 <ng-template #defaultJsonTemplate let-column="column" let-item="item" let-i="i">
-    <span *ngFor="let _item of getRealValue(item, column.attribute)|keyvalue">
+    <span *ngFor="let _item of getRealValue(item, column.attribute || column.dataAttribute)|keyvalue">
         <span *ngIf="_item.value"> <strong>{{_item.key|titlecase}}: </strong> {{_item.value}} <br /></span>
     </span>
 </ng-template>

@@ -1,32 +1,57 @@
 <h1 mat-dialog-title class="warning-title">
-    <mat-icon class="warning-icon">warning</mat-icon>
-    ¡USUARIO EN LISTA NEGRA!
-  </h1>
-  
-  <div mat-dialog-content class="warning-content">
-    <div class="warning-message">
+  <mat-icon class="warning-icon">warning</mat-icon>
+  <ng-container *ngIf="!data.noAccess; else noAccessTitle">
+    ¡PERSONA EN LISTA NEGRA!
+  </ng-container>
+  <ng-template #noAccessTitle>
+    ¡ACCESO DENEGADO!
+  </ng-template>
+</h1>
+
+<div mat-dialog-content class="warning-content">
+  <div class="warning-message">
+    <ng-container *ngIf="!data.noAccess; else noAccessMsg">
       <p>La persona {{data.person.full_name}} ({{data.person.doc_ident}}) esta <strong>BLOQUEADA</strong> en el sistema.</p>
       <p>No puede realizar ninguna operación.</p>
-    </div>
-  
-    <mat-card class="warning-card">
-      <mat-card-header>
-        <mat-card-title>Motivo del bloqueo:</mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
-        <p class="reason-text">{{data.person.blacklist_reason}}</p>
-      </mat-card-content>
-    </mat-card>
-  
-    <div class="alert-footer">
-      <mat-icon>error_outline</mat-icon>
-      <span>Contacte al administrador del sistema</span>
-    </div>
+    </ng-container>
+    <ng-template #noAccessMsg>
+      <p>{{data.message || 'No tiene acceso permitido en este momento.'}}</p>
+      <div *ngIf="data.access_list && data.access_list.length > 0">
+        <h3 style="margin-top: 16px; font-size: 1.1em;">Próximo acceso permitido:</h3>
+        <ul style="padding-left: 18px;">
+          <li *ngFor="let acc of data.access_list">
+            <strong>{{acc.title}}</strong>
+            <span *ngIf="acc.access_type === SINGLE">
+              ({{acc.date_start}} - {{acc.date_end}} {{acc.start_time}}-{{acc.end_time}})
+            </span>
+            <span *ngIf="acc.access_type === RECURRING">
+              ({{ weekDaysToSpanish(acc.week_days) }} {{acc.start_time}}-{{acc.end_time}})
+            </span>
+            <span *ngIf="acc.group_display"> - Grupo: {{acc.group_display.name}}</span>
+          </li>
+        </ul>
+      </div>
+    </ng-template>
   </div>
-  
-  <div mat-dialog-actions align="end">
-    <button mat-raised-button color="warn" mat-dialog-close cdkFocusInitial>
-      <mat-icon>check_circle</mat-icon>
-      ENTENDIDO
-    </button>
+
+  <mat-card class="warning-card" *ngIf="!data.noAccess">
+    <mat-card-header>
+      <mat-card-title>Motivo del bloqueo:</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <p class="reason-text">{{data.person?.blacklist_reason || 'No se ha proporcionado un motivo'}}</p>
+    </mat-card-content>
+  </mat-card>
+
+  <div class="alert-footer">
+    <mat-icon>error_outline</mat-icon>
+    <span>Contacte al administrador del sistema</span>
   </div>
+</div>
+
+<div mat-dialog-actions align="end">
+  <button mat-raised-button color="warn" mat-dialog-close cdkFocusInitial>
+    <mat-icon>check_circle</mat-icon>
+    ENTENDIDO
+  </button>
+</div>

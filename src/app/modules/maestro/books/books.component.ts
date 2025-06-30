@@ -29,23 +29,23 @@ export class BooksComponent implements OnInit {
     this.columns = [
       {
         dataAttribute: "code",
-        attribute: "Código",
+        header: "Código",
       },
       {
         dataAttribute: "name",
-        attribute: "Nombre",
+        header: "Nombre",
       },
       {
         dataAttribute: "phone1",
-        attribute: "Telefono 1",
+        header: "Telefono 1",
       },
       {
         dataAttribute: "phone2",
-        attribute: "Telefono 2",
+        header: "Telefono 2",
       },
       {
         dataAttribute: "is_active",
-        attribute: "Activo",
+        header: "Activo",
         type: "bool"
       },
       {

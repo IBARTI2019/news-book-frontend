@@ -9,6 +9,7 @@ import { ToastrService } from "ngx-toastr";
 import { Material } from "../../../interfaces/index";
 import { MaterialsService } from "../../../services/materials.service";
 import { CreateAndEditMaterialComponent } from "./create-and-edit-material/create-and-edit-material.component";
+import { head } from "lodash";
 
 @Component({
   selector: "app-materials",
@@ -32,19 +33,19 @@ export class MaterialsComponent implements OnInit {
     this.columns = [
       {
         dataAttribute: "code",
-        attribute: "Cod Material",
+        header: "Cod Material",
       },
       {
         dataAttribute: "serial",
-        attribute: "Serial Material",
+        header: "Serial Material",
       },
       {
         dataAttribute: "description",
-        attribute: "Descripción",
+        header: "Descripción",
       },
       {
         dataAttribute: "is_active",
-        attribute: "Activo",
+        header: "Activo",
         type: "bool"
       },
       {

@@ -32,35 +32,35 @@ export class PersonComponent implements OnInit {
     this.columns = [
       {
         dataAttribute: "code",
-        attribute: "Cod Persona",
+        header: "Cod Persona",
       },
       {
         dataAttribute: "name",
-        attribute: "Nombres",
+        header: "Nombres",
       },
       {
         dataAttribute: "last_name",
-        attribute: "Apellidos",
+        header: "Apellidos",
       },
       {
         dataAttribute: "doc_ident",
-        attribute: "Cedula",
+        header: "Cedula",
       },
       {
         dataAttribute: "address",
-        attribute: "Direccion",
+        header: "Direccion",
       },
       {
         dataAttribute: "phone",
-        attribute: "Telefono Hab.",
+        header: "Telefono Hab.",
       },
       {
         dataAttribute: "mobile",
-        attribute: "Celular",
+        header: "Celular",
       },
       {
         dataAttribute: "type_person_display.description",
-        attribute: "Tipo de Persona",
+        header: "Tipo de Persona",
       },
       {
         header: "Activo",

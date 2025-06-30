@@ -1,9 +1,45 @@
-<div fxLayout="column" fxLayoutGap="16px">
-  <h2>Accesos de la Persona</h2>
-  <mat-card>
-    <mat-card-title>Lista de accesos</mat-card-title>
-    <mat-card-content>
-      <p>(Próximamente aquí se mostrará la lista de accesos de la persona)</p>
-    </mat-card-content>
-  </mat-card>
+<div fxLayout="row wrap">
+  <div fxFlex.gt-xs="100" fxFlex="100">
+      <mat-card>
+          <app-card-header modulo="Accesos" menu="Gestión de Accesos">
+          </app-card-header>
+          <mat-card-content>
+            <div fxLayout="row" fxLayoutAlign="space-between center" class="calendar-header">
+              <h2>Lista de Accesos</h2>
+              <div>
+                <button mat-raised-button color="primary" (click)="openNewAccess()">Nuevo Acceso</button>
+                
+              </div>
+            </div>
+              <div class="d-flex flex-wrap">
+                  <ng-template #templateOpciones let-column="column" let-item="item" let-i="i">
+                      <div class="button-row">
+                          <button mat-icon-button (click)="editAccess(item)">
+                              <mat-icon>edit</mat-icon>
+                          </button>
+                          <button mat-icon-button (click)="deleteAccess(item)">
+                              <mat-icon>delete</mat-icon>
+                          </button>
+                      </div>
+                  </ng-template>
+                    <ng-template #templateDateRange let-item="item">
+                    <span>{{item.date_start | date: 'dd/MM/yyyy'}}</span><br>
+                    <span>{{item.date_end | date: 'dd/MM/yyyy'}}</span>
+                  </ng-template>
+                  <ng-template #templateTimeRange let-item="item">
+                    <span>{{item.start_time}}</span><br>
+                    <span>{{item.end_time}}</span>
+                  </ng-template>
+                  <ng-template #templatePersons let-item="item">
+                    <span>{{item.persons_display.length}} personas</span>
+                  </ng-template>
+                  <app-generic-table fxFlex="100" [filters]="filters" [showFilters]="true" [columns]="columns" 
+                  [showFilter]="true" [service]="accessEntryService" [btnRefresh]="true" 
+                  [templates]="{opciones: templateOpciones, date_range: templateDateRange, time_range: templateTimeRange, persons: templatePersons}" #table>
+                  </app-generic-table>
+              </div>
+          </mat-card-content>
+      </mat-card>
+  </div>
 </div> 
+    

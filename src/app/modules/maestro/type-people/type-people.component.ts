@@ -33,7 +33,7 @@ export class TypePeopleComponent implements OnInit {
       },
       {
         dataAttribute: "priority",
-        attribute: "Prioridad",
+        header: "Prioridad",
       },
       {
         dataAttribute: "is_institution",
@@ -52,7 +52,6 @@ export class TypePeopleComponent implements OnInit {
       },
       {
         dataAttribute: "is_active",
-        attribute: "Status",
         header: "Activo",
         type: "bool",
       },
