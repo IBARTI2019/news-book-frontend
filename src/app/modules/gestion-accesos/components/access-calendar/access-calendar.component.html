@@ -23,7 +23,7 @@
                         <mat-card *ngFor="let acceso of accessesOfDay" class="acceso-item" style="cursor:pointer;">
                           <div fxLayout="row" fxLayoutAlign="space-between start">
                             <mat-card-content (click)="editAccess(acceso)" fxFlex>
-                              <strong>{{ acceso?.title }}</strong>
+                              <strong>{{ acceso?.title }}</strong><br>
                               <span>{{ acceso?.description }}</span><br>
                               <span *ngIf="acceso?.access_type === RECURRING" class="recurring-badge">(Recurrente)</span>
                               <br>
