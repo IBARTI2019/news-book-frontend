@@ -109,11 +109,17 @@
   </mat-form-field>
 
   <div class="file-upload-container">
-    <button mat-raised-button type="button" color="primary" (click)="fileInput.click()" *ngIf="!this.data.id">
+    <button mat-raised-button type="button" color="primary" (click)="fileInput.click()" *ngIf="!data.id">
       <mat-icon>attach_file</mat-icon>
       Adjuntar comprobante
     </button>
     <input #fileInput type="file" accept="image/*" style="display: none" (change)="onFileChange($event)">
+    <div *ngIf="data.id && data.voucher_display" class="file-download-container">
+      <button mat-raised-button type="button" color="accent" (click)="downloadVoucher()">
+        <mat-icon>download</mat-icon>
+        Descargar comprobante
+      </button>
+    </div>
     <mat-card *ngIf="getImagePreview()" class="file-preview">
       <img mat-card-image [src]="getImagePreview()" class="preview-image">
     </mat-card>

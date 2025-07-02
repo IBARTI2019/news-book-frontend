@@ -307,6 +307,7 @@ export class AccessEntryFormComponent implements OnInit, OnDestroy {
     // Opción 1: Si es una URL directa al archivo
     window.open(this.data.voucher_url, '_blank');
   }
+  
   ngOnDestroy() {
     this.cleanUpPreviewUrl();
   }
