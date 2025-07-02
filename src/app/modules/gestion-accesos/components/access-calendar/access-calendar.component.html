@@ -24,6 +24,7 @@
                           <div fxLayout="row" fxLayoutAlign="space-between start">
                             <mat-card-content (click)="editAccess(acceso)" fxFlex>
                               <strong>{{ acceso?.title }}</strong>
+                              <span>{{ acceso?.description }}</span><br>
                               <span *ngIf="acceso?.access_type === RECURRING" class="recurring-badge">(Recurrente)</span>
                               <br>
                               <!-- <span>{{ acceso?.persons_display?.map(p => p.name).join(', ') }} </span> -->
