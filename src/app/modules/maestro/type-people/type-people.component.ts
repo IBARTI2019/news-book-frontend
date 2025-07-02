@@ -51,6 +51,11 @@ export class TypePeopleComponent implements OnInit {
         type: "bool",
       },
       {
+        dataAttribute: "requires_access_verification",
+        header: "Requiere verificación de acceso",
+        type: "bool",
+      },
+      {
         dataAttribute: "is_active",
         header: "Activo",
         type: "bool",

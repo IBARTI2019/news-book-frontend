@@ -2,9 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AccessEntryFormComponent } from '../access-form/access-form.component';
 import { AccessEntryService } from '../../../../services/access-entry.service';
-import { PersonService } from '../../../../services/person.service';
-import { AccessGroupService } from '../../../../services/access-group.service';
-import { AccessEntryModel, AccessGroupModel, Person } from '../../../../interfaces';
+import { AccessEntryModel } from '../../../../interfaces';
 
 @Component({
   selector: 'app-confirm-dialog',
@@ -29,21 +27,15 @@ export class AccessEntriesCalendarComponent implements OnInit {
   selectedDate: Date = new Date();
   accesses: AccessEntryModel[] = [];
   loading = false;
-  persons: Person[] = [];
-  groups: AccessGroupModel[] = [];
   RECURRING = AccessEntryService.RECURRING;
 
   constructor(
     private dialog: MatDialog,
-    private accessEntryService: AccessEntryService,
-    private personService: PersonService,
-    private accessGroupService: AccessGroupService
+    private accessEntryService: AccessEntryService
   ) {}
 
   ngOnInit() {
     this.loadAccesses();
-    this.loadPersons();
-    this.loadGroups();
   }
 
   loadAccesses() {
@@ -55,22 +47,6 @@ export class AccessEntriesCalendarComponent implements OnInit {
       },
       error: () => {
         this.loading = false;
-      }
-    });
-  }
-
-  loadPersons() {
-    this.personService.list({not_paginator: true}).subscribe({
-      next: (persons) => {
-        this.persons = persons;
-      }
-    });
-  }
-
-  loadGroups() {
-    this.accessGroupService.getAll({not_paginator: true}).subscribe({
-      next: (groups) => {
-        this.groups = groups;
       }
     });
   }
@@ -87,18 +63,19 @@ export class AccessEntriesCalendarComponent implements OnInit {
   
       // Accesos recurrentes que aplican para el día seleccionado
       const isRecurringAccess = a.access_type === AccessEntryService.RECURRING
-        && this.matchesWeekDay(a.week_days || [], this.selectedDate);
+        && this.matchesWeekDay(a.week_days || [], a.specific_days || [], this.selectedDate);
   
       return isSingleAccess || isRecurringAccess;
     });
   }
   
   // Función para verificar si el día seleccionado coincide con los días de la semana del acceso recurrente
-  private matchesWeekDay(weekDays: string[], selectedDate: Date): boolean {
+  private matchesWeekDay(weekDays: string[], specificDays: number[], selectedDate: Date): boolean {
     const dayNames = AccessEntryService.weekDays.map(day => day.value);
     const dayIndex = selectedDate.getDay();
+    const dayNumber = selectedDate.getDate();
     const currentDay = dayNames[dayIndex];
-    return weekDays.includes(currentDay);
+    return weekDays.includes(currentDay) || specificDays.includes(dayNumber);
   }
 
   selectDate(date: Date) {
@@ -108,11 +85,11 @@ export class AccessEntriesCalendarComponent implements OnInit {
   openNewAccess() {
     const dialogRef = this.dialog.open(AccessEntryFormComponent, {
       width: '500px',
-      data: { personsList: this.persons, groupsList: this.groups }
+      data: {}
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.accessEntryService.create(result).subscribe(() => this.loadAccesses());
+        this.loadAccesses();
       }
     });
   }
@@ -120,11 +97,11 @@ export class AccessEntriesCalendarComponent implements OnInit {
   editAccess(access: AccessEntryModel) {
     const dialogRef = this.dialog.open(AccessEntryFormComponent, {
       width: '500px',
-      data: { ...access, personsList: this.persons, groupsList: this.groups }
+      data: { ...access}
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.accessEntryService.updateAccessEntry(access.id, result).subscribe(() => this.loadAccesses());
+        this.loadAccesses();
       }
     });
   }
