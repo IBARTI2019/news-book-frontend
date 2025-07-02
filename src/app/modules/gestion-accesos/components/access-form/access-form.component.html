@@ -56,7 +56,7 @@
     <mat-label>Personas</mat-label>
     <mat-select formControlName="persons" multiple>
       <mat-option *ngFor="let person of persons" [value]="person.id">
-        {{ person.name }}
+        {{ person.name }}  {{ person?.last_name }} - {{ person?.doc_ident || person?.identification_number }}
       </mat-option>
     </mat-select>
   </mat-form-field>
