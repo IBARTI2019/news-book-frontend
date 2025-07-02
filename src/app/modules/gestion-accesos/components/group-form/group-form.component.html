@@ -12,11 +12,24 @@
 
   <mat-form-field appearance="fill" class="full-width">
     <mat-label>Personas asignadas</mat-label>
-    <mat-select formControlName="persons" multiple>
-      <mat-option *ngFor="let person of persons" [value]="person.id">
-        {{ person.name }}
+    <mat-chip-list #chipList>
+      <mat-chip *ngFor="let person of selectedPersons" [selectable]="true" [removable]="true" (removed)="removePerson(person)">
+        {{ person.name }} {{ person.last_name }} - {{ person.doc_ident || person.identification_number }}
+        <mat-icon matChipRemove>cancel</mat-icon>
+      </mat-chip>
+      <input
+        matInput
+        placeholder="Buscar persona"
+        [matAutocomplete]="auto"
+        [formControl]="personSearchCtrl"
+        [matChipInputFor]="chipList"
+        (matChipInputTokenEnd)="addPersonFromInput($event)">
+    </mat-chip-list>
+    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selectPerson($event.option.value)">
+      <mat-option *ngFor="let person of filteredPersons" [value]="person">
+        {{ person.name }} {{ person.last_name }} - {{ person.doc_ident || person.identification_number }}
       </mat-option>
-    </mat-select>
+    </mat-autocomplete>
   </mat-form-field>
 
   <div mat-dialog-actions align="end" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="8px">

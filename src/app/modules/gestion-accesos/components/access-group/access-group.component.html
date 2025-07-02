@@ -18,9 +18,9 @@
           <mat-card-content>
             <div (click)="editGroup(group)" style="cursor:pointer;">
               <span *ngIf="group.persons?.length">{{ group.persons.length }} persona(s) asignada(s)</span>
-              <mat-chip-list *ngIf="group.persons?.length" fxLayout="row wrap" fxLayoutGap="4px">
-                <mat-chip *ngFor="let personId of group.persons">
-                  {{ getPersonName(personId) }}
+              <mat-chip-list *ngIf="group.persons_display?.length" fxLayout="row wrap" fxLayoutGap="4px">
+                <mat-chip *ngFor="let person of group.persons_display">
+                  {{ person.name }} {{ person.last_name }} - {{ person.doc_ident || person.identification_number }}
                 </mat-chip>
               </mat-chip-list>
             </div>

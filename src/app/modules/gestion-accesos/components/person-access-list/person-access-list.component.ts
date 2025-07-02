@@ -1,12 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { AccessEntryService } from '../../../../services/access-entry.service';
-import { DTColumn, DTFilterField, DTFilters } from '../../../../componentes/generic-table/interface';
+import { DTColumn, DTFilters } from '../../../../componentes/generic-table/interface';
 import { GenericTableComponent } from '../../../../componentes/generic-table/generic-table.component';
 import { MatDialog } from '@angular/material/dialog';
 import { AccessEntryFormComponent } from '../access-form/access-form.component';
-import { AccessGroupService } from '../../../../services/access-group.service';
-import { PersonService } from '../../../../services/person.service';
-import { AccessEntryModel, AccessGroupModel, Person } from '../../../../interfaces';
+import { AccessEntryModel } from '../../../../interfaces';
 import { ConfirmDialogComponent } from '../../../../componentes/confirm-dialog/confirm-dialog.component';
 
 @Component({
@@ -19,7 +17,7 @@ export class PersonAccessListComponent implements OnInit {
 
   columns: DTColumn[] = [
     { attribute: 'title', header: 'Título' },
-    { attribute: 'description', header: 'Descripción' },
+    { attribute: 'description', header: 'Empresa' },
     { dataAttribute: 'access_type', attribute: 'access_type_display', header: 'Tipo', type: 'text' },
     { dataAttribute: 'group__name', attribute: 'group_display.name', header: 'Grupo' },
     { attribute: 'date', header: 'Fechas', template: 'date_range' },
@@ -43,58 +41,33 @@ export class PersonAccessListComponent implements OnInit {
     }
   };
 
-  persons: Person[] = [];
-  groups: AccessGroupModel[] = [];
-
   constructor(
     public accessEntryService: AccessEntryService,
-    private personService: PersonService,
-    private accessGroupService: AccessGroupService,
     private dialog: MatDialog
   ) {}
 
-  ngOnInit(): void { 
-    this.loadPersons();
-    this.loadGroups();
-  }
-  
-  
-  loadPersons() {
-    this.personService.list({not_paginator: true}).subscribe({
-      next: (persons) => {
-        this.persons = persons;
-      }
-    });
-  }
-
-  loadGroups() {
-    this.accessGroupService.getAll({not_paginator: true}).subscribe({
-      next: (groups) => {
-        this.groups = groups;
-      }
-    });
-  }
+  ngOnInit(): void { }
 
   openNewAccess() {
     const dialogRef = this.dialog.open(AccessEntryFormComponent, {
-      width: '500px',
-      data: { personsList: this.persons, groupsList: this.groups }
+      width: '600px',
+      data: { }
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.accessEntryService.create(result).subscribe(() => this.table.refresh());
+        this.table.refresh();
       }
     });
   }
 
   editAccess(access: AccessEntryModel) {
     const dialogRef = this.dialog.open(AccessEntryFormComponent, {
-      width: '500px',
-      data: { ...access, personsList: this.persons, groupsList: this.groups }
+      width: '600px',
+      data: { ...access }
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.accessEntryService.updateAccessEntry(access.id, result).subscribe(() => this.table.refresh());
+        this.table.refresh();
       }
     });
   }

@@ -32,10 +32,11 @@ export class CreateAndEditTypePeopleComponent implements OnInit {
       {
         description: ["", Validators.required],
         priority: ["", Validators.required],
-        is_active: [true, Validators.required],
-        is_institution: [false, Validators.required],
-        requires_company_data: [false, Validators.required],
-        requires_guide_number: [false, Validators.required]
+        is_active: [true],
+        is_institution: [false],
+        requires_company_data: [false],
+        requires_guide_number: [false],
+        requires_access_verification: [false]
       },
       {}
     );
@@ -85,6 +86,7 @@ export class CreateAndEditTypePeopleComponent implements OnInit {
         this.fg.get("is_institution")!.setValue(data.is_institution);
         this.fg.get("requires_company_data")!.setValue(data.requires_company_data);
         this.fg.get("requires_guide_number")!.setValue(data.requires_guide_number);
+        this.fg.get("requires_access_verification")!.setValue(data.requires_access_verification);
       },
       (error: HttpErrorResponse) => {
         this.toastr.error(

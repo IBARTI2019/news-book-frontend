@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { GroupFormComponent } from '../group-form/group-form.component';
 import { AccessGroupService } from '../../../../services/access-group.service';
-import { PersonService } from '../../../../services/person.service';
-import { AccessGroupModel, Person } from '../../../../interfaces';
+import { AccessGroupModel } from '../../../../interfaces';
 import { ConfirmDialogService } from '../../../../componentes/confirm-dialog/confirm-dialog.service';
 import { ToastrService } from 'ngx-toastr';
 
@@ -16,19 +15,16 @@ import { ToastrService } from 'ngx-toastr';
 export class AccessGroupsComponent implements OnInit {
   groups: AccessGroupModel[] = [];
   loading = false;
-  persons: Person[] = [];
 
   constructor(
     private dialog: MatDialog,
     private accessGroupService: AccessGroupService,
-    private personService: PersonService,
     private dialogService: ConfirmDialogService,
     private toastr: ToastrService
   ) {}
 
   ngOnInit() {
     this.loadGroups();
-    this.loadPersons();
   }
 
   loadGroups() {
@@ -43,31 +39,15 @@ export class AccessGroupsComponent implements OnInit {
       }
     });
   }
-
-  loadPersons() {
-    this.personService.list({not_paginator: true}).subscribe({
-      next: (persons) => {
-        this.persons = persons;
-      }
-    });
-  }
-
-  getPersonName(id: string): string {
-    const person = this.persons.find(p => p.id! === id);
-    return person ? person.name! : 'Unknown';
-  }
-
+    
   newGroup() {
     const dialogRef = this.dialog.open(GroupFormComponent, {
       width: '400px',
-      data: { persons: this.persons }
+      data: { }
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.accessGroupService.create(result).subscribe(() => {
-          this.toastr.success("Grupo creado con exito!.");
-          this.loadGroups();
-        });
+        this.loadGroups();
       }
     });
   }
@@ -75,14 +55,11 @@ export class AccessGroupsComponent implements OnInit {
   editGroup(group: AccessGroupModel) {
     const dialogRef = this.dialog.open(GroupFormComponent, {
       width: '400px',
-      data: { ...group, personsList: this.persons }
+      data: { ...group }
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.accessGroupService.updateAccessGroup(group.id, result).subscribe(() => {
-          this.toastr.success("Grupo actualizado con exito!.");
-          this.loadGroups();
-        });
+        this.loadGroups();
       }
     });
   }

@@ -92,6 +92,7 @@ export interface TypePeople {
   is_institution: boolean;
   requires_company_data: boolean;
   requires_guide_number: boolean;
+  requires_access_verification?: boolean;
 }
 
 export interface Person {
@@ -493,6 +494,7 @@ export interface AccessEntryModel {
   access_type?: string;
   persons_display?: Person[];
   group_display?: AccessGroupModel;
+  specific_days?: number[];
 }
 
 export interface AccessGroupModel {

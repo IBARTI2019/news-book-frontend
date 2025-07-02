@@ -24,6 +24,9 @@ import { AccessGroupsComponent } from './components/access-group/access-group.co
 import { PersonAccessListComponent } from './components/person-access-list/person-access-list.component';
 import { GroupFormComponent } from './components/group-form/group-form.component';
 import { ComponentesModule } from '../../componentes/componentes.module';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatChipsModule } from '@angular/material/chips';
   
 @NgModule({
   declarations: [
@@ -55,7 +58,10 @@ import { ComponentesModule } from '../../componentes/componentes.module';
     MatMenuModule,
     MatTabsModule,
     FlexLayoutModule,
+    MatSlideToggleModule,
     ComponentesModule,
+    MatAutocompleteModule,
+    MatChipsModule,
     GestionAccesosRoutingModule
   ]
 })

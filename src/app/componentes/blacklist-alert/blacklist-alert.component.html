@@ -27,6 +27,9 @@
             <span *ngIf="acc.access_type === RECURRING">
               ({{ weekDaysToSpanish(acc.week_days) }} {{acc.start_time}}-{{acc.end_time}})
             </span>
+            <span *ngIf="acc.specific_days && acc.specific_days.length">
+              (Días específicos: {{ acc.specific_days.join(', ') }} de cada mes, {{acc.start_time}}-{{acc.end_time}})
+            </span>
             <span *ngIf="acc.group_display"> - Grupo: {{acc.group_display.name}}</span>
           </li>
         </ul>
