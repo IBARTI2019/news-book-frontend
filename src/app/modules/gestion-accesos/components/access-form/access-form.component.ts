@@ -167,11 +167,12 @@ export class AccessEntryFormComponent implements OnInit, OnDestroy {
       const formValue = this.accessForm.value;
       
       // Formatear fechas a YYYY-MM-DD
+      debugger;
       if (formValue.date_start) {
-        formValue.date_start = this.formatDate(formValue.date_start);
+        formValue.date_start = new Date(formValue.date_start).toISOString().split('T')[0];
       }
       if (formValue.date_end) {
-        formValue.date_end = this.formatDate(formValue.date_end);
+        formValue.date_end = new Date(formValue.date_end).toISOString().split('T')[0];
       }
 
       let formDate = new FormData();
@@ -195,7 +196,7 @@ export class AccessEntryFormComponent implements OnInit, OnDestroy {
       if (formValue.group) {
         formDate.append('group', formValue.group);
       }
-      debugger;
+
       if (formValue.voucher) {
         formDate.append('voucher', formValue.voucher);
       }
@@ -216,19 +217,6 @@ export class AccessEntryFormComponent implements OnInit, OnDestroy {
         });
       }
     }
-  }
-
-  private formatDate(date: Date | string): string {
-    if (!date) return '';
-    
-    let d: Date;
-    if (typeof date === 'string') {
-      d = new Date(date);
-    } else {
-      d = date;
-    }
-    
-    return d.toISOString().split('T')[0];
   }
 
   onCancel() {
@@ -310,6 +298,15 @@ export class AccessEntryFormComponent implements OnInit, OnDestroy {
     return file; // URL existente en modo edición
   }
   
+
+  downloadVoucher() {
+    if (!this.data.voucher_url) {
+      return;
+    }
+
+    // Opción 1: Si es una URL directa al archivo
+    window.open(this.data.voucher_url, '_blank');
+  }
   ngOnDestroy() {
     this.cleanUpPreviewUrl();
   }

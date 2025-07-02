@@ -53,22 +53,21 @@ export class AccessEntriesCalendarComponent implements OnInit {
 
   get accessesOfDay(): AccessEntryModel[] {
     return this.accesses.filter(a => {
-      const selectedDateObj = new Date(this.selectedDate);
-      const startDateObj = new Date(a.date_start);
-      const endDateObj = new Date(a.date_end);
+      // Obtener fecha en formato YYYY-MM-DD para comparación
+      const selectedDateStr = new Date(this.selectedDate).toISOString().split('T')[0];
+      const startDateStr = new Date(a.date_start).toISOString().split('T')[0];
+      const endDateStr = new Date(a.date_end).toISOString().split('T')[0];
       
-      // Accesos normales (single) que coinciden exactamente con la fecha seleccionada
       const isSingleAccess = a.access_type === AccessEntryService.SINGLE
-        && selectedDateObj >= startDateObj && selectedDateObj <= endDateObj;
+        && selectedDateStr >= startDateStr && selectedDateStr <= endDateStr;
   
-      // Accesos recurrentes que aplican para el día seleccionado
       const isRecurringAccess = a.access_type === AccessEntryService.RECURRING
         && this.matchesWeekDay(a.week_days || [], a.specific_days || [], this.selectedDate);
   
       return isSingleAccess || isRecurringAccess;
     });
   }
-  
+
   // Función para verificar si el día seleccionado coincide con los días de la semana del acceso recurrente
   private matchesWeekDay(weekDays: string[], specificDays: number[], selectedDate: Date): boolean {
     const dayNames = AccessEntryService.weekDays.map(day => day.value);
@@ -84,7 +83,7 @@ export class AccessEntriesCalendarComponent implements OnInit {
 
   openNewAccess() {
     const dialogRef = this.dialog.open(AccessEntryFormComponent, {
-      width: '500px',
+      width: '600px',
       data: {}
     });
     dialogRef.afterClosed().subscribe(result => {
@@ -96,7 +95,7 @@ export class AccessEntriesCalendarComponent implements OnInit {
 
   editAccess(access: AccessEntryModel) {
     const dialogRef = this.dialog.open(AccessEntryFormComponent, {
-      width: '500px',
+      width: '600px',
       data: { ...access}
     });
     dialogRef.afterClosed().subscribe(result => {

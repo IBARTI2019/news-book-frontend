@@ -50,7 +50,7 @@ export class PersonAccessListComponent implements OnInit {
 
   openNewAccess() {
     const dialogRef = this.dialog.open(AccessEntryFormComponent, {
-      width: '500px',
+      width: '600px',
       data: { }
     });
     dialogRef.afterClosed().subscribe(result => {
@@ -62,7 +62,7 @@ export class PersonAccessListComponent implements OnInit {
 
   editAccess(access: AccessEntryModel) {
     const dialogRef = this.dialog.open(AccessEntryFormComponent, {
-      width: '500px',
+      width: '600px',
       data: { ...access }
     });
     dialogRef.afterClosed().subscribe(result => {
