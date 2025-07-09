@@ -45,7 +45,8 @@ export class CreateAndEditClientescomponent implements OnInit {
         name: ["", Validators.required],
         email: ["", Validators.required],
         paid_until: [""],
-        on_trial: [true, Validators.required],
+        on_trial: [true],
+        facial_recognition: [false],
         type_news: [[]],
       },
       {}
@@ -104,6 +105,7 @@ export class CreateAndEditClientescomponent implements OnInit {
       this.fg.get("paid_until")!.setValue(data.paid_until);
       this.fg.get("on_trial")!.setValue(data.on_trial);
       this.fg.get("type_news")!.setValue(data.type_news);
+      this.fg.get("facial_recognition")!.setValue(data.facial_recognition);
     },
       (error: HttpErrorResponse) => {
         this.toastr.error(error.error.message || 'Error al obtener el Cliente');

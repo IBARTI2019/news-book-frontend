@@ -461,6 +461,7 @@ export interface Client {
   paid_until?: string;
   on_trial?: boolean;
   type_news?: string[];
+  facial_recognition?: boolean;
 }
 
 
