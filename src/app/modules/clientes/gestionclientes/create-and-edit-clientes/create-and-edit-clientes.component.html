@@ -34,6 +34,11 @@
                     <mat-slide-toggle formControlName="on_trial">En juicio</mat-slide-toggle>
                 </div>
             </div>
+            <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="5px">
+                <div fxFlex="50">
+                    <mat-slide-toggle formControlName="facial_recognition">Reconocimiento Facial</mat-slide-toggle>
+                </div>
+            </div>
             <div class="panel-container" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="end">
                 <span *ngIf="guardando">Guardando...</span>
                 <button mat-raised-button color="primary" type="submit" [disabled]="guardando">{{ update ? 'Actualizar' : 'Crear' }}</button>
