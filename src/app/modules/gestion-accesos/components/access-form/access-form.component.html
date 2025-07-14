@@ -24,7 +24,7 @@
     </mat-select>
   </mat-form-field>
 
-  <mat-form-field appearance="fill" class="full-width" *ngIf="accessForm.get('access_type')?.value === SINGLE">
+  <mat-form-field appearance="fill" class="full-width">
       <mat-label>Fecha inicio</mat-label>
       <input matInput [matDatepicker]="picker" formControlName="date_start">
       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
@@ -32,17 +32,17 @@
     </mat-form-field>
 
   
-    <mat-form-field appearance="fill" class="full-width" *ngIf="accessForm.get('access_type')?.value === SINGLE">
+    <mat-form-field appearance="fill" class="full-width">
       <mat-label>Fecha fin</mat-label>
-      <input matInput [matDatepicker]="picker" formControlName="date_end">
-      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-      <mat-datepicker #picker></mat-datepicker>
+      <input matInput [matDatepicker]="pickerEnd" formControlName="date_end">
+      <mat-datepicker-toggle matSuffix [for]="pickerEnd"></mat-datepicker-toggle>
+      <mat-datepicker #pickerEnd></mat-datepicker>
     </mat-form-field>
 
   <div fxLayout="row wrap" fxLayoutGap="16px" class="horas-row">
     <mat-form-field appearance="fill" fxFlex="100" fxFlex.gt-sm="45">
       <mat-label>Hora inicio</mat-label>
-      <input matInput type="time" formControlName ="start_time" required>
+      <input matInput type="time" formControlName="start_time" required>
     </mat-form-field>
     <mat-form-field appearance="fill" fxFlex="100" fxFlex.gt-sm="45">
       <mat-label>Hora fin</mat-label>
