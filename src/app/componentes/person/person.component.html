@@ -13,7 +13,7 @@
 
             <!-- Form Header - Visible only on desktop -->
             <div fxLayout="row" fxLayoutGap="1px" style="height: 50px" fxHide.xs>
-                <div *ngIf="settings.showTokenField" fxFlex="10%" fxLayoutAlign="center center"
+                <div *ngIf="settings.showTokenField" fxFlex="9%" fxLayoutAlign="center center"
                     class="item mat-toolbar mat-primary">
                     Cedula
                 </div>
@@ -21,11 +21,11 @@
                     class="item mat-toolbar mat-primary">
                     Nombre y Apellido
                 </div>
-                <div *ngIf="settings.showTypePersonField" fxFlex="10%" fxLayoutAlign="center center"
+                <div *ngIf="settings.showTypePersonField" fxFlex="9%" fxLayoutAlign="center center"
                     class="item mat-toolbar mat-primary">
                     Tipo de persona
                 </div>
-                <div *ngIf="settings.showMovementTypeField" fxFlex="10%" fxLayoutAlign="center center"
+                <div *ngIf="settings.showMovementTypeField" fxFlex="9%" fxLayoutAlign="center center"
                     class="item mat-toolbar mat-primary">
                     Tipo de movimiento
                 </div>
@@ -37,7 +37,7 @@
                     class="item mat-toolbar mat-primary">
                     Hora
                 </div>
-                <div *ngIf="settings.showReasonVisitField" fxFlex="20%" fxLayoutAlign="center center"
+                <div *ngIf="settings.showReasonVisitField" fxFlex="19%" fxLayoutAlign="center center"
                     class="item mat-toolbar mat-primary">
                     Motivo de Visita
                 </div>
@@ -65,7 +65,7 @@
 
             <!-- Form Fields - Stacked on mobile -->
             <form *ngIf="fPerson" [formGroup]="fPerson">
-                <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign="start stretch">
+                <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="1px">
 
                     <!-- Identification Number -->
                     <div *ngIf="settings.showTokenField" fxFlex.gt-xs="9%" fxFlex.xs="100%" fxLayout="column"
