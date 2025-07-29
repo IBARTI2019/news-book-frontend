@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { DataTablesModule } from 'angular-datatables';
 import { MatTableModule } from '@angular/material/table';
 import { CardHeaderComponent } from "./card-header/card-header.component";
@@ -41,6 +41,7 @@ import { DemoMaterialModule } from '../demo-material-module';
 import { AttachedFileComponent } from './attached-file/attached-file.component';
 import { ErrataComponent } from './errata/errata.component';
 import { BlacklistAlertComponent } from './blacklist-alert/blacklist-alert.component';
+import { FacialRecognitionListComponent } from './facial-recognition-list/facial-recognition-list.component';
 
 export const entryComponentes = [
   ConfirmDialogComponent,
@@ -65,7 +66,8 @@ export const entryComponentes = [
     NewHeaderComponent,
     AttachedFileComponent,
     ErrataComponent,
-    BlacklistAlertComponent
+    BlacklistAlertComponent,
+    FacialRecognitionListComponent
   ],
   exports: [
     GenericTableComponent,
@@ -80,7 +82,8 @@ export const entryComponentes = [
     DynamicControlsComponent,
     NewHeaderComponent,
     AttachedFileComponent,
-    ErrataComponent
+    ErrataComponent,
+    FacialRecognitionListComponent
   ],
   imports: [
     CommonModule,
@@ -112,7 +115,7 @@ export const entryComponentes = [
     DemoMaterialModule
   ],
   entryComponents: entryComponentes,
-  providers: [ConfirmDialogService]
+  providers: [ConfirmDialogService, DatePipe]
 })
 export class ComponentesModule {
 }

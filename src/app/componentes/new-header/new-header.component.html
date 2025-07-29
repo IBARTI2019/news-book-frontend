@@ -1,30 +1,50 @@
-<table style="width: 100%;">
-    <thead style="width: 100%;" fxLayout="row wrap">
-        <tr fxFlex="1 0 100%" fxLayout="row" fxLayoutAlign="space-around">
-            <th fxLayout="column" fxFlex="33%"><img src="assets/images/oesvica.jfif" alt=""></th>
-            <th fxLayout="column" fxFlex="33%" align="center">
-                <h2>{{new?.type_news_display?.description || new?.description}}</h2>
-            </th>
-            <th fxLayout="column" fxFlex="33%" align="left" *ngIf="readOnly === true" >Fecha: {{new?.created | date}} <br> Hora: {{new?.created |
-                date:'shortTime'}}</th>
-        </tr>
-        <tr fxFlex="1 0 100%" fxLayout="row" fxLayoutAlign="space-around">
-            <th fxLayout="column" fxFlex="33%" align="left">Cliente: {{new?.client_display ? new?.client_display?.name : client?.cliente}} </th>
-            <th fxLayout="column" fxFlex="33%" align="left" *ngIf="readOnly === true">Correlativo: {{new?.number}}</th>
-            <th fxLayout="column" fxFlex="33%"></th>
-        </tr>
-        <tr fxFlex="1 0 100%" fxLayout="row" fxLayoutAlign="space-around">
-            <th fxLayout="column" fxFlex="33%" align="left" *ngIf="readOnly === true" >Ubicación / Libro: {{new?.location_display ? new?.location_display?.name : client?.ubicacion}}</th>
-            <th fxLayout="column" fxFlex="33%" align="left" *ngIf="readOnly === true" >Reportado  por: {{new?.employee}}</th>
-            <th fxLayout="column" fxFlex="33%" align="left">
-            </th>
-        </tr>
-        <tr fxFlex="1 0 100%" fxLayout="row" fxLayoutAlign="space-around">
-            <th fxLayout="column" fxFlex="33%" align="left" *ngIf="new?.turno">
-                Turno: {{new.turno}}
-            </th>
-            <th fxLayout="column" fxFlex="33%"></th>
-            <th fxLayout="column" fxFlex="33%"></th>
-        </tr>
-    </thead>
-</table>
+<div fxLayout="column" fxLayoutGap="16px" class="header-container">
+    <!-- Primera fila -->
+    <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="space-between center" fxLayoutGap="16px">
+      <div fxFlex="33" fxLayout="column" fxLayoutAlign="center start">
+        <img src="assets/images/oesvica.jfif" alt="Logo" class="header-logo">
+      </div>
+      
+      <div fxFlex="33" fxLayout="column" fxLayoutAlign="center center">
+        <h2 class="header-title">{{new?.type_news_display?.description || new?.description}}</h2>
+      </div>
+      
+      <div fxFlex="33" fxLayout="column" fxLayoutAlign="center end" *ngIf="readOnly">
+        <div class="header-date">Fecha: {{new?.created | date}}</div>
+        <div class="header-time">Hora: {{new?.created | date:'shortTime'}}</div>
+      </div>
+    </div>
+  
+    <!-- Segunda fila -->
+    <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="space-between start" fxLayoutGap="16px">
+      <div fxFlex="33" fxLayout="column" fxLayoutAlign="start start">
+        <div class="header-info">Cliente: {{new?.client_display ? new?.client_display?.name : client?.cliente}}</div>
+      </div>
+      
+      <div fxFlex="33" fxLayout="column" fxLayoutAlign="start center" *ngIf="readOnly">
+        <div class="header-info">Correlativo: {{new?.number}}</div>
+      </div>
+      
+      <div fxFlex="33"></div>
+    </div>
+  
+    <!-- Tercera fila -->
+    <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="space-between start" fxLayoutGap="16px">
+      <div fxFlex="33" fxLayout="column" fxLayoutAlign="start start" *ngIf="readOnly">
+        <div class="header-info">Ubicación / Libro: {{new?.location_display ? new?.location_display?.name : client?.ubicacion}}</div>
+      </div>
+      
+      <div fxFlex="67" fxLayout="column" fxLayoutAlign="start start" *ngIf="readOnly">
+        <div class="header-info">Reportado por: {{new?.employee}}</div>
+      </div>
+
+    </div>
+  
+    <!-- Cuarta fila (solo si hay turno) -->
+    <div *ngIf="new?.turno" fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="space-between start" fxLayoutGap="16px">
+      <div fxFlex="33" fxLayout="column" fxLayoutAlign="start start">
+        <div class="header-info">Turno: {{new.turno}}</div>
+      </div>
+      <div fxFlex="66"></div>
+    </div>
+  </div>

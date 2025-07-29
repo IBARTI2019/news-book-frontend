@@ -77,6 +77,8 @@ export class SessionService extends API<User> {
           setLocalStorage(ID_CRYPT, encryptUsingAES256(res.jwt_id || ""));
           setLocalStorage(API.TOKEN, res.token);
           setLocalStorage(API.TYPE_USER, res.type_user);
+          setLocalStorage(API.FACIAL_RECOGNITION, res.facial_recognition);
+          
           setLocalStorage(PERMISSIONS, encryptUsingAES256(JSON.stringify(getPermissions())));
           this.current().subscribe();
           this.userService.user$.next({
@@ -108,6 +110,7 @@ export class SessionService extends API<User> {
   public logout() {
     deleteLocalStorageItem(ID_CRYPT);
     deleteLocalStorageItem(API.SCHEMA_NAME);
+    deleteLocalStorageItem(API.FACIAL_RECOGNITION);
     this.router.navigateByUrl("/sign-in");
   }
 

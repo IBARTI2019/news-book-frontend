@@ -10,7 +10,7 @@
                 </mat-form-field>-->
                 <mat-form-field>
                     <mat-label>Cedula</mat-label>
-                    <input matInput placeholder="Cedula" formControlName="doc_ident">
+                    <input matInput placeholder="Cedula" formControlName="doc_ident" [readonly]="isDocIdentReadonly">
                 </mat-form-field>
                 <mat-form-field>
                     <mat-label>Tipo</mat-label>
@@ -93,7 +93,7 @@
                 <div fxFlex="100">
                     <mat-form-field>
                         <mat-label>Motivo de visita</mat-label>
-                        <textarea matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1"
+                        <textarea matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="2"
                             cdkAutosizeMaxRows="10" formControlName="default_visit_reason"></textarea>
                     </mat-form-field>
                 </div>

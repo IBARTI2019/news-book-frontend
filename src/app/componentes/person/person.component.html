@@ -1,417 +1,448 @@
-<div fxFlex="{{ settings?.percentage || defaultValues.percentage}}" fxLayoutGap="40px" fxLayout="column"
-    style="padding-top: 10px; padding-bottom: 10px;">
-    <div fxFlex fxLayout="row wrap" fxLayoutGap="1px grid" *ngIf="fPerson">
-        <div fxLayoutAlign="end center" fxFlex="100%" fxLayout="row" *ngIf="!readOnly" style="margin: 10px;">
-            <!-- fxFlex="1 0 10%" -->
-            <button *ngIf="settings.showButtonNew" mat-raised-button color="primary" (click)="createPersona()"
-                type="button">
+<div fxFlex="{{ settings?.percentage || defaultValues.percentage }}" fxLayout="column" fxLayoutGap="20px"
+    style="padding: 10px 0;">
+    <!-- Main Container -->
+    <div fxFlex fxLayout="column" fxLayoutGap="10px">
+        <!-- Header Section -->
+        <div fxLayout="row" fxLayoutAlign="end center" *ngIf="fPerson && !readOnly && settings.showButtonNew">
+            <button mat-raised-button color="primary" (click)="createPersona()" type="button">
                 Nuevo
             </button>
         </div>
+        <!-- Form Container -->
+        <div *ngIf="fPerson" fxLayout="column" fxLayoutGap="10px">
 
-        <div fxFlex="1 2 100%" fxLayout="row" style="height: 50px" fxLayoutGap="1px">
-            <div *ngIf="settings.showTokenField" fxLayoutAlign="center center" fxFlex="1 1 6%" fxLayout="row"
-                class="item mat-toolbar mat-primary">
-                Cedula
-            </div>
-            <div *ngIf="settings.showNameField" fxLayoutAlign="center center" fxFlex="1 1 auto" fxLayout="row"
-                class="item mat-toolbar mat-primary">
-                Nombre y Apellido
-            </div>
-            <div *ngIf="settings.showTypePersonField" fxLayoutAlign="center center" fxFlex="1 1 9%" fxLayout="row"
-                class="item mat-toolbar mat-primary">
-                Tipo de persona
-            </div>
-            <div *ngIf="settings.showMovementTypeField" fxLayoutAlign="center center" fxFlex="1 1 6%" fxLayout="row"
-                class="item mat-toolbar mat-primary">
-                Tipo de movimiento
-            </div>
-            <div *ngIf="settings.showAccompanyVisitor" fxLayoutAlign="center center" fxFlex="1 1 6%" fxLayout="row"
-                class="item mat-toolbar mat-primary">
-                Acompaño al visitante
-            </div>
-
-            <div *ngIf="settings.showHourField" fxLayoutAlign="center center" fxFlex="1 1 11%" fxLayout="row"
-                class="item mat-toolbar mat-primary">
-                Hora
-            </div>
-            <div *ngIf="settings.showReasonVisitField" fxLayoutAlign="center center" fxFlex="1 1 15%" fxLayout="row"
-                class="item mat-toolbar mat-primary">
-                Motivo de Visita
-            </div>
-            <div *ngIf="settings.showPlaceOfReceptionField" fxLayoutAlign="center center" fxFlex="1 1 15%"
-                fxLayout="row" class="item mat-toolbar mat-primary">
-                Lugar de recibimiento
-            </div>
-            <div *ngIf="settings.showEntryField" fxLayoutAlign="center center" fxFlex="1 1 6%" fxLayout="row"
-                class="item mat-toolbar mat-primary">
-                Ingreso de Herramienta, Vehículo o Equipo
-            </div>
-            <div *ngIf="settings.showProtocolField" fxLayoutAlign="center center" fxFlex="1 1 6%" fxLayout="row"
-                class="item mat-toolbar mat-primary">
-                Cumplió Protocolo COVID 19
-            </div>
-            <div *ngIf="settings.showVaccinationCardNumberField" fxLayoutAlign="center center" fxFlex="1 1 6%"
-                fxLayout="row" class="item mat-toolbar mat-primary">
-                Nro. de tarjeta de Vacunación
-            </div>
-            <div *ngIf="settings.showAssignedCardNumberField" fxLayoutAlign="center center" fxFlex="1 1 10%"
-                fxLayout="row" class="item mat-toolbar mat-primary">
-                Nro. de carnet asignado
-            </div>
-        </div>
-        <!-- Begin to Dynamic Form -->
-        <form fxFlex="{{ settings.percentage }}" [formGroup]="fPerson" fxLayout="row wrap" fxLayoutGap="1px">
-            <div *ngIf="settings.showTokenField" fxLayoutAlign="center center" fxFlex="1 1 6%" fxLayout="column"
-                style="background-color: #ffffff" class="item">
-                <mat-form-field appearance="fill" style="max-width: 140px !important;">
-                    <mat-label>Cedula</mat-label>
-                    <input type="text" matInput formControlName="identification_number" placeholder=""
-                        (keyup)="getPerson($event.target.value)" [readonly]="readOnly" />
-                    <mat-error *ngIf="fPerson.controls.identification_number.hasError('required')">
-                        La cedula es <strong>requerida</strong>
-                    </mat-error>
-                </mat-form-field>
-            </div>
-            <div *ngIf="settings.showNameField" fxLayoutAlign="center center" fxFlex="1 1 auto" fxLayout="column"
-                style="background-color: #ffffff" class="item">
-                <mat-form-field appearance="fill">
-                    <mat-label>Nombre y Apellido</mat-label>
-                    <input type="text" matInput formControlName="full_name" placeholder="Nombre y Apellido"
-                        [readonly]="readOnly" />
-                    <mat-error *ngIf="fPerson.controls.full_name.hasError('required')">
-                        El nombre es <strong>requerido</strong>
-                    </mat-error>
-                </mat-form-field>
-            </div>
-            <div *ngIf="settings.showTypePersonField" fxLayoutAlign="center center" fxFlex="1 1 9%" fxLayout="column"
-                style="background-color: #ffffff" class="item">
-                <mat-radio-group style="margin: 15px 0" formControlName="type_person" [disabled]="readOnly">
-                    <ng-container *ngFor="let mT of personTypes">
-                        <mat-radio-button style="margin: 5px" [value]="mT.id" (click)="check(mT)">{{
-                            mT.description}}
-                        </mat-radio-button>
-                        <br>
-                    </ng-container>
-                </mat-radio-group>
-                <mat-error *ngIf="fPerson.controls.type_person.hasError('required')">
-                    El tipo de persona es <strong>requerido</strong>
-                </mat-error>
-            </div>
-            <div *ngIf="settings.showMovementTypeField" fxLayoutAlign="center center" fxFlex="1 1 6%" fxLayout="column"
-                style="background-color: #ffffff" class="item">
-                <mat-radio-group style="margin: 15px 0" formControlName="movement_type" [disabled]="readOnly">
-                    <ng-container *ngFor="let mT of movementTypes">
-                        <mat-radio-button style="margin: 5px" [value]="mT.id">{{
-                            mT.text }}
-                        </mat-radio-button>
-                        <br>
-                    </ng-container>
-                </mat-radio-group>
-                <mat-error *ngIf="fPerson.controls.movement_type.hasError('required')">
-                    El tipo de movimiento es <strong>requerido</strong>
-                </mat-error>
-            </div>
-            <div *ngIf="settings.showAccompanyVisitor" fxLayoutAlign="center center" fxFlex="1 1 6%" fxLayout="column"
-                style="background-color: #ffffff" class="item">
-                <mat-radio-group style="margin: 15px 0" formControlName="accompany_visitor" [disabled]="readOnly">
-                    <mat-radio-button style="margin: 5px" value="SI">SI</mat-radio-button>
-                    <br>
-                    <mat-radio-button style="margin: 5px" value="NO">NO</mat-radio-button>
-                </mat-radio-group>
-                <mat-error *ngIf="fPerson.controls.accompany_visitor.hasError('required')">
-                    Acompaño al visitante es <strong>requerido</strong>
-                </mat-error>
-            </div>
-            <div *ngIf="settings.showHourField" fxLayoutAlign="center center" fxFlex="1 1 11%" fxLayout="column"
-                style="background-color: #ffffff" class="item">
-                <ngx-timepicker-field #hourP [format]="24" [defaultTime]="'00:00'" [toggleIcon]="icon_hour"
-                    formControlName="hour" [disabled]="readOnly">
-                </ngx-timepicker-field>
-                <ng-template #icon_hour>
-                    <mat-icon aria-hidden="false">schedule</mat-icon>
-                </ng-template>
-                <mat-error *ngIf="fPerson.controls.hour.hasError('required')">
-                    La hora es <strong>requerida</strong>
-                </mat-error>
-            </div>
-            <div *ngIf="settings.showReasonVisitField" fxLayoutAlign="center center" fxFlex="1 1 15%" fxLayout="column"
-                style="background-color: #ffffff" class="item">
-                <mat-form-field appearance="fill">
-                    <mat-label>Motivo de la visita</mat-label>
-                    <input type="text" matInput formControlName="reason_visit" placeholder="Motivo de la visita"
-                        [readonly]="readOnly" />
-                    <mat-error *ngIf="fPerson.controls.reason_visit.hasError('required')">
-                        El motivo es <strong>requerido</strong>
-                    </mat-error>
-                </mat-form-field>
-            </div>
-            <div *ngIf="settings.showPlaceOfReceptionField" fxLayoutAlign="center center" fxFlex="1 1 15%"
-                fxLayout="column" style="background-color: #ffffff" class="item">
-                <mat-form-field appearance="fill">
-                    <mat-label>Lugar de recibimiento</mat-label>
-                    <input type="text" matInput formControlName="place_of_reception" placeholder="Lugar de recibimiento"
-                        [readonly]="readOnly" />
-                    <mat-error *ngIf="fPerson.controls.place_of_reception.hasError('required')">
-                        El lugar de recibimiento es <strong>requerido</strong>
-                    </mat-error>
-                </mat-form-field>
-            </div>
-            <div *ngIf="settings.showEntryField" fxLayoutAlign="center center" fxFlex="1 1 6%" fxLayout="column"
-                style="background-color: #ffffff" class="item">
-                <mat-slide-toggle formControlName="entry" #entryST [disabled]="readOnly">{{
-                    entryST.checked ? "SI" : "NO"
-                    }}</mat-slide-toggle>
-                <mat-error *ngIf="fPerson.controls.entry.hasError('required')">
-                    El ingreso es <strong>requerido</strong>
-                </mat-error>
-            </div>
-            <div *ngIf="settings.showProtocolField" fxLayoutAlign="center center" fxFlex="1 1 6%" fxLayout="column"
-                style="background-color: #ffffff" class="item">
-                <mat-slide-toggle formControlName="protocol" #protocolST [disabled]="readOnly">{{
-                    protocolST.checked ? "SI" : "NO"
-                    }}</mat-slide-toggle>
-                <mat-error *ngIf="fPerson.controls.protocol.hasError('required')">
-                    Este campo es <strong>requerido</strong>
-                </mat-error>
-            </div>
-            <div *ngIf="settings.showVaccinationCardNumberField" fxLayoutAlign="center center" fxFlex="1 1 6%"
-                fxLayout="column" style="background-color: #ffffff" class="item">
-                <mat-form-field appearance="fill">
-                    <mat-label>Nro. de tarjeta de Vacunación</mat-label>
-                    <input type="text" matInput formControlName="vaccination_card_number" placeholder=""
-                        [readonly]="readOnly" />
-                    <mat-error *ngIf="fPerson.controls.vaccination_card_number.hasError('required')">
-                        El nro. de tarjeta de vacunación es <strong>requerido</strong>
-                    </mat-error>
-                </mat-form-field>
+            <!-- Form Header - Visible only on desktop -->
+            <div fxLayout="row" fxLayoutGap="1px" style="height: 50px" fxHide.xs>
+                <div *ngIf="settings.showTokenField" fxFlex="10%" fxLayoutAlign="center center"
+                    class="item mat-toolbar mat-primary">
+                    Cedula
+                </div>
+                <div *ngIf="settings.showNameField" fxFlex fxLayoutAlign="center center"
+                    class="item mat-toolbar mat-primary">
+                    Nombre y Apellido
+                </div>
+                <div *ngIf="settings.showTypePersonField" fxFlex="10%" fxLayoutAlign="center center"
+                    class="item mat-toolbar mat-primary">
+                    Tipo de persona
+                </div>
+                <div *ngIf="settings.showMovementTypeField" fxFlex="10%" fxLayoutAlign="center center"
+                    class="item mat-toolbar mat-primary">
+                    Tipo de movimiento
+                </div>
+                <div *ngIf="settings.showAccompanyVisitor" fxFlex="6%" fxLayoutAlign="center center"
+                    class="item mat-toolbar mat-primary">
+                    Acompaño al visitante
+                </div>
+                <div *ngIf="settings.showHourField" fxFlex="11%" fxLayoutAlign="center center"
+                    class="item mat-toolbar mat-primary">
+                    Hora
+                </div>
+                <div *ngIf="settings.showReasonVisitField" fxFlex="20%" fxLayoutAlign="center center"
+                    class="item mat-toolbar mat-primary">
+                    Motivo de Visita
+                </div>
+                <div *ngIf="settings.showPlaceOfReceptionField" fxFlex="15%" fxLayoutAlign="center center"
+                    class="item mat-toolbar mat-primary">
+                    Lugar de recibimiento
+                </div>
+                <div *ngIf="settings.showEntryField" fxFlex="6%" fxLayoutAlign="center center"
+                    class="item mat-toolbar mat-primary">
+                    Ingreso de Herramienta
+                </div>
+                <div *ngIf="settings.showProtocolField" fxFlex="6%" fxLayoutAlign="center center"
+                    class="item mat-toolbar mat-primary">
+                    Protocolo COVID
+                </div>
+                <div *ngIf="settings.showVaccinationCardNumberField" fxFlex="6%" fxLayoutAlign="center center"
+                    class="item mat-toolbar mat-primary">
+                    Tarjeta Vacunación
+                </div>
+                <div *ngIf="settings.showAssignedCardNumberField" fxFlex="6%" fxLayoutAlign="center center"
+                    class="item mat-toolbar mat-primary">
+                    Carnet asignado
+                </div>
             </div>
 
-            <div *ngIf="settings.showAssignedCardNumberField" fxLayoutAlign="center center" fxFlex="1 1 6%"
-                fxLayout="column" style="background-color: #ffffff" class="item">
-                <mat-form-field appearance="fill">
-                    <mat-label>Nro. de carnet de asignado</mat-label>
-                    <input type="text" matInput formControlName="assigned_card_number" placeholder=""
-                        [readonly]="readOnly" />
-                    <mat-error *ngIf="fPerson.controls.assigned_card_number.hasError('required')">
-                        El nro. de carnet de asignado es <strong>requerido</strong>
-                    </mat-error>
-                </mat-form-field>
-            </div>
-            <!-- Begin to Institucion -->
-            <div fxLayout="row wrap" *ngIf="settings.showTypePersonField && isInstitution" fxLayoutGap="5px grid"
-                fxFlex="100" style="background-color: #ffffff" class="item mat-toolbar">
-                <div fxLayoutAlign="center center" fxFlex="100" fxLayout="column" class="item mat-toolbar mat-primary">
-                    Personal de la Instituccion (Datos de la Instituccion)
-                </div>
-                <div fxLayoutAlign="center center" class="item" fxFlex="2 1 40%" fxLayout="column">
-                    <mat-form-field appearance="fill">
-                        <mat-label>Insituccion</mat-label>
-                        <input type="text" matInput placeholder="Descripción" formControlName="instituccion"
-                            [readonly]="readOnly" />
-                    </mat-form-field>
-                </div>
-                <div fxLayoutAlign="center center" class="item" fxFlex="3 1 30%" fxLayout="column">
-                    <mat-form-field appearance="fill">
-                        <mat-label>observacion</mat-label>
-                        <input type="text" matInput placeholder="Observacion" formControlName="observacion"
-                            [readonly]="readOnly" />
-                    </mat-form-field>
-                </div>
+            <!-- Form Fields - Stacked on mobile -->
+            <form *ngIf="fPerson" [formGroup]="fPerson">
+                <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign="start stretch">
 
-                <div fxLayoutAlign="center center" fxFlex="100" fxLayout="column" class="item mat-toolbar mat-primary">
-                    Personal que autoriza la entrada
-                </div>
-
-                <div fxLayoutAlign="center center" class="item" fxFlex="2 1 40%" fxLayout="column">
-                    <mat-form-field appearance="fill">
-                        <mat-label>Nombres y Apellidos</mat-label>
-                        <input type="text" matInput placeholder="Nombres y Apellidos" formControlName="name_recibe"
-                            [readonly]="readOnly" />
-                    </mat-form-field>
-                </div>
-                <div fxLayoutAlign="center center" class="item" fxFlex="2 1 30%" fxLayout="column">
-                    <mat-form-field appearance="fill">
-                        <mat-label>Cedula</mat-label>
-                        <input type="text" matInput placeholder="Cedula" formControlName="ident_recibe"
-                            [readonly]="readOnly" />
-                    </mat-form-field>
-                </div>
-                <div fxLayoutAlign="center center" class="item" fxFlex="2 1 30%" fxLayout="column">
-                    <mat-form-field appearance="fill">
-                        <mat-label>Cargo</mat-label>
-                        <input type="text" matInput placeholder="Cargo" formControlName="cargo_recibe"
-                            [readonly]="readOnly" />
-                    </mat-form-field>
-                </div>
-            </div>
-            <!-- End block to Institucion -->
-
-            <!-- Begin to Contractor -->
-            <div fxLayout="row wrap" *ngIf="settings.showTypePersonField && requiresCompanyData" fxLayoutGap="5px grid"
-                fxFlex="100" style="background-color: #ffffff" class="item mat-toolbar">
-
-                <div fxLayoutAlign="center center" class="item" fxFlex="2 1 50%" fxLayout="column">
-                    <mat-form-field appearance="fill">
-                        <mat-label>Nombre de la empresa</mat-label>
-                        <input type="text" matInput placeholder="Nombre de la empresa" formControlName="company_name"
-                            [readonly]="readOnly" />
-                    </mat-form-field>
-                </div>
-                <div fxLayoutAlign="center center" class="item" fxFlex="2 1 50%" fxLayout="column">
-                    <mat-form-field appearance="fill">
-                        <mat-label>RIF</mat-label>
-                        <input type="text" matInput placeholder="RIF" formControlName="rif" [readonly]="readOnly" />
-                    </mat-form-field>
-                </div>
-            </div>
-            <!-- End block to Contractor -->
-
-            <!-- Begin to Guide Number -->
-            <div fxLayout="row wrap" *ngIf="settings.showTypePersonField && requiresGuideNumber" fxLayoutGap="5px grid"
-                fxFlex="100" style="background-color: #ffffff" class="item mat-toolbar">
-
-                <div fxLayoutAlign="center center" class="item" fxFlex="2 1 50%" fxLayout="column">
-                    <mat-form-field appearance="fill">
-                        <mat-label>Número de guía o factura</mat-label>
-                        <input type="text" matInput placeholder="Número de guía o factura"
-                            formControlName="guide_number" [readonly]="readOnly" />
-                    </mat-form-field>
-                </div>
-            </div>
-            <!-- End block to Guide Number -->
-
-            <div fxLayout="row wrap" *ngIf="settings.showEntryField && fPerson.controls.entry.value === true"
-                fxLayoutGap="5px grid" fxFlex="100" style="background-color: #ffffff" class="item mat-toolbar">
-                <div fxLayoutAlign="center center" fxFlex="100" fxLayout="column" class="item mat-toolbar mat-primary">
-                    Objetos maquinas herramientas o equipos con que ingresa
-                    (Si son mas de dos solicite relación aparte con estos datos)
-                </div>
-                <div *ngIf="!readOnly" fxLayoutAlign="center center" class="item" fxFlex="2 1 40%" fxLayout="column">
-                    <mat-form-field appearance="fill">
-                        <mat-label>Descripción</mat-label>
-                        <input type="text" matInput placeholder="Descripción" [(ngModel)]="materialCurrent.description"
-                            [ngModelOptions]="{standalone: true}" />
-                    </mat-form-field>
-                </div>
-                <div *ngIf="!readOnly" fxLayoutAlign="center center" class="item" fxFlex="3 1 30%" fxLayout="column">
-                    <mat-form-field appearance="fill">
-                        <mat-label>Marca</mat-label>
-                        <input type="text" matInput placeholder="Marca" [(ngModel)]="materialCurrent.mark"
-                            [ngModelOptions]="{standalone: true}" />
-                    </mat-form-field>
-                </div>
-                <div *ngIf="!readOnly" fxLayoutAlign="center center" class="item" fxFlex="1 1 30%" fxLayout="column">
-                    <mat-form-field appearance="fill">
-                        <mat-label>Modelo</mat-label>
-                        <input type="text" matInput placeholder="Modelo" [(ngModel)]="materialCurrent.model"
-                            [ngModelOptions]="{standalone: true}" />
-                    </mat-form-field>
-                </div>
-                <div *ngIf="!readOnly" fxLayoutAlign="center center" class="item" fxFlex="1 1 30%" fxLayout="column">
-                    <mat-form-field appearance="fill">
-                        <mat-label>Color</mat-label>
-                        <input type="text" matInput placeholder="Color" [(ngModel)]="materialCurrent.color"
-                            [ngModelOptions]="{standalone: true}" />
-                    </mat-form-field>
-                </div>
-                <div *ngIf="!readOnly" fxLayoutAlign="center center" class="item" fxFlex="1 1 30%" fxLayout="column">
-                    <mat-form-field appearance="fill">
-                        <mat-label>Serial</mat-label>
-                        <input type="text" matInput placeholder="Serial" [(ngModel)]="materialCurrent.serial"
-                            [ngModelOptions]="{standalone: true}" />
-                    </mat-form-field>
-                </div>
-                <div *ngIf="!readOnly" fxLayoutAlign="center center" class="item" fxFlex="1 1 10%" fxLayout="column">
-                    <mat-form-field appearance="fill">
-                        <mat-label>Año</mat-label>
-                        <input type="text" matInput placeholder="Ano" [(ngModel)]="materialCurrent.year"
-                            [ngModelOptions]="{standalone: true}" />
-                    </mat-form-field>
-                </div>
-                <div *ngIf="!readOnly" fxLayoutAlign="center center" class="item" fxFlex="1 1 15%" fxLayout="column">
-                    <mat-form-field appearance="fill">
-                        <mat-label>Placa</mat-label>
-                        <input type="text" matInput placeholder="Placa" [(ngModel)]="materialCurrent.license_plate"
-                            [ngModelOptions]="{standalone: true}" />
-                    </mat-form-field>
-                </div>
-                <div *ngIf="!readOnly" fxLayoutAlign="center center" fxFlex="1 1 10%" fxLayout="column">
-                    <button mat-raised-button type="button" style="height: 50px" (click)="addMaterial(i)">
-                        Agregar
-                    </button>
-                </div>
-                <div fxFlex fxLayout="row wrap" fxLayoutGap="1px grid">
-                    <div fxFlex="1 1 100%" fxLayout="row" style="height: 50px" fxLayoutGap="1px">
-                        <div fxLayoutAlign="center center" fxFlex="1 0 25%" fxLayout="row"
-                            class="item mat-toolbar mat-primary">
-                            Descripción
-                        </div>
-                        <div fxLayoutAlign="center center" fxFlex="2 0 15%" fxLayout="row"
-                            class="item mat-toolbar mat-primary">
-                            Marca
-                        </div>
-                        <div fxLayoutAlign="center center" fxFlex="3 0 15%" fxLayout="row"
-                            class="item mat-toolbar mat-primary">
-                            Modelo
-                        </div>
-                        <div fxLayoutAlign="center center" fxFlex="1 1 10%" fxLayout="row"
-                            style="text-overflow: ellipsis" class="item mat-toolbar mat-primary">
-                            Color
-                        </div>
-                        <div fxLayoutAlign="center center" fxFlex="1 1 10%" fxLayout="row"
-                            style="text-overflow: ellipsis" class="item mat-toolbar mat-primary">
-                            Serial
-                        </div>
-                        <div fxLayoutAlign="center center" fxFlex="1 1 10%" fxLayout="row"
-                            class="item mat-toolbar mat-primary">
-                            Año
-                        </div>
-                        <div fxLayoutAlign="center center" fxFlex="1 1 10%" fxLayout="row"
-                            class="item mat-toolbar mat-primary">
-                            Placa
-                        </div>
-                        <div fxLayoutAlign="center center" fxFlex="1 1 5%" fxLayout="row"
-                            class="item mat-toolbar mat-primary" *ngIf="!readOnly">
-                        </div>
-                    </div>
-                    <div fxLayout="row" fxFlex="100"
-                        *ngFor="let material of fPerson.controls.materials.value.value; index as i_material;"
-                        fxLayoutGap="1px">
-                        <div fxLayoutAlign="center center" fxFlex="1 0 25%" fxLayout="column" class="item">
-                            {{material.description}}
-                        </div>
-                        <div fxLayoutAlign="center center" fxFlex="2 0 15%" fxLayout="column" class="item">
-                            {{material.mark}}
-                        </div>
-                        <div fxLayoutAlign="center center" fxFlex="3 0 15%" fxLayout="column" class="item">
-                            {{material.model}}
-                        </div>
-                        <div fxLayoutAlign="center center" fxFlex="1 0 10%" fxLayout="column" class="item">
-                            {{material.color}}
-                        </div>
-                        <div fxLayoutAlign="center center" fxFlex="1 0 10%" fxLayout="column" class="item">
-                            {{material.serial}}
-                        </div>
-                        <div fxLayoutAlign="center center" fxFlex="1 0 10%" fxLayout="column" class="item">
-                            {{material.year}}
-                        </div>
-                        <div fxLayoutAlign="center center" fxFlex="2 0 10%" fxLayout="column" class="item">
-                            {{material.license_plate}}
-                        </div>
-                        <div fxFlex="1 1 5%" fxLayoutAlign="center center" fxLayout="column" class="item"
-                            *ngIf="!readOnly">
-                            <button mat-raised-button type="button" (click)="removeMaterial(i_material)">
-                                <mat-icon>delete_sweep</mat-icon>
+                    <!-- Identification Number -->
+                    <div *ngIf="settings.showTokenField" fxFlex.gt-xs="9%" fxFlex.xs="100%" fxLayout="column"
+                        style="background-color: #ffffff" class="item">
+                        <mat-form-field appearance="fill" fxFlexFill>
+                            <mat-label>Cedula</mat-label>
+                            <input type="text" matInput formControlName="identification_number"
+                                (keyup)="getPerson($event.target.value)" [readonly]="readOnly || facialRecognition" />
+                            <button *ngIf="facialRecognition" mat-icon-button matSuffix color="primary"
+                                (click)="openFacialRecognitionModal()" type="button"
+                                aria-label="Buscar por reconocimiento facial">
+                                <mat-icon>search</mat-icon>
                             </button>
+                            <mat-error *ngIf="fPerson.controls.identification_number.hasError('required')">
+                                La cedula es <strong>requerida</strong>
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+
+                    <!-- Full Name -->
+                    <div *ngIf="settings.showNameField" fxFlex.gt-xs fxFlex.xs="100%" fxLayout="column"
+                        style="background-color: #ffffff" class="item">
+                        <div>
+                            <mat-form-field appearance="fill" fxFlexFill>
+                                <mat-label>Nombre y Apellido</mat-label>
+                                <input type="text" matInput formControlName="full_name" placeholder="Nombre y Apellido"
+                                    [readonly]="readOnly || facialRecognition" />
+                                <mat-error *ngIf="fPerson.controls.full_name.hasError('required')">
+                                    El nombre es <strong>requerido</strong>
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <!-- Person Type -->
+                    <div *ngIf="settings.showTypePersonField" fxFlex.gt-xs="9%" fxFlex.xs="100%" fxLayout="column"
+                        style="background-color: #ffffff" class="item">
+                        <div>
+                            <mat-radio-group formControlName="type_person" [disabled]="readOnly || facialRecognition"
+                                (change)="check($event.value)">
+                                <ng-container *ngFor="let mT of personTypes">
+                                    <mat-radio-button [value]="mT.id">{{ mT.description }}</mat-radio-button><br>
+                                </ng-container>
+                            </mat-radio-group>
+                            <mat-error *ngIf="fPerson.controls.type_person.hasError('required')">
+                                El tipo de persona es <strong>requerido</strong>
+                            </mat-error>
+
+                        </div>
+                    </div>
+
+                    <!-- Movement Type -->
+                    <div *ngIf="settings.showMovementTypeField" fxFlex.gt-xs="9%" fxFlex.xs="100%" fxLayout="column"
+                        style="background-color: #ffffff" class="item">
+                        <mat-radio-group formControlName="movement_type" [disabled]="readOnly || facialRecognition">
+                            <ng-container *ngFor="let mT of movementTypes">
+                                <mat-radio-button [value]="mT.id">{{ mT.text }}</mat-radio-button><br>
+                            </ng-container>
+                        </mat-radio-group>
+                        <mat-error *ngIf="fPerson.controls.movement_type.hasError('required')">
+                            El tipo de movimiento es <strong>requerido</strong>
+                        </mat-error>
+                    </div>
+
+                    <!-- Accompany Visitor -->
+                    <div *ngIf="settings.showAccompanyVisitor" fxFlex.gt-xs="6%" fxFlex.xs="100%" fxLayout="column"
+                        style="background-color: #ffffff" class="item">
+                        <mat-radio-group formControlName="accompany_visitor" [disabled]="readOnly">
+                            <mat-radio-button value="SI">SI</mat-radio-button><br>
+                            <mat-radio-button value="NO">NO</mat-radio-button>
+                        </mat-radio-group>
+                        <mat-error *ngIf="fPerson.controls.accompany_visitor.hasError('required')">
+                            Acompaño al visitante es <strong>requerido</strong>
+                        </mat-error>
+                    </div>
+
+                    <!-- Hour Field -->
+                    <div *ngIf="settings.showHourField" fxFlex.gt-xs="11%" fxFlex.xs="100%" fxLayout="column"
+                        style="background-color: #ffffff" class="item">
+                        <ngx-timepicker-field #hourP [format]="24" [defaultTime]="'00:00'" [toggleIcon]="icon_hour"
+                            formControlName="hour" [disabled]="readOnly">
+                        </ngx-timepicker-field>
+                        <ng-template #icon_hour>
+                            <mat-icon aria-hidden="false">schedule</mat-icon>
+                        </ng-template>
+                        <mat-error *ngIf="fPerson.controls.hour.hasError('required')">
+                            La hora es <strong>requerida</strong>
+                        </mat-error>
+                    </div>
+
+                    <!-- Reason Visit -->
+                    <div *ngIf="settings.showReasonVisitField" fxFlex.gt-xs="19%" fxFlex.xs="100%" fxLayout="column"
+                        style="background-color: #ffffff" class="item">
+                        <mat-form-field appearance="fill" fxFlexFill>
+                            <mat-label>Motivo de la visita</mat-label>
+                            <input type="text" matInput formControlName="reason_visit" placeholder="Motivo de la visita"
+                                [readonly]="readOnly || facialRecognition" />
+                            <mat-error *ngIf="fPerson.controls.reason_visit.hasError('required')">
+                                El motivo es <strong>requerido</strong>
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+
+                    <!-- Place of Reception -->
+                    <div *ngIf="settings.showPlaceOfReceptionField" fxFlex.gt-xs="15%" fxFlex.xs="100%"
+                        fxLayout="column" style="background-color: #ffffff" class="item">
+                        <mat-form-field appearance="fill" fxFlexFill>
+                            <mat-label>Lugar de recibimiento</mat-label>
+                            <input type="text" matInput formControlName="place_of_reception"
+                                placeholder="Lugar de recibimiento" [readonly]="readOnly || facialRecognition" />
+                            <mat-error *ngIf="fPerson.controls.place_of_reception.hasError('required')">
+                                El lugar de recibimiento es <strong>requerido</strong>
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+
+                    <!-- Entry Field -->
+                    <div *ngIf="settings.showEntryField" fxFlex.gt-xs="6%" fxFlex.xs="100%" fxLayout="column"
+                        style="background-color: #ffffff" class="item">
+                        <mat-slide-toggle formControlName="entry" #entryST [disabled]="readOnly">
+                            {{ entryST.checked ? "SI" : "NO" }}
+                        </mat-slide-toggle>
+                        <mat-error *ngIf="fPerson.controls.entry.hasError('required')">
+                            El ingreso es <strong>requerido</strong>
+                        </mat-error>
+                    </div>
+
+                    <!-- Protocol Field -->
+                    <div *ngIf="settings.showProtocolField" fxFlex.gt-xs="6%" fxFlex.xs="100%" fxLayout="column"
+                        style="background-color: #ffffff" class="item">
+                        <mat-slide-toggle formControlName="protocol" #protocolST [disabled]="readOnly">
+                            {{ protocolST.checked ? "SI" : "NO" }}
+                        </mat-slide-toggle>
+                        <mat-error *ngIf="fPerson.controls.protocol.hasError('required')">
+                            Este campo es <strong>requerido</strong>
+                        </mat-error>
+                    </div>
+
+                    <!-- Vaccination Card Number -->
+                    <div *ngIf="settings.showVaccinationCardNumberField" fxFlex.gt-xs="6%" fxFlex.xs="100%"
+                        fxLayout="column" style="background-color: #ffffff" class="item">
+                        <mat-form-field appearance="fill" fxFlexFill>
+                            <mat-label>Nro. de tarjeta de Vacunación</mat-label>
+                            <input type="text" matInput formControlName="vaccination_card_number"
+                                [disabled]="readOnly" />
+                            <mat-error *ngIf="fPerson.controls.vaccination_card_number.hasError('required')">
+                                El nro. de tarjeta de vacunación es <strong>requerido</strong>
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+
+                    <!-- Assigned Card Number -->
+                    <div *ngIf="settings.showAssignedCardNumberField" fxFlex.gt-xs="6%" fxFlex.xs="100%"
+                        fxLayout="column" style="background-color: #ffffff" class="item">
+                        <mat-form-field appearance="fill" fxFlexFill>
+                            <mat-label>Nro. de carnet de asignado</mat-label>
+                            <input type="text" matInput formControlName="assigned_card_number" [disabled]="readOnly" />
+                            <mat-error *ngIf="fPerson.controls.assigned_card_number.hasError('required')">
+                                El nro. de carnet de asignado es <strong>requerido</strong>
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <!-- Secciones especiales (Institución, Empresa, Guía, Materiales) -->
+                <div fxLayout="column" fxLayoutGap="10px">
+                    <!-- Institution Section -->
+                    <div *ngIf="settings.showTypePersonField && isInstitution" fxLayout="column" fxLayoutGap="10px"
+                        style="background-color: #ffffff" class="item mat-toolbar">
+                        <div fxLayout="row" fxLayoutAlign="center center" class="item mat-toolbar mat-primary">
+                            Personal de la Instituccion (Datos de la Instituccion)
+                        </div>
+
+                        <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px">
+                            <div fxFlex.gt-xs="40%">
+                                <mat-form-field appearance="fill" fxFlexFill>
+                                    <mat-label>Institucion</mat-label>
+                                    <input type="text" matInput formControlName="institucion" [disabled]="readOnly" />
+                                </mat-form-field>
+                            </div>
+                            <div fxFlex.gt-xs="30%">
+                                <mat-form-field appearance="fill" fxFlexFill>
+                                    <mat-label>Observacion</mat-label>
+                                    <input type="text" matInput formControlName="observacion" [disabled]="readOnly" />
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div fxLayout="row" fxLayoutAlign="center center" class="item mat-toolbar mat-primary">
+                            Personal que autoriza la entrada
+                        </div>
+
+                        <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px">
+                            <div fxFlex.gt-xs="40%">
+                                <mat-form-field appearance="fill" fxFlexFill>
+                                    <mat-label>Nombres y Apellidos</mat-label>
+                                    <input type="text" matInput formControlName="name_recibe" [disabled]="readOnly" />
+                                </mat-form-field>
+                            </div>
+                            <div fxFlex.gt-xs="30%">
+                                <mat-form-field appearance="fill" fxFlexFill>
+                                    <mat-label>Cedula</mat-label>
+                                    <input type="text" matInput formControlName="ident_recibe" [disabled]="readOnly" />
+                                </mat-form-field>
+                            </div>
+                            <div fxFlex.gt-xs="30%">
+                                <mat-form-field appearance="fill" fxFlexFill>
+                                    <mat-label>Cargo</mat-label>
+                                    <input type="text" matInput formControlName="cargo_recibe" [disabled]="readOnly" />
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Contractor Section -->
+                    <div *ngIf="fPerson && settings.showTypePersonField && requiresCompanyData" fxLayout="column"
+                        fxLayout.gt-xs="row" fxLayoutGap="10px" style="background-color: #ffffff"
+                        class="item mat-toolbar">
+                        <div fxFlex.gt-xs="50%">
+                            <mat-form-field appearance="fill" fxFlexFill>
+                                <mat-label>Nombre de la empresa</mat-label>
+                                <input type="text" matInput formControlName="company_name" [disabled]="readOnly" />
+                            </mat-form-field>
+                        </div>
+                        <div fxFlex.gt-xs="50%">
+                            <mat-form-field appearance="fill" fxFlexFill>
+                                <mat-label>RIF</mat-label>
+                                <input type="text" matInput formControlName="rif" [disabled]="readOnly" />
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <!-- Guide Number Section -->
+                    <div *ngIf="settings.showTypePersonField && requiresGuideNumber" fxLayout="row"
+                        style="background-color: #ffffff" class="item mat-toolbar">
+                        <div fxFlex="100%" fxFlex.gt-xs="50%">
+                            <mat-form-field appearance="fill" fxFlexFill>
+                                <mat-label>Número de guía o factura</mat-label>
+                                <input type="text" matInput formControlName="guide_number" [disabled]="readOnly" />
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+
+                    <!-- Materials Section -->
+                    <div *ngIf="settings.showEntryField && fPerson.controls.entry.value === true" fxLayout="column"
+                        fxLayoutGap="10px" style="background-color: #ffffff" class="item mat-toolbar">
+                        <div fxLayout="row" fxLayoutAlign="center center" class="item mat-toolbar mat-primary">
+                            Objetos maquinas herramientas o equipos con que ingresa
+                        </div>
+
+                        <!-- Material Input Fields -->
+                        <div *ngIf="!readOnly" fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px">
+                            <div fxFlex.gt-xs="25%">
+                                <mat-form-field appearance="fill" fxFlexFill>
+                                    <mat-label>Descripción</mat-label>
+                                    <input type="text" matInput [(ngModel)]="materialCurrent.description"
+                                        [ngModelOptions]="{standalone: true}" />
+                                </mat-form-field>
+                            </div>
+                            <div fxFlex.gt-xs="15%">
+                                <mat-form-field appearance="fill" fxFlexFill>
+                                    <mat-label>Marca</mat-label>
+                                    <input type="text" matInput [(ngModel)]="materialCurrent.mark"
+                                        [ngModelOptions]="{standalone: true}" />
+                                </mat-form-field>
+                            </div>
+                            <div fxFlex.gt-xs="15%">
+                                <mat-form-field appearance="fill" fxFlexFill>
+                                    <mat-label>Modelo</mat-label>
+                                    <input type="text" matInput [(ngModel)]="materialCurrent.model"
+                                        [ngModelOptions]="{standalone: true}" />
+                                </mat-form-field>
+                            </div>
+                            <div fxFlex.gt-xs="10%">
+                                <mat-form-field appearance="fill" fxFlexFill>
+                                    <mat-label>Color</mat-label>
+                                    <input type="text" matInput [(ngModel)]="materialCurrent.color"
+                                        [ngModelOptions]="{standalone: true}" />
+                                </mat-form-field>
+                            </div>
+                            <div fxFlex.gt-xs="10%">
+                                <mat-form-field appearance="fill" fxFlexFill>
+                                    <mat-label>Serial</mat-label>
+                                    <input type="text" matInput [(ngModel)]="materialCurrent.serial"
+                                        [ngModelOptions]="{standalone: true}" />
+                                </mat-form-field>
+                            </div>
+                            <div fxFlex.gt-xs="10%">
+                                <mat-form-field appearance="fill" fxFlexFill>
+                                    <mat-label>Año</mat-label>
+                                    <input type="text" matInput [(ngModel)]="materialCurrent.year"
+                                        [ngModelOptions]="{standalone: true}" />
+                                </mat-form-field>
+                            </div>
+                            <div fxFlex.gt-xs="10%">
+                                <mat-form-field appearance="fill" fxFlexFill>
+                                    <mat-label>Placa</mat-label>
+                                    <input type="text" matInput [(ngModel)]="materialCurrent.license_plate"
+                                        [ngModelOptions]="{standalone: true}" />
+                                </mat-form-field>
+                            </div>
+                            <div fxFlex.gt-xs="5%" fxLayoutAlign="center center">
+                                <button mat-raised-button type="button" (click)="addMaterial(i)">Agregar</button>
+                            </div>
+                        </div>
+
+                        <!-- Materials Table -->
+                        <div fxLayout="column">
+                            <!-- Table Header - Hidden on mobile -->
+                            <div fxLayout="row" style="height: 50px" fxHide.xs>
+                                <div fxFlex.gt-xs="25%" fxLayoutAlign="center center"
+                                    class="item mat-toolbar mat-primary">Descripción</div>
+                                <div fxFlex.gt-xs="15%" fxLayoutAlign="center center"
+                                    class="item mat-toolbar mat-primary">Marca</div>
+                                <div fxFlex.gt-xs="15%" fxLayoutAlign="center center"
+                                    class="item mat-toolbar mat-primary">Modelo</div>
+                                <div fxFlex.gt-xs="10%" fxLayoutAlign="center center"
+                                    class="item mat-toolbar mat-primary">Color</div>
+                                <div fxFlex.gt-xs="10%" fxLayoutAlign="center center"
+                                    class="item mat-toolbar mat-primary">Serial</div>
+                                <div fxFlex.gt-xs="10%" fxLayoutAlign="center center"
+                                    class="item mat-toolbar mat-primary">Año</div>
+                                <div fxFlex.gt-xs="10%" fxLayoutAlign="center center"
+                                    class="item mat-toolbar mat-primary">Placa</div>
+                                <div *ngIf="!readOnly" fxFlex.gt-xs="5%" fxLayoutAlign="center center"
+                                    class="item mat-toolbar mat-primary"></div>
+                            </div>
+
+                            <!-- Table Rows - Stacked cards on mobile -->
+                            <div *ngFor="let material of fPerson.controls.materials.value.value; index as i_material;"
+                                fxLayout="column" fxLayout.gt-xs="row" class="material-item"
+                                style="margin-bottom: 10px;">
+
+                                <!-- Mobile Card View -->
+                                <div fxLayout="column" fxLayoutGap="1px" fxShow.xs fxHide.gt-xs>
+                                    <div><strong>Descripción:</strong> {{material.description}}</div>
+                                    <div><strong>Marca:</strong> {{material.mark}}</div>
+                                    <div><strong>Modelo:</strong> {{material.model}}</div>
+                                    <div><strong>Color:</strong> {{material.color}}</div>
+                                    <div><strong>Serial:</strong> {{material.serial}}</div>
+                                    <div><strong>Año:</strong> {{material.year}}</div>
+                                    <div><strong>Placa:</strong> {{material.license_plate}}</div>
+                                    <div *ngIf="!readOnly">
+                                        <button mat-raised-button type="button" color="warn"
+                                            (click)="removeMaterial(i_material)">
+                                            <mat-icon>delete_sweep</mat-icon> Eliminar
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <!-- Desktop Table View -->
+                                <div fxFlex.gt-xs="25%" fxLayoutAlign="center center" class="item" fxHide.xs>
+                                    {{material.description}}</div>
+                                <div fxFlex.gt-xs="15%" fxLayoutAlign="center center" class="item" fxHide.xs>
+                                    {{material.mark}}</div>
+                                <div fxFlex.gt-xs="15%" fxLayoutAlign="center center" class="item" fxHide.xs>
+                                    {{material.model}}</div>
+                                <div fxFlex.gt-xs="10%" fxLayoutAlign="center center" class="item" fxHide.xs>
+                                    {{material.color}}</div>
+                                <div fxFlex.gt-xs="10%" fxLayoutAlign="center center" class="item" fxHide.xs>
+                                    {{material.serial}}</div>
+                                <div fxFlex.gt-xs="10%" fxLayoutAlign="center center" class="item" fxHide.xs>
+                                    {{material.year}}</div>
+                                <div fxFlex.gt-xs="10%" fxLayoutAlign="center center" class="item" fxHide.xs>
+                                    {{material.license_plate}}</div>
+                                <div *ngIf="!readOnly" fxFlex.gt-xs="5%" fxLayoutAlign="center center" class="item"
+                                    fxHide.xs>
+                                    <button mat-raised-button type="button" (click)="removeMaterial(i_material)">
+                                        <mat-icon>delete_sweep</mat-icon>
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-
-
-        </form>
-        <br><br>
+            </form>
+        </div>
     </div>
-
 </div>

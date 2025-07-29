@@ -11,6 +11,7 @@ import { CdkTextareaAutosize } from "@angular/cdk/text-field";
 import { take } from "rxjs/operators";
 export interface DialogData {
   id: string;
+  doc_ident?: string;
   redirect: boolean;
 }
 @Component({
@@ -28,7 +29,8 @@ export class CreateAndEditPersonComponent implements OnInit {
   id: string = "";
   @ViewChild('autosize') autosize!: CdkTextareaAutosize;
   updated = false;
-
+  isDocIdentReadonly = false;
+  
   constructor(
     private personService: PersonService,
     private typePeopleService: TypePeopleService,
@@ -70,8 +72,16 @@ export class CreateAndEditPersonComponent implements OnInit {
       {}
     );
     if (this.id) {
+      // Flujo normal de actualización
       this.update = true;
       this.getPerson();
+    } else if (this.data?.doc_ident) {
+      this.isDocIdentReadonly = true; // Se activa el flag para la plantilla
+      
+      // Se asigna la cédula al formulario
+      this.fg.patchValue({
+        doc_ident: this.data.doc_ident
+      });
     }
   }
 

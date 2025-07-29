@@ -20,6 +20,7 @@ export abstract class API<T> {
   static TYPE_USER = 'type_user';
   static BOOK = 'book';
   static SCHEMA_NAME = 'schema_name';
+  static FACIAL_RECOGNITION = 'LN_FACIAL_RECOGNITION'
   protected URL_API: string = env.API;
   protected abstract URL: string;
 
