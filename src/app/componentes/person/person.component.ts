@@ -150,19 +150,19 @@ export class PersonComponent implements OnInit {
         // Si la persona no existe
         if (!resp.person) {
           this.toastr.error(resp.message || 'La persona no existe');
-          this.fPerson.get("identification_number")!.setValue("");
+          // this.fPerson.get("identification_number")!.setValue("");
           return;
         }
         // Si está en blacklist
         if (resp.blacklist) {
           this.showBlacklistAlert(resp.person);
-          this.fPerson.get("identification_number")!.setValue("");
+          // this.fPerson.get("identification_number")!.setValue("");
           return;
         }
         // Si no tiene acceso vigente
         if (!resp.has_access) {
           this.showNoAccessAlert(resp.person, resp.message || 'No tiene acceso permitido en este momento', resp.access_list);
-          this.fPerson.get("identification_number")!.setValue("");
+          // this.fPerson.get("identification_number")!.setValue("");
           return;
         }
         // Si todo está bien, llenar los datos
@@ -180,7 +180,7 @@ export class PersonComponent implements OnInit {
         if (typePerson)
           this.check(typePerson);
       });
-    }, 1100);
+    }, 1400);
   }
 
   private showBlacklistAlert(person: Person): void {
