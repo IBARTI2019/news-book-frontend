@@ -200,7 +200,7 @@ export class FormatGeneratorComponent implements OnInit {
       }
     }
     const dialogRef = this.dialog.open(ParamsControlDialogComponent, {
-      width: element.code !== "PLANNED_STAFF" && element.code !== "OESVICA_STAFF" && element.code !== "SUB_LINE" && element.code !== "FORMER_GUARD" ? "300px" : "500px",
+      width: element.code !== "PLANNED_STAFF" && element.code !== "OESVICA_STAFF" && element.code !== "SUB_LINE" && element.code !== "FORMER_GUARD" ? "400px" : "600px",
       data: {
         element: _element,
         index: index,

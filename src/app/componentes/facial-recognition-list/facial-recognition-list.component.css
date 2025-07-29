@@ -1,0 +1,41 @@
+:host ::ng-deep .mat-dialog-actions {
+  justify-content: flex-end;
+}
+
+:host ::ng-deep .mat-list-option {
+  .mat-list-item-content {
+    padding: 0 !important;
+  }
+  
+  height: auto !important;
+}
+
+.mat-icon {
+  width: 40px;
+  height: 40px;
+  font-size: 40px;
+}
+
+.recognition-option {
+  border: 2px solid transparent;
+  border-radius: 10px;
+  margin-bottom: 12px;
+  transition: border 0.2s, box-shadow 0.2s;
+  padding:10px;
+}
+
+.recognition-option.selected-recognition,
+.recognition-option.mat-list-item.mat-list-option.mat-list-option-selected {
+  border: 2px solid #1976d2;
+  box-shadow: 0 2px 8px rgba(25, 118, 210, 0.08);
+  background: #e3f2fd;
+}
+
+.mat-icon {
+  width: 48px;
+  height: 48px;
+  font-size: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

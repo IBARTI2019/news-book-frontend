@@ -114,7 +114,7 @@
                         </div>
 
                         <div *ngIf="settings.showMovementTypeField" fxFlex="1 1 15%" class="item-cell">
-                            <mat-radio-group formControlName="movement_type" fxLayout="column" fxLayoutGap="5px"
+                            <mat-radio-group formControlName="movement_type" fxLayout="column" fxLayoutGap="1px"
                                 [disabled]="readOnly">
                                 <mat-radio-button *ngFor="let mType of movementTypes" [value]="mType.id">
                                     {{ mType.text }}

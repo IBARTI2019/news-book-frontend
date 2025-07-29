@@ -1,7 +1,31 @@
 .item {
-    font: bold;
-    /*padding: 10px;*/
-    font-size: 11px;
-    line-height: 1.5em; 
+  font: bold;
+  font-size: 11px;
+  line-height: 1.5em;
+}
+
+/* Responsive styles */
+@media (max-width: 599px) {
+  .material-item {
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      margin-bottom: 10px;
   }
   
+  mat-form-field {
+      width: 100%;
+  }
+  
+  .mat-toolbar {
+      font-size: 12px;
+      padding: 8px;
+  }
+}
+
+/* Desktop styles */
+@media (min-width: 600px) {
+  .item {
+      padding: 5px;
+  }
+}
