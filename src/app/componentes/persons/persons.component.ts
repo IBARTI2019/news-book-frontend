@@ -132,8 +132,7 @@ export class PersonsComponent implements OnInit {
         this.settings.showPlaceOfReceptionField ? Validators.required : null
       ],
       entry: [
-        person.entry || false,
-        this.settings.showEntryField ? Validators.required : null
+        person.entry || false
       ],
       protocol: [
         person.protocol || false,

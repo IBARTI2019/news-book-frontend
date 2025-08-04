@@ -150,7 +150,7 @@ export class VehiclesComponent implements OnInit {
       ],
       entry: [
         v.entry || false,
-        this.settings.showEntryField && Validators.required,
+        this.settings.showEntryField,
       ],
       protocol: [
         v.protocol || false,
