@@ -90,7 +90,7 @@ export class ControlService {
         ],
         entry: [
           question.value.entry || false,
-          question.settings.showEntryField && Validators.required,
+          question.settings.showEntryField,
         ],
         protocol: [
           question.value.protocol || false,
@@ -138,8 +138,7 @@ export class ControlService {
         question.settings.showAccompanyVisitor && Validators.required,
       ],
       entry: [
-        question.value.entry || false,
-        question.settings.showEntryField && Validators.required,
+        question.value.entry || false
       ],
       hour: [
         question.value.hour || '',
