@@ -17,7 +17,7 @@
                     class="item mat-toolbar mat-primary">
                     Cedula
                 </div>
-                <div *ngIf="settings.showNameField" fxFlex="15%" fxLayoutAlign="center center"
+                <div *ngIf="settings.showNameField" fxFlex="17%" fxLayoutAlign="center center"
                     class="item mat-toolbar mat-primary">
                     Nombre y Apellido
                 </div>
@@ -33,11 +33,11 @@
                     class="item mat-toolbar mat-primary">
                     Acompaño al visitante
                 </div>
-                <div *ngIf="settings.showHourField" fxFlex="13%" fxLayoutAlign="center center"
+                <div *ngIf="settings.showHourField" fxFlex fxLayoutAlign="center center"
                     class="item mat-toolbar mat-primary">
                     Hora
                 </div>
-                <div *ngIf="settings.showReasonVisitField" fxFlex="15%" fxLayoutAlign="center center"
+                <div *ngIf="settings.showReasonVisitField" fxFlex="14%" fxLayoutAlign="center center"
                     class="item mat-toolbar mat-primary">
                     Motivo de Visita
                 </div>
@@ -86,7 +86,7 @@
                     </div>
 
                     <!-- Full Name -->
-                    <div *ngIf="settings.showNameField" fxFlex.gt-xs="15%" fxFlex.xs="100%" fxLayout="column"
+                    <div *ngIf="settings.showNameField" fxFlex.gt-xs="17%" fxFlex.xs="100%" fxLayout="column"
                         style="background-color: #ffffff" class="item">
                         <div>
                             <mat-form-field appearance="fill" fxFlexFill>
@@ -143,7 +143,7 @@
                     </div>
 
                     <!-- Hour Field -->
-                    <div *ngIf="settings.showHourField" fxFlex.gt-xs="13%" fxFlex.xs="100%" fxLayout="column"
+                    <div *ngIf="settings.showHourField" fxFlex.gt-xs fxFlex.xs="100%" fxLayout="column"
                         style="background-color: #ffffff" class="item">
                         <ngx-timepicker-field #hourP [format]="24" [defaultTime]="'00:00'" [toggleIcon]="icon_hour"
                             formControlName="hour" [disabled]="readOnly">
@@ -157,7 +157,7 @@
                     </div>
 
                     <!-- Reason Visit -->
-                    <div *ngIf="settings.showReasonVisitField" fxFlex.gt-xs="15%" fxFlex.xs="100%" fxLayout="column"
+                    <div *ngIf="settings.showReasonVisitField" fxFlex.gt-xs="14%" fxFlex.xs="100%" fxLayout="column"
                         style="background-color: #ffffff" class="item">
                         <mat-form-field appearance="fill" fxFlexFill>
                             <mat-label>Motivo de la visita</mat-label>
