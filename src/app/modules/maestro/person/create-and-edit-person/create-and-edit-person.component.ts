@@ -9,9 +9,11 @@ import { TypePeopleService } from "../../../../services/type-people.service";
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { CdkTextareaAutosize } from "@angular/cdk/text-field";
 import { take } from "rxjs/operators";
+import { last } from "lodash";
 export interface DialogData {
   id: string;
   doc_ident?: string;
+  user_name?: string;
   redirect: boolean;
 }
 @Component({
@@ -27,10 +29,10 @@ export class CreateAndEditPersonComponent implements OnInit {
   routeState: any;
   redirectTo = "";
   id: string = "";
-  @ViewChild('autosize') autosize!: CdkTextareaAutosize;
+  @ViewChild("autosize") autosize!: CdkTextareaAutosize;
   updated = false;
   isDocIdentReadonly = false;
-  
+
   constructor(
     private personService: PersonService,
     private typePeopleService: TypePeopleService,
@@ -40,19 +42,21 @@ export class CreateAndEditPersonComponent implements OnInit {
     private route: ActivatedRoute,
     public dialogRef: MatDialogRef<CreateAndEditPersonComponent>,
     private _ngZone: NgZone,
-    @Inject(MAT_DIALOG_DATA) public data?: DialogData,
+    @Inject(MAT_DIALOG_DATA) public data?: DialogData
   ) {
     this.fg = this.fb.group({});
-    this.routeState = history.state
+    this.routeState = history.state;
   }
 
   ngOnInit() {
     this.updated = false;
-    this.id = this.data?.id || ''; //this.route.snapshot.params.id;
-    this.redirectTo = this.routeState.redirectTo || ""
-    this.typePeopleService.list({ not_paginator: true }).subscribe((data: TypePeople[]) => {
-      this.listap = data;
-    });
+    this.id = this.data?.id || ""; //this.route.snapshot.params.id;
+    this.redirectTo = this.routeState.redirectTo || "";
+    this.typePeopleService
+      .list({ not_paginator: true })
+      .subscribe((data: TypePeople[]) => {
+        this.listap = data;
+      });
     this.fg = this.fb.group(
       {
         name: ["", Validators.required],
@@ -77,20 +81,25 @@ export class CreateAndEditPersonComponent implements OnInit {
       this.getPerson();
     } else if (this.data?.doc_ident) {
       this.isDocIdentReadonly = true; // Se activa el flag para la plantilla
-      
+
       // Se asigna la cédula al formulario
       this.fg.patchValue({
-        doc_ident: this.data.doc_ident
+        doc_ident: this.data.doc_ident,
+        name: this.data.user_name ? this.data.user_name.split(" ")[0] : "",
+        last_name: last(this.data.user_name?.split(" ")) || "",
       });
     }
   }
 
   triggerResize() {
     // Wait for changes to be applied, then trigger textarea resize.
-    this._ngZone.onStable.pipe(take(1)).subscribe(() => this.autosize.resizeToFitContent(true));
+    this._ngZone.onStable
+      .pipe(take(1))
+      .subscribe(() => this.autosize.resizeToFitContent(true));
   }
 
-  requiredCompanyData = (typeId: string) => this.listap.find(t => t.id == typeId)?.requires_company_data;
+  requiredCompanyData = (typeId: string) =>
+    this.listap.find((t) => t.id == typeId)?.requires_company_data;
 
   onSubmit() {
     this.submitted = true;
@@ -128,7 +137,7 @@ export class CreateAndEditPersonComponent implements OnInit {
   }
 
   getPerson() {
-    this.personService.get(this.id || '').subscribe((data: Person) => {
+    this.personService.get(this.id || "").subscribe((data: Person) => {
       //this.fg.get("code")!.setValue(data.code);
       this.fg.get("name")!.setValue(data.name);
       this.fg.get("last_name")!.setValue(data.last_name);
@@ -144,7 +153,9 @@ export class CreateAndEditPersonComponent implements OnInit {
       this.fg.get("blacklist")!.setValue(data.blacklist);
       this.fg.get("blacklist_reason")!.setValue(data.blacklist_reason);
 
-      this.fg.get("default_visit_location")!.setValue(data.default_visit_location);
+      this.fg
+        .get("default_visit_location")!
+        .setValue(data.default_visit_location);
       this.fg.get("default_visit_reason")!.setValue(data.default_visit_reason);
     });
   }
