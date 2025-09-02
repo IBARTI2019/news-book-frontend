@@ -6,14 +6,8 @@
   .mat-list-item-content {
     padding: 0 !important;
   }
-  
-  height: auto !important;
-}
 
-.mat-icon {
-  width: 40px;
-  height: 40px;
-  font-size: 40px;
+  height: auto !important;
 }
 
 .recognition-option {
@@ -21,7 +15,7 @@
   border-radius: 10px;
   margin-bottom: 12px;
   transition: border 0.2s, box-shadow 0.2s;
-  padding:10px;
+  padding: 10px;
 }
 
 .recognition-option.selected-recognition,
@@ -34,8 +28,26 @@
 .mat-icon {
   width: 48px;
   height: 48px;
-  font-size: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.recognition-option:hover {
+  background-color: #f5f5f5;
+  cursor: pointer;
+}
+
+/* Estilo para el mensaje de no resultados */
+.no-results {
+  text-align: center;
+  padding: 40px 20px;
+  color: #757575;
+}
+
+.no-results mat-icon {
+  font-size: 48px;
+  width: 48px;
+  height: 48px;
+  margin-bottom: 16px;
 }
