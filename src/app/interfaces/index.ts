@@ -113,7 +113,7 @@ export interface Person {
   movement_type?: string;
   reason_visit?: string;
   full_name?: string;
-  hour?: string;
+  hour?: string | null;
   protocol?: boolean;
   materials?: { value: any[] };
   entry?: boolean;
@@ -121,7 +121,7 @@ export interface Person {
   assigned_card_number?: string;
   accompany_visitor?: string;
   place_of_reception?: string;
-  
+
   company?: string;
   rif?: string;
 
@@ -347,7 +347,6 @@ export interface SelectionSettings {
   showCP?: boolean;
 }
 
-
 export interface ScopeSettings {
   percentage?: number;
   showItemField?: boolean;
@@ -426,7 +425,6 @@ export interface RoundSettings {
   showReasonField?: boolean;
 }
 
-
 export interface PersonsSettings {
   percentage?: number;
   showTokenField?: boolean;
@@ -443,7 +441,6 @@ export interface PersonsSettings {
   showAssignedCardNumberField?: boolean;
   showButtonNew?: boolean;
 }
-
 
 export interface Round {
   number: string;
@@ -464,14 +461,12 @@ export interface Client {
   facial_recognition?: boolean;
 }
 
-
 export interface Domain {
   id?: string;
   domain?: string;
   tenant?: Client;
   tenant_id?: number;
 }
-
 
 export interface AttachedFileSettings {
   percentage?: number;

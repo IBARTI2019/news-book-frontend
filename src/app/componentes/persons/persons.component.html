@@ -1,372 +1,728 @@
-<div fxFlex="{{ settings?.percentage || defaultValues.percentage }}" fxLayout="column" style="padding: 10px 0;">
-    <!-- Barra de búsqueda/agregar -->
-    <form [formGroup]="fGPersons">
-        <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="15px" style="margin-bottom: 15px;">
-            <mat-form-field fxFlex="1 1 60%" fxFlex.lt-sm="100%" appearance="fill" *ngIf="!readOnly">
-                <mat-label>Cédula</mat-label>
-                <input type="text" matInput placeholder="Ingrese cédula"
-                    [(ngModel)]="personCurrent.identification_number" [ngModelOptions]="{standalone: true}">
-                <mat-error *ngIf="fGPersons.get('identification_number')?.hasError('required')">
-                    Cédula es <strong>requerida</strong>
-                </mat-error>
-            </mat-form-field>
+<div
+  fxFlex="{{ settings?.percentage || defaultValues.percentage }}"
+  fxLayout="column"
+  style="padding: 10px 0"
+>
+  <!-- Barra de búsqueda/agregar -->
+  <form [formGroup]="fGPersons">
+    <div
+      fxLayout="row"
+      fxLayout.lt-sm="column"
+      fxLayoutGap="15px"
+      style="margin-bottom: 15px"
+    >
+      <mat-form-field
+        fxFlex="1 1 60%"
+        fxFlex.lt-sm="100%"
+        appearance="fill"
+        *ngIf="!readOnly"
+      >
+        <mat-label>Cédula</mat-label>
+        <input
+          type="text"
+          matInput
+          [placeholder]="facialRecognition ? '' : 'Ingrese cédula'"
+          [(ngModel)]="personCurrent.identification_number"
+          [ngModelOptions]="{ standalone: true }"
+        />
+        <button
+          *ngIf="facialRecognition"
+          mat-icon-button
+          matSuffix
+          color="primary"
+          (click)="openFacialRecognitionModal()"
+          type="button"
+          aria-label="Buscar por reconocimiento facial"
+        >
+          <mat-icon>search</mat-icon>
+        </button>
+        <mat-error
+          *ngIf="fGPersons.get('identification_number')?.hasError('required')"
+        >
+          Cédula es <strong>requerida</strong>
+        </mat-error>
+      </mat-form-field>
 
-            <div fxLayout="row" fxLayoutGap="10px" fxFlex="1 1 40%" fxFlex.lt-sm="100%">
-                <button mat-raised-button fxFlex="50" (click)="addPerson()" style="height: 50px" *ngIf="!readOnly"
-                    [disabled]="!personCurrent.identification_number" color="primary">
-                    <mat-icon>person_add</mat-icon> Agregar
-                </button>
-                <button *ngIf="settings.showButtonNew" style="height: 50px" mat-raised-button color="primary"
-                    (click)="createPerson()" type="button">
-                    Nuevo
-                </button>
-                <!-- <button mat-raised-button fxFlex="50" (click)="searchPerson()" style="height: 50px" *ngIf="!readOnly"
+      <div
+        fxLayout="row"
+        fxLayoutGap="10px"
+        fxFlex="1 1 40%"
+        fxFlex.lt-sm="100%"
+      >
+        <button
+          mat-raised-button
+          fxFlex="50"
+          (click)="addPerson()"
+          style="height: 50px"
+          *ngIf="!readOnly && !facialRecognition"
+          [disabled]="!personCurrent.identification_number"
+          color="primary"
+        >
+          <mat-icon>person_add</mat-icon> Agregar
+        </button>
+        <button
+          *ngIf="settings.showButtonNew && !facialRecognition"
+          style="height: 50px"
+          mat-raised-button
+          color="primary"
+          (click)="createPerson()"
+          type="button"
+        >
+          Nuevo
+        </button>
+        <!-- <button mat-raised-button fxFlex="50" (click)="searchPerson()" style="height: 50px" *ngIf="!readOnly"
                     color="accent">
                     <mat-icon>search</mat-icon> Buscar
                 </button> -->
-            </div>
-        </div>
-    </form>
-
-    <!-- Versión desktop -->
-    <div fxShow="gt-sm" fxHide.lt-md>
-        <!-- Contenedor de tabla -->
-        <div class="table-container" fxLayout="column">
-            <!-- Encabezados -->
-            <div fxLayout="row" fxLayoutGap="1px" class="header-row">
-                <div *ngIf="settings.showTokenField" fxFlex="1 0 15%" class="header-cell mat-toolbar mat-primary">
-                    Cédula
-                </div>
-                <div *ngIf="settings.showNameField" fxFlex="3 0 25%" class="header-cell mat-toolbar mat-primary">
-                    Nombre
-                </div>
-                <div *ngIf="settings.showTypePersonField" fxFlex="1 1 15%" class="header-cell mat-toolbar mat-primary">
-                    Tipo
-                </div>
-                <div *ngIf="settings.showMovementTypeField" fxFlex="1 1 15%"
-                    class="header-cell mat-toolbar mat-primary">
-                    Movimiento
-                </div>
-                <div *ngIf="settings.showHourField" fxFlex="1 1 10%" class="header-cell mat-toolbar mat-primary">
-                    Hora
-                </div>
-                <div *ngIf="settings.showReasonVisitField" fxFlex="1 1 15%" class="header-cell mat-toolbar mat-primary">
-                    Motivo de Visita
-                </div>
-                <div *ngIf="settings.showPlaceOfReceptionField" fxLayoutAlign="center center" fxFlex="1 1 15%"
-                    fxLayout="row" class="item mat-toolbar mat-primary">
-                    Lugar de recibimiento
-                </div>
-                <div *ngIf="settings.showEntryField" fxLayoutAlign="center center" fxFlex="1 1 6%" fxLayout="row"
-                    class="item mat-toolbar mat-primary">
-                    Ingreso de Herramienta, Vehículo o Equipo
-                </div>
-                <div *ngIf="settings.showProtocolField" fxLayoutAlign="center center" fxFlex="1 1 6%" fxLayout="row"
-                    class="item mat-toolbar mat-primary">
-                    Cumplió Protocolo COVID 19
-                </div>
-                <div *ngIf="settings.showVaccinationCardNumberField" fxLayoutAlign="center center" fxFlex="1 1 6%"
-                    fxLayout="row" class="item mat-toolbar mat-primary">
-                    Nro. de tarjeta de Vacunación
-                </div>
-                <div *ngIf="settings.showAssignedCardNumberField" fxLayoutAlign="center center" fxFlex="1 1 10%"
-                    fxLayout="row" class="item mat-toolbar mat-primary">
-                    Nro. de carnet asignado
-                </div>
-                <div fxFlex="1 1 5%" class="header-cell mat-toolbar mat-primary" *ngIf="!readOnly"></div>
-            </div>
-
-            <!-- Items -->
-            <div fxLayout="column" fxLayoutGap="1px">
-                <ng-container *ngFor="let person of fPersons.controls; index as i;">
-                    <div [formGroup]="person" fxLayout="row" fxLayoutGap="1px" class="item-row">
-                        <div *ngIf="settings.showTokenField" fxFlex="1 0 15%" class="item-cell">
-                            <mat-form-field appearance="fill" fxFlex="100">
-                                <input type="text" matInput formControlName="identification_number" placeholder="Cédula"
-                                    [readonly]="readOnly" />
-                                <mat-error *ngIf="person.get('identification_number')?.hasError('required')">
-                                    Cédula es <strong>requerida</strong>
-                                </mat-error>
-                            </mat-form-field>
-                        </div>
-
-                        <div *ngIf="settings.showNameField" fxFlex="3 0 25%" class="item-cell">
-                            <mat-form-field appearance="fill" fxFlex="100">
-                                <input type="text" matInput formControlName="full_name" placeholder="Nombre completo"
-                                    [readonly]="readOnly" />
-                                <mat-error *ngIf="person.get('full_name')?.hasError('required')">
-                                    Nombre es <strong>requerido</strong>
-                                </mat-error>
-                            </mat-form-field>
-                        </div>
-
-                        <div *ngIf="settings.showTypePersonField" fxFlex="1 1 15%" class="item-cell">
-                            <mat-form-field appearance="fill" fxFlex="100">
-                                <mat-select formControlName="type_person" placeholder="Tipo" [disabled]="readOnly">
-                                    <mat-option *ngFor="let type of personTypes" [value]="type.id">
-                                        {{ type.description }}
-                                    </mat-option>
-                                </mat-select>
-                                <mat-error *ngIf="person.get('type_person')?.hasError('required')">
-                                    Tipo es <strong>requerido</strong>
-                                </mat-error>
-                            </mat-form-field>
-                        </div>
-
-                        <div *ngIf="settings.showMovementTypeField" fxFlex="1 1 15%" class="item-cell">
-                            <mat-radio-group formControlName="movement_type" fxLayout="column" fxLayoutGap="1px"
-                                [disabled]="readOnly">
-                                <mat-radio-button *ngFor="let mType of movementTypes" [value]="mType.id">
-                                    {{ mType.text }}
-                                </mat-radio-button>
-                            </mat-radio-group>
-                            <mat-error *ngIf="person.get('movement_type')?.hasError('required')"
-                                style="display: block; margin-top: 5px;">
-                                Movimiento es <strong>requerido</strong>
-                            </mat-error>
-                        </div>
-
-                        <div *ngIf="settings.showHourField" fxFlex="1 1 10%" class="item-cell">
-                            <ngx-timepicker-field formControlName="hour" [format]="24"
-                                [disabled]="readOnly"></ngx-timepicker-field>
-                            <mat-error *ngIf="person.get('hour')?.hasError('required')">
-                                Hora es <strong>requerida</strong>
-                            </mat-error>
-                        </div>
-
-                        <div *ngIf="settings.showReasonVisitField" fxFlex="1 1 15%" class="item-cell">
-                            <mat-form-field fxFlex="100">
-                                <textarea matInput placeholder="Motivo" formControlName="reason_visit"
-                                    [readonly]="readOnly"></textarea>
-                                <mat-error *ngIf="person.get('reason_visit')?.hasError('required')">
-                                    Motivo es <strong>requerido</strong>
-                                </mat-error>
-                            </mat-form-field>
-                        </div>
-                        <div *ngIf="settings.showPlaceOfReceptionField" fxFlex="1 1 15%" class="item-cell"
-                            fxLayoutAlign="center center">
-                            <mat-form-field appearance="fill" fxFlex="90">
-                                <mat-label>Lugar de recibimiento</mat-label>
-                                <input type="text" matInput formControlName="place_of_reception"
-                                    [readonly]="readOnly" />
-                                <mat-error *ngIf="person.get('place_of_reception')?.hasError('required')">
-                                    El lugar de recibimiento es <strong>requerido</strong>
-                                </mat-error>
-                            </mat-form-field>
-                        </div>
-
-                        <div *ngIf="settings.showEntryField" fxFlex="1 1 6%" class="item-cell"
-                            fxLayoutAlign="center center">
-                            <mat-slide-toggle formControlName="entry" #entryST [disabled]="readOnly">
-                                {{ entryST.checked ? "SI" : "NO" }}
-                            </mat-slide-toggle>
-                            <mat-error *ngIf="person.get('entry')?.hasError('required')" style="margin-top: 5px;">
-                                El ingreso es <strong>requerido</strong>
-                            </mat-error>
-                        </div>
-
-                        <div *ngIf="settings.showProtocolField" fxFlex="1 1 6%" class="item-cell"
-                            fxLayoutAlign="center center">
-                            <mat-slide-toggle formControlName="protocol" #protocolST [disabled]="readOnly">
-                                {{ protocolST.checked ? "SI" : "NO" }}
-                            </mat-slide-toggle>
-                            <mat-error *ngIf="person.get('protocol')?.hasError('required')" style="margin-top: 5px;">
-                                Este campo es <strong>requerido</strong>
-                            </mat-error>
-                        </div>
-
-                        <div *ngIf="settings.showVaccinationCardNumberField" fxFlex="1 1 6%" class="item-cell"
-                            fxLayoutAlign="center center">
-                            <mat-form-field appearance="fill" fxFlex="90">
-                                <mat-label>Nro. de tarjeta de Vacunación</mat-label>
-                                <input type="text" matInput formControlName="vaccination_card_number"
-                                    [readonly]="readOnly" />
-                                <mat-error *ngIf="person.get('vaccination_card_number')?.hasError('required')">
-                                    El nro. de tarjeta de vacunación es <strong>requerido</strong>
-                                </mat-error>
-                            </mat-form-field>
-                        </div>
-
-                        <div *ngIf="settings.showAssignedCardNumberField" fxFlex="1 1 6%" class="item-cell"
-                            fxLayoutAlign="center center">
-                            <mat-form-field appearance="fill" fxFlex="90">
-                                <mat-label>Nro. de carnet asignado</mat-label>
-                                <input type="text" matInput formControlName="assigned_card_number"
-                                    [readonly]="readOnly" />
-                                <mat-error *ngIf="person.get('assigned_card_number')?.hasError('required')">
-                                    El nro. de carnet asignado es <strong>requerido</strong>
-                                </mat-error>
-                            </mat-form-field>
-                        </div>
-                        <div fxFlex="1 1 5%" class="item-cell" *ngIf="!readOnly">
-                            <button mat-icon-button (click)="removePerson(i)">
-                                <mat-icon>delete</mat-icon>
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Sección de materiales/equipos si aplica -->
-                    <div *ngIf="person.get('entry')?.value" fxLayout="row" fxLayoutGap="1px"
-                        style="background: #f5f5f5; padding: 10px;">
-                        <!-- Contenido similar al componente de materiales -->
-                    </div>
-                </ng-container>
-            </div>
-        </div>
+      </div>
     </div>
+  </form>
 
-    <!-- Versión móvil -->
-    <div fxShow.lt-md fxHide="gt-sm">
-        <div fxLayout="column" fxLayoutGap="10px">
-            <ng-container *ngFor="let person of fPersons.controls; index as i;">
-                <div [formGroup]="person" class="mobile-card">
-                    <div fxLayout="row" fxLayoutGap="10px" *ngIf="settings.showTokenField">
-                        <div fxFlex="30%" class="mobile-label">Cédula:</div>
-                        <div fxFlex="70%">
-                            <mat-form-field appearance="fill" fxFlex="100">
-                                <input type="text" matInput formControlName="identification_number"
-                                    [readonly]="readOnly" />
-                                <mat-error *ngIf="person.get('identification_number')?.hasError('required')">
-                                    Cédula es <strong>requerida</strong>
-                                </mat-error>
-                            </mat-form-field>
-                        </div>
-                    </div>
-
-                    <div fxLayout="row" fxLayoutGap="10px" *ngIf="settings.showNameField">
-                        <div fxFlex="30%" class="mobile-label">Nombre:</div>
-                        <div fxFlex="70%">
-                            <mat-form-field appearance="fill" fxFlex="100">
-                                <input type="text" matInput formControlName="full_name" [readonly]="readOnly" />
-                                <mat-error *ngIf="person.get('full_name')?.hasError('required')">
-                                    Nombre es <strong>requerido</strong>
-                                </mat-error>
-                            </mat-form-field>
-                        </div>
-                    </div>
-
-                    <div fxLayout="row" fxLayoutGap="10px" *ngIf="settings.showTypePersonField">
-                        <div fxFlex="30%" class="mobile-label">Tipo:</div>
-                        <div fxFlex="70%">
-                            <mat-form-field appearance="fill" fxFlex="100">
-                                <mat-select formControlName="type_person" [disabled]="readOnly">
-                                    <mat-option *ngFor="let type of personTypes" [value]="type.id">
-                                        {{ type.description }}
-                                    </mat-option>
-                                </mat-select>
-                                <mat-error *ngIf="person.get('type_person')?.hasError('required')">
-                                    Tipo es <strong>requerido</strong>
-                                </mat-error>
-                            </mat-form-field>
-                        </div>
-                    </div>
-
-                    <div fxLayout="row" fxLayoutGap="10px" *ngIf="settings.showMovementTypeField">
-                        <div fxFlex="30%" class="mobile-label">Movimiento:</div>
-                        <div fxFlex="70%">
-                            <mat-radio-group formControlName="movement_type" fxLayout="column" [disabled]="readOnly">
-                                <mat-radio-button *ngFor="let mType of movementTypes" [value]="mType.id">
-                                    {{ mType.text }}
-                                </mat-radio-button>
-                            </mat-radio-group>
-                            <div *ngIf="person.get('movement_type')?.hasError('required')"
-                                style="color: #f44336; font-size: 12px; margin-top: 5px;">
-                                Movimiento es <strong>requerido</strong>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div fxLayout="row" fxLayoutGap="10px" *ngIf="settings.showHourField">
-                        <div fxFlex="30%" class="mobile-label">Hora:</div>
-                        <div fxFlex="70%">
-                            <ngx-timepicker-field formControlName="hour" [format]="24"
-                                [disabled]="readOnly"></ngx-timepicker-field>
-                            <div *ngIf="person.get('hour')?.hasError('required')"
-                                style="color: #f44336; font-size: 12px; margin-top: 5px;">
-                                Hora es <strong>requerida</strong>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div fxLayout="row" fxLayoutGap="10px" *ngIf="settings.showReasonVisitField">
-                        <div fxFlex="30%" class="mobile-label">Motivo:</div>
-                        <div fxFlex="70%">
-                            <mat-form-field fxFlex="100">
-                                <textarea matInput formControlName="reason_visit" [readonly]="readOnly"></textarea>
-                                <mat-error *ngIf="person.get('reason_visit')?.hasError('required')">
-                                    Motivo es <strong>requerido</strong>
-                                </mat-error>
-                            </mat-form-field>
-                        </div>
-                    </div>
-
-                    <div fxLayout="row" fxLayoutGap="10px" *ngIf="settings.showPlaceOfReceptionField">
-                        <div fxFlex="30%" class="mobile-label">Lugar de recibimiento:</div>
-                        <div fxFlex="70%">
-                            <mat-form-field appearance="fill">
-                                <mat-label>Lugar de recibimiento</mat-label>
-                                <input type="text" matInput formControlName="place_of_reception"
-                                    placeholder="Lugar de recibimiento" [readonly]="readOnly" />
-                                <mat-error *ngIf="person.get('place_of_reception')?.hasError('required')">
-                                    El lugar de recibimiento es <strong>requerido</strong>
-                                </mat-error>
-                            </mat-form-field>
-                        </div>
-                    </div>
-
-                    <div fxLayout="row" fxLayoutGap="10px" *ngIf="settings.showEntryField">
-                        <div fxFlex="30%" class="mobile-label">Ingreso de Herramienta o Equipo:</div>
-                        <div fxFlex="70%">
-                            <mat-slide-toggle formControlName="entry" #entryST [disabled]="readOnly">{{
-                                entryST.checked ? "SI" : "NO"
-                                }}</mat-slide-toggle>
-                        </div>
-                    </div>
-
-                    <div fxLayout="row" fxLayoutGap="10px" *ngIf="settings.showProtocolField">
-                        <div fxFlex="30%" class="mobile-label">Cumplió protocolo:</div>
-                        <div fxFlex="70%">
-                            <mat-slide-toggle formControlName="protocol" #protocolST [disabled]="readOnly">{{
-                                protocolST.checked ? "SI" : "NO"
-                                }}</mat-slide-toggle>
-                            <mat-error *ngIf="person.get('protocol')?.hasError('required')">
-                                Este campo es <strong>requerido</strong>
-                            </mat-error>
-                        </div>
-                    </div>
-                    <div fxLayout="row" fxLayoutGap="10px" *ngIf="settings.showVaccinationCardNumberField">
-                        <div fxFlex="30%" class="mobile-label">Nro. de tarjeta de Vacunación</div>
-                        <div fxFlex="70%">
-                            <mat-form-field appearance="fill">
-                                <input type="text" matInput formControlName="vaccination_card_number" placeholder=""
-                                    [readonly]="readOnly" />
-                                <mat-error *ngIf="person.get('vaccination_card_number')?.hasError('required')">
-                                    El nro. de tarjeta de vacunación es <strong>requerido</strong>
-                                </mat-error>
-                            </mat-form-field>
-                        </div>
-                    </div>
-
-                    <div fxLayout="row" fxLayoutGap="10px" *ngIf="settings.showAssignedCardNumberField">
-                        <div fxFlex="30%" class="mobile-label">Nro. de carnet de asignado</div>
-                        <div fxFlex="70%">
-                            <mat-form-field appearance="fill">
-                                <input type="text" matInput formControlName="assigned_card_number" placeholder=""
-                                    [readonly]="readOnly" />
-                                <mat-error *ngIf="person.get('assigned_card_number')?.hasError('required')">
-                                    El nro. de carnet de asignado es <strong>requerido</strong>
-                                </mat-error>
-                            </mat-form-field>
-                        </div>
-                    </div>
-
-                    <div *ngIf="!readOnly" style="text-align: right; margin-top: 10px;">
-                        <button mat-raised-button color="warn" (click)="removePerson(i)">
-                            <mat-icon>delete</mat-icon> Eliminar
-                        </button>
-                    </div>
-                </div>
-            </ng-container>
+  <!-- Versión desktop -->
+  <div fxShow="gt-sm" fxHide.lt-md>
+    <!-- Contenedor de tabla -->
+    <div class="table-container" fxLayout="column">
+      <!-- Encabezados -->
+      <div fxLayout="row" fxLayoutGap="1px" class="header-row">
+        <div
+          *ngIf="settings.showTokenField"
+          fxFlex="1 0 15%"
+          class="header-cell mat-toolbar mat-primary"
+        >
+          Cédula
         </div>
+        <div
+          *ngIf="settings.showNameField"
+          fxFlex="3 0 25%"
+          class="header-cell mat-toolbar mat-primary"
+        >
+          Nombre
+        </div>
+        <div
+          *ngIf="settings.showTypePersonField"
+          fxFlex="1 1 15%"
+          class="header-cell mat-toolbar mat-primary"
+        >
+          Tipo
+        </div>
+        <div
+          *ngIf="settings.showMovementTypeField"
+          fxFlex="1 1 15%"
+          class="header-cell mat-toolbar mat-primary"
+        >
+          Movimiento
+        </div>
+        <div
+          *ngIf="settings.showHourField"
+          fxFlex="1 1 10%"
+          class="header-cell mat-toolbar mat-primary"
+        >
+          Hora
+        </div>
+        <div
+          *ngIf="settings.showReasonVisitField"
+          fxFlex="1 1 15%"
+          class="header-cell mat-toolbar mat-primary"
+        >
+          Motivo de Visita
+        </div>
+        <div
+          *ngIf="settings.showPlaceOfReceptionField"
+          fxLayoutAlign="center center"
+          fxFlex="1 1 15%"
+          fxLayout="row"
+          class="item mat-toolbar mat-primary"
+        >
+          Lugar de recibimiento
+        </div>
+        <div
+          *ngIf="settings.showEntryField"
+          fxLayoutAlign="center center"
+          fxFlex="1 1 6%"
+          fxLayout="row"
+          class="item mat-toolbar mat-primary"
+        >
+          Ingreso de Herramienta, Vehículo o Equipo
+        </div>
+        <div
+          *ngIf="settings.showProtocolField"
+          fxLayoutAlign="center center"
+          fxFlex="1 1 6%"
+          fxLayout="row"
+          class="item mat-toolbar mat-primary"
+        >
+          Cumplió Protocolo COVID 19
+        </div>
+        <div
+          *ngIf="settings.showVaccinationCardNumberField"
+          fxLayoutAlign="center center"
+          fxFlex="1 1 6%"
+          fxLayout="row"
+          class="item mat-toolbar mat-primary"
+        >
+          Nro. de tarjeta de Vacunación
+        </div>
+        <div
+          *ngIf="settings.showAssignedCardNumberField"
+          fxLayoutAlign="center center"
+          fxFlex="1 1 10%"
+          fxLayout="row"
+          class="item mat-toolbar mat-primary"
+        >
+          Nro. de carnet asignado
+        </div>
+        <div
+          fxFlex="1 1 5%"
+          class="header-cell mat-toolbar mat-primary"
+          *ngIf="!readOnly"
+        ></div>
+      </div>
+
+      <!-- Items -->
+      <div fxLayout="column" fxLayoutGap="1px">
+        <ng-container *ngFor="let person of fPersons.controls; index as i">
+          <div
+            [formGroup]="person"
+            fxLayout="row"
+            fxLayoutGap="1px"
+            class="item-row"
+          >
+            <div
+              *ngIf="settings.showTokenField"
+              fxFlex="1 0 15%"
+              class="item-cell"
+            >
+              <mat-form-field appearance="fill" fxFlex="100">
+                <input
+                  type="text"
+                  matInput
+                  formControlName="identification_number"
+                  placeholder="Cédula"
+                  [disabled]="readOnly || facialRecognition"
+                />
+                <mat-error
+                  *ngIf="
+                    person.get('identification_number')?.hasError('required')
+                  "
+                >
+                  Cédula es <strong>requerida</strong>
+                </mat-error>
+              </mat-form-field>
+            </div>
+
+            <div
+              *ngIf="settings.showNameField"
+              fxFlex="3 0 25%"
+              class="item-cell"
+            >
+              <mat-form-field appearance="fill" fxFlex="100">
+                <input
+                  type="text"
+                  matInput
+                  formControlName="full_name"
+                  placeholder="Nombre completo"
+                  [disabled]="readOnly || facialRecognition"
+                />
+                <mat-error
+                  *ngIf="person.get('full_name')?.hasError('required')"
+                >
+                  Nombre es <strong>requerido</strong>
+                </mat-error>
+              </mat-form-field>
+            </div>
+
+            <div
+              *ngIf="settings.showTypePersonField"
+              fxFlex="1 1 15%"
+              class="item-cell"
+            >
+              <mat-form-field appearance="fill" fxFlex="100">
+                <mat-select
+                  formControlName="type_person"
+                  placeholder="Tipo"
+                  [disabled]="readOnly || facialRecognition"
+                >
+                  <mat-option
+                    *ngFor="let type of personTypes"
+                    [value]="type.id"
+                  >
+                    {{ type.description }}
+                  </mat-option>
+                </mat-select>
+                <mat-error
+                  *ngIf="person.get('type_person')?.hasError('required')"
+                >
+                  Tipo es <strong>requerido</strong>
+                </mat-error>
+              </mat-form-field>
+            </div>
+
+            <div
+              *ngIf="settings.showMovementTypeField"
+              fxFlex="1 1 15%"
+              class="item-cell"
+            >
+              <mat-radio-group
+                formControlName="movement_type"
+                fxLayout="column"
+                fxLayoutGap="1px"
+                [disabled]="readOnly || facialRecognition"
+              >
+                <mat-radio-button
+                  *ngFor="let mType of movementTypes"
+                  [value]="mType.id"
+                >
+                  {{ mType.text }}
+                </mat-radio-button>
+              </mat-radio-group>
+              <mat-error
+                *ngIf="person.get('movement_type')?.hasError('required')"
+                style="display: block; margin-top: 5px"
+              >
+                Movimiento es <strong>requerido</strong>
+              </mat-error>
+            </div>
+
+            <div
+              *ngIf="settings.showHourField"
+              fxFlex="1 1 10%"
+              class="item-cell"
+            >
+              <ngx-timepicker-field
+                [format]="24"
+                [defaultTime]="'00:00'"
+                [toggleIcon]="icon_hour"
+                formControlName="hour"
+                [disabled]="readOnly || facialRecognition"
+              >
+              </ngx-timepicker-field>
+              <ng-template #icon_hour>
+                <mat-icon aria-hidden="false">schedule</mat-icon>
+              </ng-template>
+              <mat-error *ngIf="person.get('hour')?.hasError('required')">
+                Hora es <strong>requerida</strong>
+              </mat-error>
+            </div>
+
+            <div
+              *ngIf="settings.showReasonVisitField"
+              fxFlex="1 1 15%"
+              class="item-cell"
+            >
+              <mat-form-field fxFlex="100">
+                <textarea
+                  matInput
+                  placeholder="Motivo"
+                  formControlName="reason_visit"
+                  [readonly]="readOnly"
+                ></textarea>
+                <mat-error
+                  *ngIf="person.get('reason_visit')?.hasError('required')"
+                >
+                  Motivo es <strong>requerido</strong>
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div
+              *ngIf="settings.showPlaceOfReceptionField"
+              fxFlex="1 1 15%"
+              class="item-cell"
+              fxLayoutAlign="center center"
+            >
+              <mat-form-field appearance="fill" fxFlex="90">
+                <mat-label>Lugar de recibimiento</mat-label>
+                <input
+                  type="text"
+                  matInput
+                  formControlName="place_of_reception"
+                  [readonly]="readOnly"
+                />
+                <mat-error
+                  *ngIf="person.get('place_of_reception')?.hasError('required')"
+                >
+                  El lugar de recibimiento es <strong>requerido</strong>
+                </mat-error>
+              </mat-form-field>
+            </div>
+
+            <div
+              *ngIf="settings.showEntryField"
+              fxFlex="1 1 6%"
+              class="item-cell"
+              fxLayoutAlign="center center"
+            >
+              <mat-slide-toggle
+                formControlName="entry"
+                #entryST
+                [disabled]="readOnly"
+              >
+                {{ entryST.checked ? "SI" : "NO" }}
+              </mat-slide-toggle>
+              <mat-error
+                *ngIf="person.get('entry')?.hasError('required')"
+                style="margin-top: 5px"
+              >
+                El ingreso es <strong>requerido</strong>
+              </mat-error>
+            </div>
+
+            <div
+              *ngIf="settings.showProtocolField"
+              fxFlex="1 1 6%"
+              class="item-cell"
+              fxLayoutAlign="center center"
+            >
+              <mat-slide-toggle
+                formControlName="protocol"
+                #protocolST
+                [disabled]="readOnly"
+              >
+                {{ protocolST.checked ? "SI" : "NO" }}
+              </mat-slide-toggle>
+              <mat-error
+                *ngIf="person.get('protocol')?.hasError('required')"
+                style="margin-top: 5px"
+              >
+                Este campo es <strong>requerido</strong>
+              </mat-error>
+            </div>
+
+            <div
+              *ngIf="settings.showVaccinationCardNumberField"
+              fxFlex="1 1 6%"
+              class="item-cell"
+              fxLayoutAlign="center center"
+            >
+              <mat-form-field appearance="fill" fxFlex="90">
+                <mat-label>Nro. de tarjeta de Vacunación</mat-label>
+                <input
+                  type="text"
+                  matInput
+                  formControlName="vaccination_card_number"
+                  [readonly]="readOnly"
+                />
+                <mat-error
+                  *ngIf="
+                    person.get('vaccination_card_number')?.hasError('required')
+                  "
+                >
+                  El nro. de tarjeta de vacunación es <strong>requerido</strong>
+                </mat-error>
+              </mat-form-field>
+            </div>
+
+            <div
+              *ngIf="settings.showAssignedCardNumberField"
+              fxFlex="1 1 6%"
+              class="item-cell"
+              fxLayoutAlign="center center"
+            >
+              <mat-form-field appearance="fill" fxFlex="90">
+                <mat-label>Nro. de carnet asignado</mat-label>
+                <input
+                  type="text"
+                  matInput
+                  formControlName="assigned_card_number"
+                  [readonly]="readOnly"
+                />
+                <mat-error
+                  *ngIf="
+                    person.get('assigned_card_number')?.hasError('required')
+                  "
+                >
+                  El nro. de carnet asignado es <strong>requerido</strong>
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div fxFlex="1 1 5%" class="item-cell" *ngIf="!readOnly">
+              <button mat-icon-button (click)="removePerson(i)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
+          </div>
+
+          <!-- Sección de materiales/equipos si aplica -->
+          <div
+            *ngIf="person.get('entry')?.value"
+            fxLayout="row"
+            fxLayoutGap="1px"
+            style="background: #f5f5f5; padding: 10px"
+          >
+            <!-- Contenido similar al componente de materiales -->
+          </div>
+        </ng-container>
+      </div>
     </div>
+  </div>
+
+  <!-- Versión móvil -->
+  <div fxShow.lt-md fxHide="gt-sm">
+    <div fxLayout="column" fxLayoutGap="10px">
+      <ng-container *ngFor="let person of fPersons.controls; index as i">
+        <div [formGroup]="person" class="mobile-card">
+          <div
+            fxLayout="row"
+            fxLayoutGap="10px"
+            *ngIf="settings.showTokenField"
+          >
+            <div fxFlex="30%" class="mobile-label">Cédula:</div>
+            <div fxFlex="70%">
+              <mat-form-field appearance="fill" fxFlex="100">
+                <input
+                  type="text"
+                  matInput
+                  formControlName="identification_number"
+                  [disabled]="readOnly || facialRecognition"
+                />
+                <mat-error
+                  *ngIf="
+                    person.get('identification_number')?.hasError('required')
+                  "
+                >
+                  Cédula es <strong>requerida</strong>
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div fxLayout="row" fxLayoutGap="10px" *ngIf="settings.showNameField">
+            <div fxFlex="30%" class="mobile-label">Nombre:</div>
+            <div fxFlex="70%">
+              <mat-form-field appearance="fill" fxFlex="100">
+                <input
+                  type="text"
+                  matInput
+                  formControlName="full_name"
+                  [disabled]="readOnly || facialRecognition"
+                />
+                <mat-error
+                  *ngIf="person.get('full_name')?.hasError('required')"
+                >
+                  Nombre es <strong>requerido</strong>
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div
+            fxLayout="row"
+            fxLayoutGap="10px"
+            *ngIf="settings.showTypePersonField"
+          >
+            <div fxFlex="30%" class="mobile-label">Tipo:</div>
+            <div fxFlex="70%">
+              <mat-form-field appearance="fill" fxFlex="100">
+                <mat-select
+                  formControlName="type_person"
+                  [disabled]="readOnly || facialRecognition"
+                >
+                  <mat-option
+                    *ngFor="let type of personTypes"
+                    [value]="type.id"
+                  >
+                    {{ type.description }}
+                  </mat-option>
+                </mat-select>
+                <mat-error
+                  *ngIf="person.get('type_person')?.hasError('required')"
+                >
+                  Tipo es <strong>requerido</strong>
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div
+            fxLayout="row"
+            fxLayoutGap="10px"
+            *ngIf="settings.showMovementTypeField"
+          >
+            <div fxFlex="30%" class="mobile-label">Movimiento:</div>
+            <div fxFlex="70%">
+              <mat-radio-group
+                formControlName="movement_type"
+                fxLayout="column"
+                [disabled]="readOnly || facialRecognition"
+              >
+                <mat-radio-button
+                  *ngFor="let mType of movementTypes"
+                  [value]="mType.id"
+                >
+                  {{ mType.text }}
+                </mat-radio-button>
+              </mat-radio-group>
+              <div
+                *ngIf="person.get('movement_type')?.hasError('required')"
+                style="color: #f44336; font-size: 12px; margin-top: 5px"
+              >
+                Movimiento es <strong>requerido</strong>
+              </div>
+            </div>
+          </div>
+
+          <div fxLayout="row" fxLayoutGap="10px" *ngIf="settings.showHourField">
+            <div fxFlex="30%" class="mobile-label">Hora:</div>
+            <div fxFlex="70%">
+              <ngx-timepicker-field
+                formControlName="hour"
+                [format]="24"
+                [readonly]="readOnly || facialRecognition"
+              ></ngx-timepicker-field>
+              <div
+                *ngIf="person.get('hour')?.hasError('required')"
+                style="color: #f44336; font-size: 12px; margin-top: 5px"
+              >
+                Hora es <strong>requerida</strong>
+              </div>
+            </div>
+          </div>
+
+          <div
+            fxLayout="row"
+            fxLayoutGap="10px"
+            *ngIf="settings.showReasonVisitField"
+          >
+            <div fxFlex="30%" class="mobile-label">Motivo:</div>
+            <div fxFlex="70%">
+              <mat-form-field fxFlex="100">
+                <textarea
+                  matInput
+                  formControlName="reason_visit"
+                  [readonly]="readOnly"
+                ></textarea>
+                <mat-error
+                  *ngIf="person.get('reason_visit')?.hasError('required')"
+                >
+                  Motivo es <strong>requerido</strong>
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div
+            fxLayout="row"
+            fxLayoutGap="10px"
+            *ngIf="settings.showPlaceOfReceptionField"
+          >
+            <div fxFlex="30%" class="mobile-label">Lugar de recibimiento:</div>
+            <div fxFlex="70%">
+              <mat-form-field appearance="fill">
+                <mat-label>Lugar de recibimiento</mat-label>
+                <input
+                  type="text"
+                  matInput
+                  formControlName="place_of_reception"
+                  placeholder="Lugar de recibimiento"
+                  [readonly]="readOnly"
+                />
+                <mat-error
+                  *ngIf="person.get('place_of_reception')?.hasError('required')"
+                >
+                  El lugar de recibimiento es <strong>requerido</strong>
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div
+            fxLayout="row"
+            fxLayoutGap="10px"
+            *ngIf="settings.showEntryField"
+          >
+            <div fxFlex="30%" class="mobile-label">
+              Ingreso de Herramienta o Equipo:
+            </div>
+            <div fxFlex="70%">
+              <mat-slide-toggle
+                formControlName="entry"
+                #entryST
+                [disabled]="readOnly"
+                >{{ entryST.checked ? "SI" : "NO" }}</mat-slide-toggle
+              >
+            </div>
+          </div>
+
+          <div
+            fxLayout="row"
+            fxLayoutGap="10px"
+            *ngIf="settings.showProtocolField"
+          >
+            <div fxFlex="30%" class="mobile-label">Cumplió protocolo:</div>
+            <div fxFlex="70%">
+              <mat-slide-toggle
+                formControlName="protocol"
+                #protocolST
+                [disabled]="readOnly"
+                >{{ protocolST.checked ? "SI" : "NO" }}</mat-slide-toggle
+              >
+              <mat-error *ngIf="person.get('protocol')?.hasError('required')">
+                Este campo es <strong>requerido</strong>
+              </mat-error>
+            </div>
+          </div>
+          <div
+            fxLayout="row"
+            fxLayoutGap="10px"
+            *ngIf="settings.showVaccinationCardNumberField"
+          >
+            <div fxFlex="30%" class="mobile-label">
+              Nro. de tarjeta de Vacunación
+            </div>
+            <div fxFlex="70%">
+              <mat-form-field appearance="fill">
+                <input
+                  type="text"
+                  matInput
+                  formControlName="vaccination_card_number"
+                  placeholder=""
+                  [readonly]="readOnly"
+                />
+                <mat-error
+                  *ngIf="
+                    person.get('vaccination_card_number')?.hasError('required')
+                  "
+                >
+                  El nro. de tarjeta de vacunación es <strong>requerido</strong>
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div
+            fxLayout="row"
+            fxLayoutGap="10px"
+            *ngIf="settings.showAssignedCardNumberField"
+          >
+            <div fxFlex="30%" class="mobile-label">
+              Nro. de carnet de asignado
+            </div>
+            <div fxFlex="70%">
+              <mat-form-field appearance="fill">
+                <input
+                  type="text"
+                  matInput
+                  formControlName="assigned_card_number"
+                  placeholder=""
+                  [readonly]="readOnly"
+                />
+                <mat-error
+                  *ngIf="
+                    person.get('assigned_card_number')?.hasError('required')
+                  "
+                >
+                  El nro. de carnet de asignado es <strong>requerido</strong>
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div *ngIf="!readOnly" style="text-align: right; margin-top: 10px">
+            <button mat-raised-button color="warn" (click)="removePerson(i)">
+              <mat-icon>delete</mat-icon> Eliminar
+            </button>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </div>
 </div>
