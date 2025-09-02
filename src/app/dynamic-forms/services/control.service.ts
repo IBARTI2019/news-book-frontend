@@ -94,10 +94,7 @@ export class ControlService {
         question.settings.showHourField && Validators.required,
       ],
       entry: [question.value.entry || false, question.settings.showEntryField],
-      protocol: [
-        question.value.protocol || false,
-        question.settings.showProtocolField && Validators.required,
-      ],
+      protocol: [question.value.protocol || false],
       materials: new FormControl({
         value: question.value?.materials?.value || [],
       }),
@@ -151,10 +148,7 @@ export class ControlService {
         question.value.hour || "",
         question.settings.showHourField && Validators.required,
       ],
-      protocol: [
-        question.value.protocol || "",
-        question.settings.showProtocolField && Validators.required,
-      ],
+      protocol: [question.value.protocol || ""],
       instituccion: [
         question.value.instituccion || "",
         question.settings.showTypePersonField && Validators.required,

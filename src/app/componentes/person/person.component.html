@@ -13,6 +13,7 @@
       *ngIf="fPerson && !readOnly && settings.showButtonNew"
     >
       <button
+        *ngIf="!facialRecognition"
         mat-raised-button
         color="primary"
         (click)="createPersona()"
@@ -142,7 +143,7 @@
                 matInput
                 formControlName="identification_number"
                 (keyup)="getPerson($event.target.value)"
-                [readonly]="readOnly || facialRecognition"
+                [disabled]="readOnly || facialRecognition"
               />
               <button
                 *ngIf="facialRecognition"
@@ -182,7 +183,7 @@
                   matInput
                   formControlName="full_name"
                   placeholder="Nombre y Apellido"
-                  [readonly]="readOnly || facialRecognition"
+                  [disabled]="readOnly || facialRecognition"
                 />
                 <mat-error
                   *ngIf="fPerson.controls.full_name.hasError('required')"
