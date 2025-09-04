@@ -268,8 +268,11 @@ export class PersonComponent implements OnInit {
   }
 
   check(value: any) {
+    console.log(typeof value);
+    if (typeof value == "string")
+      value = this.personTypes.find((tp) => tp.id == value);
     // Verificar primero si el formulario existe
-    if (!this.fPerson) return;
+    if (!this.fPerson || !value) return;
 
     // Usar el operador de navegación segura para todos los controles
     if (!this.readOnly) {
