@@ -130,6 +130,8 @@ export interface Person {
 
   default_visit_location?: string;
   default_visit_reason?: string;
+
+  sex?: "M" | "F";
 }
 
 export interface TypeNew {

@@ -93,7 +93,7 @@ export class ControlService {
         question.value.hour || "",
         question.settings.showHourField && Validators.required,
       ],
-      entry: [question.value.entry || false, question.settings.showEntryField],
+      entry: [question.value.entry || false],
       protocol: [question.value.protocol || false],
       materials: new FormControl({
         value: question.value?.materials?.value || [],

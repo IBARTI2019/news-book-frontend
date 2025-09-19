@@ -72,6 +72,7 @@ export class CreateAndEditPersonComponent implements OnInit {
         blacklist_reason: [""],
         default_visit_location: [""],
         default_visit_reason: [""],
+        sex: ["M", Validators.required],
       },
       {}
     );
@@ -157,6 +158,8 @@ export class CreateAndEditPersonComponent implements OnInit {
         .get("default_visit_location")!
         .setValue(data.default_visit_location);
       this.fg.get("default_visit_reason")!.setValue(data.default_visit_reason);
+
+      this.fg.get("sex")?.setValue(data.sex || "M");
     });
   }
 

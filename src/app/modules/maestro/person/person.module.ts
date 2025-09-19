@@ -17,6 +17,7 @@ import { ComponentesModule } from "../../../componentes/componentes.module";
 import { RouterModule } from "@angular/router";
 import { PersonComponent } from "./person.component";
 import { CreateAndEditPersonComponent } from "./create-and-edit-person/create-and-edit-person.component";
+import { MatRadioModule } from "@angular/material/radio";
 
 @NgModule({
   declarations: [PersonComponent, CreateAndEditPersonComponent],
@@ -37,6 +38,7 @@ import { CreateAndEditPersonComponent } from "./create-and-edit-person/create-an
     MatCheckboxModule,
     MatSelectModule,
     MatIconModule,
+    MatRadioModule,
   ],
 })
 export class PersonModule {}
